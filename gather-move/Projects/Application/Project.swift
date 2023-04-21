@@ -6,7 +6,7 @@
 //
 
 import ProjectDescription
-import DependecnyPlugin
+import DependencyPlugin
 
 let targets: [Target] = [
     .init(
@@ -15,16 +15,15 @@ let targets: [Target] = [
         product: .app,
         bundleId: "com.application.ios",
         infoPlist: .default,
-        sources: "Sources",
+        sources: ["iOS/Sources/**"],
         dependencies: []
     ),
     .init(
         name: "WatchApplication",
-        platform: .iOS,
+        platform: .watchOS,
         product: .watch2App,
         bundleId: "com.application.watch",
-        infoPlist: .default,
-        sources: "Sources",
+        infoPlist: .default
     )
 ]
 

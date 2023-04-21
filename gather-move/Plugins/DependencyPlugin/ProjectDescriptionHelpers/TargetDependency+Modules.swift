@@ -8,27 +8,6 @@
 import ProjectDescription
 import Foundation
 
-// MARK: - Application
-
-extension TargetDependency {
-    
-    private static func application(target: String, moduleName: String) -> TargetDependency {
-        .project(target: target, path: .relativeToRoot("Projects/Application/" + moduleName))
-    }
-    
-    public static func application(interface moduleName: ApplicationModule) -> TargetDependency {
-        .feature(target: moduleName.rawValue + "ApplicationInterface", moduleName: moduleName.rawValue)
-    }
-    
-    public static func application(implementation moduleName: ApplicationModule) -> TargetDependency {
-        .feature(target: moduleName.rawValue + "Application", moduleName: moduleName.rawValue)
-    }
-    
-    public static func application(testing moduleName: ApplicationModule) -> TargetDependency {
-        .feature(target: moduleName.rawValue + "ApplicationTesting", moduleName: moduleName.rawValue)
-    }
-}
-
 // MARK: - Feature
 
 extension TargetDependency {
