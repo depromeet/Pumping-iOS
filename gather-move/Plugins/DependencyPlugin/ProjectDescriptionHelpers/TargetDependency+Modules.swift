@@ -9,7 +9,7 @@ import ProjectDescription
 import Foundation
 
 extension TargetDependency {
-    public static func interface(forIdentifier identifier: TargetIdentifierType) -> TargetDependency {
-        return .project(target: identifier.interface, path: .relativeToRoot("Projects/\(identifier.project)/\(identifier.interface)"))
-    }
+//    public static func interface(forIdentifier identifier: TargetIdentifierType) -> TargetDependency {
+//        return .project(target: identifier.interface, path: .relativeToRoot("Projects/\(identifier.project)/\(identifier.interface)"))
+//    }
 }
