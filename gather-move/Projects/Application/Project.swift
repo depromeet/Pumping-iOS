@@ -9,26 +9,12 @@ import ProjectDescription
 import DependencyPlugin
 
 let targets: [Target] = [
-    .init(
-        name: "iOSApplication",
-        platform: .iOS,
-        product: .app,
-        bundleId: "com.application.ios",
-        infoPlist: .default,
-        sources: ["iOS/Sources/**"],
-        dependencies: []
-    ),
-    .init(
-        name: "WatchApplication",
-        platform: .watchOS,
-        product: .watch2App,
-        bundleId: "com.application.watch",
-        infoPlist: .default
-    )
+    ApplicationModuleIdentifier.iOS.target(dependencies: []),
+    ApplicationModuleIdentifier.WatchOS.target(dependencies: [])
 ]
 
 let project: Project = .init(
-    name: Environment.appName,
-    organizationName: Environment.organizationName,
+    name: ApplicationModuleIdentifier.id.project,
+    organizationName: ApplicationModuleIdentifier.organizationName,
     targets: targets
 )
