@@ -10,10 +10,18 @@ import Foundation
 // MARK: ApplicationModuleIdentifier
 
 public class ApplicationModuleIdentifier: ModuleIdentifier {
-    public static let id: ApplicationModuleIdentifier = .init(project: "Application", target: "")
+    public static let projectName: String = "Application"
     
-    public static let iOS: ApplicationModuleIdentifier = .init(project: id.project, target: "iOS")
-    public static let WatchOS: ApplicationModuleIdentifier = .init(project: id.project, target: "WatchOS")
-    
-    
+    public static let module: ApplicationModuleIdentifier = .init(
+        project: ApplicationModuleIdentifier.projectName,
+        targets: [
+            TargetIdentifier(
+                project: ApplicationModuleIdentifier.projectName,
+                target: "iOS"
+            ),
+            TargetIdentifier(
+                project: ApplicationModuleIdentifier.projectName,
+                target: "WatchOS"
+            )
+    ])
 }

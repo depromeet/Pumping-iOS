@@ -8,13 +8,10 @@
 import ProjectDescription
 import DependencyPlugin
 
-let targets: [Target] = [
-    ApplicationModuleIdentifier.iOS.target(dependencies: []),
-    ApplicationModuleIdentifier.WatchOS.target(dependencies: [])
-]
+let id = ApplicationModuleIdentifier.self
 
 let project: Project = .init(
-    name: ApplicationModuleIdentifier.id.project,
-    organizationName: ApplicationModuleIdentifier.organizationName,
-    targets: targets
+    name: id.module.project,
+    organizationName: id.organizationName,
+    targets: id.module.targets.map { $0.make() }
 )

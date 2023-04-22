@@ -10,7 +10,7 @@ import ProjectDescription
 
 public protocol ModuleIdentifierType {
     var project: String { get }
-    var target: String { get }
+    var targets: [TargetIdentifier] { get }
     
     func project(
         name: String,
@@ -24,8 +24,61 @@ public protocol ModuleIdentifierType {
         additionalFiles: [FileElement],
         resourceSynthesizers: [ResourceSynthesizer]
     ) -> Project
+}
+
+public class ModuleIdentifier: ModuleIdentifierType {
+    public static let appName = "GatherMove"
+    public static let organizationName = "com.82team.gathermove"
     
-    func target(
+    public var project: String
+    public var targets: [TargetIdentifier]
+    
+    public init(project: String, targets: [TargetIdentifier]) {
+        self.project = project
+        self.targets = targets
+    }
+    
+    public func project(
+        name: String,
+        organizationName: String? = "com.82team.gathermove",
+        options: Project.Options = .options(),
+        packages: [Package] = [],
+        settings: Settings? = .settings(),
+        targets: [Target] = [],
+        schemes: [Scheme] = [],
+        fileHeaderTemplate: FileHeaderTemplate? = nil,
+        additionalFiles: [FileElement] = [],
+        resourceSynthesizers: [ResourceSynthesizer] = []
+    ) -> Project {
+        return .init(
+            name: name,
+            organizationName: organizationName,
+            options: options,
+            packages: packages,
+            settings: settings,
+            targets: targets,
+            schemes: schemes,
+            fileHeaderTemplate: fileHeaderTemplate,
+            additionalFiles: additionalFiles,
+            resourceSynthesizers: resourceSynthesizers
+        )
+    }
+}
+
+public enum TargetType {
+    case interface
+    case testing
+    case tests
+}
+
+public protocol TargetIdentifierType {
+    var project: String { get }
+    var target: String { get }
+    var interface: String { get }
+    var testing: String { get }
+    var tests: String { get }
+    
+    func make(
         name: String?,
         platform: Platform,
         product: Product,
@@ -47,45 +100,26 @@ public protocol ModuleIdentifierType {
         additionalFiles: [FileElement]) -> Target
 }
 
-public class ModuleIdentifier: ModuleIdentifierType {
-    public static let appName = "GatherMove"
-    public static let organizationName = "com.82team.gathermove"
-    
+public class TargetIdentifier: TargetIdentifierType {
     public var project: String
     public var target: String
+    
+    public var interface: String
+    public var testing: String
+    public var tests: String
     
     public init(project: String, target: String) {
         self.project = project
         self.target = target
+        
+        self.interface = project + "interface"
+        self.testing = project + "testing"
+        self.tests = project + "tests"
     }
-    
-    public func project(
-        name: String,
-        organizationName: String? = "com.82team.gathermove",
-        options: Project.Options = .options(),
-        packages: [Package] = [],
-        settings: Settings? = .settings(),
-        targets: [Target] = [],
-        schemes: [Scheme] = [],
-        fileHeaderTemplate: FileHeaderTemplate? = nil,
-        additionalFiles: [FileElement] = [],
-        resourceSynthesizers: [ResourceSynthesizer] = []
-    ) -> Project {
-            return .init(
-                name: name,
-                organizationName: organizationName,
-                options: options,
-                packages: packages,
-                settings: settings,
-                targets: targets,
-                schemes: schemes,
-                fileHeaderTemplate: fileHeaderTemplate,
-                additionalFiles: additionalFiles,
-                resourceSynthesizers: resourceSynthesizers
-            )
-        }
-    
-    public func target(
+}
+
+extension TargetIdentifier {
+    public func make(
         name: String? = nil,
         platform: Platform = .iOS,
         product: Product = .framework,
