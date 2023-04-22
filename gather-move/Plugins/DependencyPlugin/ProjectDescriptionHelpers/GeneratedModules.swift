@@ -7,31 +7,38 @@
 
 import Foundation
 
-public protocol ModuleProtocol: CaseIterable {
-    var projectName: String { get }
-    var targetName: String { get }
+public protocol ModuleIdentifier: CaseIterable {
+    var name: String { get }
 }
 
-public enum ApplicationModule: String, ModuleProtocol {
-    case iOS = "iOS"
-    case watchOS = "WatchOS"
+// MARK: ApplicationModuleIdentifier
+
+public struct ApplicationModuleIdentifier: ModuleIdentifier {
+    public static var allCases: [ApplicationModuleIdentifier] = [
+        Self.iOS,
+        Self.WatchOS
+    ]
     
-    public var projectName: String { "Application" }
-    public var targetName: String { "\(projectName)\(self.rawValue)" }
+    static let iOS: Self = .init(name: "iOS")
+    static let WatchOS: Self = .init(name: "WatchOS")
+    
+    public let name: String
+    
+    public init(name: String) {
+        self.name = name
+    }
 }
 
-public enum FeatureModule: String, ModuleProtocol {
-    case health = "Health"
-    case map = "Map"
-    
-    public var projectName: String { "Feature" }
-    public var targetName: String { "\(projectName)\(self.rawValue)" }
+public enum FeatureModule: String {
+    case Health
+    case Map
 }
 
-public enum CoreModule: String, ModuleProtocol {
-    case health = "Health"
-    case map = "Map"
-    
-    public var projectName: String { "Core" }
-    public var targetName: String { "\(projectName)\(self.rawValue)" }
+public enum CoreModule: String {
+    case Health
+    case Map
+}
+
+public enum ThirdPartyLibModule: String {
+    case ThirdPartyLib
 }

@@ -17,7 +17,7 @@ extension TargetDependency {
     }
     
     public static func feature(interface moduleName: FeatureModule) -> TargetDependency {
-        .feature(target: moduleName.rawValue + "FeatureInterface", moduleName: moduleName.rawValue)
+        .feature(target: moduleName.rawValue + "Interface", moduleName: moduleName.rawValue)
     }
     
     public static func feature(implementation moduleName: FeatureModule) -> TargetDependency {
