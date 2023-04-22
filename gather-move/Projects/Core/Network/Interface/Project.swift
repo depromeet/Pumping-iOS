@@ -1,6 +1,6 @@
 //
 //  Project.swift
-//  ProjectDescriptionHelpers
+//  NetworkManifests
 //
 //  Created by 송영모 on 2023/04/22.
 //
@@ -10,20 +10,19 @@ import DependencyPlugin
 
 let targets: [Target] = [
     .init(
-        name: "Core",
+        name: "NetworkInterface",
         platform: .iOS,
         product: .framework,
-        bundleId: "com.core",
+        bundleId: "com.core.network.networkInterface",
         infoPlist: .default,
         sources: "Sources/**",
         dependencies: [
-            .project(target: "Network", path: .relativeToCurrentFile("Network")),
-            .project(target: "Utility", path: .relativeToCurrentFile("Utility"))
+            
         ]
-    )
+    ),
 ]
 
 let project: Project = .init(
-    name: "Core",
+    name: "NetworkInterface",
     targets: targets
 )

@@ -10,20 +10,19 @@ import DependencyPlugin
 
 let targets: [Target] = [
     .init(
-        name: "Core",
+        name: "NetworkTesting",
         platform: .iOS,
-        product: .framework,
-        bundleId: "com.core",
+        product: .staticLibrary,
+        bundleId: "com.core.network.networkTesting",
         infoPlist: .default,
         sources: "Sources/**",
         dependencies: [
-            .project(target: "Network", path: .relativeToCurrentFile("Network")),
-            .project(target: "Utility", path: .relativeToCurrentFile("Utility"))
+            
         ]
-    )
+    ),
 ]
 
 let project: Project = .init(
-    name: "Core",
+    name: "NetworkTesting",
     targets: targets
 )
