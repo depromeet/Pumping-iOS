@@ -15,11 +15,44 @@ let targets: [Target] = [
         product: .framework,
         bundleId: "com.core.network",
         infoPlist: .default,
-        sources: "Sources/**",
+        sources: ["Sources/**"],
         dependencies: [
-            .project(target: "NetworkInterface", path: .relativeToCurrentFile("Interface")),
-            .project(target: "NetworkTesting", path: .relativeToCurrentFile("Testing")),
-            .project(target: "NetworkTests", path: .relativeToCurrentFile("Tests"))
+            .target(name: "NetworkInterface"),
+            .target(name: "NetworkTesting"),
+            .target(name: "NetworkTests")
+        ]
+    ),
+    .init(
+        name: "NetworkInterface",
+        platform: .iOS,
+        product: .staticFramework,
+        bundleId: "com.core.network.interface",
+        infoPlist: .default,
+        sources: ["Interface/Sources/**"],
+        dependencies: [
+            
+        ]
+    ),
+    .init(
+        name: "NetworkTesting",
+        platform: .iOS,
+        product: .staticFramework,
+        bundleId: "com.core.network.testing",
+        infoPlist: .default,
+        sources: ["Testing/Sources/**"],
+        dependencies: [
+            
+        ]
+    ),
+    .init(
+        name: "NetworkTests",
+        platform: .iOS,
+        product: .staticFramework,
+        bundleId: "com.core.network.tests",
+        infoPlist: .default,
+        sources: ["Tests/Sources/**"],
+        dependencies: [
+            
         ]
     ),
 ]
