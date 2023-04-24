@@ -18,7 +18,8 @@ let targets: [Target] = [
         sources: ["Sources/**"],
         dependencies: [
             .project(target: "Network", path: .relativeToCurrentFile("Network")),
-            .project(target: "Utility", path: .relativeToCurrentFile("Utility"))
+            .project(target: "Utility", path: .relativeToCurrentFile("Utility")),
+            .project(target: "ThirdPartyLib", path: .relativeToRoot("Projects/ThirdPartyLib"))
         ]
     )
 ]
