@@ -22,11 +22,22 @@ let targets: [Target] = [
         ]
     ),
     .init(
-        name: "WatchOSApp",
+        name: "WatchApp",
         platform: .watchOS,
         product: .watch2App,
-        bundleId: "com.app.watchOS",
+        bundleId: "com.app.watch",
         infoPlist: .default,
+        dependencies: [
+            .target(name: "WatchExtension")
+        ]
+    ),
+    .init(
+        name: "WatchExtension",
+        platform: .watchOS,
+        product: .watch2Extension,
+        bundleId: "com.app.watchExtension",
+        infoPlist: .default,
+        sources: ["WatchExtension/Sources/**"],
         dependencies: [
             
         ]
