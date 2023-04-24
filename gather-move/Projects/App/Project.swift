@@ -8,27 +8,32 @@
 import ProjectDescription
 import DependencyPlugin
 
+
 let targets: [Target] = [
     .init(
-        name: "iOSApplication",
+        name: "iOSApp",
         platform: .iOS,
-        product: .app,
-        bundleId: "com.application.ios",
+        product: .framework,
+        bundleId: "com.app.iOS",
         infoPlist: .default,
-        sources: ["iOS/Sources/**"],
-        dependencies: []
+        sources: "Sources/**",
+        dependencies: [
+            
+        ]
     ),
     .init(
-        name: "WatchApplication",
+        name: "WatchOSApp",
         platform: .watchOS,
         product: .watch2App,
-        bundleId: "com.application.watch",
-        infoPlist: .default
+        bundleId: "com.app.watchOS",
+        infoPlist: .default,
+        dependencies: [
+            
+        ]
     )
 ]
 
 let project: Project = .init(
-    name: Environment.appName,
-    organizationName: Environment.organizationName,
+    name: "App",
     targets: targets
 )
