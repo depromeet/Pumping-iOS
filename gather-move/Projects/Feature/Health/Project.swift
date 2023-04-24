@@ -1,8 +1,8 @@
 //
 //  Project.swift
-//  CoreManifests
+//  ProjectDescriptionHelpers
 //
-//  Created by 송영모 on 2023/04/22.
+//  Created by 송영모 on 2023/04/24.
 //
 
 import ProjectDescription
@@ -10,23 +10,24 @@ import DependencyPlugin
 
 let targets: [Target] = [
     .init(
-        name: "Network",
+        name: "FeatureHealth",
         platform: .iOS,
         product: .framework,
-        bundleId: "com.core.network",
+        bundleId: "com.feature.health",
         infoPlist: .default,
         sources: ["Sources/**"],
         dependencies: [
-            .target(name: "NetworkInterface"),
-            .target(name: "NetworkTesting"),
-            .target(name: "NetworkTests")
+            .target(name: "FeatureHealthInterface"),
+            .target(name: "FeatureHealthTesting"),
+            .target(name: "FeatureHealthTests"),
+            .project(target: "Core", path: .relativeToRoot("Projects/Core"))
         ]
     ),
     .init(
-        name: "NetworkInterface",
+        name: "FeatureHealthInterface",
         platform: .iOS,
         product: .staticFramework,
-        bundleId: "com.core.network.interface",
+        bundleId: "com.feature.health.interface",
         infoPlist: .default,
         sources: ["Interface/Sources/**"],
         dependencies: [
@@ -34,10 +35,10 @@ let targets: [Target] = [
         ]
     ),
     .init(
-        name: "NetworkTesting",
+        name: "FeatureHealthTesting",
         platform: .iOS,
         product: .staticFramework,
-        bundleId: "com.core.network.testing",
+        bundleId: "com.feature.health.testing",
         infoPlist: .default,
         sources: ["Testing/Sources/**"],
         dependencies: [
@@ -45,10 +46,10 @@ let targets: [Target] = [
         ]
     ),
     .init(
-        name: "NetworkTests",
+        name: "FeatureHealthTests",
         platform: .iOS,
         product: .staticFramework,
-        bundleId: "com.core.network.tests",
+        bundleId: "com.feature.health.tests",
         infoPlist: .default,
         sources: ["Tests/Sources/**"],
         dependencies: [
@@ -58,6 +59,6 @@ let targets: [Target] = [
 ]
 
 let project: Project = .init(
-    name: "Network",
+    name: "FeatureHealth",
     targets: targets
 )

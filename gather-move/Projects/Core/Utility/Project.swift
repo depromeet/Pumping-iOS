@@ -15,11 +15,22 @@ let targets: [Target] = [
         product: .framework,
         bundleId: "com.core.utility",
         infoPlist: .default,
-        sources: "Sources/**",
+        sources: ["Sources/**"],
         dependencies: [
-            .project(target: "UtilityInterface", path: .relativeToCurrentFile("Interface")),
+            .target(name: "UtilityInterface")
         ]
     ),
+    .init(
+        name: "UtilityInterface",
+        platform: .iOS,
+        product: .staticFramework,
+        bundleId: "com.core.utility.interface",
+        infoPlist: .default,
+        sources: ["Interface/Sources/**"],
+        dependencies: [
+            
+        ]
+    )
 ]
 
 let project: Project = .init(

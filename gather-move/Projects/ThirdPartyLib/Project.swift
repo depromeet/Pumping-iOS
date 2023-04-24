@@ -2,7 +2,7 @@
 //  Project.swift
 //  ProjectDescriptionHelpers
 //
-//  Created by 송영모 on 2023/04/22.
+//  Created by 송영모 on 2023/04/24.
 //
 
 import ProjectDescription
@@ -10,19 +10,18 @@ import DependencyPlugin
 
 let targets: [Target] = [
     .init(
-        name: "NetworkTests",
+        name: "ThirdPartyLib",
         platform: .iOS,
-        product: .staticFramework,
-        bundleId: "com.core.network.networkTests",
+        product: .framework,
+        bundleId: "com.thirdPartyLib",
         infoPlist: .default,
-        sources: "Sources/**",
         dependencies: [
-            
+            .external(name: "ComposableArchitecture")
         ]
-    ),
+    )
 ]
 
 let project: Project = .init(
-    name: "NetworkTests",
+    name: "ThirdPartyLib",
     targets: targets
 )
