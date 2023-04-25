@@ -26,7 +26,7 @@ let targets: [Target] = [
         name: "WatchApp",
         platform: .watchOS,
         product: .watch2App,
-        bundleId: "com.82team.gathermove",
+        bundleId: "com.82team.gathermove.watchkit",
         infoPlist: .default,
         dependencies: [
             .target(name: "WatchExtension"),
@@ -36,7 +36,7 @@ let targets: [Target] = [
         name: "WatchExtension",
         platform: .watchOS,
         product: .watch2Extension,
-        bundleId: "com.82team.gathermove",
+        bundleId: "com.82team.gathermove.watchkit.extension",
         infoPlist: .default,
         sources: ["WatchExtension/Sources/**"],
         dependencies: [
