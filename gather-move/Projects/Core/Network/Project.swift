@@ -9,55 +9,35 @@ import ProjectDescription
 import DependencyPlugin
 
 let targets: [Target] = [
-    .init(
-        name: "CoreNetwork",
-        platform: .iOS,
-        product: .framework,
-        bundleId: "com.core.network",
-        infoPlist: .default,
-        sources: ["Sources/**"],
+    CoreModule.target(
+        target: .Network,
+        micro: .Source,
         dependencies: [
-            .target(name: "CoreNetworkInterface"),
-            .target(name: "CoreNetworkTesting"),
-            .target(name: "CoreNetworkTests")
+            CoreModule.targetDependency(target: .Network, micro: .Interface),
         ]
     ),
-    .init(
-        name: "CoreNetworkInterface",
-        platform: .iOS,
-        product: .staticFramework,
-        bundleId: "com.core.network.interface",
-        infoPlist: .default,
-        sources: ["Interface/Sources/**"],
+    CoreModule.target(
+        target: .Network,
+        micro: .Tests,
         dependencies: [
-            
+            CoreModule.targetDependency(target: .Network, micro: .Interface),
+            CoreModule.targetDependency(target: .Network, micro: .Testing),
         ]
     ),
-    .init(
-        name: "CoreNetworkTesting",
-        platform: .iOS,
-        product: .staticFramework,
-        bundleId: "com.core.network.testing",
-        infoPlist: .default,
-        sources: ["Testing/Sources/**"],
+    CoreModule.target(
+        target: .Network,
+        micro: .Testing,
         dependencies: [
-            
+            CoreModule.targetDependency(target: .Network, micro: .Interface),
         ]
     ),
-    .init(
-        name: "CoreNetworkTests",
-        platform: .iOS,
-        product: .staticFramework,
-        bundleId: "com.core.network.tests",
-        infoPlist: .default,
-        sources: ["Tests/Sources/**"],
-        dependencies: [
-            
-        ]
+    CoreModule.target(
+        target: .Network,
+        micro: .Interface
     ),
 ]
 
 let project: Project = .init(
-    name: "CoreNetwork",
+    name: CoreModule.name(),
     targets: targets
 )

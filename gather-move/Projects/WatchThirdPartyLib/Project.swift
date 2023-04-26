@@ -9,12 +9,8 @@ import ProjectDescription
 import DependencyPlugin
 
 let targets: [Target] = [
-    .init(
-        name: "WatchThirdPartyLib",
+    WatchThirdPartyLibModule.target(
         platform: .watchOS,
-        product: .framework,
-        bundleId: "com.watch.thirdPartyLib",
-        infoPlist: .default,
         dependencies: [
             .external(name: "ComposableArchitecture")
         ]
@@ -22,6 +18,6 @@ let targets: [Target] = [
 ]
 
 let project: Project = .init(
-    name: "WatchThirdPartyLib",
+    name: WatchThirdPartyLibModule.name(),
     targets: targets
 )

@@ -14,6 +14,7 @@ let targets: [Target] = [
         micro: .Source,
         dependencies: [
             FeatureModule.targetDependency(target: .Login, micro: .Interface),
+            CoreModule.targetDependency(),
         ]
     ),
     FeatureModule.target(

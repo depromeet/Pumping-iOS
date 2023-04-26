@@ -208,7 +208,29 @@ public class CoreModuleType: ModuleType {
     }
 }
 
+// MARK: ThirdPartyLibType
+
+public class ThirdPartyLibType: ModuleType {
+    public let moduleName: String = "ThirdPartyLib"
+    
+    public enum TargetType: String {
+        case none
+    }
+}
+
+// MARK: WatchThirdPartyLibType
+
+public class WatchThirdPartyLibType: ModuleType {
+    public let moduleName: String = "WatchThirdPartyLib"
+    
+    public enum TargetType: String {
+        case none
+    }
+}
+
 public let AppModule = AppModuleType()
 public let DomainModule = DomainModuleType()
 public let FeatureModule = FeatureModuleType()
 public let CoreModule = CoreModuleType()
+public let ThirdPartyLibModule = ThirdPartyLibType()
+public let WatchThirdPartyLibModule = WatchThirdPartyLibType()

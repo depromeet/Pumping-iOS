@@ -20,6 +20,7 @@ let targets: [Target] = [
             FeatureModule.targetDependency(target: .Login),
             FeatureModule.targetDependency(target: .Home),
             FeatureModule.targetDependency(target: .Health),
+            CoreModule.targetDependency(),
         ]
     )
 ]

@@ -9,19 +9,14 @@ import ProjectDescription
 import DependencyPlugin
 
 let targets: [Target] = [
-    .init(
-        name: "ThirdPartyLib",
-        platform: .iOS,
-        product: .framework,
-        bundleId: "com.thirdPartyLib",
-        infoPlist: .default,
+    ThirdPartyLibModule.target(
         dependencies: [
             .external(name: "ComposableArchitecture")
         ]
-    )
+    ),
 ]
 
 let project: Project = .init(
-    name: "ThirdPartyLib",
+    name: ThirdPartyLibModule.name(),
     targets: targets
 )
