@@ -11,7 +11,7 @@ import DependencyPlugin
 
 let targets: [Target] = [
     .init(
-        name: AppModule.name(target: .IOS, micro: .Source),
+        name: "App",
         platform: .iOS,
         product: .app,
         bundleId: "com.82team.gathermove",
