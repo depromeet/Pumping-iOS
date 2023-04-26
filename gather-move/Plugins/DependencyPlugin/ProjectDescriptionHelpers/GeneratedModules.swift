@@ -27,6 +27,7 @@ public protocol ModuleType {
         target: TargetType?,
         micro: MicroModuleType,
         platform: Platform,
+        resources: ResourceFileElements?,
         dependencies: [TargetDependency]
     ) -> Target
     func targetDependency(target: TargetType?, micro: MicroModuleType?) -> TargetDependency
@@ -79,60 +80,57 @@ extension ModuleType {
         target: TargetType? = nil,
         micro: MicroModuleType = .Source,
         platform: Platform = .iOS,
+        resources: ResourceFileElements? = nil,
         dependencies: [TargetDependency] = []
     ) -> Target {
-        guard let target = target else {
-            return .init(
-                name: self.name(target: target, micro: micro),
-                platform: platform,
-                product: .framework,
-                bundleId: self.bundleId(target: target, micro: micro),
-                sources: ["Sources/**"],
-                dependencies: dependencies
-            )
-        }
+        let name: String = self.name(target: target, micro: micro)
+        let product: Product
+        let sources: SourceFilesList
+        let bundleId: String = self.bundleId(target: target, micro: micro)
         
+//        guard let target = target else {
+//            return .init(
+//                name: self.name(target: target, micro: micro),
+//                platform: platform,
+//                product: .framework,
+//                bundleId: self.bundleId(target: target, micro: micro),
+//                sources: ["Sources/**"],
+//                resources: resources,
+//                dependencies: dependencies
+//            )
+//        }
+//
         switch micro {
         case .Source:
-            return .init(
-                name: self.name(target: target, micro: micro),
-                platform: platform,
-                product: .framework,
-                bundleId: self.bundleId(target: target, micro: micro),
-                sources: ["Sources/**"],
-                dependencies: dependencies
-            )
+            product = .framework
+            sources = ["Sources/**"]
             
         case .Interface:
-            return .init(
-                name: self.name(target: target, micro: micro),
-                platform: platform,
-                product: .framework,
-                bundleId: self.bundleId(target: target, micro: micro),
-                sources: ["\(micro.rawValue)/Sources/**"],
-                dependencies: dependencies
-            )
+            product = .framework
+            sources = ["\(micro.rawValue)/Sources/**"]
             
         case .Tests:
-            return .init(
-                name: self.name(target: target, micro: micro),
-                platform: platform,
-                product: .unitTests,
-                bundleId: self.bundleId(target: target, micro: micro),
-                sources: ["\(micro.rawValue)/Sources/**"],
-                dependencies: dependencies
-            )
+            product = .unitTests
+            sources = ["\(micro.rawValue)/Sources/**"]
             
         default:
-            return .init(
-                name: self.name(target: target, micro: micro),
-                platform: platform,
-                product: .staticFramework,
-                bundleId: self.bundleId(target: target, micro: micro),
-                sources: ["\(micro.rawValue)/Sources/**"],
-                dependencies: dependencies
-            )
+            if resources == nil {
+                product = .staticLibrary
+            } else {
+                product = .staticFramework
+            }
+            sources = ["\(micro.rawValue)/Sources/**"]
         }
+            
+        return .init(
+            name: name,
+            platform: platform,
+            product: product,
+            bundleId: bundleId,
+            sources: sources,
+            resources: resources,
+            dependencies: dependencies
+        )
     }
     
     // TODO: TargetDependency의 Extension으로 관리 필요성
