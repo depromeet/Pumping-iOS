@@ -9,56 +9,35 @@ import ProjectDescription
 import DependencyPlugin
 
 let targets: [Target] = [
-    .init(
-        name: "FeatureHome",
-        platform: .iOS,
-        product: .framework,
-        bundleId: "com.feature.home",
-        infoPlist: .default,
-        sources: ["Sources/**"],
+    FeatureModule.target(
+        target: .Home,
+        micro: .Source,
         dependencies: [
-            .target(name: "FeatureHomeInterface"),
-            .target(name: "FeatureHomeTesting"),
-            .target(name: "FeatureHomeTests"),
-            .project(target: "Core", path: .relativeToRoot("Projects/Core"))
+            FeatureModule.targetDependency(target: .Home, micro: .Interface),
         ]
     ),
-    .init(
-        name: "FeatureHomeInterface",
-        platform: .iOS,
-        product: .staticFramework,
-        bundleId: "com.feature.home.interface",
-        infoPlist: .default,
-        sources: ["Interface/Sources/**"],
+    FeatureModule.target(
+        target: .Home,
+        micro: .Tests,
         dependencies: [
-            
+            FeatureModule.targetDependency(target: .Home, micro: .Interface),
+            FeatureModule.targetDependency(target: .Home, micro: .Testing),
         ]
     ),
-    .init(
-        name: "FeatureHomeTesting",
-        platform: .iOS,
-        product: .staticFramework,
-        bundleId: "com.feature.home.testing",
-        infoPlist: .default,
-        sources: ["Testing/Sources/**"],
+    FeatureModule.target(
+        target: .Home,
+        micro: .Testing,
         dependencies: [
-            
+            FeatureModule.targetDependency(target: .Home, micro: .Interface),
         ]
     ),
-    .init(
-        name: "FeatureHomeTests",
-        platform: .iOS,
-        product: .staticFramework,
-        bundleId: "com.feature.home.tests",
-        infoPlist: .default,
-        sources: ["Tests/Sources/**"],
-        dependencies: [
-            
-        ]
+    FeatureModule.target(
+        target: .Home,
+        micro: .Interface
     ),
 ]
 
 let project: Project = .init(
-    name: "FeatureHome",
+    name: FeatureModule.name(target: .Home),
     targets: targets
 )

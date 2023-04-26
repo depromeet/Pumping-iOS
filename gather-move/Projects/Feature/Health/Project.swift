@@ -9,56 +9,35 @@ import ProjectDescription
 import DependencyPlugin
 
 let targets: [Target] = [
-    .init(
-        name: "FeatureHealth",
-        platform: .iOS,
-        product: .framework,
-        bundleId: "com.feature.health",
-        infoPlist: .default,
-        sources: ["Sources/**"],
+    FeatureModule.target(
+        target: .Health,
+        micro: .Source,
         dependencies: [
-            .target(name: "FeatureHealthInterface"),
-            .target(name: "FeatureHealthTesting"),
-            .target(name: "FeatureHealthTests"),
-            .project(target: "Core", path: .relativeToRoot("Projects/Core"))
+            FeatureModule.targetDependency(target: .Health, micro: .Interface),
         ]
     ),
-    .init(
-        name: "FeatureHealthInterface",
-        platform: .iOS,
-        product: .staticFramework,
-        bundleId: "com.feature.health.interface",
-        infoPlist: .default,
-        sources: ["Interface/Sources/**"],
+    FeatureModule.target(
+        target: .Health,
+        micro: .Tests,
         dependencies: [
-            
+            FeatureModule.targetDependency(target: .Health, micro: .Interface),
+            FeatureModule.targetDependency(target: .Health, micro: .Testing),
         ]
     ),
-    .init(
-        name: "FeatureHealthTesting",
-        platform: .iOS,
-        product: .staticFramework,
-        bundleId: "com.feature.health.testing",
-        infoPlist: .default,
-        sources: ["Testing/Sources/**"],
+    FeatureModule.target(
+        target: .Health,
+        micro: .Testing,
         dependencies: [
-            
+            FeatureModule.targetDependency(target: .Health, micro: .Interface),
         ]
     ),
-    .init(
-        name: "FeatureHealthTests",
-        platform: .iOS,
-        product: .staticFramework,
-        bundleId: "com.feature.health.tests",
-        infoPlist: .default,
-        sources: ["Tests/Sources/**"],
-        dependencies: [
-            
-        ]
+    FeatureModule.target(
+        target: .Health,
+        micro: .Interface
     ),
 ]
 
 let project: Project = .init(
-    name: "FeatureHealth",
+    name: FeatureModule.name(target: .Health),
     targets: targets
 )

@@ -9,56 +9,35 @@ import ProjectDescription
 import DependencyPlugin
 
 let targets: [Target] = [
-    .init(
-        name: "FeatureLogin",
-        platform: .iOS,
-        product: .framework,
-        bundleId: "com.feature.login",
-        infoPlist: .default,
-        sources: ["Sources/**"],
+    FeatureModule.target(
+        target: .Login,
+        micro: .Source,
         dependencies: [
-            .target(name: "FeatureLoginInterface"),
-            .project(target: "Core", path: .relativeToRoot("Projects/Core"))
+            FeatureModule.targetDependency(target: .Login, micro: .Interface),
         ]
     ),
-    .init(
-        name: "FeatureLoginTests",
-        platform: .iOS,
-        product: .unitTests,
-        bundleId: "com.feature.login.tests",
-        infoPlist: .default,
-        sources: ["Tests/Sources/**"],
+    FeatureModule.target(
+        target: .Login,
+        micro: .Tests,
         dependencies: [
-            .target(name: "FeatureLogin"),
-            .target(name: "FeatureLoginTesting"),
+            FeatureModule.targetDependency(target: .Login, micro: .Interface),
+            FeatureModule.targetDependency(target: .Login, micro: .Testing),
         ]
     ),
-    .init(
-        name: "FeatureLoginTesting",
-        platform: .iOS,
-        product: .staticFramework,
-        bundleId: "com.feature.login.testing",
-        infoPlist: .default,
-        sources: ["Testing/Sources/**"],
+    FeatureModule.target(
+        target: .Login,
+        micro: .Testing,
         dependencies: [
-            .target(name: "FeatureLoginInterface"),
+            FeatureModule.targetDependency(target: .Login, micro: .Interface),
         ]
     ),
-    .init(
-        name: "FeatureLoginInterface",
-        platform: .iOS,
-        product: .framework,
-        bundleId: "com.feature.login.interface",
-        infoPlist: .default,
-        sources: ["Interface/Sources/**"],
-        dependencies: [
-            
-        ]
+    FeatureModule.target(
+        target: .Login,
+        micro: .Interface
     ),
 ]
 
 let project: Project = .init(
-    name: "FeatureLogin",
+    name: FeatureModule.name(target: .Login),
     targets: targets
 )
-

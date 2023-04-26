@@ -22,7 +22,14 @@ public protocol ModuleType {
     func path(target: TargetType?, micro: MicroModuleType) -> Path
     func name(target: TargetType?, micro: MicroModuleType) -> String
     func bundleId(target: TargetType?, micro: MicroModuleType) -> String
-    func targetDependency(target: TargetType?, micro: MicroModuleType) -> TargetDependency
+    
+    func target(
+        target: TargetType?,
+        micro: MicroModuleType,
+        platform: Platform,
+        dependencies: [TargetDependency]
+    ) -> Target
+    func targetDependency(target: TargetType?, micro: MicroModuleType?) -> TargetDependency
 }
 
 extension ModuleType {
@@ -54,7 +61,7 @@ extension ModuleType {
         }
     }
     
-    public func bundleId(target: TargetType?, micro: MicroModuleType = .Source) -> String {
+    public func bundleId(target: TargetType? = nil, micro: MicroModuleType = .Source) -> String {
         guard let target = target else {
             return "com.82.team.gathermove.\(self.name(target: target, micro: micro))"
         }
@@ -68,12 +75,79 @@ extension ModuleType {
         }
     }
     
-    // TODO: TargetDependency의 Extension으로 이동
-    public func targetDependency(target: TargetType? = nil, micro: MicroModuleType = .Source) -> TargetDependency {
+    public func target(
+        target: TargetType? = nil,
+        micro: MicroModuleType = .Source,
+        platform: Platform = .iOS,
+        dependencies: [TargetDependency] = []
+    ) -> Target {
+        guard let target = target else {
+            return .init(
+                name: self.name(target: target, micro: micro),
+                platform: platform,
+                product: .framework,
+                bundleId: self.bundleId(target: target, micro: micro),
+                sources: ["Sources/**"],
+                dependencies: dependencies
+            )
+        }
+        
+        switch micro {
+        case .Source:
+            return .init(
+                name: self.name(target: target, micro: micro),
+                platform: platform,
+                product: .framework,
+                bundleId: self.bundleId(target: target, micro: micro),
+                sources: ["Sources/**"],
+                dependencies: dependencies
+            )
+            
+        case .Interface:
+            return .init(
+                name: self.name(target: target, micro: micro),
+                platform: platform,
+                product: .framework,
+                bundleId: self.bundleId(target: target, micro: micro),
+                sources: ["\(micro.rawValue)/Sources/**"],
+                dependencies: dependencies
+            )
+            
+        case .Tests:
+            return .init(
+                name: self.name(target: target, micro: micro),
+                platform: platform,
+                product: .unitTests,
+                bundleId: self.bundleId(target: target, micro: micro),
+                sources: ["\(micro.rawValue)/Sources/**"],
+                dependencies: dependencies
+            )
+            
+        default:
+            return .init(
+                name: self.name(target: target, micro: micro),
+                platform: platform,
+                product: .staticFramework,
+                bundleId: self.bundleId(target: target, micro: micro),
+                sources: ["\(micro.rawValue)/Sources/**"],
+                dependencies: dependencies
+            )
+        }
+    }
+    
+    // TODO: TargetDependency의 Extension으로 관리 필요성
+    public func targetDependency(target: TargetType? = nil, micro: MicroModuleType? = nil) -> TargetDependency {
         guard let target = target else {
             return .project(
-                target: self.name(target: target, micro: micro),
-                path: self.path(target: target, micro: micro)
+                target: self.name(target: target),
+                path: self.path(target: target)
+            )
+        }
+        
+        guard let micro = micro else {
+            return .project(
+                target: self.name(target: target),
+                path: self.path(target: target)
             )
         }
         
@@ -87,6 +161,8 @@ extension ModuleType {
     }
 }
 
+// MARK: AppModuleType
+
 public class AppModuleType: ModuleType {
     public let moduleName: String = "App"
     
@@ -96,6 +172,8 @@ public class AppModuleType: ModuleType {
         case WatchExtension
     }
 }
+
+// MARK: FeatureModuleType
 
 public class FeatureModuleType: ModuleType {
     public let moduleName: String = "Feature"
@@ -107,5 +185,17 @@ public class FeatureModuleType: ModuleType {
     }
 }
 
+// MARK: CoreModuleType
+
+public class CoreModuleType: ModuleType {
+    public let moduleName: String = "Core"
+    
+    public enum TargetType: String {
+        case Network
+        case Utility
+    }
+}
+
 public let AppModule = AppModuleType()
 public let FeatureModule = FeatureModuleType()
+public let CoreModule = CoreModuleType()
