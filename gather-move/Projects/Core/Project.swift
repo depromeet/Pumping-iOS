@@ -12,7 +12,8 @@ let targets: [Target] = [
     CoreModule.target(
         dependencies: [
             CoreModule.targetDependency(target: .Network),
-            CoreModule.targetDependency(target: .Utility)
+            CoreModule.targetDependency(target: .Utility),
+            SharedModule.targetDependency()
         ]
     )
 ]

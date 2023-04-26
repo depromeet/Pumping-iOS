@@ -28,7 +28,7 @@ let targets: [Target] = [
         sources: "Sources/**",
         dependencies: [
             AppModule.targetDependency(target: .Watch, micro: .Source),
-            DomainModule.targetDependency()
+            FeatureModule.targetDependency()
         ]
     ),
     .init(
@@ -49,7 +49,7 @@ let targets: [Target] = [
         infoPlist: .default,
         sources: ["WatchExtension/Sources/**"],
         dependencies: [
-            WatchThirdPartyLibModule.targetDependency()
+            WatchSharedModule.targetDependency()
         ]
     )
 ]

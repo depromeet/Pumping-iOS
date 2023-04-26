@@ -11,9 +11,8 @@ import DependencyPlugin
 let targets: [Target] = [
     DomainModule.target(
         dependencies: [
-            DomainModule.targetDependency(target: .Onboarding),
-            DomainModule.targetDependency(target: .Home),
-            DomainModule.targetDependency(target: .MyPage)
+            DomainModule.targetDependency(target: .Health),
+            DomainModule.targetDependency(target: .Login)
         ]
     ),
 ]

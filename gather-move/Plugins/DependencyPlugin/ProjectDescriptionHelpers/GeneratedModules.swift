@@ -87,22 +87,15 @@ extension ModuleType {
         let product: Product
         let sources: SourceFilesList
         let bundleId: String = self.bundleId(target: target, micro: micro)
-        
-//        guard let target = target else {
-//            return .init(
-//                name: self.name(target: target, micro: micro),
-//                platform: platform,
-//                product: .framework,
-//                bundleId: self.bundleId(target: target, micro: micro),
-//                sources: ["Sources/**"],
-//                resources: resources,
-//                dependencies: dependencies
-//            )
-//        }
-//
+
         switch micro {
         case .Source:
-            product = .framework
+            if resources == nil {
+                product = .framework
+            } else {
+                product = .staticFramework
+            }
+            
             sources = ["Sources/**"]
             
         case .Interface:
@@ -177,9 +170,8 @@ public class DomainModuleType: ModuleType {
     public let moduleName: String = "Domain"
     
     public enum TargetType: String {
-        case Onboarding
-        case Home
-        case MyPage
+        case Health
+        case Login
     }
 }
 
@@ -189,9 +181,9 @@ public class FeatureModuleType: ModuleType {
     public let moduleName: String = "Feature"
     
     public enum TargetType: String {
+        case Onboarding
         case Home
-        case Health
-        case Login
+        case MyPage
     }
 }
 
@@ -206,23 +198,25 @@ public class CoreModuleType: ModuleType {
     }
 }
 
-// MARK: ThirdPartyLibType
+// MARK: SharedModuleType
 
-public class ThirdPartyLibType: ModuleType {
-    public let moduleName: String = "ThirdPartyLib"
+public class SharedModuleType: ModuleType {
+    public let moduleName: String = "Shared"
     
     public enum TargetType: String {
-        case none
+        case DesignSystem
+        case ThirdPartyLib
     }
 }
 
-// MARK: WatchThirdPartyLibType
+// MARK: WatchSharedModuleType
 
-public class WatchThirdPartyLibType: ModuleType {
-    public let moduleName: String = "WatchThirdPartyLib"
+public class WatchSharedModuleType: ModuleType {
+    public let moduleName: String = "WatchShared"
     
     public enum TargetType: String {
-        case none
+        case DesignSystem
+        case ThirdPartyLib
     }
 }
 
@@ -230,5 +224,5 @@ public let AppModule = AppModuleType()
 public let DomainModule = DomainModuleType()
 public let FeatureModule = FeatureModuleType()
 public let CoreModule = CoreModuleType()
-public let ThirdPartyLibModule = ThirdPartyLibType()
-public let WatchThirdPartyLibModule = WatchThirdPartyLibType()
+public let SharedModule = SharedModuleType()
+public let WatchSharedModule = WatchSharedModuleType()

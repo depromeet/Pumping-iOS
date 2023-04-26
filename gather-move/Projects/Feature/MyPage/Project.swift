@@ -1,8 +1,8 @@
 //
 //  Project.swift
-//  FeatureManifests
+//  ProjectDescriptionHelpers
 //
-//  Created by 송영모 on 2023/04/27.
+//  Created by 송영모 on 2023/04/26.
 //
 
 import ProjectDescription
@@ -10,7 +10,7 @@ import DependencyPlugin
 
 let targets: [Target] = [
     FeatureModule.target(
-        target: .Home,
+        target: .MyPage,
         dependencies: [
             DomainModule.targetDependency(target: .Login),
             DomainModule.targetDependency(target: .Health)
@@ -19,6 +19,6 @@ let targets: [Target] = [
 ]
 
 let project: Project = .init(
-    name: FeatureModule.name(target: .Home),
+    name: FeatureModule.name(target: .MyPage),
     targets: targets
 )

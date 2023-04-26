@@ -13,7 +13,7 @@ let targets: [Target] = [
         target: .Utility,
         micro: .Source,
         dependencies: [
-            ThirdPartyLibModule.targetDependency()
+            
         ]
     )
 ]
