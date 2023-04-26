@@ -11,7 +11,7 @@ import DependencyPlugin
 
 let targets: [Target] = [
     .init(
-        name: "iOSApp",
+        name: AppModule.name(target: .IOS, micro: .Source),
         platform: .iOS,
         product: .app,
         bundleId: "com.82team.gathermove",
@@ -27,22 +27,22 @@ let targets: [Target] = [
             ]),
         sources: "Sources/**",
         dependencies: [
-            .target(name: "WatchApp"),
-            .project(target: "Feature", path: .relativeToRoot("Projects/Feature"))
+            AppModule.targetDependency(target: .Watch, micro: .Source),
+            FeatureModule.targetDependency()
         ]
     ),
     .init(
-        name: "WatchApp",
+        name: AppModule.name(target: .Watch, micro: .Source),
         platform: .watchOS,
         product: .watch2App,
         bundleId: "com.82team.gathermove.watchkit",
         infoPlist: .default,
         dependencies: [
-            .target(name: "WatchExtension"),
+            AppModule.targetDependency(target: .WatchExtension, micro: .Source),
         ]
     ),
     .init(
-        name: "WatchExtension",
+        name: AppModule.name(target: .WatchExtension, micro: .Source),
         platform: .watchOS,
         product: .watch2Extension,
         bundleId: "com.82team.gathermove.watchkit.extension",
@@ -55,6 +55,6 @@ let targets: [Target] = [
 ]
 
 let project: Project = .init(
-    name: "App",
+    name: AppModule.moduleName,
     targets: targets
 )
