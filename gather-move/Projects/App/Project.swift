@@ -11,7 +11,7 @@ import DependencyPlugin
 
 let targets: [Target] = [
     .init(
-        name: "App",
+        name: AppModule.name(target: .IOS, micro: .Source),
         platform: .iOS,
         product: .app,
         bundleId: "com.82team.gathermove",
@@ -28,26 +28,6 @@ let targets: [Target] = [
         sources: "Sources/**",
         dependencies: [
             AppModule.targetDependency(target: .Watch, micro: .Source),
-            DomainModule.targetDependency()
-        ]
-    ),
-    .init(
-        name: AppModule.name(target: .IOS, micro: .Source),
-        platform: .iOS,
-        product: .app,
-        bundleId: "com.82team.gathermove.ios",
-        infoPlist: .extendingDefault(
-            with: [
-                "CFBundleShortVersionString": "1.0",
-                "CFBundleVersion": "1",
-                "UILaunchStoryboardName": "LaunchScreen",
-                "UIApplicationSceneManifest": [
-                    "UIApplicationSupportsMultipleScenes": false,
-                    "UISceneConfigurations": []
-                ]
-            ]),
-        sources: "Sources/**",
-        dependencies: [
             DomainModule.targetDependency()
         ]
     ),
