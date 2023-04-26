@@ -173,6 +173,18 @@ public class AppModuleType: ModuleType {
     }
 }
 
+// MARK: DomainModuleType
+
+public class DomainModuleType: ModuleType {
+    public let moduleName: String = "Domain"
+    
+    public enum TargetType: String {
+        case Onboarding
+        case Home
+        case MyPage
+    }
+}
+
 // MARK: FeatureModuleType
 
 public class FeatureModuleType: ModuleType {
@@ -197,5 +209,6 @@ public class CoreModuleType: ModuleType {
 }
 
 public let AppModule = AppModuleType()
+public let DomainModule = DomainModuleType()
 public let FeatureModule = FeatureModuleType()
 public let CoreModule = CoreModuleType()

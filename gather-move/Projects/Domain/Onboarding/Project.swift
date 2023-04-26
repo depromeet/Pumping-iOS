@@ -10,15 +10,15 @@ import DependencyPlugin
 
 let targets: [Target] = [
     DomainModule.target(
+        target: .Onboarding,
         dependencies: [
-            DomainModule.targetDependency(target: .Onboarding),
-            DomainModule.targetDependency(target: .Home),
-            DomainModule.targetDependency(target: .MyPage)
+            FeatureModule.targetDependency(target: .Login),
+            FeatureModule.targetDependency(target: .Health)
         ]
-    ),
+    )
 ]
 
 let project: Project = .init(
-    name: DomainModule.name(),
+    name: DomainModule.name(target: .Onboarding),
     targets: targets
 )
