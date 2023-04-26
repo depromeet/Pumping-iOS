@@ -9,7 +9,7 @@ import SwiftUI
 import Feature
 
 @main
-struct SearchApp: App {
+struct MainApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

@@ -10,20 +10,20 @@ import DependencyPlugin
 
 let targets: [Target] = [
     .init(
-        name: "Network",
+        name: "CoreNetwork",
         platform: .iOS,
         product: .framework,
         bundleId: "com.core.network",
         infoPlist: .default,
         sources: ["Sources/**"],
         dependencies: [
-            .target(name: "NetworkInterface"),
-            .target(name: "NetworkTesting"),
-            .target(name: "NetworkTests")
+            .target(name: "CoreNetworkInterface"),
+            .target(name: "CoreNetworkTesting"),
+            .target(name: "CoreNetworkTests")
         ]
     ),
     .init(
-        name: "NetworkInterface",
+        name: "CoreNetworkInterface",
         platform: .iOS,
         product: .staticFramework,
         bundleId: "com.core.network.interface",
@@ -34,7 +34,7 @@ let targets: [Target] = [
         ]
     ),
     .init(
-        name: "NetworkTesting",
+        name: "CoreNetworkTesting",
         platform: .iOS,
         product: .staticFramework,
         bundleId: "com.core.network.testing",
@@ -45,7 +45,7 @@ let targets: [Target] = [
         ]
     ),
     .init(
-        name: "NetworkTests",
+        name: "CoreNetworkTests",
         platform: .iOS,
         product: .staticFramework,
         bundleId: "com.core.network.tests",
@@ -58,6 +58,6 @@ let targets: [Target] = [
 ]
 
 let project: Project = .init(
-    name: "Network",
+    name: "CoreNetwork",
     targets: targets
 )

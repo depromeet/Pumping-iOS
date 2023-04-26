@@ -6,14 +6,18 @@
 //
 
 import SwiftUI
-import FeatureHome
 
 public struct ContentView: View {
     public init() {}
     
     public var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-            .foregroundColor(.white)
+        TabView {
+            Text("Another Tab")
+                .tabItem {
+                    Image(systemName: "2.square.fill")
+                    Text("Second")
+                }
+        }
     }
 }
 
