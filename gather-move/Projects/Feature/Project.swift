@@ -9,21 +9,16 @@ import ProjectDescription
 import DependencyPlugin
 
 let targets: [Target] = [
-    .init(
-        name: "Feature",
-        platform: .iOS,
-        product: .framework,
-        bundleId: "com.feature",
-        infoPlist: .default,
-        sources: ["Sources/**"],
+    FeatureModule.target(
         dependencies: [
-            .project(target: "FeatureHome", path: .relativeToCurrentFile("Home")),
-            .project(target: "FeatureHealth", path: .relativeToCurrentFile("Health"))
-        ]
-    )
+            FeatureModule.targetDependency(target: .Home),
+            FeatureModule.targetDependency(target: .MyPage),
+            FeatureModule.targetDependency(target: .Onboarding),
+            CoreModule.targetDependency(),
+        ])
 ]
 
 let project: Project = .init(
-    name: "Feature",
+    name: FeatureModule.name(),
     targets: targets
 )

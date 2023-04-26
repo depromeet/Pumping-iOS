@@ -11,36 +11,45 @@ import DependencyPlugin
 
 let targets: [Target] = [
     .init(
-        name: "iOSApp",
+        name: "App",
         platform: .iOS,
         product: .app,
         bundleId: "com.82team.gathermove",
-        infoPlist: .default,
+        infoPlist: .extendingDefault(
+            with: [
+                "CFBundleShortVersionString": "1.0",
+                "CFBundleVersion": "1",
+                "UILaunchStoryboardName": "LaunchScreen",
+                "UIApplicationSceneManifest": [
+                    "UIApplicationSupportsMultipleScenes": false,
+                    "UISceneConfigurations": []
+                ]
+            ]),
         sources: "Sources/**",
         dependencies: [
-            .target(name: "WatchApp"),
-            .project(target: "Feature", path: .relativeToRoot("Projects/Feature"))
+            AppModule.targetDependency(target: .Watch, micro: .Source),
+            FeatureModule.targetDependency()
         ]
     ),
     .init(
-        name: "WatchApp",
+        name: AppModule.name(target: .Watch, micro: .Source),
         platform: .watchOS,
         product: .watch2App,
         bundleId: "com.82team.gathermove.watchkit",
         infoPlist: .default,
         dependencies: [
-            .target(name: "WatchExtension"),
+            AppModule.targetDependency(target: .WatchExtension, micro: .Source),
         ]
     ),
     .init(
-        name: "WatchExtension",
+        name: AppModule.name(target: .WatchExtension, micro: .Source),
         platform: .watchOS,
         product: .watch2Extension,
         bundleId: "com.82team.gathermove.watchkit.extension",
         infoPlist: .default,
         sources: ["WatchExtension/Sources/**"],
         dependencies: [
-            .project(target: "WatchThirdPartyLib", path: .relativeToRoot("Projects/WatchThirdPartyLib"))
+            WatchSharedModule.targetDependency()
         ]
     )
 ]

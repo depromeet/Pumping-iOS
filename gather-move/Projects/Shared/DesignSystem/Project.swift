@@ -1,6 +1,6 @@
 //
 //  Project.swift
-//  FeatureManifests
+//  ProjectDescriptionHelpers
 //
 //  Created by 송영모 on 2023/04/27.
 //
@@ -9,16 +9,16 @@ import ProjectDescription
 import DependencyPlugin
 
 let targets: [Target] = [
-    FeatureModule.target(
-        target: .Home,
+    SharedModule.target(
+        target: .DesignSystem,
+        resources: ["Resources/**"],
         dependencies: [
-            DomainModule.targetDependency(target: .Login),
-            DomainModule.targetDependency(target: .Health)
+            
         ]
     )
 ]
 
 let project: Project = .init(
-    name: FeatureModule.name(target: .Home),
+    name: SharedModule.name(target: .DesignSystem),
     targets: targets
 )

@@ -9,22 +9,16 @@ import ProjectDescription
 import DependencyPlugin
 
 let targets: [Target] = [
-    .init(
-        name: "Core",
-        platform: .iOS,
-        product: .framework,
-        bundleId: "com.core",
-        infoPlist: .default,
-        sources: ["Sources/**"],
+    CoreModule.target(
         dependencies: [
-            .project(target: "Network", path: .relativeToCurrentFile("Network")),
-            .project(target: "Utility", path: .relativeToCurrentFile("Utility")),
-            .project(target: "ThirdPartyLib", path: .relativeToRoot("Projects/ThirdPartyLib"))
+            CoreModule.targetDependency(target: .Network),
+            CoreModule.targetDependency(target: .Utility),
+            SharedModule.targetDependency()
         ]
     )
 ]
 
 let project: Project = .init(
-    name: "Core",
+    name: CoreModule.name(),
     targets: targets
 )

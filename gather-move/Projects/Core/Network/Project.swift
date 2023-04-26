@@ -9,55 +9,35 @@ import ProjectDescription
 import DependencyPlugin
 
 let targets: [Target] = [
-    .init(
-        name: "Network",
-        platform: .iOS,
-        product: .framework,
-        bundleId: "com.core.network",
-        infoPlist: .default,
-        sources: ["Sources/**"],
+    CoreModule.target(
+        target: .Network,
+        micro: .Source,
         dependencies: [
-            .target(name: "NetworkInterface"),
-            .target(name: "NetworkTesting"),
-            .target(name: "NetworkTests")
+            CoreModule.targetDependency(target: .Network, micro: .Interface),
         ]
     ),
-    .init(
-        name: "NetworkInterface",
-        platform: .iOS,
-        product: .staticFramework,
-        bundleId: "com.core.network.interface",
-        infoPlist: .default,
-        sources: ["Interface/Sources/**"],
+    CoreModule.target(
+        target: .Network,
+        micro: .Tests,
         dependencies: [
-            
+            CoreModule.targetDependency(target: .Network, micro: .Interface),
+            CoreModule.targetDependency(target: .Network, micro: .Testing),
         ]
     ),
-    .init(
-        name: "NetworkTesting",
-        platform: .iOS,
-        product: .staticFramework,
-        bundleId: "com.core.network.testing",
-        infoPlist: .default,
-        sources: ["Testing/Sources/**"],
+    CoreModule.target(
+        target: .Network,
+        micro: .Testing,
         dependencies: [
-            
+            CoreModule.targetDependency(target: .Network, micro: .Interface),
         ]
     ),
-    .init(
-        name: "NetworkTests",
-        platform: .iOS,
-        product: .staticFramework,
-        bundleId: "com.core.network.tests",
-        infoPlist: .default,
-        sources: ["Tests/Sources/**"],
-        dependencies: [
-            
-        ]
+    CoreModule.target(
+        target: .Network,
+        micro: .Interface
     ),
 ]
 
 let project: Project = .init(
-    name: "Network",
+    name: CoreModule.name(),
     targets: targets
 )
