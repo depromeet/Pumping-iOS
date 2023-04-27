@@ -14,7 +14,8 @@ let targets: [Target] = [
         implements: .Health,
         factory: .init(
             dependencies: [
-                .domain(interface: .Health)
+                .domain(interface: .Health),
+                .domain(interface: .Login)
             ]
         )
     ),

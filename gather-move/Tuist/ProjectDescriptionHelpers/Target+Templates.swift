@@ -132,12 +132,16 @@ public extension Target {
     static func feature(factory: TargetFactory) -> Self {
         var newFactory = factory
         newFactory.name = FeatureModule.name
+        newFactory.product = .framework
+        
         return make(factory: newFactory)
     }
     
     static func feature(implements module: FeatureModule, factory: TargetFactory) -> Self {
         var newFactory = factory
         newFactory.name = FeatureModule.name + module.rawValue
+        newFactory.product = .framework
+        
         return make(factory: newFactory)
     }
     
@@ -145,6 +149,8 @@ public extension Target {
         var newFactory = factory
         newFactory.name = FeatureModule.name + module.rawValue + "Tests"
         newFactory.sources = ["Tests/Sources/**"]
+        newFactory.product = .staticLibrary
+        
         return make(factory: newFactory)
     }
     
@@ -152,6 +158,8 @@ public extension Target {
         var newFactory = factory
         newFactory.name = FeatureModule.name + module.rawValue + "Testing"
         newFactory.sources = ["Testing/Sources/**"]
+        newFactory.product = .staticLibrary
+        
         return make(factory: newFactory)
     }
     
@@ -252,7 +260,7 @@ public extension Target {
     static func core(interface module: CoreModule, factory: TargetFactory) -> Self {
         var newFactory = factory
         newFactory.name = CoreModule.name + module.rawValue + "Interface"
-        newFactory.product = .staticLibrary
+        newFactory.product = .framework
         newFactory.sources = ["Interface/Sources/**"]
         
         return make(factory: newFactory)
