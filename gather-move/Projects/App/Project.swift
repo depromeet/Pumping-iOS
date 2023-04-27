@@ -6,55 +6,37 @@
 //
 
 import ProjectDescription
+import ProjectDescriptionHelpers
 import DependencyPlugin
 
 
 let targets: [Target] = [
-    .init(
-        name: "App",
-        platform: .iOS,
-        product: .app,
-        bundleId: "com.82team.gathermove",
-        infoPlist: .extendingDefault(
-            with: [
-                "CFBundleShortVersionString": "1.0",
-                "CFBundleVersion": "1",
-                "UILaunchStoryboardName": "LaunchScreen",
-                "UIApplicationSceneManifest": [
-                    "UIApplicationSupportsMultipleScenes": false,
-                    "UISceneConfigurations": []
-                ]
-            ]),
-        sources: "Sources/**",
-        dependencies: [
-            AppModule.targetDependency(target: .Watch, micro: .Source),
-            FeatureModule.targetDependency()
-        ]
+    .app(
+        implements: .IOS,
+        factory: .init(
+            dependencies: [
+                .app(implements: .Watch)
+            ]
+        )
     ),
-    .init(
-        name: AppModule.name(target: .Watch, micro: .Source),
-        platform: .watchOS,
-        product: .watch2App,
-        bundleId: "com.82team.gathermove.watchkit",
-        infoPlist: .default,
-        dependencies: [
-            AppModule.targetDependency(target: .WatchExtension, micro: .Source),
-        ]
+    .app(
+        implements: .Watch,
+        factory: .init(
+            dependencies: [
+                .app(implements: .WatchExtension)
+            ]
+        )
     ),
-    .init(
-        name: AppModule.name(target: .WatchExtension, micro: .Source),
-        platform: .watchOS,
-        product: .watch2Extension,
-        bundleId: "com.82team.gathermove.watchkit.extension",
-        infoPlist: .default,
-        sources: ["WatchExtension/Sources/**"],
-        dependencies: [
-            WatchSharedModule.targetDependency()
-        ]
+    .app(
+        implements: .WatchExtension,
+        factory: .init(
+            dependencies: [
+            ]
+        )
     )
 ]
 
 let project: Project = .init(
-    name: "App",
+    name: "IOSApp",
     targets: targets
 )

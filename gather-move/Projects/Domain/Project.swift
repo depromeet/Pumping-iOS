@@ -6,18 +6,21 @@
 //
 
 import ProjectDescription
+import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let targets: [Target] = [
-    DomainModule.target(
-        dependencies: [
-            DomainModule.targetDependency(target: .Health),
-            DomainModule.targetDependency(target: .Login)
-        ]
-    ),
+    .domain(
+        factory: .init(
+            dependencies: [
+                .domain(implements: .Health),
+                .domain(implements: .Login)
+            ]
+        )
+    )
 ]
 
-let project: Project = .init(
-    name: DomainModule.name(),
+let project: Project = .make(
+    name: "Domain",
     targets: targets
 )

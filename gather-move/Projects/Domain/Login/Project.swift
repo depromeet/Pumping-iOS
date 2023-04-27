@@ -6,39 +6,41 @@
 //
 
 import ProjectDescription
+import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let targets: [Target] = [
-    DomainModule.target(
-        target: .Login,
-        micro: .Source,
-        dependencies: [
-            DomainModule.targetDependency(target: .Login, micro: .Interface),
-            CoreModule.targetDependency(),
-        ]
+    .domain(
+        implements: .Login,
+        factory: .init(
+            dependencies: [
+                .domain(interface: .Login)
+            ]
+        )
     ),
-    DomainModule.target(
-        target: .Login,
-        micro: .Tests,
-        dependencies: [
-            DomainModule.targetDependency(target: .Login, micro: .Interface),
-            DomainModule.targetDependency(target: .Login, micro: .Testing),
-        ]
+    .domain(
+        tests: .Login,
+        factory: .init(
+            dependencies: [
+                .domain(testing: .Login)
+            ]
+        )
     ),
-    DomainModule.target(
-        target: .Login,
-        micro: .Testing,
-        dependencies: [
-            DomainModule.targetDependency(target: .Login, micro: .Interface),
-        ]
+    .domain(
+        testing: .Login,
+        factory: .init(
+            dependencies: [
+                .domain(interface: .Login)
+            ]
+        )
     ),
-    DomainModule.target(
-        target: .Login,
-        micro: .Interface
-    ),
+    .domain(
+        interface: .Login,
+        factory: .init()
+    )
 ]
 
-let project: Project = .init(
-    name: DomainModule.name(target: .Login),
+let project: Project = .make(
+    name: "DomainLogin",
     targets: targets
 )

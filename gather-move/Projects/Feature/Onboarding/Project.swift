@@ -6,19 +6,41 @@
 //
 
 import ProjectDescription
+import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let targets: [Target] = [
-    FeatureModule.target(
-        target: .Onboarding,
-        dependencies: [
-            DomainModule.targetDependency(target: .Login),
-            DomainModule.targetDependency(target: .Health)
-        ]
+    .feature(
+        implements: .Onboarding,
+        factory: .init(
+            dependencies: [
+                .feature(interface: .Onboarding)
+            ]
+        )
+    ),
+    .feature(
+        tests: .Onboarding,
+        factory: .init(
+            dependencies: [
+                .feature(testing: .Onboarding)
+            ]
+        )
+    ),
+    .feature(
+        testing: .Onboarding,
+        factory: .init(
+            dependencies: [
+                .feature(interface: .Onboarding)
+            ]
+        )
+    ),
+    .feature(
+        interface: .Onboarding,
+        factory: .init()
     )
 ]
 
-let project: Project = .init(
-    name: FeatureModule.name(target: .Onboarding),
+let project: Project = .make(
+    name: "FeatureOnboarding",
     targets: targets
 )

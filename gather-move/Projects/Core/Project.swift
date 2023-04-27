@@ -6,19 +6,21 @@
 //
 
 import ProjectDescription
+import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let targets: [Target] = [
-    CoreModule.target(
-        dependencies: [
-            CoreModule.targetDependency(target: .Network),
-            CoreModule.targetDependency(target: .Utility),
-            SharedModule.targetDependency()
-        ]
+    .core(
+        factory: .init(
+            dependencies: [
+                .core(implements: .Network)
+            ]
+        )
     )
 ]
 
-let project: Project = .init(
-    name: CoreModule.name(),
+
+let project: Project = .make(
+    name: "Core",
     targets: targets
 )

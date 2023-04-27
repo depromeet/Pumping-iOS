@@ -6,39 +6,41 @@
 //
 
 import ProjectDescription
+import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let targets: [Target] = [
-    DomainModule.target(
-        target: .Health,
-        micro: .Source,
-        dependencies: [
-            DomainModule.targetDependency(target: .Health, micro: .Interface),
-            CoreModule.targetDependency(),
-        ]
+    .domain(
+        implements: .Health,
+        factory: .init(
+            dependencies: [
+                .domain(interface: .Health)
+            ]
+        )
     ),
-    DomainModule.target(
-        target: .Health,
-        micro: .Tests,
-        dependencies: [
-            DomainModule.targetDependency(target: .Health, micro: .Interface),
-            DomainModule.targetDependency(target: .Health, micro: .Testing),
-        ]
+    .domain(
+        tests: .Health,
+        factory: .init(
+            dependencies: [
+                .domain(testing: .Health)
+            ]
+        )
     ),
-    DomainModule.target(
-        target: .Health,
-        micro: .Testing,
-        dependencies: [
-            DomainModule.targetDependency(target: .Health, micro: .Interface),
-        ]
+    .domain(
+        testing: .Health,
+        factory: .init(
+            dependencies: [
+                .domain(interface: .Health)
+            ]
+        )
     ),
-    DomainModule.target(
-        target: .Health,
-        micro: .Interface
-    ),
+    .domain(
+        interface: .Health,
+        factory: .init()
+    )
 ]
 
-let project: Project = .init(
-    name: DomainModule.name(target: .Health),
+let project: Project = .make(
+    name: "DomainHealth",
     targets: targets
 )

@@ -6,19 +6,21 @@
 //
 
 import ProjectDescription
+import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let targets: [Target] = [
-    WatchSharedModule.target(
-        platform: .watchOS,
-        dependencies: [
-            WatchSharedModule.targetDependency(target: .DesignSystem),
-            WatchSharedModule.targetDependency(target: .ThirdPartyLib)
-        ]
+    .watchShared(
+        factory: .init(
+            dependencies: [
+                .watchShared(implements: .DesignSystem),
+                .watchShared(implements: .ThirdPartyLib)
+            ]
+        )
     )
 ]
 
-let project: Project = .init(
-    name: WatchSharedModule.name(),
+let project: Project = .make(
+    name: "WatchShared",
     targets: targets
 )
