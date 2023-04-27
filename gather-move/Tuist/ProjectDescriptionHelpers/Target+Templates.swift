@@ -149,7 +149,7 @@ public extension Target {
         var newFactory = factory
         newFactory.name = FeatureModule.name + module.rawValue + "Tests"
         newFactory.sources = ["Tests/Sources/**"]
-        newFactory.product = .staticLibrary
+        newFactory.product = .unitTests
         
         return make(factory: newFactory)
     }
@@ -195,7 +195,7 @@ public extension Target {
     static func domain(tests module: DomainModule, factory: TargetFactory) -> Self {
         var newFactory = factory
         newFactory.name = DomainModule.name + module.rawValue + "Tests"
-        newFactory.product = .staticLibrary
+        newFactory.product = .unitTests
         newFactory.sources = ["Tests/Sources/**"]
         
         return make(factory: newFactory)
@@ -242,7 +242,7 @@ public extension Target {
     static func core(tests module: CoreModule, factory: TargetFactory) -> Self {
         var newFactory = factory
         newFactory.name = CoreModule.name + module.rawValue + "Tests"
-        newFactory.product = .staticLibrary
+        newFactory.product = .unitTests
         newFactory.sources = ["Tests/Sources/**"]
         
         return make(factory: newFactory)
