@@ -158,7 +158,9 @@ public extension Target {
     static func feature(interface module: FeatureModule, factory: TargetFactory) -> Self {
         var newFactory = factory
         newFactory.name = FeatureModule.name + module.rawValue + "Interface"
+        newFactory.product = .framework
         newFactory.sources = ["Interface/Sources/**"]
+        
         return make(factory: newFactory)
     }
 }
@@ -169,33 +171,43 @@ public extension Target {
     static func domain(factory: TargetFactory) -> Self {
         var newFactory = factory
         newFactory.name = DomainModule.name
+        newFactory.product = .framework
+        
         return make(factory: newFactory)
     }
     
     static func domain(implements module: DomainModule, factory: TargetFactory) -> Self {
         var newFactory = factory
         newFactory.name = DomainModule.name + module.rawValue
+        newFactory.product = .framework
+        
         return make(factory: newFactory)
     }
     
     static func domain(tests module: DomainModule, factory: TargetFactory) -> Self {
         var newFactory = factory
         newFactory.name = DomainModule.name + module.rawValue + "Tests"
+        newFactory.product = .staticLibrary
         newFactory.sources = ["Tests/Sources/**"]
+        
         return make(factory: newFactory)
     }
     
     static func domain(testing module: DomainModule, factory: TargetFactory) -> Self {
         var newFactory = factory
         newFactory.name = DomainModule.name + module.rawValue + "Testing"
+        newFactory.product = .staticLibrary
         newFactory.sources = ["Testing/Sources/**"]
+        
         return make(factory: newFactory)
     }
     
     static func domain(interface module: DomainModule, factory: TargetFactory) -> Self {
         var newFactory = factory
         newFactory.name = DomainModule.name + module.rawValue + "Interface"
+        newFactory.product = .framework
         newFactory.sources = ["Interface/Sources/**"]
+        
         return make(factory: newFactory)
     }
 }
@@ -206,33 +218,43 @@ public extension Target {
     static func core(factory: TargetFactory) -> Self {
         var newFactory = factory
         newFactory.name = CoreModule.name
+        newFactory.product = .framework
+        
         return make(factory: newFactory)
     }
     
     static func core(implements module: CoreModule, factory: TargetFactory) -> Self {
         var newFactory = factory
         newFactory.name = CoreModule.name + module.rawValue
+        newFactory.product = .framework
+        
         return make(factory: newFactory)
     }
     
     static func core(tests module: CoreModule, factory: TargetFactory) -> Self {
         var newFactory = factory
         newFactory.name = CoreModule.name + module.rawValue + "Tests"
+        newFactory.product = .staticLibrary
         newFactory.sources = ["Tests/Sources/**"]
+        
         return make(factory: newFactory)
     }
     
     static func core(testing module: CoreModule, factory: TargetFactory) -> Self {
         var newFactory = factory
         newFactory.name = CoreModule.name + module.rawValue + "Testing"
+        newFactory.product = .staticLibrary
         newFactory.sources = ["Testing/Sources/**"]
+        
         return make(factory: newFactory)
     }
     
     static func core(interface module: CoreModule, factory: TargetFactory) -> Self {
         var newFactory = factory
         newFactory.name = CoreModule.name + module.rawValue + "Interface"
+        newFactory.product = .staticLibrary
         newFactory.sources = ["Interface/Sources/**"]
+        
         return make(factory: newFactory)
     }
 }
@@ -243,6 +265,7 @@ public extension Target {
     static func shared(factory: TargetFactory) -> Self {
         var newFactory = factory
         newFactory.name = SharedModule.name
+        
         return make(factory: newFactory)
     }
     
@@ -253,9 +276,12 @@ public extension Target {
         switch module {
         case .DesignSystem:
             newFactory.resources = ["Resources/**"]
+            newFactory.product = .staticFramework
         case .ThirdPartyLib:
             newFactory.sources = nil
+            newFactory.product = .staticLibrary
         }
+        
         return make(factory: newFactory)
     }
 }
@@ -267,6 +293,7 @@ public extension Target {
         var newFactory = factory
         newFactory.name = WatchSharedModule.name
         newFactory.platform = .watchOS
+        newFactory.product = .framework
         newFactory.deploymentTarget = Project.Environment.watchDeploymentTarget
         
         return make(factory: newFactory)
@@ -281,9 +308,12 @@ public extension Target {
         switch module {
         case .DesignSystem:
             newFactory.resources = ["Resources/**"]
+            newFactory.product = .staticFramework
         case .ThirdPartyLib:
             newFactory.sources = nil
+            newFactory.product = .staticLibrary
         }
+        
         return make(factory: newFactory)
     }
 }

@@ -8,6 +8,8 @@
 import Foundation
 import ProjectDescription
 
+// MARK: TargetDependency + App
+
 public extension TargetDependency {
     static var app: Self {
         return .project(target: AppModule.name, path: .app)
@@ -17,6 +19,8 @@ public extension TargetDependency {
         return .target(name: AppModule.name + module.rawValue)
     }
 }
+
+// MARK: TargetDependency + Feature
 
 public extension TargetDependency {
     static var feature: Self {
@@ -28,17 +32,19 @@ public extension TargetDependency {
     }
     
     static func feature(interface module: FeatureModule) -> Self {
-        return .target(name: FeatureModule.name + module.rawValue + "Interface")
+        return .project(target: FeatureModule.name + module.rawValue + "Interface", path: .feature(implementation: module))
     }
     
     static func feature(tests module: FeatureModule) -> Self {
-        return .target(name: FeatureModule.name + module.rawValue + "Tests")
+        return .project(target: FeatureModule.name + module.rawValue + "Tests", path: .feature(implementation: module))
     }
     
     static func feature(testing module: FeatureModule) -> Self {
-        return .target(name: FeatureModule.name + module.rawValue + "Testing")
+        return .project(target: FeatureModule.name + module.rawValue + "Testing", path: .feature(implementation: module))
     }
 }
+
+// MARK: TargetDependency + Domain
 
 public extension TargetDependency {
     static var domain: Self {
@@ -50,17 +56,19 @@ public extension TargetDependency {
     }
     
     static func domain(interface module: DomainModule) -> Self {
-        return .target(name: DomainModule.name + module.rawValue + "Interface")
+        return .project(target: DomainModule.name + module.rawValue + "Interface", path: .domain(implementation: module))
     }
     
     static func domain(tests module: DomainModule) -> Self {
-        return .target(name: DomainModule.name + module.rawValue + "Tests")
+        return .project(target: DomainModule.name + module.rawValue + "Tests", path: .domain(implementation: module))
     }
     
     static func domain(testing module: DomainModule) -> Self {
-        return .target(name: DomainModule.name + module.rawValue + "Testing")
+        return .project(target: DomainModule.name + module.rawValue + "Testing", path: .domain(implementation: module))
     }
 }
+
+// MARK: TargetDependency + Core
 
 public extension TargetDependency {
     static var core: Self {
@@ -72,17 +80,19 @@ public extension TargetDependency {
     }
     
     static func core(interface module: CoreModule) -> Self {
-        return .target(name: CoreModule.name + module.rawValue + "Interface")
+        return .project(target: CoreModule.name + module.rawValue + "Interface", path: .core(implementation: module))
     }
     
     static func core(tests module: CoreModule) -> Self {
-        return .target(name: CoreModule.name + module.rawValue + "Tests")
+        return .project(target: CoreModule.name + module.rawValue + "Tests", path: .core(implementation: module))
     }
     
     static func core(testing module: CoreModule) -> Self {
-        return .target(name: CoreModule.name + module.rawValue + "Testing")
+        return .project(target: CoreModule.name + module.rawValue + "Testing", path: .core(implementation: module))
     }
 }
+
+// MARK: TargetDependency + Shared
 
 public extension TargetDependency {
     static var shared: Self {
@@ -93,6 +103,8 @@ public extension TargetDependency {
         return .project(target: SharedModule.name + module.rawValue, path: .shared(implementation: module))
     }
 }
+
+// MARK: TargetDependency + WatchShared
 
 public extension TargetDependency {
     static var watchShared: Self {

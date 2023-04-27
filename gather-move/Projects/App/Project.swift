@@ -15,7 +15,8 @@ let targets: [Target] = [
         implements: .IOS,
         factory: .init(
             dependencies: [
-                .app(implements: .Watch)
+                .app(implements: .Watch),
+                .feature
             ]
         )
     ),
@@ -31,6 +32,7 @@ let targets: [Target] = [
         implements: .WatchExtension,
         factory: .init(
             dependencies: [
+                .watchShared
             ]
         )
     )

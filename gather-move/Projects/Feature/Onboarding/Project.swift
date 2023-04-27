@@ -14,7 +14,11 @@ let targets: [Target] = [
         implements: .Onboarding,
         factory: .init(
             dependencies: [
-                .feature(interface: .Onboarding)
+                .feature(interface: .Home),
+                .feature(interface: .MyPage),
+                .feature(interface: .Onboarding),
+                .domain(implements: .Login),
+                .domain(implements: .Health)
             ]
         )
     ),
