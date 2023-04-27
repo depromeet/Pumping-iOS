@@ -273,6 +273,7 @@ public extension Target {
     static func shared(factory: TargetFactory) -> Self {
         var newFactory = factory
         newFactory.name = SharedModule.name
+        newFactory.product = .framework
         
         return make(factory: newFactory)
     }
