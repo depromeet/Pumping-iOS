@@ -6,19 +6,17 @@
 //
 
 import ProjectDescription
+import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let targets: [Target] = [
-    SharedModule.target(
-        target: .DesignSystem,
-        resources: ["Resources/**"],
-        dependencies: [
-            
-        ]
+    .shared(
+        implements: .DesignSystem,
+        factory: .init()
     )
 ]
 
 let project: Project = .init(
-    name: SharedModule.name(target: .DesignSystem),
+    name: "SharedDesignSystem",
     targets: targets
 )

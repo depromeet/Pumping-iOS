@@ -6,19 +6,23 @@
 //
 
 import ProjectDescription
+import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let targets: [Target] = [
-    FeatureModule.target(
-        dependencies: [
-            FeatureModule.targetDependency(target: .Home),
-            FeatureModule.targetDependency(target: .MyPage),
-            FeatureModule.targetDependency(target: .Onboarding),
-            CoreModule.targetDependency(),
-        ])
+    .feature(
+        factory: .init(
+            dependencies: [
+                .domain,
+                .feature(implements: .Onboarding),
+                .feature(implements: .Home),
+                .feature(implements: .MyPage)
+            ]
+        )
+    )
 ]
 
-let project: Project = .init(
-    name: FeatureModule.name(),
+let project: Project = .make(
+    name: "Feature",
     targets: targets
 )

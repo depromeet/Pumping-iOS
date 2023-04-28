@@ -6,19 +6,21 @@
 //
 
 import ProjectDescription
+import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let targets: [Target] = [
-    WatchSharedModule.target(
-        target: .ThirdPartyLib,
-        platform: .watchOS,
-        dependencies: [
-            .external(name: "ComposableArchitecture")
-        ]
+    .watchShared(
+        implements: .ThirdPartyLib,
+        factory: .init(
+            dependencies: [
+                .external(name: "ComposableArchitecture")
+            ]
+        )
     )
 ]
 
 let project: Project = .init(
-    name: WatchSharedModule.name(target: .ThirdPartyLib),
+    name: "WatchSharedThirdPartyLib",
     targets: targets
 )

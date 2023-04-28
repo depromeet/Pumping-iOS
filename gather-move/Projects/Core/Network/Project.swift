@@ -6,38 +6,40 @@
 //
 
 import ProjectDescription
+import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let targets: [Target] = [
-    CoreModule.target(
-        target: .Network,
-        micro: .Source,
-        dependencies: [
-            CoreModule.targetDependency(target: .Network, micro: .Interface),
-        ]
+    .core(
+        implements: .Network,
+        factory: .init(
+            dependencies: [
+                .core(interface: .Network)
+            ]
+        )
     ),
-    CoreModule.target(
-        target: .Network,
-        micro: .Tests,
-        dependencies: [
-            CoreModule.targetDependency(target: .Network, micro: .Interface),
-            CoreModule.targetDependency(target: .Network, micro: .Testing),
-        ]
+    .core(
+        tests: .Network,
+        factory: .init(
+            dependencies: [
+                .core(testing: .Network)
+            ]
+        )
     ),
-    CoreModule.target(
-        target: .Network,
-        micro: .Testing,
-        dependencies: [
-            CoreModule.targetDependency(target: .Network, micro: .Interface),
-        ]
+    .core(
+        testing: .Network,
+        factory: .init(
+            dependencies: [
+                .core(interface: .Network)
+            ]
+        )
     ),
-    CoreModule.target(
-        target: .Network,
-        micro: .Interface
-    ),
+    .core(
+        interface: .Network,
+        factory: .init()
+    )
 ]
-
-let project: Project = .init(
-    name: CoreModule.name(),
+let project: Project = .make(
+    name: "CoreNetwork",
     targets: targets
 )

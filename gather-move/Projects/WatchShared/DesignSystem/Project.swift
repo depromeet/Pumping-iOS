@@ -6,17 +6,17 @@
 //
 
 import ProjectDescription
+import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let targets: [Target] = [
-    WatchSharedModule.target(
-        target: .DesignSystem,
-        platform: .watchOS,
-        resources: ["Resources/**"]
+    .watchShared(
+        implements: .DesignSystem,
+        factory: .init()
     )
 ]
 
 let project: Project = .init(
-    name: WatchSharedModule.name(target: .DesignSystem),
+    name: "WatchSharedDesignSystem",
     targets: targets
 )

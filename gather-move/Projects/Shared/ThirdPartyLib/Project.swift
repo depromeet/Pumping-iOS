@@ -6,18 +6,21 @@
 //
 
 import ProjectDescription
+import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let targets: [Target] = [
-    SharedModule.target(
-        target: .ThirdPartyLib,
-        dependencies: [
-            .external(name: "ComposableArchitecture")
-        ]
+    .shared(
+        implements: .ThirdPartyLib,
+        factory: .init(
+            dependencies: [
+                .external(name: "ComposableArchitecture")
+            ]
+        )
     )
 ]
 
 let project: Project = .init(
-    name: SharedModule.name(target: .ThirdPartyLib),
+    name: "SharedThirdPartyLib",
     targets: targets
 )
