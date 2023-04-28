@@ -2,7 +2,7 @@
 //  Project.swift
 //  ProjectDescriptionHelpers
 //
-//  Created by 송영모 on 2023/04/22.
+//  Created by 송영모 on 2023/04/26.
 //
 
 import ProjectDescription
@@ -10,18 +10,18 @@ import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let targets: [Target] = [
-    .core(
+    .domain(
         factory: .init(
             dependencies: [
-                .core(implements: .Network),
-                .shared
+                .domain(implements: .Health),
+                .domain(implements: .Login),
+                .core
             ]
         )
     )
 ]
 
-
 let project: Project = .make(
-    name: "Core",
+    name: "Domain",
     targets: targets
 )

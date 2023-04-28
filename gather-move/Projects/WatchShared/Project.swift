@@ -2,7 +2,7 @@
 //  Project.swift
 //  ProjectDescriptionHelpers
 //
-//  Created by 송영모 on 2023/04/22.
+//  Created by 송영모 on 2023/04/27.
 //
 
 import ProjectDescription
@@ -10,18 +10,17 @@ import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let targets: [Target] = [
-    .core(
+    .watchShared(
         factory: .init(
             dependencies: [
-                .core(implements: .Network),
-                .shared
+                .watchShared(implements: .DesignSystem),
+                .watchShared(implements: .ThirdPartyLib)
             ]
         )
     )
 ]
 
-
 let project: Project = .make(
-    name: "Core",
+    name: "WatchShared",
     targets: targets
 )

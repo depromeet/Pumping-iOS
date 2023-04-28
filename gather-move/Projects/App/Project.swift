@@ -6,46 +6,39 @@
 //
 
 import ProjectDescription
+import ProjectDescriptionHelpers
 import DependencyPlugin
 
 
 let targets: [Target] = [
-    .init(
-        name: "iOSApp",
-        platform: .iOS,
-        product: .app,
-        bundleId: "com.82team.gathermove",
-        infoPlist: .default,
-        sources: "Sources/**",
-        dependencies: [
-            .target(name: "WatchApp"),
-            .project(target: "Feature", path: .relativeToRoot("Projects/Feature"))
-        ]
+    .app(
+        implements: .IOS,
+        factory: .init(
+            dependencies: [
+                .app(implements: .Watch),
+                .feature
+            ]
+        )
     ),
-    .init(
-        name: "WatchApp",
-        platform: .watchOS,
-        product: .watch2App,
-        bundleId: "com.82team.gathermove.watchkit",
-        infoPlist: .default,
-        dependencies: [
-            .target(name: "WatchExtension"),
-        ]
+    .app(
+        implements: .Watch,
+        factory: .init(
+            dependencies: [
+                .app(implements: .WatchExtension)
+            ]
+        )
     ),
-    .init(
-        name: "WatchExtension",
-        platform: .watchOS,
-        product: .watch2Extension,
-        bundleId: "com.82team.gathermove.watchkit.extension",
-        infoPlist: .default,
-        sources: ["WatchExtension/Sources/**"],
-        dependencies: [
-            .project(target: "WatchThirdPartyLib", path: .relativeToRoot("Projects/WatchThirdPartyLib"))
-        ]
+    .app(
+        implements: .WatchExtension,
+        factory: .init(
+            dependencies: [
+                .watchShared
+            ]
+        )
     )
 ]
 
 let project: Project = .init(
-    name: "App",
+    name: "IOSApp",
     targets: targets
 )

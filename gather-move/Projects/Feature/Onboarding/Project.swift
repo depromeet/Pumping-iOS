@@ -1,8 +1,8 @@
 //
 //  Project.swift
-//  FeatureManifests
+//  ProjectDescriptionHelpers
 //
-//  Created by 송영모 on 2023/04/27.
+//  Created by 송영모 on 2023/04/26.
 //
 
 import ProjectDescription
@@ -11,7 +11,7 @@ import DependencyPlugin
 
 let targets: [Target] = [
     .feature(
-        implements: .Home,
+        implements: .Onboarding,
         factory: .init(
             dependencies: [
                 .feature(interface: .Home),
@@ -23,28 +23,28 @@ let targets: [Target] = [
         )
     ),
     .feature(
-        tests: .Home,
+        tests: .Onboarding,
         factory: .init(
             dependencies: [
-                .feature(testing: .Home)
+                .feature(testing: .Onboarding)
             ]
         )
     ),
     .feature(
-        testing: .Home,
+        testing: .Onboarding,
         factory: .init(
             dependencies: [
-                .feature(interface: .Home)
+                .feature(interface: .Onboarding)
             ]
         )
     ),
     .feature(
-        interface: .Home,
+        interface: .Onboarding,
         factory: .init()
     )
 ]
 
 let project: Project = .make(
-    name: "FeatureHome",
+    name: "FeatureOnboarding",
     targets: targets
 )

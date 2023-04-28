@@ -6,24 +6,23 @@
 //
 
 import ProjectDescription
+import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let targets: [Target] = [
-    .init(
-        name: "Feature",
-        platform: .iOS,
-        product: .framework,
-        bundleId: "com.feature",
-        infoPlist: .default,
-        sources: ["Sources/**"],
-        dependencies: [
-            .project(target: "FeatureHome", path: .relativeToCurrentFile("Home")),
-            .project(target: "FeatureHealth", path: .relativeToCurrentFile("Health"))
-        ]
+    .feature(
+        factory: .init(
+            dependencies: [
+                .domain,
+                .feature(implements: .Onboarding),
+                .feature(implements: .Home),
+                .feature(implements: .MyPage)
+            ]
+        )
     )
 ]
 
-let project: Project = .init(
+let project: Project = .make(
     name: "Feature",
     targets: targets
 )

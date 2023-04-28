@@ -1,8 +1,8 @@
 //
 //  Project.swift
-//  CoreManifests
+//  ProjectDescriptionHelpers
 //
-//  Created by 송영모 on 2023/04/22.
+//  Created by 송영모 on 2023/04/26.
 //
 
 import ProjectDescription
@@ -10,36 +10,38 @@ import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let targets: [Target] = [
-    .core(
-        implements: .Network,
+    .domain(
+        implements: .Health,
         factory: .init(
             dependencies: [
-                .core(interface: .Network)
+                .domain(interface: .Health),
+                .domain(interface: .Login)
             ]
         )
     ),
-    .core(
-        tests: .Network,
+    .domain(
+        tests: .Health,
         factory: .init(
             dependencies: [
-                .core(testing: .Network)
+                .domain(testing: .Health)
             ]
         )
     ),
-    .core(
-        testing: .Network,
+    .domain(
+        testing: .Health,
         factory: .init(
             dependencies: [
-                .core(interface: .Network)
+                .domain(interface: .Health)
             ]
         )
     ),
-    .core(
-        interface: .Network,
+    .domain(
+        interface: .Health,
         factory: .init()
     )
 ]
+
 let project: Project = .make(
-    name: "CoreNetwork",
+    name: "DomainHealth",
     targets: targets
 )
