@@ -118,5 +118,5 @@ Tuist/Dependencies
 Derived/
 *.xcworkspace
 *.xcodeproj
-Tuist/Signing
+*.p12
 Tuist/master.key
