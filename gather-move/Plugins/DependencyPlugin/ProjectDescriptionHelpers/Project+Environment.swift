@@ -12,7 +12,7 @@ public extension Project {
     enum Environment {
         public static let workspaceName = "GatherMove"
         public static let deploymentTarget = DeploymentTarget.iOS(targetVersion: "16.0", devices: [.iphone])
-        public static let bundlePrefix = "com.82team"
+        public static let bundlePrefix = "com.dpm.gathermove"
         
         public static let watchDeploymentTarget = DeploymentTarget.watchOS(targetVersion: "7.0")
     }
