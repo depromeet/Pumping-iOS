@@ -110,18 +110,21 @@ public extension Target {
         case .IOS:
             newFactory.platform = .iOS
             newFactory.product = .app
-            newFactory.bundleId = "com.82team.pumping"
+            newFactory.name = "Pumping"
+            newFactory.bundleId = "com.dpm.pumping"
+            newFactory.productName = "Pumping"
         case .Watch:
             newFactory.platform = .watchOS
             newFactory.product = .watch2App
+            newFactory.bundleId = "com.dpm.pumping.watch"
             newFactory.sources = nil
             newFactory.bundleId = "com.82team.pumping.watch"
             newFactory.deploymentTarget = Project.Environment.watchDeploymentTarget
         case .WatchExtension:
             newFactory.platform = .watchOS
             newFactory.product = .watch2Extension
-            newFactory.bundleId = "com.82team.pumping.watch.extension"
             newFactory.sources = ["WatchExtension/Sources/**"]
+            newFactory.bundleId = "com.dpm.pumping.watch.extension"
             newFactory.deploymentTarget = Project.Environment.watchDeploymentTarget
         }
         return make(factory: newFactory)
