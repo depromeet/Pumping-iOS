@@ -119,4 +119,4 @@ Derived/
 *.xcworkspace
 *.xcodeproj
 *.p12
-Tuist/master.key
+master.key

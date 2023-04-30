@@ -8,4 +8,4 @@
 import ProjectDescription
 import DependencyPlugin
 
-let workspace = Workspace(name: "GatherMove", projects: ["Projects/*"])
+let workspace = Workspace(name: "Pumping", projects: ["Projects/*"])
