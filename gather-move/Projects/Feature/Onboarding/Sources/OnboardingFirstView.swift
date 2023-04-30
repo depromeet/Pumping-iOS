@@ -10,17 +10,25 @@ import FeatureOnboardingInterface
 import ComposableArchitecture
 
 public struct OnboardingFirstView: OnboardingScreen {
+    @State var path = NavigationPath()
+    
     public init() {}
     
     public var body: some View {
-        NavigationStack {
-            NavigationLink("Second", destination: OnboardingSecondView())
+        NavigationStack(path: $path) {
+            VStack {
+                Text("First View \(path.count)")
+                    .padding()
+                
+                Button(action: {
+                    path.append("second")
+                }, label: {
+                    Text("Next")
+                })
+            }
+            .navigationDestination(for: String.self, destination: { _ in
+                OnboardingSecondView(path: $path)
+            })
         }
-    }
-}
-
-struct OnboardingFirstView_Previews: PreviewProvider {
-    static var previews: some View {
-        OnboardingFirstView()
     }
 }

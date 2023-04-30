@@ -18,8 +18,5 @@ public struct OnboardingCore: ReducerProtocol {
     }
     
     public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
-        switch action {
-
-        }
     }
 }

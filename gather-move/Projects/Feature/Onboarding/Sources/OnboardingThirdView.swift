@@ -10,13 +10,30 @@ import FeatureOnboardingInterface
 import ComposableArchitecture
 
 public struct OnboardingThirdView: OnboardingScreen {
-    let store: StoreOf<OnboardingCore>
+    @Binding var path: NavigationPath
     
-    public init(store: StoreOf<OnboardingCore>) {
-        self.store = store
+    public init(path: Binding<NavigationPath>) {
+        _path = path
     }
     
     public var body: some View {
-        Text("Back To Root")
+        VStack {
+            Text("Third View \(path.count)")
+                .padding()
+            
+            Button(action: {
+                self.path = .init()
+            }, label: {
+                Text("pop to root")
+            })
+            .padding()
+            
+            Button(action: {
+                self.path.removeLast()
+            }, label: {
+                Text("prev")
+            })
+            .padding()
+        }
     }
 }

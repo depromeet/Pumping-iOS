@@ -10,18 +10,33 @@ import FeatureOnboardingInterface
 import ComposableArchitecture
 
 public struct OnboardingSecondView: OnboardingScreen {
+    @Binding var path: NavigationPath
     
-    public init() {
-        
+    public init(path: Binding<NavigationPath>) {
+        _path = path
     }
     
     public var body: some View {
-        NavigationLink("Third", destination: OnboardingThirdView(store: .init(initialState: .init(), reducer: OnboardingCore()._printChanges())))
-    }
-}
-
-struct OnboardingSecondView_Previews: PreviewProvider {
-    static var previews: some View {
-        OnboardingSecondView()
+        VStack {
+            Text("Second View \(path.count)")
+                .padding()
+            
+            Button(action: {
+                self.path.append(1)
+            }, label: {
+                Text("Next")
+            })
+            .padding()
+            
+            Button(action: {
+                self.path.removeLast()
+            }, label: {
+                Text("prev")
+            })
+            .padding()
+        }
+        .navigationDestination(for: Int.self, destination: { _ in
+            OnboardingThirdView(path: $path)
+        })
     }
 }
