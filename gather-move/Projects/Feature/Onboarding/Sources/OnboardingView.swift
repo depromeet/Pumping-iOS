@@ -13,7 +13,9 @@ public struct OnboardingView: OnboardingScreen {
     public init() {}
     
     public var body: some View {
-        Text("OnboardingView")
+        NavigationStack {
+            Text("OnboardingView")
+        }
     }
 }
 

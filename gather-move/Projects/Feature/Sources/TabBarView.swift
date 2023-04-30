@@ -1,15 +1,15 @@
 //
-//  ContentView.swift
+//  TabBarView.swift
 //  Feature
 //
-//  Created by 송영모 on 2023/04/26.
+//  Created by 송영모 on 2023/04/30.
 //
 
 import SwiftUI
 import FeatureHome
 import FeatureMyPage
 
-public struct ContentView: View {
+public struct TabBarView: View {
     public init() {}
     
     public var body: some View {
@@ -28,8 +28,8 @@ public struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        TabBarView()
     }
 }
