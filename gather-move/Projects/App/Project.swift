@@ -14,6 +14,16 @@ let targets: [Target] = [
     .app(
         implements: .IOS,
         factory: .init(
+            infoPlist: .extendingDefault(
+                with: [
+                    "CFBundleShortVersionString": "1.0",
+                    "CFBundleVersion": "1",
+                    "UILaunchStoryboardName": "LaunchScreen",
+                    "UIApplicationSceneManifest": [
+                        "UIApplicationSupportsMultipleScenes": false,
+                        "UISceneConfigurations": []
+                    ]
+                ]),
             dependencies: [
                 .app(implements: .Watch),
                 .feature

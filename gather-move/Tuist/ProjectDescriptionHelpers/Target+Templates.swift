@@ -118,12 +118,13 @@ public extension Target {
             newFactory.product = .watch2App
             newFactory.bundleId = "com.dpm.pumping.watch"
             newFactory.sources = nil
+            newFactory.bundleId = "com.82team.pumping.watch"
             newFactory.deploymentTarget = Project.Environment.watchDeploymentTarget
         case .WatchExtension:
             newFactory.platform = .watchOS
             newFactory.product = .watch2Extension
+            newFactory.sources = ["WatchExtension/Sources/**"]
             newFactory.bundleId = "com.dpm.pumping.watch.extension"
-            newFactory.sources = ["Sources/**"]
             newFactory.deploymentTarget = Project.Environment.watchDeploymentTarget
         }
         return make(factory: newFactory)
@@ -293,7 +294,7 @@ public extension Target {
             newFactory.product = .staticFramework
         case .ThirdPartyLib:
             newFactory.sources = nil
-            newFactory.product = .staticLibrary
+            newFactory.product = .staticFramework
         }
         
         return make(factory: newFactory)
@@ -306,9 +307,11 @@ public extension Target {
     static func watchShared(factory: TargetFactory) -> Self {
         var newFactory = factory
         newFactory.name = WatchSharedModule.name
+        newFactory.sources = nil
         newFactory.platform = .watchOS
         newFactory.product = .framework
         newFactory.deploymentTarget = Project.Environment.watchDeploymentTarget
+        
         
         return make(factory: newFactory)
     }
@@ -321,11 +324,12 @@ public extension Target {
         
         switch module {
         case .DesignSystem:
+            newFactory.sources = nil
             newFactory.resources = ["Resources/**"]
             newFactory.product = .staticFramework
         case .ThirdPartyLib:
             newFactory.sources = nil
-            newFactory.product = .staticLibrary
+            newFactory.product = .staticFramework
         }
         
         return make(factory: newFactory)
