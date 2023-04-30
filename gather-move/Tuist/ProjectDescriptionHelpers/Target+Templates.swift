@@ -15,7 +15,7 @@ public struct TargetFactory {
     var platform: Platform
     var product: Product
     var productName: String?
-    var bundleId: String
+    var bundleId: String?
     var deploymentTarget: DeploymentTarget?
     var infoPlist: InfoPlist
     var sources: SourceFilesList?
@@ -56,7 +56,7 @@ public struct TargetFactory {
         self.product = product
         self.productName = productName
         self.deploymentTarget = Project.Environment.deploymentTarget
-        self.bundleId = bundleId ?? Project.Environment.bundlePrefix + ".\(name)"
+        self.bundleId = bundleId
         self.infoPlist = infoPlist
         self.sources = sources
         self.resources = resources
@@ -80,7 +80,7 @@ public extension Target {
             platform: factory.platform,
             product: factory.product,
             productName: factory.productName,
-            bundleId: factory.bundleId,
+            bundleId: factory.bundleId ?? Project.Environment.bundlePrefix + ".\(factory.name)",
             deploymentTarget: factory.deploymentTarget,
             infoPlist: factory.infoPlist,
             sources: factory.sources,
@@ -110,14 +110,17 @@ public extension Target {
         case .IOS:
             newFactory.platform = .iOS
             newFactory.product = .app
+            newFactory.bundleId = "com.82team.pumping"
         case .Watch:
             newFactory.platform = .watchOS
             newFactory.product = .watch2App
             newFactory.sources = nil
+            newFactory.bundleId = "com.82team.pumping.watch"
             newFactory.deploymentTarget = Project.Environment.watchDeploymentTarget
         case .WatchExtension:
             newFactory.platform = .watchOS
             newFactory.product = .watch2Extension
+            newFactory.bundleId = "com.82team.pumping.watch.extension"
             newFactory.sources = ["Sources/**"]
             newFactory.deploymentTarget = Project.Environment.watchDeploymentTarget
         }
@@ -288,7 +291,7 @@ public extension Target {
             newFactory.product = .staticFramework
         case .ThirdPartyLib:
             newFactory.sources = nil
-            newFactory.product = .staticLibrary
+            newFactory.product = .staticFramework
         }
         
         return make(factory: newFactory)
@@ -301,9 +304,11 @@ public extension Target {
     static func watchShared(factory: TargetFactory) -> Self {
         var newFactory = factory
         newFactory.name = WatchSharedModule.name
+        newFactory.sources = nil
         newFactory.platform = .watchOS
         newFactory.product = .framework
         newFactory.deploymentTarget = Project.Environment.watchDeploymentTarget
+        
         
         return make(factory: newFactory)
     }
@@ -316,11 +321,12 @@ public extension Target {
         
         switch module {
         case .DesignSystem:
+            newFactory.sources = nil
             newFactory.resources = ["Resources/**"]
             newFactory.product = .staticFramework
         case .ThirdPartyLib:
             newFactory.sources = nil
-            newFactory.product = .staticLibrary
+            newFactory.product = .staticFramework
         }
         
         return make(factory: newFactory)
