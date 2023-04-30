@@ -15,7 +15,7 @@ public struct TargetFactory {
     var platform: Platform
     var product: Product
     var productName: String?
-    var bundleId: String
+    var bundleId: String?
     var deploymentTarget: DeploymentTarget?
     var infoPlist: InfoPlist
     var sources: SourceFilesList?
@@ -56,7 +56,7 @@ public struct TargetFactory {
         self.product = product
         self.productName = productName
         self.deploymentTarget = Project.Environment.deploymentTarget
-        self.bundleId = bundleId ?? Project.Environment.bundlePrefix + ".\(name)"
+        self.bundleId = bundleId
         self.infoPlist = infoPlist
         self.sources = sources
         self.resources = resources
@@ -80,7 +80,7 @@ public extension Target {
             platform: factory.platform,
             product: factory.product,
             productName: factory.productName,
-            bundleId: factory.bundleId,
+            bundleId: factory.bundleId ?? Project.Environment.bundlePrefix + ".\(factory.name)",
             deploymentTarget: factory.deploymentTarget,
             infoPlist: factory.infoPlist,
             sources: factory.sources,
@@ -110,14 +110,19 @@ public extension Target {
         case .IOS:
             newFactory.platform = .iOS
             newFactory.product = .app
+            newFactory.name = "Pumping"
+            newFactory.bundleId = "com.dpm.pumping"
+            newFactory.productName = "Pumping"
         case .Watch:
             newFactory.platform = .watchOS
             newFactory.product = .watch2App
+            newFactory.bundleId = "com.dpm.pumping.watch"
             newFactory.sources = nil
             newFactory.deploymentTarget = Project.Environment.watchDeploymentTarget
         case .WatchExtension:
             newFactory.platform = .watchOS
             newFactory.product = .watch2Extension
+            newFactory.bundleId = "com.dpm.pumping.watch.extension"
             newFactory.sources = ["Sources/**"]
             newFactory.deploymentTarget = Project.Environment.watchDeploymentTarget
         }

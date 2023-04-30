@@ -39,6 +39,6 @@ let targets: [Target] = [
 ]
 
 let project: Project = .init(
-    name: "IOSApp",
+    name: "Pumping",
     targets: targets
 )
