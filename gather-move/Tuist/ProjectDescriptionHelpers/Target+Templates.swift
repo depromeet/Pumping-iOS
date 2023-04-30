@@ -121,7 +121,7 @@ public extension Target {
             newFactory.platform = .watchOS
             newFactory.product = .watch2Extension
             newFactory.bundleId = "com.82team.pumping.watch.extension"
-            newFactory.sources = ["Sources/**"]
+            newFactory.sources = ["WatchExtension/Sources/**"]
             newFactory.deploymentTarget = Project.Environment.watchDeploymentTarget
         }
         return make(factory: newFactory)
