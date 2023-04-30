@@ -6,19 +6,25 @@
 //
 
 import SwiftUI
+import FeatureHome
+import FeatureMyPage
 
 public struct ContentView: View {
     public init() {}
     
     public var body: some View {
-        Text("Another Tab")
-//        TabView {
-//            Text("Another Tab")
-//                .tabItem {
-//                    Image(systemName: "2.square.fill")
-//                    Text("Second")
-//                }
-//        }
+        TabView {
+            HomeView()
+                .tabItem {
+                    Image(systemName: "1.square.fill")
+                    Text("Second")
+                }
+            MyPageView()
+                .tabItem {
+                    Image(systemName: "2.square.fill")
+                    Text("Second")
+                }
+        }
     }
 }
 
