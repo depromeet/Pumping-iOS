@@ -11,7 +11,9 @@ public struct ContentView: View {
     public init() {}
     
     public var body: some View {
-        Text("Hello world")
+        VStack {
+            Text("Hello world")
+        }
     }
 }
 
