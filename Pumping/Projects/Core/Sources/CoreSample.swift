@@ -6,5 +6,3 @@
 //
 
 import Foundation
-
-// 주석 추가
