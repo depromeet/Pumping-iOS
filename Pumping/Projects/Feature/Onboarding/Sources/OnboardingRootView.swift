@@ -24,6 +24,7 @@ public struct OnboardingRootCore: ReducerProtocol {
         switch action {
         case .pushOnboardingNicknameScreen:
             state.path.append(OnboardingNicknameLink.link)
+            print(state.path)
             return .none
             
         case .setNavigation:
@@ -39,7 +40,7 @@ public struct OnboardingRootView: OnboardingRootScreen {
     public init() {
         self.store = .init(
             initialState: .init(),
-            reducer: OnboardingRootCore()
+            reducer: OnboardingRootCore()._printChanges()
         )
     }
 
@@ -55,6 +56,9 @@ public struct OnboardingRootView: OnboardingRootScreen {
                 }
                 .navigationDestination(for: OnboardingNicknameLink.self, destination: { _ in
                     OnboardingNicknameView(dependency: .init(path: viewStore.path))
+                })
+                .navigationDestination(for: OnboardingSignUpLink.self, destination: { _ in
+                    Text("Sign Up")
                 })
             }
         }

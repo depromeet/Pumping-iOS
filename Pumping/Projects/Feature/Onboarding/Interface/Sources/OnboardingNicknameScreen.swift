@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 public struct OnboardingNicknameDependency: Equatable {
-    let path: NavigationPath
+    public var path: NavigationPath
     
     public init(path: NavigationPath) {
         self.path = path

@@ -21,14 +21,26 @@ enum OnboardingNicknameLink: Hashable, Identifiable {
 public struct OnboardingNicknameCore: ReducerProtocol {
     public struct State: Equatable {
         var depencendy: OnboardingNicknameDependency
+        
+        var nickname: String = ""
     }
     
     public enum Action: Equatable, Sendable {
+        case nicknameChanged(String)
         
+        case pushSignUpScreen
     }
     
     public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
-
+        switch action {
+        case let .nicknameChanged(nickname):
+            state.nickname = nickname
+            return .none
+            
+        case .pushSignUpScreen:
+            state.depencendy.path.append(OnboardingSignUpLink.link)
+            return .none
+        }
     }
 }
 
@@ -47,8 +59,23 @@ public struct OnboardingNicknameView: OnboardingNicknameScreen {
     }
     
     public var body: some View {
-        VStack {
-            Text("nick name view")
+        WithViewStore(self.store, observe: { $0 }) { viewStore in
+            VStack {
+                HStack() {
+                    TextField(
+                        "Nick name",
+                        text: viewStore.binding(get: \.nickname, send: OnboardingNicknameCore.Action.nicknameChanged)
+                    )
+                    .padding()
+                }
+                .font(.headline)
+                
+                Button(action: {
+                    viewStore.send(.pushSignUpScreen)
+                }, label: {
+                    Text("go to nick name view")
+                })
+            }
         }
     }
 }
