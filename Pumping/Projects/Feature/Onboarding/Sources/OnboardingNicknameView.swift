@@ -10,6 +10,14 @@ import ComposableArchitecture
 
 import FeatureOnboardingInterface
 
+enum OnboardingNicknameLink: Hashable, Identifiable {
+    case link
+
+    var id: String {
+        String(describing: self)
+    }
+}
+
 public struct OnboardingNicknameCore: ReducerProtocol {
     public struct State: Equatable {
         var depencendy: OnboardingNicknameDependency

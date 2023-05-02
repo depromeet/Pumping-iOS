@@ -10,6 +10,10 @@ import ComposableArchitecture
 
 public struct OnboardingNicknameDependency: Equatable {
     let path: NavigationPath
+    
+    public init(path: NavigationPath) {
+        self.path = path
+    }
 }
 
 public protocol OnboardingNicknameScreen: View {
