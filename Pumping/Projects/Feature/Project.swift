@@ -16,13 +16,13 @@ let targets: [Target] = [
                 .domain,
                 .feature(implements: .Onboarding),
                 .feature(implements: .Home),
-                .feature(implements: .MyPage)
+                .feature(implements: .MyPage)                
             ]
         )
     )
 ]
 
-let project: Project = .make(
+let project: Project = .makeModule(
     name: "Feature",
     targets: targets
 )

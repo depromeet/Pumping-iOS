@@ -12,7 +12,7 @@ import ProjectDescription
 
 public extension ProjectDescription.Path {
     static var app: Self {
-        return .relativeToRoot("Projects/\(AppModule.name)")
+        return .relativeToRoot("Projects/\(ModulePath.App.name)")
     }
 }
 
@@ -20,11 +20,11 @@ public extension ProjectDescription.Path {
 
 public extension ProjectDescription.Path {
     static var feature: Self {
-        return .relativeToRoot("Projects/\(FeatureModule.name)")
+        return .relativeToRoot("Projects/\(ModulePath.Feature.name)")
     }
     
-    static func feature(implementation module: FeatureModule) -> Self {
-        return .relativeToRoot("Projects/\(FeatureModule.name)/\(module.rawValue)")
+    static func feature(implementation module: ModulePath.Feature) -> Self {
+        return .relativeToRoot("Projects/\(ModulePath.Feature.name)/\(module.rawValue)")
     }
 }
 
@@ -32,11 +32,11 @@ public extension ProjectDescription.Path {
 
 public extension ProjectDescription.Path {
     static var domain: Self {
-        return .relativeToRoot("Projects/\(DomainModule.name)")
+        return .relativeToRoot("Projects/\(ModulePath.Domain.name)")
     }
     
-    static func domain(implementation module: DomainModule) -> Self {
-        return .relativeToRoot("Projects/\(DomainModule.name)/\(module.rawValue)")
+    static func domain(implementation module: ModulePath.Domain) -> Self {
+        return .relativeToRoot("Projects/\(ModulePath.Domain.name)/\(module.rawValue)")
     }
 }
 
@@ -44,11 +44,11 @@ public extension ProjectDescription.Path {
 
 public extension ProjectDescription.Path {
     static var core: Self {
-        return .relativeToRoot("Projects/\(CoreModule.name)")
+        return .relativeToRoot("Projects/\(ModulePath.Core.name)")
     }
     
-    static func core(implementation module: CoreModule) -> Self {
-        return .relativeToRoot("Projects/\(CoreModule.name)/\(module.rawValue)")
+    static func core(implementation module: ModulePath.Core) -> Self {
+        return .relativeToRoot("Projects/\(ModulePath.Core.name)/\(module.rawValue)")
     }
 }
 
@@ -56,11 +56,11 @@ public extension ProjectDescription.Path {
 
 public extension ProjectDescription.Path {
     static var shared: Self {
-        return .relativeToRoot("Projects/\(SharedModule.name)")
+        return .relativeToRoot("Projects/\(ModulePath.Shared.name)")
     }
     
-    static func shared(implementation module: SharedModule) -> Self {
-        return .relativeToRoot("Projects/\(SharedModule.name)/\(module.rawValue)")
+    static func shared(implementation module: ModulePath.Shared) -> Self {
+        return .relativeToRoot("Projects/\(ModulePath.Shared.name)/\(module.rawValue)")
     }
 }
 
@@ -68,10 +68,10 @@ public extension ProjectDescription.Path {
 
 public extension ProjectDescription.Path {
     static var watchShared: Self {
-        return .relativeToRoot("Projects/\(WatchSharedModule.name)")
+        return .relativeToRoot("Projects/\(ModulePath.WatchShared.name)")
     }
     
-    static func watchShared(implementation module: WatchSharedModule) -> Self {
-        return .relativeToRoot("Projects/\(WatchSharedModule.name)/\(module.rawValue)")
+    static func watchShared(implementation module: ModulePath.WatchShared) -> Self {
+        return .relativeToRoot("Projects/\(ModulePath.WatchShared.name)/\(module.rawValue)")
     }
 }
