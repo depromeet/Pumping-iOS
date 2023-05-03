@@ -16,7 +16,7 @@ let targets: [Target] = [
                 .domain,
                 .feature(implements: .Onboarding),
                 .feature(implements: .Home),
-                .feature(implements: .MyPage)                
+                .feature(implements: .MyPage)
             ]
         )
     )

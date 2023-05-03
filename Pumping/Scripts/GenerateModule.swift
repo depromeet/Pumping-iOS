@@ -26,62 +26,62 @@ func registerModuleDependency() {
     
     var targetString = "["
     
-    if hasInterface {
-        makeScaffold(target: .Interface)
-        targetString += """
-            
+    makeScaffold(target: .Interface)
+    targetString += """
+        
             .\(layer.rawValue.lowercased())(
                 interface: .\(moduleName),
                 factory: .init()
             ),
-        
-        """
-    }
-    
-    if hasTesting {
-        makeScaffold(target: .Testing)
-        targetString += """
-            
             .\(layer.rawValue.lowercased())(
-                testing: .\(moduleName),
+                implements: .\(moduleName),
                 factory: .init(
                     dependencies: [
                         .\(layer.rawValue.lowercased())(interface: .\(moduleName))
                     ]
                 )
             ),
-        
-        """
-    }
+    
+    """
+    
     
     if hasUnitTests {
+        makeScaffold(target: .Testing)
         makeScaffold(target: .Tests)
         targetString += """
             
-            .\(layer.rawValue.lowercased())(
-                tests: .\(moduleName),
-                factory: .init(
-                    dependencies: [
-                        .\(layer.rawValue.lowercased())(testing: .\(moduleName))
-                    ]
-                )
-            ),
+                .\(layer.rawValue.lowercased())(
+                    testing: .\(moduleName),
+                    factory: .init(
+                        dependencies: [
+                            .\(layer.rawValue.lowercased())(interface: .\(moduleName))
+                        ]
+                    )
+                ),
+                .\(layer.rawValue.lowercased())(
+                    tests: .\(moduleName),
+                    factory: .init(
+                        dependencies: [
+                            .\(layer.rawValue.lowercased())(testing: .\(moduleName))
+                        ]
+                    )
+                ),
         
         """
     }
-    
+
     if hasExample {
         makeScaffold(target: .Example)
         targetString += """
             
-            .\(layer.rawValue.lowercased())(
-                example: .\(moduleName),
-                factory: .init(
-                    dependencies: [
-                        .\(layer.rawValue.lowercased())(interface: .\(moduleName))
-                    ]
+                .\(layer.rawValue.lowercased())(
+                    example: .\(moduleName),
+                    factory: .init(
+                        dependencies: [
+                            .\(layer.rawValue.lowercased())(interface: .\(moduleName))
+                        ]
+                    )
                 )
-            )
         
         """
     }
@@ -107,22 +107,6 @@ func registerModulePath() {
     )
     print("Register \(layer.rawValue)Layer's \(moduleName)Module to Modules.swift")
 }
-
-//func registerMicroTarget(target: MicroTargetType) {
-//
-//    let targetString = """
-//    static let \(moduleName)\(target.rawValue) = TargetDependency.project(
-//        target: ModulePath.\(layer.rawValue).\(moduleName).targetName(type: .\(target)),
-//        path: .relativeTo\(layer.rawValue)(ModulePath.\(layer.rawValue).\(moduleName).rawValue)
-//    )\n
-//"""
-//    updateFileContent(
-//        filePath: currentPath + "Plugin/DependencyPlugin/ProjectDescriptionHelpers/Dependency+Target.swift",
-//        finding: "public extension TargetDependency.\(layer.rawValue) {\n",
-//        inserting: targetString
-//    )
-//    print("Register \(moduleName) \(target.rawValue) target to Dependency+Target.swift")
-//}
 
 
 func makeDirectory(path: String) {
@@ -225,12 +209,6 @@ guard let moduleNameUnwrapping = moduleInput, !moduleNameUnwrapping.isEmpty else
 var moduleName = moduleNameUnwrapping
 print("Module name: \(moduleName)\n")
 
-print("This module has a 'Interface' Target? (y\\n, default = n)", terminator: " : ")
-let hasInterface = readLine()?.lowercased() == "y"
-
-print("This module has a 'Testing' Target? (y\\n, default = n)", terminator: " : ")
-let hasTesting = readLine()?.lowercased() == "y"
-
 print("This module has a 'Tests' Target? (y\\n, default = n)", terminator: " : ")
 let hasUnitTests = readLine()?.lowercased() == "y"
 
@@ -248,7 +226,7 @@ print("")
 print("------------------------------------------------------------------------------------------------------------------------")
 print("Layer: \(layer.rawValue)")
 print("Module name: \(moduleName)")
-print("interface: \(hasInterface), testing: \(hasTesting), unitTests: \(hasUnitTests), example: \(hasExample)")
+print("unitTests: \(hasUnitTests), example: \(hasExample)")
 print("------------------------------------------------------------------------------------------------------------------------")
 print("✅ Module is created successfully!")
 

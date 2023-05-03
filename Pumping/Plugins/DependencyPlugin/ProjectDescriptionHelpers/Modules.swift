@@ -32,7 +32,6 @@ public extension ModulePath {
 // MARK: FeatureModule
 public extension ModulePath {
     enum Feature: String, CaseIterable {
-        case SampleFeature1
         case Onboarding
         case Home
         case MyPage
