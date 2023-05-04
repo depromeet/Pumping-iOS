@@ -8,65 +8,79 @@
 import Foundation
 import ProjectDescription
 
-public enum MicroFeatureType: String, CaseIterable {
-    case Example
-    case Sources
-    case Tests
-    case Testing
-    case Interface
+public enum ModulePath {
+    case feature(Feature)
+    case domain(Domain)
+    case core(Core)
+    case shared(Shared)
+    case watchShared(WatchShared)
 }
 
 // MARK: AppModule
 
-public enum AppModule: String, CaseIterable {
-    public static let name: String = "App"
+public extension ModulePath {
+    enum App: String, CaseIterable {
+        case IOS
+        case Watch
+        case WatchExtension
+        
+        public static let name: String = "App"
+    }
+}
 
-    case IOS
-    case Watch
-    case WatchExtension
+
+// MARK: FeatureModule
+public extension ModulePath {
+    enum Feature: String, CaseIterable {
+        case SampleFeature
+        case Onboarding
+        case Home
+        case MyPage
+        
+        public static let name: String = "Feature"
+    }
 }
 
 // MARK: DomainModule
 
-public enum DomainModule: String, CaseIterable {
-    public static let name: String = "Domain"
-
-    case Health
-    case Login
-}
-
-// MARK: FeatureModule
-
-public enum FeatureModule: String, CaseIterable {
-    public static let name: String = "Feature"
-
-    case Onboarding
-    case Home
-    case MyPage
+public extension ModulePath {
+    enum Domain: String, CaseIterable {
+        case Health
+        case Login
+        
+        public static let name: String = "Domain"
+    }
 }
 
 // MARK: CoreModule
 
-public enum CoreModule: String, CaseIterable {
-    public static let name: String = "Core"
-
-    case Network
+public extension ModulePath {
+    enum Core: String, CaseIterable {
+        case Network
+        
+        public static let name: String = "Core"
+    }
 }
 
 // MARK: SharedModule
 
-public enum SharedModule: String, CaseIterable {
-    public static let name: String = "Shared"
-
-    case DesignSystem
-    case ThirdPartyLib
+public extension ModulePath {
+    enum Shared: String, CaseIterable {
+        case DesignSystem
+        case ThirdPartyLib
+        
+        public static let name: String = "Shared"
+    }
 }
 
 // MARK: WatchSharedModule
 
-public enum WatchSharedModule: String, CaseIterable {
-    public static let name: String = "WatchShared"
-
-    case DesignSystem
-    case ThirdPartyLib
+public extension ModulePath {
+    enum WatchShared: String, CaseIterable {
+        case DesignSystem
+        case ThirdPartyLib
+        
+        public static let name: String = "WatchShared"
+    }
 }
+

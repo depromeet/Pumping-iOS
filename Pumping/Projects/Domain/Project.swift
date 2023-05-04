@@ -21,7 +21,7 @@ let targets: [Target] = [
     )
 ]
 
-let project: Project = .make(
+let project: Project = .makeModule(
     name: "Domain",
     targets: targets
 )

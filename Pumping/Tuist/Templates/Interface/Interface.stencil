@@ -1,0 +1,5 @@
+// This is for Tuist
+
+public protocol {{ name }}Interface {
+
+}

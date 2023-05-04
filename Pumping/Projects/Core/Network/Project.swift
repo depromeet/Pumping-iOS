@@ -37,9 +37,9 @@ let targets: [Target] = [
     .core(
         interface: .Network,
         factory: .init()
-    )
+    ),
 ]
-let project: Project = .make(
+let project: Project = .makeModule(
     name: "CoreNetwork",
     targets: targets
 )

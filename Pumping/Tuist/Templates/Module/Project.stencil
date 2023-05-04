@@ -1,0 +1,8 @@
+import ProjectDescription
+import ProjectDescriptionHelpers
+import DependencyPlugin
+
+let project = Project.makeModule(
+    name: ModulePath.{{ layer }}.name+ModulePath.{{ layer }}.{{ name }}.rawValue,
+    targets: {{ target }}
+)
