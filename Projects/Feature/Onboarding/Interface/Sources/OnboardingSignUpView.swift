@@ -13,25 +13,17 @@ public struct OnboardingSignUp: ReducerProtocol {
     public init() {}
     
     public struct State: Equatable {
-        public var navigation: OnboardingNavigation.State
-        
-        public init(navigation: OnboardingNavigation.State) {
-            self.navigation = navigation
+        public init() {
+            
         }
     }
     
     public enum Action: Equatable {
-        case navigation(OnboardingNavigation.Action)
+        
     }
     
-    public var body: some ReducerProtocol<State, Action> {
-        Scope(state: \.navigation, action: /Action.navigation) {
-            OnboardingNavigation()
-        }
+    public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
         
-        Reduce { state, action in
-            return .none
-        }
     }
 }
 

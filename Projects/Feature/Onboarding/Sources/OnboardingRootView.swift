@@ -14,15 +14,28 @@ import FeatureOnboardingInterface
 extension OnboardingRootView: View {
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
-            NavigationStack(path: viewStore.binding(get: \.navigation.path, send: OnboardingRoot.Action.navigation(.pop))) {
-                VStack {
-                    Text("Onboarding Root View")
-                    
-                }
-                .navigationDestination(for: OnboardingSignUp.State.self, destination: { state in
-                    OnboardingSignUpView(store: .init(initialState: .init(navigation: viewStore.binding(get: \.navigation, send: OnboardingNavigation.Action)), reducer: <#T##ReducerProtocol#>))
-                }
+            NavigationStack(
+                path: viewStore.binding(
+                    get: \.path,
+                    send: OnboardingRoot.Action.navigationPathChanged
                 )
+            ) {
+                VStack {
+                    Text("Root View")
+                    Button("Go To Nickname") {
+                        viewStore.send(.goToNickname)
+                    }
+                }
+                .navigationDestination(
+                    for: OnboardingDestination.self
+                ) { destination in
+                    switch destination {
+                    case .nickname:
+                        OnboardingNicknameView(store: .init(initialState: .init(path: viewStore.$path), reducer: OnboardingNickname()._printChanges()))
+                    case .signUp:
+                        OnboardingSignUpView(store: .init(initialState: .init(), reducer: OnboardingSignUp()._printChanges()))
+                    }
+                }
             }
         }
     }

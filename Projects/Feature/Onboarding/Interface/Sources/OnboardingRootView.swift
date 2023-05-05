@@ -9,11 +9,16 @@ import Foundation
 
 import ComposableArchitecture
 
+public enum OnboardingDestination: Equatable {
+    case nickname
+    case signUp
+}
+
 public struct OnboardingRoot: ReducerProtocol {
     public init() {}
     
     public struct State: Equatable {
-        public var navigation = OnboardingNavigation.State()
+        @BindingState public var path: [OnboardingDestination] = []
         
         public init() {
             
@@ -21,15 +26,18 @@ public struct OnboardingRoot: ReducerProtocol {
     }
     
     public enum Action: Equatable {
-        case navigation(OnboardingNavigation.Action)
+        case goToNickname
+        case navigationPathChanged([OnboardingDestination])
     }
     
-    public var body: some ReducerProtocol<State, Action> {
-        Scope(state: \.navigation, action: /Action.navigation) {
-            OnboardingNavigation()
-        }
-        
-        Reduce { state, action in
+    public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+        switch action {
+        case .goToNickname:
+            state.path.append(.nickname)
+            return .none
+            
+        case let .navigationPathChanged(path):
+            state.path = path
             return .none
         }
     }
