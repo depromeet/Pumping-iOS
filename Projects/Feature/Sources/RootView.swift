@@ -15,7 +15,7 @@ public struct RootView: View {
     public init() {}
     
     public var body: some View {
-        OnboardingRootView(store: .init(initialState: .init(), reducer: OnboardingRoot()._printChanges()))
+        OnboardingRootView(store: .init(initialState: .init(), reducer: OnboardingRootStore()._printChanges()))
     }
 }
 

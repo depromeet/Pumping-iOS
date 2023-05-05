@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AuthenticationServices
 
 import ComposableArchitecture
 
@@ -15,7 +16,34 @@ extension OnboardingSignUpView: View {
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack {
-                Text("Onboarding Root View")
+                Text("Sign Up View")
+                
+                SignInWithAppleButton(
+                    onRequest: { request in
+                        request.requestedScopes = [.fullName, .email]
+                    },
+                    onCompletion: { result in
+                        switch result {
+                        case .success(let authResults):
+                            switch authResults.credential{
+                            case let appleIDCredential as ASAuthorizationAppleIDCredential:
+                                let UserIdentifier = appleIDCredential.user
+                                let fullName = appleIDCredential.fullName
+                                let name =  (fullName?.familyName ?? "") + (fullName?.givenName ?? "")
+                                let email = appleIDCredential.email
+                                let IdentityToken = String(data: appleIDCredential.identityToken!, encoding: .utf8)
+                                let AuthorizationCode = String(data: appleIDCredential.authorizationCode!, encoding: .utf8)
+                            default:
+                                break
+                            }
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                            print("error")
+                        }
+                    }
+                )
+                .frame(width : UIScreen.main.bounds.width * 0.9, height:50)
+                .cornerRadius(5)
             }
         }
     }

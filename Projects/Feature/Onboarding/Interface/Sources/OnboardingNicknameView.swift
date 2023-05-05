@@ -9,34 +9,29 @@ import Foundation
 
 import ComposableArchitecture
 
-public struct OnboardingNickname: ReducerProtocol {
+public struct OnboardingNicknameStore: ReducerProtocol {
     public init() {}
     
     public struct State: Equatable {
-        @BindingState public var path: [OnboardingDestination]
         
-        public init(path: BindingState<[OnboardingDestination]>) {
-            _path = path
-        }
     }
     
     public enum Action: Equatable {
-        case goToSignUp
+        case tapNextButton
     }
     
     public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
         switch action {
-        case .goToSignUp:
-            state.path.append(.signUp)
+        case .tapNextButton:
             return .none
         }
     }
 }
 
 public struct OnboardingNicknameView {
-    public let store: StoreOf<OnboardingNickname>
+    public let store: StoreOf<OnboardingNicknameStore>
     
-    public init(store: StoreOf<OnboardingNickname>) {
+    public init(store: StoreOf<OnboardingNicknameStore>) {
         self.store = store
     }
 }

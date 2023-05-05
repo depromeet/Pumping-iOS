@@ -9,7 +9,7 @@ import Foundation
 
 import ComposableArchitecture
 
-public struct OnboardingSignUp: ReducerProtocol {
+public struct OnboardingSignUpStore: ReducerProtocol {
     public init() {}
     
     public struct State: Equatable {
@@ -28,9 +28,9 @@ public struct OnboardingSignUp: ReducerProtocol {
 }
 
 public struct OnboardingSignUpView {
-    public let store: StoreOf<OnboardingSignUp>
+    public let store: StoreOf<OnboardingSignUpStore>
     
-    public init(store: StoreOf<OnboardingSignUp>) {
+    public init(store: StoreOf<OnboardingSignUpStore>) {
         self.store = store
     }
 }

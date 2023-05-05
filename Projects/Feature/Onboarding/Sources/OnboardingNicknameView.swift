@@ -16,8 +16,9 @@ extension OnboardingNicknameView: View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack {
                 Text("Nickname View")
-                Button("Go To Sign Up") {
-                    viewStore.send(.goToSignUp)
+                
+                Button("next button") {
+                    viewStore.send(.tapNextButton)
                 }
             }
         }
