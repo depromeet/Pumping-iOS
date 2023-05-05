@@ -7,13 +7,17 @@ let project = Project.makeModule(
     targets: [    
         .domain(
             interface: .Auth,
-            factory: .init()
+            factory: .init(
+                dependencies: [
+                    .core
+                ]
+            )
         ),
         .domain(
             implements: .Auth,
             factory: .init(
                 dependencies: [
-                    .domain(interface: .Auth)
+                    .domain(interface: .Auth),
                 ]
             )
         ),
@@ -21,7 +25,7 @@ let project = Project.makeModule(
             testing: .Auth,
             factory: .init(
                 dependencies: [
-                    .domain(interface: .Auth)
+                    .domain(interface: .Auth),
                 ]
             )
         ),
@@ -29,7 +33,7 @@ let project = Project.makeModule(
             tests: .Auth,
             factory: .init(
                 dependencies: [
-                    .domain(testing: .Auth)
+                    .domain(testing: .Auth),
                 ]
             )
         ),

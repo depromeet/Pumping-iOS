@@ -6,15 +6,16 @@
 //
 
 import SwiftUI
-import FeatureHome
-import FeatureMyPage
+import FeatureOnboardingInterface
 import FeatureOnboarding
+
+import ComposableArchitecture
 
 public struct RootView: View {
     public init() {}
     
     public var body: some View {
-        OnboardingRootView()
+        OnboardingRootView(store: .init(initialState: .init(), reducer: OnboardingRoot()._printChanges()))
     }
 }
 
