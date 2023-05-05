@@ -11,7 +11,7 @@ import ComposableArchitecture
 
 public struct OnboardingNavigation: ReducerProtocol {
     public struct State: Equatable {
-        var path = NavigationPath()
+        public var path = NavigationPath()
     }
     
     public enum Action: Equatable {

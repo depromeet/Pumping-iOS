@@ -1,5 +1,5 @@
 //
-//  OnboardingRootView.swift
+//  OnboardingSignUpView.swift
 //  FeatureOnboardingInterface
 //
 //  Created by 송영모 on 2023/05/05.
@@ -9,14 +9,14 @@ import Foundation
 
 import ComposableArchitecture
 
-public struct OnboardingRoot: ReducerProtocol {
+public struct OnboardingSignUp: ReducerProtocol {
     public init() {}
     
     public struct State: Equatable {
-        public var navigation = OnboardingNavigation.State()
+        public var navigation: OnboardingNavigation.State
         
-        public init() {
-            
+        public init(navigation: OnboardingNavigation.State) {
+            self.navigation = navigation
         }
     }
     
@@ -35,10 +35,10 @@ public struct OnboardingRoot: ReducerProtocol {
     }
 }
 
-public struct OnboardingRootView {
-    public let store: StoreOf<OnboardingRoot>
+public struct OnboardingSignUpView {
+    public let store: StoreOf<OnboardingSignUp>
     
-    public init(store: StoreOf<OnboardingRoot>) {
+    public init(store: StoreOf<OnboardingSignUp>) {
         self.store = store
     }
 }
