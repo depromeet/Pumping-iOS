@@ -27,12 +27,12 @@ extension OnboardingSignUpView: View {
                         case .success(let authResults):
                             switch authResults.credential{
                             case let appleIDCredential as ASAuthorizationAppleIDCredential:
-                                let UserIdentifier = appleIDCredential.user
+                                let userIdentifier = appleIDCredential.user
                                 let fullName = appleIDCredential.fullName
                                 let name =  (fullName?.familyName ?? "") + (fullName?.givenName ?? "")
                                 let email = appleIDCredential.email
-                                let IdentityToken = String(data: appleIDCredential.identityToken!, encoding: .utf8)
-                                let AuthorizationCode = String(data: appleIDCredential.authorizationCode!, encoding: .utf8)
+                                let identityToken = String(data: appleIDCredential.identityToken!, encoding: .utf8)
+                                let authorizationCode = String(data: appleIDCredential.authorizationCode!, encoding: .utf8)
                             default:
                                 break
                             }
