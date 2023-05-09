@@ -64,6 +64,15 @@ public struct RootStore: ReducerProtocol {
                 return .none
             }
         }
+        .ifLet(\.home, action: /Action.home) {
+            HomeRootStore()
+        }
+        .ifLet(\.myPage, action: /Action.myPage) {
+            MyPageRootStore()
+        }
+        .ifLet(\.onboarding, action: /Action.onboarding) {
+            OnboardingRootStore()
+        }
     }
 }
 

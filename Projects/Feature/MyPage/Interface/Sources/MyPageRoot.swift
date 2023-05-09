@@ -10,6 +10,7 @@ import ComposableArchitecture
 public enum MyPageScene: Hashable {
     case root
     case userInfo
+    case versionInfo
 }
 
 public struct MyPageRootStore: ReducerProtocol {
@@ -19,6 +20,7 @@ public struct MyPageRootStore: ReducerProtocol {
         @BindingState public var path: [MyPageScene] = []
         
         public var userInfo: UserInfoStore.State?
+        public var versionInfo: VersionInfoStore.State?
         
         public init() {
             
@@ -27,9 +29,11 @@ public struct MyPageRootStore: ReducerProtocol {
     
     public enum Action: BindableAction, Equatable {
         case tapUserInfoButton
+        case tapVersionInfoButton
         
         case binding(BindingAction<State>)
         case userInfo(UserInfoStore.Action)
+        case versionInfo(VersionInfoStore.Action)
     }
     
     public var body: some ReducerProtocol<State, Action> {
@@ -40,6 +44,11 @@ public struct MyPageRootStore: ReducerProtocol {
             case .tapUserInfoButton:
                 state.path = [.userInfo]
                 state.userInfo = .init()
+                return .none
+                
+            case .tapVersionInfoButton:
+                state.path = [.versionInfo]
+                state.versionInfo = .init()
                 return .none
                 
             case .binding:
