@@ -16,7 +16,7 @@ extension HomeRootView: View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             NavigationStack(path: viewStore.binding(\.$path)) {
                 VStack {
-                    Text("Root View")
+                    Text("Home Root View")
                 }
             }
         }

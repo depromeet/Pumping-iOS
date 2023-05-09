@@ -16,7 +16,7 @@ extension MyPageRootView: View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             NavigationStack(path: viewStore.binding(\.$path)) {
                 VStack {
-                    Text("Root View")
+                    Text("MyPage Root View")
                 }
                 .navigationDestination(for: MyPageScene.self) { scene in
                     switch scene {

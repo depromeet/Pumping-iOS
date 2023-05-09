@@ -9,10 +9,12 @@ import SwiftUI
 
 import ComposableArchitecture
 
-import FeatureOnboardingInterface
-import FeatureOnboarding
+import FeatureHomeInterface
 import FeatureMyPageInterface
+import FeatureOnboardingInterface
+import FeatureHome
 import FeatureMyPage
+import FeatureOnboarding
 
 public enum RootScene: Hashable {
     case root
@@ -25,7 +27,11 @@ public struct RootStore: ReducerProtocol {
     public init() {}
     
     public struct State: Equatable {
-        @BindingState public var path: [RootScene] = []
+        @BindingState public var path: [RootScene] = [] //TODO: 필요성 생각하기
+        
+        public var home: HomeRootStore.State? = .init()
+        public var myPage: MyPageRootStore.State? = .init()
+        public var onboarding: OnboardingRootStore.State? = .init()
         
         public init() {
             
@@ -35,8 +41,9 @@ public struct RootStore: ReducerProtocol {
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         
-        case onboarding(OnboardingRootStore.Action)
+        case home(HomeRootStore.Action)
         case myPage(MyPageRootStore.Action)
+        case onboarding(OnboardingRootStore.Action)
     }
     
     public var body: some ReducerProtocol<State, Action> {
@@ -47,10 +54,13 @@ public struct RootStore: ReducerProtocol {
             case .binding:
                 return .none
                 
-            case .onboarding:
+            case .home:
                 return .none
                 
             case .myPage:
+                return .none
+                
+            case .onboarding:
                 return .none
             }
         }
@@ -59,11 +69,32 @@ public struct RootStore: ReducerProtocol {
 
 
 public struct RootView: View {
-    public init() {}
+    public let store: StoreOf<RootStore>
+    
+    public init() {
+        store = .init(initialState: .init(), reducer: RootStore()._printChanges())
+    }
     
     public var body: some View {
-//        RootView()
-//        OnboardingRootView(store: .init(initialState: .init(), reducer: OnboardingRootStore()._printChanges()))
+        WithViewStore(self.store, observe: { $0 }) { viewStore in
+            TabView {
+                IfLetStore(self.store.scope(state: \.home, action: { .home($0) })) {
+                    HomeRootView(store: $0)
+                        .tabItem {
+                            Image(systemName: "house")
+                            Text("Home")
+                        }
+                }
+                
+                IfLetStore(self.store.scope(state: \.myPage, action: { .myPage($0) })) {
+                    MyPageRootView(store: $0)
+                        .tabItem {
+                            Image(systemName: "person")
+                            Text("MyPage")
+                        }
+                }
+            }
+        }
     }
 }
 

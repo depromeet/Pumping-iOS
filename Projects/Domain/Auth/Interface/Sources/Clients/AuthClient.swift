@@ -13,7 +13,7 @@ public struct AuthClient {
     public var signUp: @Sendable (SignUpRequest) async throws -> SignUpResponse
     public var signOut: @Sendable (SignOutRequest) async throws -> SignOutResponse
     
-    public init(signUp: @escaping (SignUpRequest) -> SignUpResponse, signOut: @escaping (SignOutRequest) -> SignOutResponse) {
+    public init(signUp: @Sendable @escaping (SignUpRequest) -> SignUpResponse, signOut: @Sendable @escaping (SignOutRequest) -> SignOutResponse) {
         self.signUp = signUp
         self.signOut = signOut
     }
