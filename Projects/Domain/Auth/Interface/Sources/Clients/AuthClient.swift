@@ -12,6 +12,11 @@ import ComposableArchitecture
 public struct AuthClient {
     public var signUp: @Sendable (SignUpRequest) async throws -> SignUpResponse
     public var signOut: @Sendable (SignOutRequest) async throws -> SignOutResponse
+    
+    public init(signUp: @escaping (SignUpRequest) -> SignUpResponse, signOut: @escaping (SignOutRequest) -> SignOutResponse) {
+        self.signUp = signUp
+        self.signOut = signOut
+    }
 }
 
 extension AuthClient: TestDependencyKey {
