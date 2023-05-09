@@ -11,11 +11,14 @@ import ComposableArchitecture
 
 import FeatureOnboardingInterface
 import FeatureOnboarding
+import FeatureMyPageInterface
+import FeatureMyPage
 
 public enum RootScene: Hashable {
     case root
-    case nickname
-    case signUp
+    case home
+    case myPage
+    case onboarding
 }
 
 public struct RootStore: ReducerProtocol {
@@ -33,7 +36,7 @@ public struct RootStore: ReducerProtocol {
         case binding(BindingAction<State>)
         
         case onboarding(OnboardingRootStore.Action)
-        case 
+        case myPage(MyPageRootStore.Action)
     }
     
     public var body: some ReducerProtocol<State, Action> {
@@ -46,6 +49,9 @@ public struct RootStore: ReducerProtocol {
                 
             case .onboarding:
                 return .none
+                
+            case .myPage:
+                return .none
             }
         }
     }
@@ -56,7 +62,8 @@ public struct RootView: View {
     public init() {}
     
     public var body: some View {
-        OnboardingRootView(store: .init(initialState: .init(), reducer: OnboardingRootStore()._printChanges()))
+//        RootView()
+//        OnboardingRootView(store: .init(initialState: .init(), reducer: OnboardingRootStore()._printChanges()))
     }
 }
 
