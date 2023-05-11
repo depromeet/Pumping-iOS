@@ -14,7 +14,11 @@ public enum OnboardingScene: Hashable {
 }
 
 public struct OnboardingRootStore: ReducerProtocol {
-    public init() {}
+    private let reduce: Reduce<State, Action>
+    
+    public init(reduce: Reduce<State, Action>) {
+        self.reduce = reduce
+    }
     
     public struct State: Equatable {
         @BindingState public var path: [OnboardingScene] = []
@@ -37,29 +41,7 @@ public struct OnboardingRootStore: ReducerProtocol {
     
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()
-        
-        Reduce { state, action in
-            switch action {
-            case .tapNextButton:
-                state.path.append(.nickname)
-                state.nickname = .init()
-                return .none
-                
-            case .binding:
-                return .none
-                
-            case let .nickname(action):
-                switch action {
-                case .tapNextButton:
-                    state.path.append(.signUp)
-                    state.signUp = .init()
-                }
-                return .none
-                
-            case .signUp:
-                return .none
-            }
-        }
+        reduce
     }
 }
 
