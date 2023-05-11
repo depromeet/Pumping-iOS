@@ -18,8 +18,12 @@ extension OnboardingRootView: View {
                 VStack {
                     Text("Root View")
                     
-                    Button("next") {
-                        viewStore.send(.tapNextButton)
+                    Button("nickname") {
+                        viewStore.send(.tapNicknameButton)
+                    }
+                    
+                    Button("other profile") {
+                        viewStore.send(.tapOtherProfileButton)
                     }
                 }
                 .navigationDestination(for: OnboardingScene.self) { scene in
@@ -32,6 +36,11 @@ extension OnboardingRootView: View {
                     case .signUp:
                         IfLetStore(self.store.scope(state: \.signUp, action: { .signUp($0) })) {
                             OnboardingSignUpView(store: $0)
+                        }
+                        
+                    case .otherProfile:
+                        IfLetStore(self.store.scope(state: \.otherProfile, action: { .otherProfile($0) })) {
+                            OtherProfileView(store: $0)
                         }
                         
                     default:

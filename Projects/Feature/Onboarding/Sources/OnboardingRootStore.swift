@@ -15,12 +15,17 @@ extension OnboardingRootStore {
     public init() {
         let reduce: Reduce<State, Action> = .init { state, action in
             switch action {
-            case .tapNextButton:
+            case .binding:
+                return .none
+                
+            case .tapNicknameButton:
                 state.path.append(.nickname)
                 state.nickname = .init()
                 return .none
-
-            case .binding:
+                
+            case .tapOtherProfileButton:
+                state.path.append(.otherProfile)
+                state.otherProfile = .init()
                 return .none
 
             case let .nickname(action):
@@ -32,6 +37,9 @@ extension OnboardingRootStore {
                 return .none
 
             case .signUp:
+                return .none
+                
+            case .otherProfile:
                 return .none
             }
         }

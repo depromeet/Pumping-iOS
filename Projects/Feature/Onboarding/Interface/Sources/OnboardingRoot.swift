@@ -11,6 +11,7 @@ public enum OnboardingScene: Hashable {
     case root
     case nickname
     case signUp
+    case otherProfile //TODO: 피쳐 분리후 이동
 }
 
 public struct OnboardingRootStore: ReducerProtocol {
@@ -25,6 +26,7 @@ public struct OnboardingRootStore: ReducerProtocol {
         
         public var nickname: OnboardingNicknameStore.State?
         public var signUp: OnboardingSignUpStore.State?
+        public var otherProfile: OtherProfileStore.State?
         
         public init() {
             
@@ -32,11 +34,14 @@ public struct OnboardingRootStore: ReducerProtocol {
     }
     
     public enum Action: BindableAction, Equatable {
-        case tapNextButton
-        
         case binding(BindingAction<State>)
+        
+        case tapNicknameButton
+        case tapOtherProfileButton
+        
         case nickname(OnboardingNicknameStore.Action)
         case signUp(OnboardingSignUpStore.Action)
+        case otherProfile(OtherProfileStore.Action)
     }
     
     public var body: some ReducerProtocol<State, Action> {
