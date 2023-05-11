@@ -5,8 +5,6 @@
 //  Created by 송영모 on 2023/05/05.
 //
 
-import SwiftUI
-
 import ComposableArchitecture
 
 public enum OnboardingScene: Hashable {
@@ -64,6 +62,7 @@ public struct OnboardingRootStore: ReducerProtocol {
         }
     }
 }
+
 
 public struct OnboardingRootView {
     public let store: StoreOf<OnboardingRootStore>
