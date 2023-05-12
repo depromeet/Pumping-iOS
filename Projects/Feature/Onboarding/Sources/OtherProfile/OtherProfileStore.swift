@@ -14,7 +14,6 @@ extension OtherProfileStore {
         let reduce: Reduce<State, Action> = .init { state, action in
             switch action {
             case let .tapCell(index):
-                print("[D] \(index)")
                 return .send(.goToOtherProfileDetail(.init(index: index)))
                 
             default:
