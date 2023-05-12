@@ -43,6 +43,11 @@ extension OnboardingRootView: View {
                             OtherProfileView(store: $0)
                         }
                         
+                    case .otherProfileDetail:
+                        IfLetStore(self.store.scope(state: \.otherProfileDetail, action: { .otherProfileDetail($0) })) {
+                            OtherProfileDetailView(store: $0)
+                        }
+                        
                     default:
                         EmptyView()
                     }

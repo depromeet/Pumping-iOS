@@ -12,7 +12,14 @@ import FeatureOnboardingInterface
 extension OtherProfileStore {
     public init() {
         let reduce: Reduce<State, Action> = .init { state, action in
-            return .none
+            switch action {
+            case let .tapCell(index):
+                print("[D] \(index)")
+                return .send(.goToOtherProfileDetail(.init(index: index)))
+                
+            default:
+                return .none
+            }
         }
         
         self.init(reduce: reduce)

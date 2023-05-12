@@ -12,13 +12,28 @@ public enum OnboardingScene: Hashable {
     case nickname
     case signUp
     case otherProfile //TODO: 피쳐 분리후 이동
+    case otherProfileDetail //TODO: 피쳐 분리후 이동
 }
 
 public struct OnboardingRootStore: ReducerProtocol {
     private let reduce: Reduce<State, Action>
+    private let onboardingNicknameStore: OnboardingNicknameStore
+    private let onboardingSignUpStore: OnboardingSignUpStore
+    private let otherProfileStore: OtherProfileStore
+    private let otherProfileDetailStore: OtherProfileDetailStore
     
-    public init(reduce: Reduce<State, Action>) {
+    public init(
+        reduce: Reduce<State, Action>,
+        onboardingNicknameStore: OnboardingNicknameStore,
+        onboardingSignUpStore: OnboardingSignUpStore,
+        otherProfileStore: OtherProfileStore,
+        otherProfileDetailStore: OtherProfileDetailStore
+    ) {
         self.reduce = reduce
+        self.onboardingNicknameStore = onboardingNicknameStore
+        self.onboardingSignUpStore = onboardingSignUpStore
+        self.otherProfileStore = otherProfileStore
+        self.otherProfileDetailStore = otherProfileDetailStore
     }
     
     public struct State: Equatable {
@@ -27,6 +42,7 @@ public struct OnboardingRootStore: ReducerProtocol {
         public var nickname: OnboardingNicknameStore.State?
         public var signUp: OnboardingSignUpStore.State?
         public var otherProfile: OtherProfileStore.State?
+        public var otherProfileDetail: OtherProfileDetailStore.State?
         
         public init() {
             
@@ -42,11 +58,24 @@ public struct OnboardingRootStore: ReducerProtocol {
         case nickname(OnboardingNicknameStore.Action)
         case signUp(OnboardingSignUpStore.Action)
         case otherProfile(OtherProfileStore.Action)
+        case otherProfileDetail(OtherProfileDetailStore.Action)
     }
     
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()
         reduce
+            .ifLet(\.nickname, action: /Action.nickname) {
+                onboardingNicknameStore
+            }
+            .ifLet(\.signUp, action: /Action.signUp) {
+                onboardingSignUpStore
+            }
+            .ifLet(\.otherProfile, action: /Action.otherProfile) {
+                otherProfileStore
+            }
+            .ifLet(\.otherProfileDetail, action: /Action.otherProfileDetail) {
+                otherProfileDetailStore
+            }
     }
 }
 

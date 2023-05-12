@@ -27,7 +27,7 @@ extension OnboardingRootStore {
                 state.path.append(.otherProfile)
                 state.otherProfile = .init()
                 return .none
-
+                
             case let .nickname(action):
                 switch action {
                 case .tapNextButton:
@@ -35,15 +35,32 @@ extension OnboardingRootStore {
                     state.signUp = .init()
                 }
                 return .none
-
+                
             case .signUp:
                 return .none
                 
-            case .otherProfile:
+            case let .otherProfile(action):
+                switch action {
+                case let .goToOtherProfileDetail(otherProfileDetailState):
+                    state.path.append(.otherProfileDetail)
+                    state.otherProfileDetail = otherProfileDetailState
+                    return .none
+                    
+                default:
+                    return .none
+                }
+                
+            case .otherProfileDetail:
                 return .none
             }
         }
         
-        self.init(reduce: reduce)
+        self.init(
+            reduce: reduce,
+            onboardingNicknameStore: .init(),
+            onboardingSignUpStore: .init(),
+            otherProfileStore: .init(),
+            otherProfileDetailStore: .init()
+        )
     }
 }

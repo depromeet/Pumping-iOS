@@ -1,13 +1,13 @@
 //
-//  OtherProfile.swift
-//  FeatureOnboardingInterface
+//  OtherProfileDetail.swift
+//  FeatureOnboarding
 //
-//  Created by 송영모 on 2023/05/11.
+//  Created by 송영모 on 2023/05/12.
 //
 
 import ComposableArchitecture
 
-public struct OtherProfileStore: ReducerProtocol {
+public struct OtherProfileDetailStore: ReducerProtocol {
     private let reduce: Reduce<State, Action>
     
     public init(reduce: Reduce<State, Action>) {
@@ -15,17 +15,15 @@ public struct OtherProfileStore: ReducerProtocol {
     }
     
     public struct State: Equatable {
-        public init() {
-            
+        public let index: Int
+        
+        public init(index: Int) {
+            self.index = index
         }
     }
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
-        
-        case tapCell(Int)
-        
-        case goToOtherProfileDetail(OtherProfileDetailStore.State)
     }
     
     public var body: some ReducerProtocol<State, Action> {
@@ -35,10 +33,10 @@ public struct OtherProfileStore: ReducerProtocol {
 }
 
 
-public struct OtherProfileView {
-    public let store: StoreOf<OtherProfileStore>
+public struct OtherProfileDetailView {
+    public let store: StoreOf<OtherProfileDetailStore>
     
-    public init(store: StoreOf<OtherProfileStore>) {
+    public init(store: StoreOf<OtherProfileDetailStore>) {
         self.store = store
     }
 }

@@ -17,7 +17,6 @@ let targets: [Target] = [
                 .feature(interface: .Home),
                 .feature(interface: .MyPage),
                 .feature(interface: .Onboarding),
-                .domain
             ]
         )
     ),
@@ -39,7 +38,11 @@ let targets: [Target] = [
     ),
     .feature(
         interface: .MyPage,
-        factory: .init()
+        factory: .init(
+            dependencies: [
+                .domain
+            ]
+        )
     )
 ]
 
