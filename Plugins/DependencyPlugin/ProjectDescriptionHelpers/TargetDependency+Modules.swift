@@ -103,6 +103,10 @@ public extension TargetDependency {
     static func shared(implements module: ModulePath.Shared) -> Self {
         return .project(target: ModulePath.Shared.name + module.rawValue, path: .shared(implementation: module))
     }
+    
+    static func shared(interface module: ModulePath.Shared) -> Self {
+        return .project(target: ModulePath.Shared.name + module.rawValue + "Interface", path: .shared(implementation: module))
+    }
 }
 
 // MARK: TargetDependency + WatchShared

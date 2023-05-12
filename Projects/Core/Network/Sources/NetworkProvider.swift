@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreNetworkInterface
+import SharedUtil
 
 final class NetworkProvider : NetworkProviderInterface {
     static let shared = NetworkProvider()
@@ -19,6 +20,10 @@ final class NetworkProvider : NetworkProviderInterface {
             
             guard let response = response as? HTTPURLResponse else {
                 throw NetworkError.noResponseError
+            }
+            
+            if let emptyResponse = try JSONDecoder().decode(EmptyData.self, from: data) as? T, data.isEmpty {
+                return emptyResponse
             }
             
             switch response.statusCode {

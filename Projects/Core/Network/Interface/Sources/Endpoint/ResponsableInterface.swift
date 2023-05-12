@@ -7,6 +7,9 @@
 
 import Foundation
 
+public struct EmptyData : Decodable { }
+
+
 public protocol Responsable {
-  associatedtype Response
+    associatedtype Response
 }

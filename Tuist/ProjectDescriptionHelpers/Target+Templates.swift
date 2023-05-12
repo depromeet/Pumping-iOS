@@ -303,7 +303,18 @@ public extension Target {
         case .ThirdPartyLib:
             newFactory.sources = nil
             newFactory.product = .staticFramework
+        case .Util:
+            newFactory.product = .staticFramework
         }
+        
+        return make(factory: newFactory)
+    }
+    
+    static func shared(interface module: ModulePath.Shared, factory: TargetFactory) -> Self {
+        var newFactory = factory
+        newFactory.name = ModulePath.Shared.name + module.rawValue + "Interface"
+        newFactory.product = .staticFramework
+        newFactory.sources = .interface
         
         return make(factory: newFactory)
     }

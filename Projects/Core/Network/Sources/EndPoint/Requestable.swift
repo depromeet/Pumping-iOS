@@ -7,18 +7,15 @@
 
 import Foundation
 import CoreNetworkInterface
+import SharedUtil
 
 extension Requestable {
-    private func makeURLComponents() throws -> URLComponents {
+    private func makeURLComponents() throws -> URLComponents? {
         guard let baseURL = Bundle.main.infoDictionary?["BASE_URL"] as? String else {
             throw NetworkError.urlRequestError(.makeURLError)
         }
         
-        guard let urlComponents = URLComponents(string: baseURL + path) else {
-            throw NetworkError.urlRequestError(.urlComponentError)
-        }
-        
-        return urlComponents
+        return URLComponents(string: baseURL + path)
     }
     
     private func getQueryParameters() throws -> [URLQueryItem]? {
@@ -52,7 +49,7 @@ extension Requestable {
         guard let bodyDictionary = try? bodyParameters.toDictionary() else {
             throw NetworkError.urlRequestError(.bodyEncodingError)
         }
-                
+        
         guard let encodedBody = try? JSONSerialization.data(withJSONObject: bodyDictionary) else {
             throw NetworkError.urlRequestError(.bodyEncodingError)
         }
@@ -62,7 +59,9 @@ extension Requestable {
     
     public func makeURLRequest() throws -> URLRequest {
         
-        var urlComponent = try makeURLComponents()
+        guard var urlComponent = try makeURLComponents() else {
+            throw NetworkError.urlRequestError(.urlComponentError)
+        }
         
         if let queryItems = try getQueryParameters() {
             urlComponent.queryItems = queryItems
@@ -85,14 +84,5 @@ extension Requestable {
         urlRequest.httpMethod = httpMethod.rawValue
         
         return urlRequest
-    }
-}
-
-// Shared의 Util 모듈로 이동?
-extension Encodable {
-    func toDictionary() throws -> [String : Any]? {
-        let data = try JSONEncoder().encode(self)
-        let jsonObject = try JSONSerialization.jsonObject(with: data)
-        return jsonObject as? [String : Any]
     }
 }
