@@ -11,6 +11,14 @@ import DependencyPlugin
 
 let targets: [Target] = [
     .core(
+        interface: .Network,
+        factory: .init(
+            dependencies: [
+                .shared
+            ]
+        )
+    ),
+    .core(
         implements: .Network,
         factory: .init(
             dependencies: [
@@ -34,10 +42,7 @@ let targets: [Target] = [
             ]
         )
     ),
-    .core(
-        interface: .Network,
-        factory: .init()
-    ),
+    
 ]
 let project: Project = .makeModule(
     name: "CoreNetwork",
