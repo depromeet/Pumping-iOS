@@ -8,10 +8,10 @@
 import ComposableArchitecture
 
 public struct OtherProfileStore: ReducerProtocol {
-    private let reduce: Reduce<State, Action>
+    private let reducer: Reduce<State, Action>
     
-    public init(reduce: Reduce<State, Action>) {
-        self.reduce = reduce
+    public init(reducer: Reduce<State, Action>) {
+        self.reducer = reducer
     }
     
     public struct State: Equatable {
@@ -30,7 +30,7 @@ public struct OtherProfileStore: ReducerProtocol {
     
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()
-        reduce
+        reducer
     }
 }
 

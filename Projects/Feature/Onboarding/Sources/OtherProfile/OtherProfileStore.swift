@@ -11,7 +11,7 @@ import FeatureOnboardingInterface
 
 extension OtherProfileStore {
     public init() {
-        let reduce: Reduce<State, Action> = .init { state, action in
+        let reducer: Reduce<State, Action> = .init { state, action in
             switch action {
             case let .tapCell(index):
                 return .send(.goToOtherProfileDetail(.init(index: index)))
@@ -21,6 +21,6 @@ extension OtherProfileStore {
             }
         }
         
-        self.init(reduce: reduce)
+        self.init(reducer: reducer)
     }
 }

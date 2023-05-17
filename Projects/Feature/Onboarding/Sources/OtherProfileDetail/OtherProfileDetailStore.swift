@@ -11,13 +11,13 @@ import FeatureOnboardingInterface
 
 extension OtherProfileDetailStore {
     public init() {
-        let reduce: Reduce<State, Action> = .init { state, action in
+        let reducer: Reduce<State, Action> = .init { state, action in
             switch action {
             case .binding:
                 return .none
             }
         }
         
-        self.init(reduce: reduce)
+        self.init(reducer: reducer)
     }
 }
