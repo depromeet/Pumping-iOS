@@ -14,6 +14,6 @@ public extension Project {
         public static let deploymentTarget = DeploymentTarget.iOS(targetVersion: "16.0", devices: [.iphone])
         public static let bundlePrefix = "com.depromeet.pumping"
         
-        public static let watchDeploymentTarget = DeploymentTarget.watchOS(targetVersion: "7.0")
+        public static let watchDeploymentTarget = DeploymentTarget.watchOS(targetVersion: "9.0")
     }
 }

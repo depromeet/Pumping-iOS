@@ -36,7 +36,7 @@ extension ProfileRootView: View {
                                 Spacer()
                                 
                                 Button("변화폭") {
-                                    
+                                    viewStore.send(.tapWidthOfChangeButton)
                                 }
                             }
                             .padding()

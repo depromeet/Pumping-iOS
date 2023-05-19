@@ -15,11 +15,20 @@ extension ProfileRootStore {
             switch action {
             case .binding:
                 return .none
+                
+            case .tapWidthOfChangeButton:
+                state.widthOfChange = .init()
+                state.path.append(.widthOfChange)
+                return .none
+                
+            case .widthOfChange:
+                return .none
             }
         }
         
         self.init(
-            reducer: reducer
+            reducer: reducer,
+            widthOfChangeStore: .init()
         )
     }
 }
