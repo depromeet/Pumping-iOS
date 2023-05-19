@@ -8,11 +8,15 @@
 import ComposableArchitecture
 
 public enum HomeScene: Hashable {
-    case root
+    case home
 }
 
 public struct HomeRootStore: ReducerProtocol {
-    public init() {}
+    private let reducer: Reduce<State, Action>
+    
+    public init(reducer: Reduce<State, Action>) {
+        self.reducer = reducer
+    }
     
     public struct State: Equatable {
         @BindingState public var path: [HomeScene] = []
