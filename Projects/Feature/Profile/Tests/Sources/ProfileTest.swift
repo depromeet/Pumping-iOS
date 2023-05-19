@@ -1,6 +1,6 @@
 import XCTest
 
-final class SampleFeatureTests: XCTestCase {
+final class ProfileTests: XCTestCase {
     override func setUpWithError() throws {}
 
     override func tearDownWithError() throws {}
