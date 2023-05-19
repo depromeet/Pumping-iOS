@@ -13,13 +13,20 @@ public enum HomeScene: Hashable {
 
 public struct HomeRootStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
+    private let homeStore: HomeStore
     
-    public init(reducer: Reduce<State, Action>) {
+    public init(
+        reducer: Reduce<State, Action>,
+        homeStore: HomeStore
+    ) {
         self.reducer = reducer
+        self.homeStore = homeStore
     }
     
     public struct State: Equatable {
         @BindingState public var path: [HomeScene] = []
+        
+        public var home: HomeStore.State? = .init()
         
         public init() {
             
@@ -28,17 +35,16 @@ public struct HomeRootStore: ReducerProtocol {
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
+        
+        case home(HomeStore.Action)
     }
     
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()
-        
-        Reduce { state, action in
-            switch action {
-            case .binding:
-                return .none
+        reducer
+            .ifLet(\.home, action: /Action.home) {
+                homeStore
             }
-        }
     }
 }
 

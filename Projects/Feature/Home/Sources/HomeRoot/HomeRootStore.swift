@@ -15,11 +15,15 @@ extension HomeRootStore {
             switch action {
             case .binding:
                 return .none
+                
+            case .home:
+                return .none
             }
         }
         
         self.init(
-            reducer: reducer
+            reducer: reducer,
+            homeStore: .init()
         )
     }
 }
