@@ -11,16 +11,38 @@ public enum OnboardingScene: Hashable {
     case root
     case nickname
     case signUp
+    case otherProfile //TODO: 피쳐 분리후 이동
+    case otherProfileDetail //TODO: 피쳐 분리후 이동
 }
 
 public struct OnboardingRootStore: ReducerProtocol {
-    public init() {}
+    private let reduce: Reduce<State, Action>
+    private let onboardingNicknameStore: OnboardingNicknameStore
+    private let onboardingSignUpStore: OnboardingSignUpStore
+    private let otherProfileStore: OtherProfileStore
+    private let otherProfileDetailStore: OtherProfileDetailStore
+    
+    public init(
+        reduce: Reduce<State, Action>,
+        onboardingNicknameStore: OnboardingNicknameStore,
+        onboardingSignUpStore: OnboardingSignUpStore,
+        otherProfileStore: OtherProfileStore,
+        otherProfileDetailStore: OtherProfileDetailStore
+    ) {
+        self.reduce = reduce
+        self.onboardingNicknameStore = onboardingNicknameStore
+        self.onboardingSignUpStore = onboardingSignUpStore
+        self.otherProfileStore = otherProfileStore
+        self.otherProfileDetailStore = otherProfileDetailStore
+    }
     
     public struct State: Equatable {
         @BindingState public var path: [OnboardingScene] = []
         
         public var nickname: OnboardingNicknameStore.State?
         public var signUp: OnboardingSignUpStore.State?
+        public var otherProfile: OtherProfileStore.State?
+        public var otherProfileDetail: OtherProfileDetailStore.State?
         
         public init() {
             
@@ -28,38 +50,32 @@ public struct OnboardingRootStore: ReducerProtocol {
     }
     
     public enum Action: BindableAction, Equatable {
-        case tapNextButton
-        
         case binding(BindingAction<State>)
+        
+        case tapNicknameButton
+        case tapOtherProfileButton
+        
         case nickname(OnboardingNicknameStore.Action)
         case signUp(OnboardingSignUpStore.Action)
+        case otherProfile(OtherProfileStore.Action)
+        case otherProfileDetail(OtherProfileDetailStore.Action)
     }
     
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()
-        
-        Reduce { state, action in
-            switch action {
-            case .tapNextButton:
-                state.path.append(.nickname)
-                state.nickname = .init()
-                return .none
-                
-            case .binding:
-                return .none
-                
-            case let .nickname(action):
-                switch action {
-                case .tapNextButton:
-                    state.path.append(.signUp)
-                    state.signUp = .init()
-                }
-                return .none
-                
-            case .signUp:
-                return .none
+        reduce
+            .ifLet(\.nickname, action: /Action.nickname) {
+                onboardingNicknameStore
             }
-        }
+            .ifLet(\.signUp, action: /Action.signUp) {
+                onboardingSignUpStore
+            }
+            .ifLet(\.otherProfile, action: /Action.otherProfile) {
+                otherProfileStore
+            }
+            .ifLet(\.otherProfileDetail, action: /Action.otherProfileDetail) {
+                otherProfileDetailStore
+            }
     }
 }
 

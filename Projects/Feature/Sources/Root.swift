@@ -102,6 +102,14 @@ public struct RootView: View {
                             Text("MyPage")
                         }
                 }
+                
+                IfLetStore(self.store.scope(state: \.onboarding, action: { .onboarding($0) })) {
+                    OnboardingRootView(store: $0)
+                        .tabItem {
+                            Image(systemName: "person")
+                            Text("Onboarding")
+                        }
+                }
             }
         }
     }

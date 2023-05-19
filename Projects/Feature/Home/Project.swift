@@ -39,7 +39,11 @@ let targets: [Target] = [
     ),
     .feature(
         interface: .Home,
-        factory: .init()
+        factory: .init(
+            dependencies: [
+                .domain
+            ]
+        )
     )
 ]
 
