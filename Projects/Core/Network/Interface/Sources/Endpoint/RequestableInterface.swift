@@ -9,7 +9,7 @@ import Foundation
 
 public protocol Requestable {
     var path: String { get }
-    var httpMethod : HTTPMethod { get}
+    var httpMethod : HTTPMethod { get }
     var queryParameters: Encodable? { get }
     var bodyParameters: Encodable? { get }
 }

@@ -11,18 +11,11 @@ import CoreKeyChainStore
 
 final class LocalAuthStore : LocalAuthStoreInterface {
     
-    // DI 해야할듯 Swinject 사용?
-    let tokenStore : KeyChainStore
-    
-    public init(tokenStore: KeyChainStore) {
-        self.tokenStore = KeyChainStore()
-    }
-    
     func loadToken() -> Token {
         return Token(
-            accessToken: tokenStore.load(property: .accessToken),
-            refreshToken: tokenStore.load(property: .refreshToken),
-            expiresAt: tokenStore.load(property: .expiresAt)
+            accessToken: KeyChainStore.shared.load(property: .accessToken),
+            refreshToken: KeyChainStore.shared.load(property: .refreshToken),
+            expiresAt: KeyChainStore.shared.load(property: .expiresAt)
         )
     }
     

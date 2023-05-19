@@ -2,6 +2,8 @@ import Foundation
 import CoreKeyChainStoreInterface
 
 public final class KeyChainStore: TokenStore {
+    public static let shared = KeyChainStore()
+    
     public func save(property: TokenProperties, value: String) {
         let query: NSDictionary = [
             kSecClass: kSecClassGenericPassword,
