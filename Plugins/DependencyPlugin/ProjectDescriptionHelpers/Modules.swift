@@ -56,6 +56,7 @@ public extension ModulePath {
 
 public extension ModulePath {
     enum Core: String, CaseIterable {
+        case KeyChainStore
         case Network
         
         public static let name: String = "Core"
