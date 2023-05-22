@@ -176,7 +176,8 @@ public extension Target {
     static func feature(example module: ModulePath.Feature, factory: TargetFactory) -> Self {
         var newFactory = factory
         newFactory.name = ModulePath.Feature.name + module.rawValue + "Example"
-        newFactory.sources = .interface
+        newFactory.sources = .exampleSources
+        newFactory.product = .app
         
         return make(factory: newFactory)
     }

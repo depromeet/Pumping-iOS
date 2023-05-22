@@ -1,8 +1,8 @@
 //
 //  HomeRootView.swift
-//  FeatureHome
+//  FeatureHomeInterface
 //
-//  Created by 송영모 on 2023/05/09.
+//  Created by 송영모 on 2023/05/19.
 //
 
 import SwiftUI
@@ -16,7 +16,7 @@ extension HomeRootView: View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             NavigationStack(path: viewStore.binding(\.$path)) {
                 VStack {
-                    Text("Home Root View")
+                    Text("홈 화면 구현")
                 }
             }
         }
