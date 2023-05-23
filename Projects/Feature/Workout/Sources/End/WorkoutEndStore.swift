@@ -6,3 +6,27 @@
 //
 
 import Foundation
+import ComposableArchitecture
+
+import FeatureWorkoutInterface
+
+extension WorkoutEndStore {
+    public init() {
+        let reducer: Reduce<State, Action> = .init { state, action in
+            switch action {
+            case .binding:
+                return .none
+                
+            case .startButtonTapped:
+                return .none
+                
+            case .goToWorkoutTimer:
+                return .none
+            }
+        }
+        
+        self.init(
+            reducer: reducer
+        )
+    }
+}
