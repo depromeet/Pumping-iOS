@@ -18,17 +18,24 @@ public enum WorkoutScene: Hashable {
 public struct WorkoutRootStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
     
-    private let workoutStartStore: WorkoutStartStore
     private let workoutHomeStore: WorkoutHomeStore
+    private let workoutStartStore: WorkoutStartStore
+    private let workoutTimerStore: WorkoutTimerStore
+    private let workoutEndStore: WorkoutEndStore
     
     public init(
         reducer: Reduce<State, Action>,
+        workoutHomeStore: WorkoutHomeStore,
         workoutStartStore: WorkoutStartStore,
-        workoutHomeStore: WorkoutHomeStore
+        workoutTimerStore: WorkoutTimerStore,
+        workoutEndStore: WorkoutEndStore
     ) {
         self.reducer = reducer
-        self.workoutStartStore = workoutStartStore
+        
         self.workoutHomeStore = workoutHomeStore
+        self.workoutStartStore = workoutStartStore
+        self.workoutTimerStore = workoutTimerStore
+        self.workoutEndStore = workoutEndStore
     }
     
     public struct State: Equatable {
@@ -36,6 +43,8 @@ public struct WorkoutRootStore: ReducerProtocol {
         
         public var workoutHome: WorkoutHomeStore.State?
         public var workoutStart: WorkoutStartStore.State?
+        public var workoutTimer: WorkoutTimerStore.State?
+        public var workoutEnd: WorkoutEndStore.State?
         
         public init() {
             
@@ -49,6 +58,8 @@ public struct WorkoutRootStore: ReducerProtocol {
         
         case workoutHome(WorkoutHomeStore.Action)
         case workoutStart(WorkoutStartStore.Action)
+        case workoutTimer(WorkoutTimerStore.Action)
+        case workoutEnd(WorkoutEndStore.Action)
     }
     
     public var body: some ReducerProtocol<State, Action> {
@@ -59,6 +70,12 @@ public struct WorkoutRootStore: ReducerProtocol {
             }
             .ifLet(\.workoutStart, action: /Action.workoutStart) {
                 workoutStartStore
+            }
+            .ifLet(\.workoutTimer, action: /Action.workoutTimer) {
+                workoutTimerStore
+            }
+            .ifLet(\.workoutEnd, action: /Action.workoutEnd) {
+                workoutEndStore
             }
     }
 }

@@ -17,10 +17,12 @@ extension WorkoutTimerView: View {
             VStack {
                 //TODO: 타이머
                 
+                Text("타이머 뷰 입니다.")
+                
                 Spacer()
                 
-                Button("시작하기") {
-                    viewStore.send(.startButtonTapped)
+                Button("종료") {
+                    viewStore.send(.endButtonTapped)
                 }
             }
         }

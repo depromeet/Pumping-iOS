@@ -17,10 +17,10 @@ extension WorkoutTimerStore {
             case .binding:
                 return .none
                 
-            case .startButtonTapped:
-                return .none
+            case .endButtonTapped:
+                return .send(.goToWorkoutEnd)
                 
-            case .goToWorkoutTimer:
+            case .goToWorkoutEnd:
                 return .none
             }
         }

@@ -35,6 +35,28 @@ extension WorkoutRootStore {
             case let .workoutStart(action):
                 switch action {
                 case .goToWorkoutTimer:
+                    state.workoutTimer = .init()
+                    state.path.append(.workoutTimer)
+                    return .none
+                    
+                default:
+                    return .none
+                }
+                
+            case let .workoutTimer(action):
+                switch action {
+                case .goToWorkoutEnd:
+                    state.workoutEnd = .init()
+                    state.path.append(.workoutEnd)
+                    return .none
+                    
+                default:
+                    return .none
+                }
+            case let .workoutEnd(action):
+                switch action {
+                case .backToRoot:
+                    state.path = []
                     return .none
                     
                 default:
@@ -45,8 +67,10 @@ extension WorkoutRootStore {
         
         self.init(
             reducer: reducer,
+            workoutHomeStore: .init(),
             workoutStartStore: .init(),
-            workoutHomeStore: .init()
+            workoutTimerStore: .init(),
+            workoutEndStore: .init()
         )
     }
 }

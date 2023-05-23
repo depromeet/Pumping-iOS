@@ -17,6 +17,8 @@ extension WorkoutStartView: View {
             VStack {
                 //TODO: 스타트 뷰 구현
                 
+                Text("스타트 뷰 입니다.")
+                
                 Spacer()
                 
                 Button("시작하기") {

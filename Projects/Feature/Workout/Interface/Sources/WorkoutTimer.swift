@@ -24,9 +24,9 @@ public struct WorkoutTimerStore: ReducerProtocol {
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         
-        case startButtonTapped
+        case endButtonTapped
         
-        case goToWorkoutTimer
+        case goToWorkoutEnd
     }
     
     public var body: some ReducerProtocol<State, Action> {

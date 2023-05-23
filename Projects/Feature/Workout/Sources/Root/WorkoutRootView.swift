@@ -45,6 +45,16 @@ extension WorkoutRootView: View {
                             WorkoutStartView(store: $0)
                         }
                         
+                    case .workoutTimer:
+                        IfLetStore(self.store.scope(state: \.workoutTimer, action: { .workoutTimer($0) })) {
+                            WorkoutTimerView(store: $0)
+                        }
+                        
+                    case .workoutEnd:
+                        IfLetStore(self.store.scope(state: \.workoutEnd, action: { .workoutEnd($0) })) {
+                            WorkoutEndView(store: $0)
+                        }
+                        
                     default:
                         EmptyView()
                     }

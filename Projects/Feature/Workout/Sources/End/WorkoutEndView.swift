@@ -19,8 +19,8 @@ extension WorkoutEndView: View {
                 
                 Spacer()
                 
-                Button("시작하기") {
-                    viewStore.send(.startButtonTapped)
+                Button("완료") {
+                    viewStore.send(.completeButtonTapped)
                 }
             }
         }

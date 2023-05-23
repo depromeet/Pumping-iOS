@@ -18,7 +18,7 @@ extension WorkoutStartStore {
                 return .none
                 
             case .startButtonTapped:
-                return .none
+                return .send(.goToWorkoutTimer)
                 
             case .goToWorkoutTimer:
                 return .none
