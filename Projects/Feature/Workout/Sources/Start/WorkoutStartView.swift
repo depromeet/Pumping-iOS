@@ -15,7 +15,9 @@ extension WorkoutStartView: View {
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack {
-                Text("하잉")
+                //TODO: 스타트 뷰 구현
+                
+                Spacer()
                 
                 Button("시작하기") {
                     viewStore.send(.startButtonTapped)
