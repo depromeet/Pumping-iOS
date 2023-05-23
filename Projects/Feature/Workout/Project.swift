@@ -51,7 +51,8 @@ let project = Project.makeModule(
                         ]
                     ]),
                 dependencies: [
-                    .feature(interface: .Workout)
+                    .feature(interface: .Workout),
+                    .feature(implements: .Workout)
                 ]
             )
         )

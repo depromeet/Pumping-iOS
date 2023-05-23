@@ -1,10 +1,13 @@
 import SwiftUI
 
+import FeatureWorkoutInterface
+import FeatureWorkout
+
 @main
 struct AppView: App {
     var body: some Scene {
         WindowGroup {
-           Text("Hello Tuist!")
+            WorkoutRootView(store: .init(initialState: .init(), reducer: WorkoutRootStore()._printChanges()))
         }
     }
 }
