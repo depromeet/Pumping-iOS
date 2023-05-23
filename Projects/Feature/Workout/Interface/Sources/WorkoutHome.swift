@@ -1,14 +1,14 @@
 //
-//  WorkoutStart.swift
+//  WorkoutHome.swift
 //  FeatureWorkoutInterface
 //
-//  Created by 송영모 on 2023/05/23.
+//  Created by 송영모 on 2023/05/24.
 //
 
 import Foundation
 import ComposableArchitecture
 
-public struct WorkoutStartStore: ReducerProtocol {
+public struct WorkoutHomeStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
     
     public init(reducer: Reduce<State, Action>) {
@@ -26,7 +26,7 @@ public struct WorkoutStartStore: ReducerProtocol {
         
         case startButtonTapped
         
-        case goToWorkoutTimer
+        case goToWorkoutStart
     }
     
     public var body: some ReducerProtocol<State, Action> {
@@ -36,10 +36,10 @@ public struct WorkoutStartStore: ReducerProtocol {
 }
 
 
-public struct WorkoutStartView {
-    public let store: StoreOf<WorkoutStartStore>
+public struct WorkoutHomeView {
+    public let store: StoreOf<WorkoutHomeStore>
     
-    public init(store: StoreOf<WorkoutStartStore>) {
+    public init(store: StoreOf<WorkoutHomeStore>) {
         self.store = store
     }
 }

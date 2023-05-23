@@ -16,6 +16,12 @@ extension WorkoutStartStore {
             switch action {
             case .binding:
                 return .none
+                
+            case .startButtonTapped:
+                return .none
+                
+            case .goToWorkoutTimer:
+                return .none
             }
         }
         

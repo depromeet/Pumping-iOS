@@ -18,18 +18,35 @@ extension WorkoutRootStore {
                 return .none
                 
             case .startButtonTapped:
-                state.workoutStart = .init()
-                state.path.append(.workoutStart)
+                state.workoutHome = .init()
+                state.path.append(.workoutHome)
                 return .none
                 
-            case .workoutStart:
-                return .none
+            case let .workoutHome(action):
+                switch action {
+                case .goToWorkoutStart:
+                    state.workoutStart = .init()
+                    state.path.append(.workoutStart)
+                    return .none
+                    
+                default:
+                    return .none
+                }
+            case let .workoutStart(action):
+                switch action {
+                case .goToWorkoutTimer:
+                    return .none
+                    
+                default:
+                    return .none
+                }
             }
         }
         
         self.init(
             reducer: reducer,
-            workoutStartStore: .init()
+            workoutStartStore: .init(),
+            workoutHomeStore: .init()
         )
     }
 }

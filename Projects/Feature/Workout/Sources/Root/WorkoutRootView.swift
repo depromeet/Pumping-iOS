@@ -35,6 +35,11 @@ extension WorkoutRootView: View {
                 }
                 .navigationDestination(for: WorkoutScene.self) { scene in
                     switch scene {
+                    case .workoutHome:
+                        IfLetStore(self.store.scope(state: \.workoutHome, action: { .workoutHome($0) })) {
+                            WorkoutHomeView(store: $0)
+                        }
+                        
                     case .workoutStart:
                         IfLetStore(self.store.scope(state: \.workoutStart, action: { .workoutStart($0) })) {
                             WorkoutStartView(store: $0)
