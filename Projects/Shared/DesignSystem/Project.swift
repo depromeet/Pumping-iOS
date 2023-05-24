@@ -18,5 +18,9 @@ let targets: [Target] = [
 
 let project: Project = .init(
     name: "SharedDesignSystem",
-    targets: targets
+    targets: targets,
+    resourceSynthesizers: [
+        .assets(),
+        .fonts()
+    ]
 )
