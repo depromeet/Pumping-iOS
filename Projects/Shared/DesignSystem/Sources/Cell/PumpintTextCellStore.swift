@@ -9,16 +9,22 @@ import Foundation
 
 import ComposableArchitecture
 
-struct PumpingTextCellStore: ReducerProtocol {
-    struct State: Equatable, Identifiable {
-        let id: UUID
+public struct PumpingTextCellStore: ReducerProtocol {
+    public struct State: Equatable, Identifiable {
+        public let id: UUID
+        public let title: String
+        
+        public init(id: UUID, title: String) {
+            self.id = id
+            self.title = title
+        }
     }
     
-    enum Action: Equatable {
+    public enum Action: Equatable {
         case tapped
     }
     
-    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
         switch action {
         case .tapped:
             return .none

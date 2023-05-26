@@ -22,6 +22,9 @@ extension WorkoutHomeStore {
                 
             case .goToWorkoutStart:
                 return .none
+                
+            case let .pumpingTextCell(id, action):
+                return .none
             }
         }
         
