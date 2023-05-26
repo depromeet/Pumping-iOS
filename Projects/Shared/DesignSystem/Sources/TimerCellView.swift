@@ -18,11 +18,26 @@ public struct TimerCellView: View {
 
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
-            HStack {
-                Text(viewStore.state.title)
-                    .font(.pretendard(size: 15, type: .medium))
+            VStack {
+                HStack {
+                    Text("00:00")
+                        .font(.pretendard(size: 21, type: .bold))
+                    
+                    Button(action: {
+                        
+                    }, label: {
+                        Image(systemName: "play.circle.fill")
+                    })
+                }
+                .padding(.bottom, 24)
+                
+                HStack {
+                    Text(viewStore.state.title)
+                        .font(.pretendard(size: 15, type: .medium))
+                        .foregroundColor(.colorGrey900)
 
-                Spacer()
+                    Spacer()
+                }
             }
             .padding()
             .overlay(
