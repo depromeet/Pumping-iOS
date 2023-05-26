@@ -10,14 +10,21 @@ import SwiftUI
 import ComposableArchitecture
 
 import FeatureWorkoutInterface
+import SharedDesignSystem
 
 extension WorkoutTimerView: View {
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack {
-                //TODO: 타이머
-                
                 Text("타이머 뷰 입니다.")
+                
+                ScrollView(.horizontal) {
+                    HStack {
+                        ForEachStore(self.store.scope(state: \.timerCells, action: WorkoutTimerStore.Action.timerCell(id:action:))) {
+                            TimerCellView(store: $0)
+                        }
+                    }
+                }
                 
                 Spacer()
                 
