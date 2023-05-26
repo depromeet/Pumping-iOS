@@ -40,7 +40,7 @@ extension WorkoutRootView: View {
                     }, label: {
                         Text("시작하기")
                             .font(.pretendard(size: 18, type: .bold))
-                            .foregroundColor(.colorGrey900)
+                            .foregroundColor(.colorGrey000)
                             .frame(maxWidth: .infinity)
                             .frame(height: 52)
                     })
