@@ -284,7 +284,7 @@ public extension Target {
         newFactory.name = ModulePath.Shared.name + module.rawValue
         
         if module == .DesignSystem {
-            newFactory.sources = nil
+            newFactory.sources = .sources
             newFactory.resources = ["Resources/**"]
             newFactory.product = .staticFramework
         }

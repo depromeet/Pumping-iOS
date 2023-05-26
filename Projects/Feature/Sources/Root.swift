@@ -15,6 +15,7 @@ import FeatureOnboardingInterface
 import FeatureHome
 import FeatureMyPage
 import FeatureOnboarding
+import SharedDesignSystem
 
 public enum RootScene: Hashable {
     case root
@@ -24,7 +25,9 @@ public enum RootScene: Hashable {
 }
 
 public struct RootStore: ReducerProtocol {
-    public init() {}
+    public init() {
+        SharedDesignSystemFontFamily.registerAllCustomFonts()
+    }
     
     public struct State: Equatable {
         @BindingState public var path: [RootScene] = [] //TODO: 필요성 생각하기
