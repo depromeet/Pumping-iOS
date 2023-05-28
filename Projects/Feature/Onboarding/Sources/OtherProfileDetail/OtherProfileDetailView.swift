@@ -63,7 +63,6 @@ extension OtherProfileDetailView: View {
                     ScrollView {
                         VStack {
                             Spacer()
-                            Spacer()
                             HStack {
                                 Text("운동량")
                                     .font(.pretendard(size: 18, type: .semiBold))
