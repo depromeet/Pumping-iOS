@@ -8,6 +8,8 @@
 import Foundation
 import ComposableArchitecture
 
+import SharedDesignSystem
+
 public struct WorkoutTimerStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
     
@@ -16,6 +18,13 @@ public struct WorkoutTimerStore: ReducerProtocol {
     }
     
     public struct State: Equatable {
+        public var timerCells: IdentifiedArrayOf<TimerCellStore.State> = [
+            .init(id: .init(), title: "어깨"),
+            .init(id: .init(), title: "가슴"),
+            .init(id: .init(), title: "팔"),
+            .init(id: .init(), title: "등"),
+        ]
+        
         public init() {
             
         }
@@ -25,6 +34,7 @@ public struct WorkoutTimerStore: ReducerProtocol {
         case binding(BindingAction<State>)
         
         case endButtonTapped
+        case timerCell(id: TimerCellStore.State.ID, action: TimerCellStore.Action)
         
         case goToWorkoutEnd
     }
