@@ -10,20 +10,34 @@ import SwiftUI
 import ComposableArchitecture
 
 import FeatureWorkoutInterface
+import SharedDesignSystem
 
 extension WorkoutStartView: View {
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack {
-                //TODO: 스타트 뷰 구현
+                Spacer()
                 
-                Text("스타트 뷰 입니다.")
+                Rectangle()
+                    .frame(height: 391)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.white)
                 
                 Spacer()
                 
-                Button("시작하기") {
+                Button(action: {
                     viewStore.send(.startButtonTapped)
-                }
+                }, label: {
+                    Text("운동시작")
+                        .font(.pretendard(size: 18, type: .bold))
+                        .foregroundColor(.colorGrey000)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 52)
+                })
+                .background(Color.colorCyan300)
+                .cornerRadius(12)
+                .padding(.horizontal)
+                .padding(.bottom, 34)
             }
         }
     }
