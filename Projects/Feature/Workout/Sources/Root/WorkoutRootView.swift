@@ -11,28 +11,45 @@ import SwiftUI
 import ComposableArchitecture
 
 import FeatureWorkoutInterface
+import SharedDesignSystem
 
 extension WorkoutRootView: View {
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             NavigationStack(path: viewStore.binding(\.$path)) {
                 VStack {
-                    Text("운동을 시작해보세요")
-                        .padding(.top, 50)
-                        .padding(.bottom, 85)
+                    HStack {
+                        Spacer()
+                        
+                        Text("운동을 시작해보세요")
+                            .font(.pretendard(size: 24, type: .bold))
+                            .padding(.top, 50)
+                            .padding(.bottom, 85)
+                        
+                        Spacer()
+                    }
                     
                     Circle()
                         .frame(width: 327, height: 327)
-                        .foregroundColor(.mint)
+                        .foregroundColor(.colorCyan300)
                     
                     Spacer()
                     
-                    Button("시작하기") {
+                    Button(action: {
                         viewStore.send(.startButtonTapped)
-                    }
-                    .buttonStyle(.bordered)
+                    }, label: {
+                        Text("시작하기")
+                            .font(.pretendard(size: 18, type: .bold))
+                            .foregroundColor(.colorGrey000)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 52)
+                    })
+                    .background(Color.colorCyan300)
+                    .cornerRadius(12)
+                    .padding(.horizontal)
                     .padding(.bottom, 34)
                 }
+                .background(Color.colorGrey000)
                 .navigationDestination(for: WorkoutScene.self) { scene in
                     switch scene {
                     case .workoutHome:

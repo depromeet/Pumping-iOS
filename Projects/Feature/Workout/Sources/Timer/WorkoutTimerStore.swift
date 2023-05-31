@@ -20,6 +20,9 @@ extension WorkoutTimerStore {
             case .endButtonTapped:
                 return .send(.goToWorkoutEnd)
                 
+            case let .timerCell(id, action):
+                return .none
+                
             case .goToWorkoutEnd:
                 return .none
             }
