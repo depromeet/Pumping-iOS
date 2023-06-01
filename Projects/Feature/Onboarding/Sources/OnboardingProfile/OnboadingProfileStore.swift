@@ -6,15 +6,12 @@
 //
 
 import ComposableArchitecture
-
 import FeatureOnboardingInterface
 
-extension OtherProfileStore {
+extension OnboadingProfileStore {
     public init() {
-        let reducer: Reduce<State, Action> = .init { state, action in
+        let reducer: Reduce<State, Action> = Reduce { state, action in
             switch action {
-            case let .tapCell(index):
-                return .send(.goToOtherProfileDetail(.init(index: index)))
                 
             default:
                 return .none

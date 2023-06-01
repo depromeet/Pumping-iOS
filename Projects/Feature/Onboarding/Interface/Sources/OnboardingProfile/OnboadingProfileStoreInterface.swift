@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 
-public struct OtherProfileStore: ReducerProtocol {
+public struct OnboadingProfileStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
     
     public init(reducer: Reduce<State, Action>) {
@@ -22,23 +22,11 @@ public struct OtherProfileStore: ReducerProtocol {
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
-        
-        case tapCell(Int)
-        
-        case goToOtherProfileDetail(OtherProfileDetailStore.State)
+
     }
     
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()
         reducer
-    }
-}
-
-
-public struct OtherProfileView {
-    public let store: StoreOf<OtherProfileStore>
-    
-    public init(store: StoreOf<OtherProfileStore>) {
-        self.store = store
     }
 }

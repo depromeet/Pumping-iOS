@@ -6,12 +6,11 @@
 //
 
 import SwiftUI
-
 import ComposableArchitecture
 
-import FeatureOnboardingInterface
-
-extension OtherProfileView: View {
+public struct OnboardingProfileView : View {
+    public let store: StoreOf<OnboadingProfileStore>
+    
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack{
@@ -41,7 +40,7 @@ extension OtherProfileView: View {
     }
     
     @ViewBuilder
-    func cell(_ store: ViewStore<OtherProfileStore.State, OtherProfileStore.Action>, index: Int) -> some View {
+    func cell(_ store: ViewStore<OnboadingProfileStore.State, OnboadingProfileStore.Action>, index: Int) -> some View {
         HStack {
             Circle()
                 .frame(width: 50, height: 50)
@@ -60,9 +59,6 @@ extension OtherProfileView: View {
                     Spacer()
                 }
             }
-        }
-        .onTapGesture {
-            store.send(.tapCell(index))
         }
     }
 }

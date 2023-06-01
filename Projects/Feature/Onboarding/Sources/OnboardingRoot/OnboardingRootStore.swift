@@ -13,54 +13,23 @@ import FeatureOnboardingInterface
 
 extension OnboardingRootStore {
     public init() {
-        let reduce: Reduce<State, Action> = .init { state, action in
+        let reduce: Reduce<State, Action> = Reduce { state, action in
             switch action {
             case .binding:
                 return .none
                 
-            case .tapNicknameButton:
-                state.path.append(.nickname)
-                state.nickname = .init()
+            case .auth:
                 return .none
                 
-            case .tapOtherProfileButton:
-                state.path.append(.otherProfile)
-                state.otherProfile = .init()
-                return .none
-                
-            case let .nickname(action):
-                switch action {
-                case .tapNextButton:
-                    state.path.append(.signUp)
-                    state.signUp = .init()
-                }
-                return .none
-                
-            case .signUp:
-                return .none
-                
-            case let .otherProfile(action):
-                switch action {
-                case let .goToOtherProfileDetail(otherProfileDetailState):
-                    state.path.append(.otherProfileDetail)
-                    state.otherProfileDetail = otherProfileDetailState
-                    return .none
-                    
-                default:
-                    return .none
-                }
-                
-            case .otherProfileDetail:
+            case let .profile(action):
                 return .none
             }
         }
         
         self.init(
             reduce: reduce,
-            onboardingNicknameStore: .init(),
-            onboardingSignUpStore: .init(),
-            otherProfileStore: .init(),
-            otherProfileDetailStore: .init()
+            onboardingAuthStore: OnboardingAuthStore(),
+            onboadingProfileStore: OnboadingProfileStore()
         )
     }
 }
