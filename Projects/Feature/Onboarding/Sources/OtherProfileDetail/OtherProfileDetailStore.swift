@@ -13,6 +13,12 @@ extension OtherProfileDetailStore {
     public init() {
         let reducer: Reduce<State, Action> = .init { state, action in
             switch action {
+            case .tapHeartButton:
+                return .none
+
+            case .tapComparisonButton:
+                return .none
+                
             case .binding:
                 return .none
             }

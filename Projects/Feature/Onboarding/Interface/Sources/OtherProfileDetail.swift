@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import Foundation
 
 public struct OtherProfileDetailStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
@@ -16,7 +17,7 @@ public struct OtherProfileDetailStore: ReducerProtocol {
     
     public struct State: Equatable {
         public let index: Int
-        
+
         public init(index: Int) {
             self.index = index
         }
@@ -24,6 +25,9 @@ public struct OtherProfileDetailStore: ReducerProtocol {
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
+
+        case tapHeartButton
+        case tapComparisonButton
     }
     
     public var body: some ReducerProtocol<State, Action> {
