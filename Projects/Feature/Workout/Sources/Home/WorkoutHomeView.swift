@@ -57,20 +57,14 @@ extension WorkoutHomeView: View {
                 .padding(.horizontal)
                 
                 Spacer()
-                
+
                 Button(action: {
                     viewStore.send(.startButtonTapped)
                 }, label: {
-                    Text("시작하기")
-                        .font(.pretendard(size: 18, type: .bold))
-                        .foregroundColor(.colorGrey000)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 52)
+                    Text(PumpingButtonStyle.start.title)
+                        .modifier(PumpingButtonTextStyleModifier(style: .start))
                 })
-                .background(Color.colorCyan300)
-                .cornerRadius(12)
-                .padding(.horizontal)
-                .padding(.bottom, 34)
+                .modifier(PumpingButtonStyleModifier(style: .start))
             }
             .navigationBarBackButtonHidden(true)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
