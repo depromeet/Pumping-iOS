@@ -1,5 +1,5 @@
 //
-//  OtherProfile.swift
+//  OnboardingProfileView.swift
 //  FeatureOnboardingInterface
 //
 //  Created by 송영모 on 2023/05/11.
@@ -7,58 +7,85 @@
 
 import SwiftUI
 import ComposableArchitecture
+import SharedDesignSystem
 
 public struct OnboardingProfileView : View {
     public let store: StoreOf<OnboadingProfileStore>
     
     public var body: some View {
-        WithViewStore(self.store, observe: { $0 }) { viewStore in
-            VStack{
-                TabView {
-                    Color.red
-                    Color.yellow
-                    Color.blue
-                }
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-                .frame(height: 300)
+        WithViewStore(self.store) { viewStore in
+            VStack(spacing : 32){
                 
-                ScrollView {
-                    VStack {
-                        ForEach(0..<10) { i in
-                            cell(viewStore, index: i)
-                                .padding()
-                                .background(Color(UIColor.systemGray5))
-                                .cornerRadius(10)
-                                .padding(.horizontal)
-                        }
-                    }
+                PumpingTextField(text: viewStore.binding(\.$name))
+                    .setTitleText("이름")
+                
+                
+                genderSelectionView(viewStore: viewStore)
+                
+                PumpingWheelPicker(value: viewStore.binding(\.$height), pickerUnit: .height)
+                    .setTitleText("키")
+                
+                PumpingWheelPicker(value: viewStore.binding(\.$weight), pickerUnit: .weight)
+                    .setTitleText("몸무게")
+                
+                Spacer()
+                
+                PumpingSubmitButton(title : "계속하기", isEnable : true) {
+                    //                    viewStore.send(.moveToNextStep)
                 }
+                
             }
-            
-            Spacer()
+            .ignoresSafeArea(.keyboard, edges: .bottom)
+            .padding(.horizontal)
+            .navigationBarBackButtonHidden(true)
         }
     }
     
+    //TODO: 성별 타입으로 변경
     @ViewBuilder
-    func cell(_ store: ViewStore<OnboadingProfileStore.State, OnboadingProfileStore.Action>, index: Int) -> some View {
-        HStack {
-            Circle()
-                .frame(width: 50, height: 50)
+    private func genderSelectionView(viewStore : ViewStoreOf<OnboadingProfileStore>) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("성별")
+                .font(.pretendard(size: 16, type: .bold))
+                .foregroundColor(.colorGrey800)
+                .frame(maxWidth: .infinity, alignment: .leading)
             
-            VStack {
-                HStack {
-                    Text("\(index)위 채령")
-                    
-                    Spacer()
+            HStack {
+                Button {
+                    viewStore.send(.setGender("남성"))
+                } label: {
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(viewStore.state.gender == "남성" ? Color.colorCyanPrimary : Color.colorGrey500, lineWidth : 1)
+                        .frame(height: 50)
+                        .overlay {
+                            Text("남성")
+                                .font(.pretendard(size: 15, type: .medium))
+                                .foregroundColor(viewStore.state.gender == "남성" ? .colorGrey000 : .colorGrey500)
+                        }
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(viewStore.state.gender == "남성" ? Color.colorCyan50 : Color.clear)
+                        )
                 }
-                .padding(.bottom, 5)
                 
-                HStack {
-                    Text("운동 횟수 5회 운동 시간 02:40")
-                    
-                    Spacer()
+                Button {
+                    viewStore.send(.setGender("여성"))
+                } label: {
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(viewStore.state.gender == "여성" ? Color.colorCyanPrimary : Color.colorGrey500 , lineWidth : 1)
+                        .frame(height: 50)
+                        .overlay {
+                            Text("여성")
+                                .font(.pretendard(size: 15, type: .medium))
+                                .foregroundColor(viewStore.state.gender == "여성" ? .colorGrey000 : .colorGrey500)
+                        }
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(viewStore.state.gender == "여성" ? Color.colorCyan50 : Color.clear)
+                        )
                 }
             }
         }
     }
+    
 }

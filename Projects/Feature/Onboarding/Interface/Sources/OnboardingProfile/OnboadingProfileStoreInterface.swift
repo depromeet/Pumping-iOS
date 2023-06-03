@@ -15,14 +15,19 @@ public struct OnboadingProfileStore: ReducerProtocol {
     }
     
     public struct State: Equatable {
-        public init() {
-            
-        }
+        @BindingState public var name : String = ""
+        public var gender : String?
+        @BindingState public var height : Int = 0
+        @BindingState public var weight : Int = 0
+        public var isSatisfied : Bool = false
+        
+        public init() {}
     }
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
-
+        case setGender(String)
+        case moveToNextStep
     }
     
     public var body: some ReducerProtocol<State, Action> {

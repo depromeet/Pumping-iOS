@@ -12,8 +12,13 @@ extension OnboadingProfileStore {
     public init() {
         let reducer: Reduce<State, Action> = Reduce { state, action in
             switch action {
+            case .binding:
                 
-            default:
+                return .none
+            case let .setGender(gender):
+                state.gender = gender
+                return .none
+            case.moveToNextStep :
                 return .none
             }
         }

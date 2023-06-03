@@ -8,7 +8,8 @@
 import Foundation
 
 public enum OnboardingScene: Hashable {
-    case root
     case auth
+    case permission
     case profile
+    case crew
 }

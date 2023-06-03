@@ -9,7 +9,6 @@ import SwiftUI
 import ComposableArchitecture
 import SharedDesignSystem
 
-
 public struct OnboardingRootView : View {
     public let store: StoreOf<OnboardingRootStore>
     
@@ -23,24 +22,33 @@ public struct OnboardingRootView : View {
                 VStack {
                     Text("Root View")
 
-                    PumpingSubmitButton(title: "계속하기", isEnable: false) {
-                        print("hi")
+                    PumpingSubmitButton(title: "계속하기", isEnable: true) {
+                        viewStore.send(.moveToAuth)
                     }
                     
-                }
+                }                
                 .navigationDestination(for: OnboardingScene.self) { scene in
                     switch scene {
                     case .auth:
-                        IfLetStore(self.store.scope(state: \.auth, action: { .auth($0) })) {
+                        IfLetStore(store.scope(state: \.auth , action: { .auth($0) })) {
                             OnboardingAuthView(store: $0)
                         }
                         
+                    case .permission:
+                        IfLetStore(store.scope(state: \.permission, action: { .permission($0) })) {
+                            OnboardingPermissionView(store: $0)
+                        }
+                        
                     case .profile:
-                        IfLetStore(self.store.scope(state: \.profile, action: { .profile($0) })) {
+                        IfLetStore(store.scope(state: \.profile, action: { .profile($0) })) {
                             OnboardingProfileView(store: $0)
                         }
-                    default:
-                        EmptyView()
+                        
+                    case .crew:
+                        IfLetStore(store.scope(state: \.crew, action: { .crew($0) })) {
+                            OnboardingCrewView(store: $0)
+                        }
+                        
                     }
                 }
             }
