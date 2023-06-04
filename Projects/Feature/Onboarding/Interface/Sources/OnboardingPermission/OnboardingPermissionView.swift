@@ -15,18 +15,19 @@ struct OnboardingPermissionView: View {
     
     public var body: some View {
         WithViewStore(self.store) { viewStore in
-            VStack(alignment: .leading) {
-                
-                permissionTitleView()
-                
+            ZStack {
                 Color.colorGreen700
                     .frame(height: 353)
                 
-                Spacer()
-                
-                PumpingSubmitButton(title : "권한 부여", isEnable : true) {
-                    viewStore.send(.moveToNextStep)
-//                    viewStore.send(.requestHealthKitAuthorization)
+                VStack(alignment : .leading) {
+                    permissionTitleView()
+                    
+                    Spacer()
+                    
+                    PumpingSubmitButton(title: "권한 부여", isEnable: true) {
+                        viewStore.send(.moveToNextStep)
+                        // viewStore.send(.requestHealthKitAuthorization)
+                    }
                 }
             }
             .navigationBarBackButtonHidden(true)

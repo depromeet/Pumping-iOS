@@ -105,6 +105,12 @@ extension PumpingTextField {
         return copy
     }
     
+    public func setPlaceHolderText(_ placeHolderText: String) -> Self {
+        var copy = self
+        copy.placeHolderText = placeHolderText
+        return copy
+    }
+    
     public func setMaxCount(_ count: Int) -> Self {
         var copy = self
         copy.maxCount = count

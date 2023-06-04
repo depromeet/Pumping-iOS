@@ -24,11 +24,11 @@ extension OnboardingRootStore {
                 
             case let .auth(action):
                 switch action {
-                case .binding:
-                    return .none
                 case .moveToNextStep :
                     state.permission = .init()
                     state.path.append(.permission)
+                default :
+                    return .none
                 }
                 return .none
                 
@@ -37,29 +37,28 @@ extension OnboardingRootStore {
                 case .moveToNextStep :
                     state.profile = .init()
                     state.path.append(.profile)
-                case .requestHealthKitAuthorization:
+                default :
                     return .none
                 }
                 return .none
                 
             case let .profile(action):
                 switch action {
-                case .binding:
-                    return .none
-                case .setGender:
-                    return .none
                 case .moveToNextStep :
-                    state.profile = .init()
+                    state.crew = .init()
                     state.path.append(.crew)
+                default :
+                    return .none
                 }
                 return .none
                 
             case let .crew(action):
                 switch action {
                 case .moveToNextStep :
-                    state.path.removeAll()
+                    return .none
+                default :
+                    return .none
                 }
-                return .none
             }
         }
         

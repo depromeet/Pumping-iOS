@@ -13,13 +13,28 @@ extension OnboardingCrewStore {
     public init() {
         let reducer : Reduce<State, Action> = Reduce { state, action in
             switch action {
-            case.moveToNextStep :
+            case .binding:
                 return .none
+            case .moveToNextStep :
+                return .none
+            case .crewJoinButtonTapped:
+                state.showCrewJoin = true
+                state.crewJoin = .init()
+                return .none
+            case let .crewJoin(action):
+                switch action {
+                case .crewJoinViewDidDisappear:
+                    state.showCrewJoin = false
+                    return .none
+                default :
+                    return .none
+                }
             }
         }
         
         self.init(
-            reducer: reducer
+            reducer: reducer,
+            onboardingCrewJoinStore: OnboardingCrewJoinStore()
         )
     }
 }

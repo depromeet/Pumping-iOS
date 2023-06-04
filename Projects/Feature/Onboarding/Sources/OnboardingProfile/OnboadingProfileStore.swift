@@ -13,10 +13,16 @@ extension OnboadingProfileStore {
         let reducer: Reduce<State, Action> = Reduce { state, action in
             switch action {
             case .binding:
-                
-                return .none
+                return .send(.checkAllSatisfied)
             case let .setGender(gender):
                 state.gender = gender
+                return .none
+            case .checkAllSatisfied:
+                if !state.name.isEmpty && state.height != 0 && state.weight != 0 {
+                    state.isSatisfied = true
+                } else {
+                    state.isSatisfied = false
+                }
                 return .none
             case.moveToNextStep :
                 return .none

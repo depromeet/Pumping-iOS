@@ -18,6 +18,7 @@ public struct OnboardingProfileView : View {
                 
                 PumpingTextField(text: viewStore.binding(\.$name))
                     .setTitleText("이름")
+                    .setPlaceHolderText("최대 15자 이내로 작성해주세요.")
                 
                 
                 genderSelectionView(viewStore: viewStore)
@@ -30,8 +31,8 @@ public struct OnboardingProfileView : View {
                 
                 Spacer()
                 
-                PumpingSubmitButton(title : "계속하기", isEnable : true) {
-                    //                    viewStore.send(.moveToNextStep)
+                PumpingSubmitButton(title : "계속하기", isEnable : viewStore.isSatisfied) {
+                    viewStore.send(.moveToNextStep)
                 }
                 
             }

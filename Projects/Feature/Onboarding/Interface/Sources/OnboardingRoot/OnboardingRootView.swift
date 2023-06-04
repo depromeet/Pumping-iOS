@@ -21,12 +21,10 @@ public struct OnboardingRootView : View {
             NavigationStack(path: viewStore.binding(\.$path)) {
                 VStack {
                     Text("Root View")
-
-                    PumpingSubmitButton(title: "계속하기", isEnable: true) {
-                        viewStore.send(.moveToAuth)
-                    }
-                    
-                }                
+                }
+                .onAppear {
+                    viewStore.send(.moveToAuth)
+                }
                 .navigationDestination(for: OnboardingScene.self) { scene in
                     switch scene {
                     case .auth:

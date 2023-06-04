@@ -1,13 +1,15 @@
 //
-//  OtherProfile.swift
+//  OnboardingCrewJoinStore.swift
 //  FeatureOnboardingInterface
 //
-//  Created by 송영모 on 2023/05/11.
+//  Created by 박현우 on 2023/06/04.
 //
 
+import Foundation
 import ComposableArchitecture
 
-public struct OnboadingProfileStore: ReducerProtocol {
+public struct OnboardingCrewJoinStore : ReducerProtocol {
+    
     private let reducer: Reduce<State, Action>
     
     public init(reducer: Reduce<State, Action>) {
@@ -15,24 +17,18 @@ public struct OnboadingProfileStore: ReducerProtocol {
     }
     
     public struct State: Equatable {
-        @BindingState public var name : String = ""
-        public var gender : String?
-        @BindingState public var height : Int = 0
-        @BindingState public var weight : Int = 0
-        public var isSatisfied : Bool = false
-        
+        @BindingState public var code: String = ""
         public init() {}
     }
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
-        case setGender(String)
-        case checkAllSatisfied
-        case moveToNextStep
+        case crewJoinViewDidDisappear
     }
     
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()
         reducer
     }
+    
 }
