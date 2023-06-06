@@ -27,6 +27,8 @@ public struct PumpingTextCellView: View {
                 //TODO: isTapped가 True이면 이미지 추가
             }
             .padding()
+            .background(viewStore.isTapped ? Color.colorCyan50 : Color.colorGrey300)
+            .cornerRadius(8)
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(viewStore.isTapped ? Color.colorCyan300 : Color.colorGrey300, lineWidth: 1)
