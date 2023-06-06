@@ -11,7 +11,7 @@ import ComposableArchitecture
 
 import SharedDesignSystem
 
-public struct WorkoutRootView {
+public struct WorkoutRootView: View {
     public let store: StoreOf<WorkoutRootStore>
     
     public init(store: StoreOf<WorkoutRootStore>) {

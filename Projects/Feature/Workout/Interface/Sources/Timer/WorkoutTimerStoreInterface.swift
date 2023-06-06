@@ -11,6 +11,8 @@ import ComposableArchitecture
 import SharedDesignSystem
 
 public struct WorkoutTimerStore: ReducerProtocol {
+    public enum Mode { case timer, counter }
+    
     private let reducer: Reduce<State, Action>
     
     public init(reducer: Reduce<State, Action>) {
@@ -24,6 +26,8 @@ public struct WorkoutTimerStore: ReducerProtocol {
             .init(id: .init(), title: "팔"),
             .init(id: .init(), title: "등"),
         ]
+        
+        public var mode: Mode = .counter
         
         public init() {
             
