@@ -8,59 +8,66 @@
 import Foundation
 
 import ComposableArchitecture
-
 import FeatureOnboardingInterface
 
 extension OnboardingRootStore {
     public init() {
-        let reduce: Reduce<State, Action> = .init { state, action in
+        let reducer: Reduce<State, Action> = Reduce { state, action in
             switch action {
             case .binding:
                 return .none
                 
-            case .tapNicknameButton:
-                state.path.append(.nickname)
-                state.nickname = .init()
+            case .moveToAuth :
+                state.auth = .init()
+                state.path.append(.auth)
                 return .none
                 
-            case .tapOtherProfileButton:
-                state.path.append(.otherProfile)
-                state.otherProfile = .init()
-                return .none
-                
-            case let .nickname(action):
+            case let .auth(action):
                 switch action {
-                case .tapNextButton:
-                    state.path.append(.signUp)
-                    state.signUp = .init()
+                case .moveToNextStep :
+                    state.permission = .init()
+                    state.path.append(.permission)
+                default :
+                    return .none
+                }
+                return .none
+                
+            case let .permission(action):
+                switch action {
+                case .moveToNextStep :
+                    state.profile = .init()
+                    state.path.append(.profile)
+                default :
+                    return .none
+                }
+                return .none
+                
+            case let .profile(action):
+                switch action {
+                case .moveToNextStep :
+                    state.crew = .init()
+                    state.path.append(.crew)
+                default :
+                    return .none
                 }
                 return .none
                 
-            case .signUp:
-                return .none
-                
-            case let .otherProfile(action):
+            case let .crew(action):
                 switch action {
-                case let .goToOtherProfileDetail(otherProfileDetailState):
-                    state.path.append(.otherProfileDetail)
-                    state.otherProfileDetail = otherProfileDetailState
+                case .moveToNextStep :
                     return .none
-                    
-                default:
+                default :
                     return .none
                 }
-                
-            case .otherProfileDetail:
-                return .none
             }
         }
         
         self.init(
-            reduce: reduce,
-            onboardingNicknameStore: .init(),
-            onboardingSignUpStore: .init(),
-            otherProfileStore: .init(),
-            otherProfileDetailStore: .init()
+            reducer: reducer,
+            onboardingAuthStore: OnboardingAuthStore(),
+            onboardingPermissionStore: OnboardingPermissionStore(),
+            onboadingProfileStore: OnboadingProfileStore(),
+            onboardingCrewStore: OnboardingCrewStore()
         )
     }
 }

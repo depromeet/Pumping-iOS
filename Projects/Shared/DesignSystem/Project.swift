@@ -12,7 +12,7 @@ import DependencyPlugin
 let targets: [Target] = [
     .shared(
         implements: .DesignSystem,
-        factory: .init()
+        factory: TargetFactory(dependencies: [.external(name: "ComposableArchitecture")])
     )
 ]
 
