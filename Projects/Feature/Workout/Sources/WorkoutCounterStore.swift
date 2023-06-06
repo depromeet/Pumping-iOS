@@ -20,21 +20,7 @@ extension WorkoutCounterStore {
                 
             case .dismiss: return .none
             }
-            
         }
-            
-//            .init { state, action in
-//            switch action {
-//            case .binding:
-//                return .none
-//
-//            case .completeButtonTapped:
-//                return .send(.backToRoot)
-//
-//            case .backToRoot:
-//                return .none
-//            }
-//        }
         
         self.init(
             reducer: reducer
