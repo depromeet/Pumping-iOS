@@ -17,11 +17,11 @@ import FeatureMyPage
 import FeatureOnboarding
 import SharedDesignSystem
 
-public struct MainView: View {
-    public let store: StoreOf<MainStore>
+public struct RootView: View {
+    public let store: StoreOf<RootStore>
     
     public init() {
-        store = .init(initialState: .init(), reducer: MainStore()._printChanges())
+        store = .init(initialState: .init(), reducer: RootStore()._printChanges())
     }
     
     public var body: some View {

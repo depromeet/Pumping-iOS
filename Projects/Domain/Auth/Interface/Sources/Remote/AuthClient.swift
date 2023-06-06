@@ -7,31 +7,34 @@
 
 import Foundation
 import ComposableArchitecture
+import AuthenticationServices
 
 public struct AuthClient {
-    public var signUp: @Sendable (SignUpRequest) async throws -> SignUpResponse
-    public var signOut: @Sendable (SignOutRequest) async throws -> SignOutResponse
-    
-    public init(signUp: @Sendable @escaping (SignUpRequest) -> SignUpResponse, signOut: @Sendable @escaping (SignOutRequest) -> SignOutResponse) {
-        self.signUp = signUp
-        self.signOut = signOut
+    public var setUserInfo: (ASAuthorizationAppleIDCredential) -> Void
+    public var getUserInfo: @Sendable () async throws -> UserInfo
+   
+    public init(setUserInfo: @escaping (ASAuthorizationAppleIDCredential) -> Void,
+                getUserInfo: @Sendable @escaping () -> UserInfo) {
+        self.setUserInfo = setUserInfo
+        self.getUserInfo = getUserInfo
     }
 }
 
 extension AuthClient: TestDependencyKey {
-    public static let previewValue = Self(
-        signUp: { _ in .mock },
-        signOut: { _ in .mock }
+    public static var previewValue = Self(
+        setUserInfo: unimplemented("\(Self.self).setUserInfo"),
+        getUserInfo: unimplemented("\(Self.self).getUserInfo")
+    )
+    
+    public static let testValue = Self(
+        setUserInfo: unimplemented("\(Self.self).setUserInfo"),
+        getUserInfo: unimplemented("\(Self.self).getUserInfo")
     )
 
-    public static let testValue = Self(
-        signUp: unimplemented("\(Self.self).signUp"),
-        signOut: unimplemented("\(Self.self).signOut")
-    )
 }
 
 extension DependencyValues {
-    var authClient: AuthClient {
+    public var authClient: AuthClient {
         get { self[AuthClient.self] }
         set { self[AuthClient.self] = newValue }
     }

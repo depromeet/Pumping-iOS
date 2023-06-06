@@ -15,7 +15,7 @@ import FeatureMyPage
 import FeatureOnboarding
 import SharedDesignSystem
 
-public struct MainStore: ReducerProtocol {
+public struct RootStore: ReducerProtocol {
     public init() {
         SharedDesignSystemFontFamily.registerAllCustomFonts()
     }

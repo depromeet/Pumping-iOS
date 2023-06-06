@@ -7,13 +7,12 @@
 
 import Foundation
 import ComposableArchitecture
-<<<<<<< HEAD:Projects/Feature/Onboarding/Interface/Sources/OnboardingAuth/OnboardingAuthStoreInterface.swift
 import AuthenticationServices
-=======
-import Foundation
->>>>>>> develop:Projects/Feature/Onboarding/Interface/Sources/OtherProfileDetail.swift
+import DomainAuthInterface
 
 public struct OnboardingAuthStore: ReducerProtocol {
+    
+    @Dependency(\.authClient) public var authClient
     
     private let reducer: Reduce<State, Action>
     
@@ -22,31 +21,18 @@ public struct OnboardingAuthStore: ReducerProtocol {
     }
     
     public struct State: Equatable {
-<<<<<<< HEAD:Projects/Feature/Onboarding/Interface/Sources/OnboardingAuth/OnboardingAuthStoreInterface.swift
         @BindingState public var tabViewIndex : Int = 0
-        public var isAuthorized : Bool = false
         
         public init() { }
-=======
-        public let index: Int
-
-        public init(index: Int) {
-            self.index = index
-        }
->>>>>>> develop:Projects/Feature/Onboarding/Interface/Sources/OtherProfileDetail.swift
     }
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
-<<<<<<< HEAD:Projects/Feature/Onboarding/Interface/Sources/OnboardingAuth/OnboardingAuthStoreInterface.swift
         case signInWithApple(ASAuthorizationAppleIDCredential)
         case signInWithAppleError(String)
+        case getUserInfo
+        case getUserInfoResponse(TaskResult<UserInfo>)
         case moveToNextStep
-=======
-
-        case tapHeartButton
-        case tapComparisonButton
->>>>>>> develop:Projects/Feature/Onboarding/Interface/Sources/OtherProfileDetail.swift
     }
     
     public var body: some ReducerProtocol<State, Action> {

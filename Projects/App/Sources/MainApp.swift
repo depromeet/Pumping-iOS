@@ -12,7 +12,7 @@ import Feature
 struct MainApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+            RootView()
         }
     }
 }
