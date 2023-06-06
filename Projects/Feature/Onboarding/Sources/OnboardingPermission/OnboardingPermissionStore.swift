@@ -18,7 +18,7 @@ extension OnboardingPermissionStore {
                 return .none
             case .requestHealthKitAuthorization:
                 HealthKitAuthorizationHelper.shared.checkAuthorizationAndRequest {
-                   
+                    
                 }
                 
                 return .none

@@ -118,6 +118,10 @@ extension PumpingTextField {
     }
     
     private func getBorderColor() -> Color {
+        if maxCount <= text.wrappedValue.count {
+            return Color.red
+        }
+        
         if isFocused {
             return focusedBorderColor
         } else {

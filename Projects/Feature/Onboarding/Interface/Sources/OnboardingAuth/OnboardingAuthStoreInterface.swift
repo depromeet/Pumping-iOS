@@ -7,6 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
+import AuthenticationServices
 
 public struct OnboardingAuthStore: ReducerProtocol {
     
@@ -25,6 +26,8 @@ public struct OnboardingAuthStore: ReducerProtocol {
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
+        case signInWithApple(ASAuthorizationAppleIDCredential)
+        case signInWithAppleError(String)
         case moveToNextStep
     }
     
