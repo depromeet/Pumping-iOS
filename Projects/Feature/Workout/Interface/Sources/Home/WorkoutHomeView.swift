@@ -2,17 +2,22 @@
 //  WorkoutHomeView.swift
 //  FeatureWorkoutInterface
 //
-//  Created by 송영모 on 2023/05/23.
+//  Created by 송영모 on 2023/06/06.
 //
 
 import SwiftUI
 
 import ComposableArchitecture
 
-import FeatureWorkoutInterface
 import SharedDesignSystem
 
-extension WorkoutHomeView: View {
+public struct WorkoutHomeView : View {
+    public let store: StoreOf<WorkoutHomeStore>
+    
+    public init(store: StoreOf<WorkoutHomeStore>) {
+        self.store = store
+    }
+    
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack(spacing: .zero) {

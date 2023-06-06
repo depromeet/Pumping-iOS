@@ -44,12 +44,3 @@ public struct WorkoutTimerStore: ReducerProtocol {
         reducer
     }
 }
-
-
-public struct WorkoutTimerView {
-    public let store: StoreOf<WorkoutTimerStore>
-    
-    public init(store: StoreOf<WorkoutTimerStore>) {
-        self.store = store
-    }
-}

@@ -1,14 +1,14 @@
 //
-//  WorkoutStart.swift
+//  WorkoutEnd.swift
 //  FeatureWorkoutInterface
 //
-//  Created by 송영모 on 2023/05/23.
+//  Created by 송영모 on 2023/05/24.
 //
 
 import Foundation
 import ComposableArchitecture
 
-public struct WorkoutStartStore: ReducerProtocol {
+public struct WorkoutEndStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
     
     public init(reducer: Reduce<State, Action>) {
@@ -17,29 +17,20 @@ public struct WorkoutStartStore: ReducerProtocol {
     
     public struct State: Equatable {
         public init() {
-
+            
         }
     }
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         
-        case startButtonTapped
+        case completeButtonTapped
         
-        case goToWorkoutTimer
+        case backToRoot
     }
     
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()
         reducer
-    }
-}
-
-
-public struct WorkoutStartView {
-    public let store: StoreOf<WorkoutStartStore>
-    
-    public init(store: StoreOf<WorkoutStartStore>) {
-        self.store = store
     }
 }

@@ -12,7 +12,13 @@ import ComposableArchitecture
 import FeatureWorkoutInterface
 import SharedDesignSystem
 
-extension WorkoutTimerView: View {
+public struct WorkoutTimerView: View {
+    public let store: StoreOf<WorkoutTimerStore>
+    
+    public init(store: StoreOf<WorkoutTimerStore>) {
+        self.store = store
+    }
+    
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack {
