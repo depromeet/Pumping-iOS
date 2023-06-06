@@ -45,4 +45,8 @@ public extension Font {
     static func pretendard(size fontSize: CGFloat, type: FontType) -> Font {
         return .custom("\(type.name)", size: fontSize)
     }
+
+    static func tenada(size fontSize: CGFloat) -> Font {
+        return .custom("Tenada", size: fontSize)
+    }
 }
