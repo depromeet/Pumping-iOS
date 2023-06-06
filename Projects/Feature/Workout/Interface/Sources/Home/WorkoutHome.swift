@@ -24,6 +24,8 @@ public struct WorkoutHomeStore: ReducerProtocol {
             [.init(id: .init(), title: "엉덩이"), .init(id: .init(), title: "다리")]
         ]
         
+        public var startButtonisEnabled: Bool = true
+        
         public init() {}
     }
     

@@ -14,6 +14,8 @@ public struct PumpingTextCellStore: ReducerProtocol {
         public let id: UUID
         public let title: String
         
+        public var isTapped: Bool = true
+        
         public init(id: UUID, title: String) {
             self.id = id
             self.title = title

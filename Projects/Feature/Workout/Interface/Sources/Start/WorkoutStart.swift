@@ -17,7 +17,7 @@ public struct WorkoutStartStore: ReducerProtocol {
     
     public struct State: Equatable {
         public init() {
-            
+
         }
     }
     
