@@ -17,11 +17,25 @@ extension WorkoutTimerStore {
             case .binding:
                 return .none
                 
+            case .onAppear:
+                state.counter = .init()
+                return .none
+                
             case .endButtonTapped:
                 return .send(.goToWorkoutEnd)
                 
             case let .timerCell(id, action):
                 return .none
+                
+            case let .counter(action):
+                switch action {
+                case .dismiss:
+                    state.counter = nil
+                    return .none
+                    
+                default:
+                    return .none
+                }
                 
             case .goToWorkoutEnd:
                 return .none
@@ -29,7 +43,8 @@ extension WorkoutTimerStore {
         }
         
         self.init(
-            reducer: reducer
+            reducer: reducer,
+            workoutCounterStore: .init()
         )
     }
 }

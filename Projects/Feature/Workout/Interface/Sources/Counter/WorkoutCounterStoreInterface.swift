@@ -31,8 +31,13 @@ public struct WorkoutCounterStore: ReducerProtocol {
         case binding(BindingAction<State>)
         
         case onAppear
+        
+        case ticked
+        
         case dismiss
     }
+    
+    public enum CounterID {}
     
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()

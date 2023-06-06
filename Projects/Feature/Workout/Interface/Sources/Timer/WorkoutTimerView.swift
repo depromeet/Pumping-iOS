@@ -20,12 +20,20 @@ public struct WorkoutTimerView: View {
     
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
-            
+            IfLetStore(
+                store.scope(state: \.counter, action: { .counter($0) }),
+                then: {
+                    WorkoutCounterView(store: $0)
+                },
+                else: {
+                    mainView(viewStore: viewStore)
+                }
+            )
         }
     }
     
     @ViewBuilder
-    private func timerView(viewStore : ViewStoreOf<WorkoutTimerStore>) -> some View {
+    private func mainView(viewStore : ViewStoreOf<WorkoutTimerStore>) -> some View {
         VStack {
             VStack {
                 HStack {

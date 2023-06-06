@@ -11,12 +11,16 @@ import ComposableArchitecture
 import SharedDesignSystem
 
 public struct WorkoutTimerStore: ReducerProtocol {
-    public enum Mode { case timer, counter }
-    
     private let reducer: Reduce<State, Action>
     
-    public init(reducer: Reduce<State, Action>) {
+    private let workoutCounterStore: WorkoutCounterStore
+    
+    public init(
+        reducer: Reduce<State, Action>,
+        workoutCounterStore: WorkoutCounterStore
+    ) {
         self.reducer = reducer
+        self.workoutCounterStore = workoutCounterStore
     }
     
     public struct State: Equatable {
@@ -27,7 +31,8 @@ public struct WorkoutTimerStore: ReducerProtocol {
             .init(id: .init(), title: "등"),
         ]
         
-        public var mode: Mode = .counter
+        public var counter: WorkoutCounterStore.State? = .init()
+        
         
         public init() {
             
@@ -37,14 +42,22 @@ public struct WorkoutTimerStore: ReducerProtocol {
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         
-        case endButtonTapped
-        case timerCell(id: TimerCellStore.State.ID, action: TimerCellStore.Action)
+        case onAppear
         
+        case endButtonTapped
+        
+        case timerCell(id: TimerCellStore.State.ID, action: TimerCellStore.Action)
+        case counter(WorkoutCounterStore.Action)
+        
+        //MARK: Navigation
         case goToWorkoutEnd
     }
     
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()
         reducer
+            .ifLet(\.counter, action: /Action.counter) {
+                workoutCounterStore
+            }
     }
 }
