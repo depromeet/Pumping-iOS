@@ -84,6 +84,10 @@ public struct OnboardingAuthView : View {
                         switch authResults.credential {
                         case let appleIDCredential as ASAuthorizationAppleIDCredential:
                             viewStore.send(.signInWithApple(appleIDCredential))
+                            
+                        case let passwordCredential as ASPasswordCredential:
+                            let username = passwordCredential.user
+                            let password = passwordCredential.password
                         default:
                             break
                         }

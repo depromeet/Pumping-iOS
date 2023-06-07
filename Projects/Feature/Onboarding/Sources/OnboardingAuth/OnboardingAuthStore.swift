@@ -18,7 +18,7 @@ extension OnboardingAuthStore {
                 return .none
                 
             case let .signInWithApple(appleIDCredential):
-                authClient.setUserInfo(appleIDCredential)
+//                authClient.setUserInfo(appleIDCredential)
                 
                 return .send(.moveToNextStep)
             case let .signInWithAppleError(error):

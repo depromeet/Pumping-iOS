@@ -31,7 +31,7 @@ public struct OnboardingRootStore: ReducerProtocol {
     public struct State: Equatable {
         @BindingState public var path: [OnboardingScene] = []
         
-        public var auth: OnboardingAuthStore.State?
+        public var auth: OnboardingAuthStore.State? = .init()
         public var permission: OnboardingPermissionStore.State?
         public var profile: OnboadingProfileStore.State?
         public var crew: OnboardingCrewStore.State?

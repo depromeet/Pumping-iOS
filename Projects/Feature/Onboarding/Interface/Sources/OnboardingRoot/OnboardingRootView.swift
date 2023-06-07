@@ -20,18 +20,14 @@ public struct OnboardingRootView : View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             NavigationStack(path: viewStore.binding(\.$path)) {
                 VStack {
-                    Text("Root View")
-                }
-                .onAppear {
-                    viewStore.send(.moveToAuth)
+                    IfLetStore(store.scope(state: \.auth , action: { .auth($0) })) {
+                        OnboardingAuthView(store: $0)
+                    }
                 }
                 .navigationDestination(for: OnboardingScene.self) { scene in
                     switch scene {
                     case .auth:
-                        IfLetStore(store.scope(state: \.auth , action: { .auth($0) })) {
-                            OnboardingAuthView(store: $0)
-                        }
-                        
+                        EmptyView()
                     case .permission:
                         IfLetStore(store.scope(state: \.permission, action: { .permission($0) })) {
                             OnboardingPermissionView(store: $0)
