@@ -42,7 +42,6 @@ public struct OnboardingProfileView : View {
         }
     }
     
-    //TODO: 성별 타입으로 변경
     @ViewBuilder
     private func genderSelectionView(viewStore : ViewStoreOf<OnboadingProfileStore>) -> some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -53,36 +52,36 @@ public struct OnboardingProfileView : View {
             
             HStack {
                 Button {
-                    viewStore.send(.setGender("남성"))
+                    viewStore.send(.setGender(.M))
                 } label: {
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(viewStore.state.gender == "남성" ? Color.colorCyanPrimary : Color.colorGrey500, lineWidth : 1)
+                        .stroke(viewStore.state.gender == .M ? Color.colorCyanPrimary : Color.colorGrey500, lineWidth : 1)
                         .frame(height: 50)
                         .overlay {
                             Text("남성")
                                 .font(.pretendard(size: 15, type: .medium))
-                                .foregroundColor(viewStore.state.gender == "남성" ? .colorGrey000 : .colorGrey500)
+                                .foregroundColor(viewStore.state.gender == .M ? .colorGrey000 : .colorGrey500)
                         }
                         .background(
                             RoundedRectangle(cornerRadius: 12)
-                                .fill(viewStore.state.gender == "남성" ? Color.colorCyan50 : Color.clear)
+                                .fill(viewStore.state.gender == .M ? Color.colorCyan50 : Color.clear)
                         )
                 }
                 
                 Button {
-                    viewStore.send(.setGender("여성"))
+                    viewStore.send(.setGender(.W))
                 } label: {
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(viewStore.state.gender == "여성" ? Color.colorCyanPrimary : Color.colorGrey500 , lineWidth : 1)
+                        .stroke(viewStore.state.gender == .W ? Color.colorCyanPrimary : Color.colorGrey500 , lineWidth : 1)
                         .frame(height: 50)
                         .overlay {
                             Text("여성")
                                 .font(.pretendard(size: 15, type: .medium))
-                                .foregroundColor(viewStore.state.gender == "여성" ? .colorGrey000 : .colorGrey500)
+                                .foregroundColor(viewStore.state.gender == .W ? .colorGrey000 : .colorGrey500)
                         }
                         .background(
                             RoundedRectangle(cornerRadius: 12)
-                                .fill(viewStore.state.gender == "여성" ? Color.colorCyan50 : Color.clear)
+                                .fill(viewStore.state.gender == .W ? Color.colorCyan50 : Color.clear)
                         )
                 }
             }

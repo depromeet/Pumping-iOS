@@ -18,6 +18,8 @@ import FeatureWorkout
 import SharedDesignSystem
 
 public struct MainTabViewStore: ReducerProtocol {
+    
+    public init() {}
 
     public struct State: Equatable {        
         public var home: HomeRootStore.State? = .init()

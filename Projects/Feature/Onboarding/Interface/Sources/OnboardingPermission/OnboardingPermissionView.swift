@@ -25,7 +25,7 @@ struct OnboardingPermissionView: View {
                     Spacer()
                     
                     PumpingSubmitButton(title: "권한 부여", isEnable: true) {
-                         viewStore.send(.requestHealthKitAuthorization)
+                         viewStore.send(.moveToNextStep)
                     }
                 }
             }

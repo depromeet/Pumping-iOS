@@ -44,9 +44,7 @@ public struct OnboardingRootStore: ReducerProtocol {
         case auth(OnboardingAuthStore.Action)
         case permission(OnboardingPermissionStore.Action)
         case profile(OnboadingProfileStore.Action)
-        case crew(OnboardingCrewStore.Action)
-        
-        case moveToAuth
+        case crew(OnboardingCrewStore.Action)        
     }
     
     public var body: some ReducerProtocol<State, Action> {

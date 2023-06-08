@@ -16,12 +16,6 @@ extension OnboardingRootStore {
             switch action {
             case .binding:
                 return .none
-                
-            case .moveToAuth :
-                state.auth = .init()
-                state.path.append(.auth)
-                return .none
-                
             case let .auth(action):
                 switch action {
                 case .moveToNextStep :
@@ -42,23 +36,11 @@ extension OnboardingRootStore {
                 }
                 return .none
                 
-            case let .profile(action):
-                switch action {
-                case .moveToNextStep :
-                    state.crew = .init()
-                    state.path.append(.crew)
-                default :
-                    return .none
-                }
+            case .profile:
                 return .none
                 
-            case let .crew(action):
-                switch action {
-                case .moveToNextStep :
-                    return .none
-                default :
-                    return .none
-                }
+            case .crew:
+                return .none
             }
         }
         

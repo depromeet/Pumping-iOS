@@ -11,13 +11,15 @@ import ComposableArchitecture
 import FeatureOnboardingInterface
 import Feature
 
-public struct MainStore: ReducerProtocol {
+public struct RootStore: ReducerProtocol {
 
-    public struct State: Equatable {
-        public var onboarding: OnboardingRootStore.State?
-        public var mainTab: MainTabViewStore.State?
+    public enum State: Equatable {
+        case onboarding(OnboardingRootStore.State)
+        case mainTab(MainTabViewStore.State)
         
-        public init() { }
+        public init() {
+            self = .onboarding(.init())
+        }
     }
     
     public enum Action: Equatable {
@@ -34,17 +36,21 @@ public struct MainStore: ReducerProtocol {
             case .onAppear:
                 return EffectTask(value: .checkIfLogin)
             case .checkIfLogin:
-                state.onboarding = .init()
+                state = .mainTab(.init())
+                return .none
+            case .onboarding(.profile(.moveToNextStep)):
+                state = .mainTab(.init())
                 return .none
             case .onboarding:
-                state.onboarding = .init()
                 return .none
             case .mainTab:
-                state.mainTab = .init()
                 return .none
             }
         }
-        .ifLet(\.onboarding, action: /Action.onboarding) {
+        .ifCaseLet(/State.mainTab, action: /Action.mainTab) {
+            MainTabViewStore()
+        }
+        .ifCaseLet(/State.onboarding, action: /Action.onboarding) {
             OnboardingRootStore()
         }
     }

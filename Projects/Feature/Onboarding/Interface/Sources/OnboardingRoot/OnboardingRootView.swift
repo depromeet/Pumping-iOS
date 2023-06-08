@@ -26,9 +26,7 @@ public struct OnboardingRootView : View {
                 }
                 .navigationDestination(for: OnboardingScene.self) { scene in
                     switch scene {
-                    case .auth:
-                        EmptyView()
-                    case .permission:
+                    case .auth, .permission:
                         IfLetStore(store.scope(state: \.permission, action: { .permission($0) })) {
                             OnboardingPermissionView(store: $0)
                         }
@@ -42,7 +40,6 @@ public struct OnboardingRootView : View {
                         IfLetStore(store.scope(state: \.crew, action: { .crew($0) })) {
                             OnboardingCrewView(store: $0)
                         }
-                        
                     }
                 }
             }

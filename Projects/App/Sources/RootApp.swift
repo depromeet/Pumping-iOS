@@ -9,14 +9,18 @@ import SwiftUI
 import ComposableArchitecture
 import Feature
 import SharedDesignSystem
+import SharedUtil
 
 @main
 struct RootApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView(store: .init(initialState: MainStore.State(), reducer: MainStore()._printChanges()))
+            RootView(store: .init(initialState: RootStore.State(), reducer: RootStore()._printChanges()))
                 .onAppear {
                     SharedDesignSystemFontFamily.registerAllCustomFonts()
+                }
+                .onAppear {
+                    UIApplication.shared.addTapGestureRecognizer()
                 }
         }
     }
