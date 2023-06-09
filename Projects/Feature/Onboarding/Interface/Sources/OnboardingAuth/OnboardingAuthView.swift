@@ -22,6 +22,9 @@ public struct OnboardingAuthView : View {
 
                 signInWithAppleButton(viewStore: viewStore)
             }
+            .onAppear {
+                viewStore.send(.checkAuthorization)
+            }
             .navigationBarBackButtonHidden(true)
         }
     }
@@ -85,9 +88,9 @@ public struct OnboardingAuthView : View {
                         case let appleIDCredential as ASAuthorizationAppleIDCredential:
                             viewStore.send(.signInWithApple(appleIDCredential))
                             
-                        case let passwordCredential as ASPasswordCredential:
-                            let username = passwordCredential.user
-                            let password = passwordCredential.password
+//                        case let passwordCredential as ASPasswordCredential:
+//                            let username = passwordCredential.user
+//                            let password = passwordCredential.password
                         default:
                             break
                         }

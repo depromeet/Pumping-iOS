@@ -23,9 +23,6 @@ public struct RootStore: ReducerProtocol {
     }
     
     public enum Action: Equatable {
-        case onAppear
-        case checkIfLogin
-
         case onboarding(OnboardingRootStore.Action)
         case mainTab(MainTabViewStore.Action)
     }
@@ -33,12 +30,10 @@ public struct RootStore: ReducerProtocol {
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
-            case .onAppear:
-                return EffectTask(value: .checkIfLogin)
-            case .checkIfLogin:
+            case .onboarding(.profile(.moveToNextStep)):
                 state = .mainTab(.init())
                 return .none
-            case .onboarding(.profile(.moveToNextStep)):
+            case .onboarding(.auth(.isAlreadyAuthorized)):
                 state = .mainTab(.init())
                 return .none
             case .onboarding:

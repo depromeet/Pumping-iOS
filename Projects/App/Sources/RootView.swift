@@ -1,5 +1,5 @@
 //
-//  MainView.swift
+//  RootView.swift
 //  Pumping
 //
 //  Created by 박현우 on 2023/06/07.

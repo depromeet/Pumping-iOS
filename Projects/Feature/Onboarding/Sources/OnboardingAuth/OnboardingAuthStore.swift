@@ -9,37 +9,38 @@ import Foundation
 import ComposableArchitecture
 import FeatureOnboardingInterface
 import DomainAuthInterface
+import DomainAuth
+import CoreKeyChainStore
 
 extension OnboardingAuthStore {
-    public init() {        
+    public init() {
+        
+        @Dependency(\.authClient) var authClient
+        
         let reducer : Reduce<State, Action> = Reduce { state, action in
             switch action {
             case .binding:
                 return .none
                 
-            case let .signInWithApple(appleIDCredential):
-//                authClient.setUserInfo(appleIDCredential)
+            case .checkAuthorization:
+                if !KeyChainStore.shared.load(property: .accessToken).isEmpty {
+                    return .send(.isAlreadyAuthorized)
+                }
                 
+                return.none
+                
+            case .isAlreadyAuthorized:
+                return .none
+                
+            case let .signInWithApple(appleIDCredential):
+                
+                authClient.setUserInfo(appleIDCredential)
                 return .send(.moveToNextStep)
+                
             case let .signInWithAppleError(error):
                 print(error)
                 return .none
-            case .getUserInfo:
-                return .none
-//                return .task {
-//                    await .getUserInfoResponse(
-//                        TaskResult {
-//                            try await authClient.getUserInfo()
-//                        }
-//                    )
-//                }
-            case let .getUserInfoResponse(.success(userInfo)):
-                print(userInfo)
-                return .none
                 
-            case let .getUserInfoResponse(.failure(error)):
-                print(error.localizedDescription)
-                return .none
             case.moveToNextStep :
                 return .none
             }

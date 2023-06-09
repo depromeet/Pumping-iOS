@@ -9,10 +9,11 @@ import Foundation
 import ComposableArchitecture
 import AuthenticationServices
 import DomainAuthInterface
+import DomainAuth
 
 public struct OnboardingAuthStore: ReducerProtocol {
     
-    @Dependency(\.authClient) public var authClient
+//    @Dependency(\.authClient) public var authClient
     
     private let reducer: Reduce<State, Action>
     
@@ -28,10 +29,10 @@ public struct OnboardingAuthStore: ReducerProtocol {
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
+        case checkAuthorization
+        case isAlreadyAuthorized
         case signInWithApple(ASAuthorizationAppleIDCredential)
         case signInWithAppleError(String)
-        case getUserInfo
-        case getUserInfoResponse(TaskResult<UserInfo>)
         case moveToNextStep
     }
     
