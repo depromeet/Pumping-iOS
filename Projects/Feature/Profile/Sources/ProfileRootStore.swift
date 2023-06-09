@@ -14,7 +14,6 @@ extension ProfileRootStore {
         let reducer : Reduce<State, Action> = Reduce { state, action in
             switch action {
             case .tapHeartButton:
-
                 return .none
 
             case .tapWidthOfChangeButton:

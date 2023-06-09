@@ -19,8 +19,6 @@ public struct WidthOfChangeView : View {
             VStack(spacing: 20) {
                 Spacer()
 
-                RectangleXView()
-
                 VStack(spacing: 10) {
                     Text("아직 기록이 없어요")
                         .font(.pretendard(size: 24, type: .semiBold))
@@ -34,21 +32,6 @@ public struct WidthOfChangeView : View {
                 Spacer()
             }
             .offset(y: -30)
-
-//            VStack {
-//                VStack(alignment: .leading, spacing: 10) {
-//                    Text("변화폭")
-//                        .font(.pretendard(size: 24, type: .extraBold))
-//                        .foregroundColor(Color.colorGrey900)
-//
-//                    Text("지난 주에 비해 달라진 기록을 확인해보세요.음하하하")
-//                        .font(.pretendard(size: 15, type: .medium))
-//                        .foregroundColor(Color.colorGrey600)
-//                }
-//
-//                Text("")
-//
-//            }
         }
     }
 }
