@@ -13,8 +13,14 @@ import SharedDesignSystem
 public struct WorkoutTimerStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
     
-    public init(reducer: Reduce<State, Action>) {
+    private let workoutCounterStore: WorkoutCounterStore
+    
+    public init(
+        reducer: Reduce<State, Action>,
+        workoutCounterStore: WorkoutCounterStore
+    ) {
         self.reducer = reducer
+        self.workoutCounterStore = workoutCounterStore
     }
     
     public struct State: Equatable {
@@ -25,6 +31,9 @@ public struct WorkoutTimerStore: ReducerProtocol {
             .init(id: .init(), title: "등"),
         ]
         
+        public var counter: WorkoutCounterStore.State? = .init()
+        
+        
         public init() {
             
         }
@@ -33,23 +42,22 @@ public struct WorkoutTimerStore: ReducerProtocol {
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         
-        case endButtonTapped
-        case timerCell(id: TimerCellStore.State.ID, action: TimerCellStore.Action)
+        case onAppear
         
+        case endButtonTapped
+        
+        case timerCell(id: TimerCellStore.State.ID, action: TimerCellStore.Action)
+        case counter(WorkoutCounterStore.Action)
+        
+        //MARK: Navigation
         case goToWorkoutEnd
     }
     
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()
         reducer
-    }
-}
-
-
-public struct WorkoutTimerView {
-    public let store: StoreOf<WorkoutTimerStore>
-    
-    public init(store: StoreOf<WorkoutTimerStore>) {
-        self.store = store
+            .ifLet(\.counter, action: /Action.counter) {
+                workoutCounterStore
+            }
     }
 }

@@ -18,7 +18,7 @@ extension OnboardingRootStore {
                 return .none
                 
             case .moveToAuth :
-                state.auth = .init()
+                state.auth = .init(.init(index: 0))
                 state.path.append(.auth)
                 return .none
                 
