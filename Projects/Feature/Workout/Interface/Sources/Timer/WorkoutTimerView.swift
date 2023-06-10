@@ -26,14 +26,26 @@ public struct WorkoutTimerView: View {
                     WorkoutCounterView(store: $0)
                 },
                 else: {
-                    mainView(viewStore: viewStore)
+                    timerView(viewStore: viewStore)
                 }
             )
         }
     }
     
     @ViewBuilder
-    private func mainView(viewStore : ViewStoreOf<WorkoutTimerStore>) -> some View {
+    private func timerCellListView(viewStore: ViewStoreOf<WorkoutTimerStore>) -> some View {
+        ScrollView(.horizontal) {
+            HStack {
+                ForEachStore(self.store.scope(state: \.timerCells, action: WorkoutTimerStore.Action.timerCell(id:action:))) {
+                    TimerCellView(store: $0)
+                }
+            }
+            .padding(.bottom, 24)
+        }
+    }
+    
+    @ViewBuilder
+    private func timerView(viewStore: ViewStoreOf<WorkoutTimerStore>) -> some View {
         VStack {
             VStack {
                 HStack {
@@ -46,15 +58,8 @@ public struct WorkoutTimerView: View {
                 .padding(.bottom, 22)
                 .padding(.horizontal)
                 
-                ScrollView(.horizontal) {
-                    HStack {
-                        ForEachStore(self.store.scope(state: \.timerCells, action: WorkoutTimerStore.Action.timerCell(id:action:))) {
-                            TimerCellView(store: $0)
-                        }
-                    }
-                    .padding(.bottom, 24)
-                }
-                .padding(.leading)
+                timerCellListView(viewStore: viewStore)
+                    .padding(.leading)
             }
             .frame(maxWidth: .infinity)
             .cornerRadius(12)

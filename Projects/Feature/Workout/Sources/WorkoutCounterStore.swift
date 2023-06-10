@@ -9,11 +9,12 @@ import Foundation
 import ComposableArchitecture
 
 import FeatureWorkoutInterface
+import DomainAuthInterface
 
 extension WorkoutCounterStore {
     public init() {
         @Dependency(\.continuousClock) var clock
-        
+
         let reducer: Reduce<State, Action> = .init { state, action in
             switch action {
             case .binding:

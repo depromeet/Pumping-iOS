@@ -11,6 +11,7 @@ import Foundation
 import ComposableArchitecture
 
 import SharedDesignSystem
+import DomainAuth
 
 public struct WorkoutCounterStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
