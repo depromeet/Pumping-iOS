@@ -19,6 +19,14 @@ extension OnboardingAuthStore {
         
         let reducer : Reduce<State, Action> = Reduce { state, action in
             switch action {
+            case .checkAuthorization :
+                // TODO: authorizationCode에서 accessToken으로 체크방식을 변경해야함 서버에 authorizationCode를 전달 후 리스폰스로 받은 JWT토큰을 키체인에 저장
+                if !KeyChainStore.shared.load(property: .authorizationCode).isEmpty {
+                    return .send(.isAlreadyAuthorized)
+                }
+                
+                return .none
+                
             case let .signInWithApple(appleIDCredential):
                 authClient.setUserInfo(appleIDCredential)
                 

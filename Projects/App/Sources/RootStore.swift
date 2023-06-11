@@ -34,7 +34,7 @@ public struct RootStore: ReducerProtocol {
                 state = .mainTab(.init())
                 return .none
                 
-            case .onboarding(.isAlreadyAuthorized):
+            case .onboarding(.auth(.isAlreadyAuthorized)):
                 state = .mainTab(.init())
                 return .none
                 

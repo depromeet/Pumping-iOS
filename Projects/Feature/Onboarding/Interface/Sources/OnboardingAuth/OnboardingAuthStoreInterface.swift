@@ -24,6 +24,8 @@ public struct OnboardingAuthStore: ReducerProtocol {
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
+        case checkAuthorization
+        case isAlreadyAuthorized
         case signInWithApple(ASAuthorizationAppleIDCredential)
         case signInWithAppleError(String)
         case moveToNextStep
