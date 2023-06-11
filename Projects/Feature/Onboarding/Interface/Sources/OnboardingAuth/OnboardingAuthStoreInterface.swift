@@ -23,7 +23,7 @@ public struct OnboardingAuthStore: ReducerProtocol {
         public var isAuthorized : Bool = false
         
         public let index: Int
-
+        
         public init(index: Int) {
             self.index = index
         }
@@ -34,9 +34,6 @@ public struct OnboardingAuthStore: ReducerProtocol {
         case signInWithApple(ASAuthorizationAppleIDCredential)
         case signInWithAppleError(String)
         case moveToNextStep
-
-        case tapHeartButton
-        case tapComparisonButton
     }
     
     public var body: some ReducerProtocol<State, Action> {

@@ -30,5 +30,4 @@ public struct OnboardingCrewJoinStore : ReducerProtocol {
         BindingReducer()
         reducer
     }
-    
 }

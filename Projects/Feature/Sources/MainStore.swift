@@ -8,10 +8,10 @@
 import Foundation
 import ComposableArchitecture
 import FeatureHomeInterface
-import FeatureMyPageInterface
+import FeatureProfileInterface
 import FeatureOnboardingInterface
 import FeatureHome
-import FeatureMyPage
+import FeatureProfile
 import FeatureOnboarding
 import SharedDesignSystem
 
@@ -24,7 +24,7 @@ public struct MainStore: ReducerProtocol {
         @BindingState public var path: [MainScene] = [] //TODO: 필요성 생각하기
         
         public var home: HomeRootStore.State? = .init()
-        public var myPage: MyPageRootStore.State? = .init()
+        public var myPage: ProfileRootStore.State? = .init()
         public var onboarding: OnboardingRootStore.State? = .init()
         
         public init() { }
@@ -34,7 +34,7 @@ public struct MainStore: ReducerProtocol {
         case binding(BindingAction<State>)
         
         case home(HomeRootStore.Action)
-        case myPage(MyPageRootStore.Action)
+        case myPage(ProfileRootStore.Action)
         case onboarding(OnboardingRootStore.Action)
     }
     
@@ -60,7 +60,7 @@ public struct MainStore: ReducerProtocol {
             HomeRootStore()
         }
         .ifLet(\.myPage, action: /Action.myPage) {
-            MyPageRootStore()
+            ProfileRootStore()
         }
         .ifLet(\.onboarding, action: /Action.onboarding) {
             OnboardingRootStore()

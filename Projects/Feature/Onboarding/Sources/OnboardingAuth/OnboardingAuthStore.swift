@@ -37,10 +37,6 @@ extension OnboardingAuthStore {
                 return .none
             case.moveToNextStep :
                 return .none
-            case .tapHeartButton:
-                return .none
-            case .tapComparisonButton:
-                return .none
             }
         }
         

@@ -10,10 +10,9 @@ import SwiftUI
 import ComposableArchitecture
 
 import FeatureHomeInterface
-import FeatureMyPageInterface
+import FeatureProfileInterface
 import FeatureOnboardingInterface
 import FeatureHome
-import FeatureMyPage
 import FeatureOnboarding
 import SharedDesignSystem
 
@@ -36,7 +35,7 @@ public struct MainView: View {
                 }
                 
                 IfLetStore(self.store.scope(state: \.myPage, action: { .myPage($0) })) {
-                    MyPageRootView(store: $0)
+                    ProfileRootView(store: $0, profileSubject: .my)
                         .tabItem {
                             Image(systemName: "person")
                             Text("MyPage")
