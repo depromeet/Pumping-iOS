@@ -1,14 +1,19 @@
 //
-//  WorkoutEnd.swift
+//  WorkoutCounterStoreInterface.swift
 //  FeatureWorkoutInterface
 //
-//  Created by 송영모 on 2023/05/24.
+//  Created by 송영모 on 2023/06/06.
 //
+
+import SwiftUI
 
 import Foundation
 import ComposableArchitecture
 
-public struct WorkoutEndStore: ReducerProtocol {
+import SharedDesignSystem
+import DomainAuth
+
+public struct WorkoutCounterStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
     
     public init(reducer: Reduce<State, Action>) {
@@ -16,6 +21,8 @@ public struct WorkoutEndStore: ReducerProtocol {
     }
     
     public struct State: Equatable {
+        public var count: Int = 3
+        
         public init() {
             
         }
@@ -24,22 +31,17 @@ public struct WorkoutEndStore: ReducerProtocol {
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         
-        case completeButtonTapped
+        case onAppear
         
-        case backToRoot
+        case ticked
+        
+        case dismiss
     }
+    
+    public enum CounterID {}
     
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()
         reducer
-    }
-}
-
-
-public struct WorkoutEndView {
-    public let store: StoreOf<WorkoutEndStore>
-    
-    public init(store: StoreOf<WorkoutEndStore>) {
-        self.store = store
     }
 }

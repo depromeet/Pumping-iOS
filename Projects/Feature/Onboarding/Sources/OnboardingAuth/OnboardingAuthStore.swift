@@ -39,6 +39,10 @@ extension OnboardingAuthStore {
                 
             default :
                 return .none
+            case .tapHeartButton:
+                return .none
+            case .tapComparisonButton:
+                return .none
             }
         }
         

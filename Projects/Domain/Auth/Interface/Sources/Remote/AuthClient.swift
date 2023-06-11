@@ -30,5 +30,4 @@ extension AuthClient: TestDependencyKey {
         setUserInfo: unimplemented("\(Self.self).setUserInfo"),
         getUserInfo: unimplemented("\(Self.self).getUserInfo")
     )
-
 }

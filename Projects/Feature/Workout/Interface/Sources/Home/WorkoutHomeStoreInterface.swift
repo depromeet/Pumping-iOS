@@ -42,12 +42,3 @@ public struct WorkoutHomeStore: ReducerProtocol {
         reducer
     }
 }
-
-
-public struct WorkoutHomeView {
-    public let store: StoreOf<WorkoutHomeStore>
-    
-    public init(store: StoreOf<WorkoutHomeStore>) {
-        self.store = store
-    }
-}
