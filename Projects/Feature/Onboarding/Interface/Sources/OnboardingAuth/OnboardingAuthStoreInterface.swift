@@ -23,8 +23,6 @@ public struct OnboardingAuthStore: ReducerProtocol {
         public var isAuthorized : Bool = false
         
         public let index: Int
-
-        public let index: Int
         
         public init(index: Int) {
             self.index = index
