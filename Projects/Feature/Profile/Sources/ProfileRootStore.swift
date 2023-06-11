@@ -24,10 +24,6 @@ extension ProfileRootStore {
             case let .tapComparisonButton(isEnabled):
                 state.hasComparison = isEnabled
                 return .none
-
-            case let .setupProfileScene(profileScene):
-                state.profileScene = profileScene
-                return .none
                 
             case .binding:
                 return .none

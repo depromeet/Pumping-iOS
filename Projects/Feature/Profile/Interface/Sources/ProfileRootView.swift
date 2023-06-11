@@ -13,9 +13,11 @@ import SharedDesignSystem
 
 public struct ProfileRootView : View {
     public let store: StoreOf<ProfileRootStore>
+    private let profileSubject: ProfileSubject
 
-    public init(store: StoreOf<ProfileRootStore>) {
+    public init(store: StoreOf<ProfileRootStore>, profileSubject: ProfileSubject) {
         self.store = store
+        self.profileSubject = profileSubject
     }
 
     public var body: some View {
@@ -26,8 +28,8 @@ public struct ProfileRootView : View {
                         VStack {
                             HStack {
                                 VStack(alignment: .leading, spacing: 30) {
-                                    
-                                    ProfileHeaderView(scene: viewStore.profileScene)
+
+                                    ProfileHeaderView(profileSubject: profileSubject)
 
                                     Button {
 
@@ -65,13 +67,9 @@ public struct ProfileRootView : View {
                                     Spacer()
 
                                     Button {
-                                        if viewStore.profileScene == .my {
-                                            viewStore.send(.tapWidthOfChangeButton)
-                                        } else {
-                                            viewStore.send(.tapComparisonButton(!viewStore.hasComparison))
-                                        }
+                                        sendWidthOfChangeOrComparisonButtonAction(by: viewStore)
                                     } label: {
-                                        if viewStore.profileScene == .my {
+                                        if profileSubject == .my {
                                             Text("변화폭")
                                                 .font(.pretendard(size: 16, type: .semiBold))
                                                 .padding(.init(top: 8 ,leading: 10, bottom: 8, trailing: 10))
@@ -126,41 +124,13 @@ public struct ProfileRootView : View {
                     .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
                     .background(Color.colorGrey50)
                 }
-                .navigationDestination(for: MyPageScene.self) { scene in
+                .navigationDestination(for: ProfileScene.self) { scene in
                     switch scene {
                     case .widthOfChange:
                         IfLetStore(self.store.scope(state: \.widthOfChange, action: { .widthOfChange($0) })) {
                             WidthOfChangeView(store: $0)
                                 .navigationBarTitleDisplayMode(.inline)
                                 .toolbarRole(.editor)
-                                .toolbar {
-                                    ToolbarItem(placement: .principal) {
-                                        HStack(spacing: 5) {
-                                            Button {
-                                                
-                                            } label: {
-                                                Image(systemName: "arrowtriangle.left.fill")
-                                                    .resizable()
-                                                    .foregroundColor(Color.colorGrey200)
-                                                    .frame(maxWidth: 10, maxHeight: 10)
-
-                                            }
-
-                                            Text("5월 12일 - 19일").font(.headline)
-                                                .font(.pretendard(size: 15, type: .medium))
-                                                .foregroundColor(Color.colorGrey400)
-
-                                            Button {
-
-                                            } label: {
-                                                Image(systemName: "arrowtriangle.right.fill")
-                                                    .resizable()
-                                                    .foregroundColor(Color.colorGrey200)
-                                                    .frame(maxWidth: 10, maxHeight: 10)
-                                            }
-                                        }
-                                    }
-                                }
                         }
                     default:
                         EmptyView()
@@ -168,5 +138,15 @@ public struct ProfileRootView : View {
                 }
             }
         }
+    }
+
+    @discardableResult
+    private func sendWidthOfChangeOrComparisonButtonAction(by viewStore: ViewStore<ProfileRootStore.State,
+                                                           ProfileRootStore.Action>) -> ViewStoreTask {
+        if profileSubject == .my {
+            return viewStore.send(.tapWidthOfChangeButton)
+        }
+
+        return viewStore.send(.tapComparisonButton(!viewStore.hasComparison))
     }
 }

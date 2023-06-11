@@ -7,12 +7,12 @@
 
 import ComposableArchitecture
 
-public enum MyPageScene: Hashable {
+public enum ProfileScene: Hashable {
     case root
     case widthOfChange
 }
 
-public enum ProfileScene: Hashable {
+public enum ProfileSubject: Hashable {
     case my
     case other
 }
@@ -26,9 +26,8 @@ public struct ProfileRootStore: ReducerProtocol {
     }
 
     public struct State: Equatable {
-        @BindingState public var path: [MyPageScene] = []
-
-        public var profileScene: ProfileScene = .my
+        @BindingState public var path: [ProfileScene] = []
+        
         public var hasComparison: Bool = false
         public var widthOfChange: WidthOfChangeStore.State?
 
@@ -41,7 +40,6 @@ public struct ProfileRootStore: ReducerProtocol {
         case tapComparisonButton(Bool)
 
         case binding(BindingAction<State>)
-        case setupProfileScene(ProfileScene)
         case widthOfChange(WidthOfChangeStore.Action)
     }
 

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProfileHeaderView: View {
-    @State var scene: ProfileScene
+    @State var profileSubject: ProfileSubject
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -18,7 +18,7 @@ struct ProfileHeaderView: View {
                     .foregroundColor(.colorGrey800)
 
                 HStack(alignment: .center, spacing: 10) {
-                    if scene == .my {
+                    if profileSubject == .my {
                         HStack {
                             Text("나")
                                 .font(.pretendard(size: 16, type: .semiBold))

@@ -35,13 +35,10 @@ public struct MainView: View {
                 }
                 
                 IfLetStore(self.store.scope(state: \.myPage, action: { .myPage($0) })) {
-                    ProfileRootView(store: $0)
+                    ProfileRootView(store: $0, profileSubject: .my)
                         .tabItem {
                             Image(systemName: "person")
                             Text("MyPage")
-                        }
-                        .onAppear {
-                            viewStore.send(.myPage(.setupProfileScene(.my)))
                         }
                 }
                 
