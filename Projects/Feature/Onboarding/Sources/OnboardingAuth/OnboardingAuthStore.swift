@@ -19,29 +19,17 @@ extension OnboardingAuthStore {
         
         let reducer : Reduce<State, Action> = Reduce { state, action in
             switch action {
-            case .binding:
-                return .none
-                
-            case .checkAuthorization:
-                if !KeyChainStore.shared.load(property: .accessToken).isEmpty {
-                    return .send(.isAlreadyAuthorized)
-                }
-                
-                return.none
-                
-            case .isAlreadyAuthorized:
-                return .none
-                
             case let .signInWithApple(appleIDCredential):
-                
                 authClient.setUserInfo(appleIDCredential)
+                
                 return .send(.moveToNextStep)
                 
             case let .signInWithAppleError(error):
+                // TODO: error를 통해 모달이나 ViewModifier로 뷰에 노출
                 print(error)
                 return .none
                 
-            case.moveToNextStep :
+            default :
                 return .none
             }
         }

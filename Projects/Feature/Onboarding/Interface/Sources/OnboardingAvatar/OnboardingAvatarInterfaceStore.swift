@@ -1,15 +1,13 @@
 //
-//  OnboardingCrewJoinStore.swift
+//  OnboardingCrewStore.swift
 //  FeatureOnboardingInterface
 //
-//  Created by 박현우 on 2023/06/04.
+//  Created by 박현우 on 2023/06/02.
 //
 
-import Foundation
 import ComposableArchitecture
 
-public struct OnboardingCrewJoinStore : ReducerProtocol {
-    
+public struct OnboardingAvatarStore : ReducerProtocol {
     private let reducer: Reduce<State, Action>
     
     public init(reducer: Reduce<State, Action>) {
@@ -17,18 +15,17 @@ public struct OnboardingCrewJoinStore : ReducerProtocol {
     }
     
     public struct State: Equatable {
-        @BindingState public var code: String = ""
+        public var isAvatarPicked : Bool = false
         public init() {}
     }
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
-        case crewJoinViewDidDisappear
+        case moveToNextStep
     }
     
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()
         reducer
     }
-    
 }

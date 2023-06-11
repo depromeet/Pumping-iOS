@@ -14,31 +14,54 @@ public struct OnboardingProfileView : View {
     
     public var body: some View {
         WithViewStore(self.store) { viewStore in
-            VStack(spacing : 32){
-                
-                PumpingTextField(text: viewStore.binding(\.$name))
-                    .setTitleText("이름")
-                    .setPlaceHolderText("최대 15자 이내로 작성해주세요.")
-                
-                
-                genderSelectionView(viewStore: viewStore)
-                
-                PumpingWheelPicker(value: viewStore.binding(\.$height), pickerUnit: .height)
-                    .setTitleText("키")
-                
-                PumpingWheelPicker(value: viewStore.binding(\.$weight), pickerUnit: .weight)
-                    .setTitleText("몸무게")
-                
-                Spacer()
-                
-                PumpingSubmitButton(title : "계속하기", isEnable : viewStore.isSatisfied) {
-                    viewStore.send(.moveToNextStep)
+            GeometryReader { _ in
+                ZStack {
+                    VStack(alignment : .leading, spacing : 32){
+                        
+                        profileTitleView()
+                        
+                        PumpingTextField(text: viewStore.binding(\.$name))
+                            .setTitleText("이름")
+                            .setMaxCount(viewStore.maxCount)
+                            .setPlaceHolderText("최대 15자 이내로 작성해주세요.")
+                            .setErrorText("15자까지만 쓸 수 있어요.")
+                        
+                        
+                        genderSelectionView(viewStore: viewStore)
+                        
+                        PumpingWheelPicker(value: viewStore.binding(\.$height), pickerUnit: .height)
+                            .setTitleText("키")
+                        
+                        PumpingWheelPicker(value: viewStore.binding(\.$weight), pickerUnit: .weight)
+                            .setTitleText("몸무게")
+                        
+                        Spacer()
+                        
+                        PumpingSubmitButton(title : "다음", isEnable : viewStore.isSatisfied) {
+                            viewStore.send(.moveToNextStep)
+                        }
+                        
+                    }
                 }
-                
+            }
+            .transaction { transaction in
+                transaction.animation = nil
             }
             .ignoresSafeArea(.keyboard, edges: .bottom)
-            .padding(.horizontal)
+            .padding()
             .navigationBarBackButtonHidden(true)
+        }
+    }
+    
+    private func profileTitleView() -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("프로필 작성")
+                .font(.pretendard(size: 24, type: .bold))
+                .foregroundColor(.colorGrey900)
+            
+            Text("정확한 건강정보 수집을 위해 필요해요.")
+                .font(.pretendard(size: 15, type: .medium))
+                .foregroundColor(.colorGrey600)
         }
     }
     
@@ -87,5 +110,4 @@ public struct OnboardingProfileView : View {
             }
         }
     }
-    
 }

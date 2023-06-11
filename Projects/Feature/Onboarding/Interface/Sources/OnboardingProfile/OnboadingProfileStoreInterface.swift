@@ -16,6 +16,7 @@ public struct OnboadingProfileStore: ReducerProtocol {
     
     public struct State: Equatable {
         @BindingState public var name : String = ""
+        public var maxCount : Int = 15
         public var gender : GenderType?
         @BindingState public var height : Int = 0
         @BindingState public var weight : Int = 0

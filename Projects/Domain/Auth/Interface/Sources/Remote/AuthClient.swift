@@ -11,7 +11,7 @@ import AuthenticationServices
 
 public struct AuthClient {
     public var setUserInfo: (ASAuthorizationAppleIDCredential) -> Void
-    public var getUserInfo: @Sendable () async throws -> UserInfo
+    public var getUserInfo: @Sendable () -> UserInfo
    
     public init(setUserInfo: @escaping (ASAuthorizationAppleIDCredential) -> Void,
                 getUserInfo: @Sendable @escaping () -> UserInfo) {

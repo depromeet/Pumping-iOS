@@ -10,8 +10,8 @@ import SwiftUI
 import ComposableArchitecture
 import SharedDesignSystem
 
-struct OnboardingCrewView: View {
-    public let store: StoreOf<OnboardingCrewStore>
+struct OnboardingAvatarView: View {
+    public let store: StoreOf<OnboardingAvatarStore>
     
     public var body: some View {
         WithViewStore(self.store) { viewStore in
@@ -20,49 +20,41 @@ struct OnboardingCrewView: View {
                     .frame(height: 353)
                 
                 VStack(alignment : .leading) {
-                    crewTitleView()
+                    avatarTitleView()
                     
                     Spacer()
                     
                     buttonView(viewStore: viewStore)
                 }
             }
-            .navigationDestination(isPresented: viewStore.binding(\.$showCrewJoin)) {
-                IfLetStore(store.scope(state: \.crewJoin , action: { .crewJoin($0) })) {
-                    OnboardingCrewJoinView(store: $0)
-                }
-            }
             .navigationBarBackButtonHidden(true)
-            .padding(.horizontal)
+            .padding(.vertical)
         }
     }
     
-    private func crewTitleView() -> some View {
+    private func avatarTitleView() -> some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("아직 크루가 없어요!")
+            Text("내 캐릭터를 뽑아보세요")
                 .font(.pretendard(size: 24, type: .bold))
                 .foregroundColor(.colorGrey900)
             
-            Text("새로운 운동 크루를 만들어보세요")
+            Text("랜덤으로 캐릭터가 만들어져요.")
                 .font(.pretendard(size: 15, type: .medium))
                 .foregroundColor(.colorGrey600)
         }
+        .padding([.horizontal])
     }
     
-    private func buttonView(viewStore : ViewStoreOf<OnboardingCrewStore>) -> some View {
-        VStack(spacing: 24) {
-            Button {
-                viewStore.send(.crewJoinButtonTapped)
-            } label: {
-                Text("코드로 참여하기")
-                    .font(.pretendard(size: 18, type: .bold))
-                    .foregroundColor(.colorCyanPrimary)
-            }
-            
-            PumpingSubmitButton(title: "완료") {
+    @ViewBuilder
+    private func buttonView(viewStore : ViewStoreOf<OnboardingAvatarStore>) -> some View {
+        PumpingSubmitButton(title: viewStore.isAvatarPicked ? "다음" : "캐릭터 뽑기") {
+            if viewStore.isAvatarPicked {
+                viewStore.send(.moveToNextStep)
+            } else {
+                //TODO: 아바타 뽑기 시 로직 작성
                 viewStore.send(.moveToNextStep)
             }
         }
-        
+        .padding([.horizontal, .bottom])
     }
 }

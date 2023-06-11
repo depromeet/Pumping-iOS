@@ -30,16 +30,17 @@ public struct RootStore: ReducerProtocol {
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
-            case .onboarding(.profile(.moveToNextStep)):
+            case .onboarding(.avatar(.moveToNextStep)):
                 state = .mainTab(.init())
                 return .none
-            case .onboarding(.auth(.isAlreadyAuthorized)):
+                
+            case .onboarding(.isAlreadyAuthorized):
                 state = .mainTab(.init())
                 return .none
-            case .onboarding:
+                
+            default :
                 return .none
-            case .mainTab:
-                return .none
+                
             }
         }
         .ifCaseLet(/State.mainTab, action: /Action.mainTab) {

@@ -25,12 +25,16 @@ struct OnboardingPermissionView: View {
                     Spacer()
                     
                     PumpingSubmitButton(title: "권한 부여", isEnable: true) {
-                         viewStore.send(.moveToNextStep)
+                        HealthKitAuthorizationHelper.shared.checkAuthorizationAndRequest {
+                            viewStore.send(.moveToNextStep)
+                        } onFailure: {
+                            viewStore.send(.failToAuthorize)
+                        }
                     }
                 }
             }
             .navigationBarBackButtonHidden(true)
-            .padding(.horizontal)
+            .padding()
         }
     }
     

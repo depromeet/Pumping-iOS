@@ -12,39 +12,43 @@ public struct OnboardingRootStore: ReducerProtocol {
     private let onboardingAuthStore: OnboardingAuthStore
     private let onboardingPermissionStore: OnboardingPermissionStore
     private let onboardingProfileStore: OnboadingProfileStore
-    private let onboardingCrewStore: OnboardingCrewStore
+    private let onboardingAvatarStore: OnboardingAvatarStore
     
     public init(
         reducer: Reduce<State, Action>,
         onboardingAuthStore: OnboardingAuthStore,
         onboardingPermissionStore: OnboardingPermissionStore,
         onboadingProfileStore: OnboadingProfileStore,
-        onboardingCrewStore: OnboardingCrewStore
+        onboardingAvatarStore: OnboardingAvatarStore
     ) {
         self.reducer = reducer
         self.onboardingAuthStore = onboardingAuthStore
         self.onboardingPermissionStore = onboardingPermissionStore
         self.onboardingProfileStore = onboadingProfileStore
-        self.onboardingCrewStore = onboardingCrewStore
+        self.onboardingAvatarStore = onboardingAvatarStore
     }
     
     public struct State: Equatable {
         @BindingState public var path: [OnboardingScene] = []
+        public var isAuthorizeSuccess : Bool = false
         
-        public var auth: OnboardingAuthStore.State? = .init()
+        public var auth: OnboardingAuthStore.State?
         public var permission: OnboardingPermissionStore.State?
         public var profile: OnboadingProfileStore.State?
-        public var crew: OnboardingCrewStore.State?
+        public var avatar: OnboardingAvatarStore.State?
         
         public init() { }
     }
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
+        case onAppear
+        case isAlreadyAuthorized
+        
         case auth(OnboardingAuthStore.Action)
         case permission(OnboardingPermissionStore.Action)
         case profile(OnboadingProfileStore.Action)
-        case crew(OnboardingCrewStore.Action)        
+        case avatar(OnboardingAvatarStore.Action)        
     }
     
     public var body: some ReducerProtocol<State, Action> {
@@ -59,8 +63,8 @@ public struct OnboardingRootStore: ReducerProtocol {
             .ifLet(\.profile, action: /Action.profile) {
                 onboardingProfileStore
             }
-            .ifLet(\.crew, action: /Action.crew) {
-                onboardingCrewStore
+            .ifLet(\.avatar, action: /Action.avatar) {
+                onboardingAvatarStore
             }
     }
 }

@@ -22,9 +22,6 @@ public struct OnboardingAuthView : View {
 
                 signInWithAppleButton(viewStore: viewStore)
             }
-            .onAppear {
-                viewStore.send(.checkAuthorization)
-            }
             .navigationBarBackButtonHidden(true)
         }
     }

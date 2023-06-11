@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol HealthKitAuthorizationHelperInterface {
-    func checkAuthorizationAndRequest(onSuccess : @escaping () -> Void)
+    func checkAuthorizationAndRequest(onSuccess : @escaping () -> Void, onFailure : @escaping () -> Void)
 }

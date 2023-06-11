@@ -21,8 +21,14 @@ public final class LocalAuthStore : LocalAuthStoreInterface {
     
     public func setUserInfo(userInfo : ASAuthorizationAppleIDCredential) {
         KeyChainStore.shared.save(property: .userIdentifier, value: userInfo.user)
-        KeyChainStore.shared.save(property: .name, value: userInfo.fullName?.givenName ?? "")
-        KeyChainStore.shared.save(property: .email, value: userInfo.email ?? "")
+        
+        if let name = userInfo.fullName?.givenName {
+            KeyChainStore.shared.save(property: .name, value: name)
+        }
+        
+        if let email = userInfo.email {
+            KeyChainStore.shared.save(property: .email, value: email)
+        }
         
         if let identityToken = userInfo.identityToken {
             KeyChainStore.shared.save(property: .identityToken, value: String(data: identityToken, encoding: .utf8) ?? "")
