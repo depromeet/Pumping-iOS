@@ -79,12 +79,3 @@ public struct WorkoutRootStore: ReducerProtocol {
             }
     }
 }
-
-
-public struct WorkoutRootView {
-    public let store: StoreOf<WorkoutRootStore>
-    
-    public init(store: StoreOf<WorkoutRootStore>) {
-        self.store = store
-    }
-}

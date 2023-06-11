@@ -9,10 +9,15 @@ import SwiftUI
 
 import ComposableArchitecture
 
-import FeatureWorkoutInterface
 import SharedDesignSystem
 
-extension WorkoutStartView: View {
+public struct WorkoutStartView: View {
+    public let store: StoreOf<WorkoutStartStore>
+    
+    public init(store: StoreOf<WorkoutStartStore>) {
+        self.store = store
+    }
+    
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack {

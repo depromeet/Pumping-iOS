@@ -5,15 +5,19 @@
 //  Created by 송영모 on 2023/05/23.
 //
 
-import Foundation
 import SwiftUI
 
 import ComposableArchitecture
 
-import FeatureWorkoutInterface
 import SharedDesignSystem
 
-extension WorkoutRootView: View {
+public struct WorkoutRootView: View {
+    public let store: StoreOf<WorkoutRootStore>
+    
+    public init(store: StoreOf<WorkoutRootStore>) {
+        self.store = store
+    }
+
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             NavigationStack(path: viewStore.binding(\.$path)) {

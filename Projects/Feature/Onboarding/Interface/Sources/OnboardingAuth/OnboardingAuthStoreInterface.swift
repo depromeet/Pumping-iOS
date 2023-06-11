@@ -8,7 +8,6 @@
 import Foundation
 import ComposableArchitecture
 import AuthenticationServices
-
 import Foundation
 
 public struct OnboardingAuthStore: ReducerProtocol {
@@ -22,6 +21,8 @@ public struct OnboardingAuthStore: ReducerProtocol {
     public struct State: Equatable {
         @BindingState public var tabViewIndex : Int = 0
         public var isAuthorized : Bool = false
+        
+        public let index: Int
 
         public let index: Int
         

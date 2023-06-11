@@ -31,7 +31,7 @@ extension AuthClient: TestDependencyKey {
 }
 
 extension DependencyValues {
-    var authClient: AuthClient {
+    public var authClient: AuthClient {
         get { self[AuthClient.self] }
         set { self[AuthClient.self] = newValue }
     }
