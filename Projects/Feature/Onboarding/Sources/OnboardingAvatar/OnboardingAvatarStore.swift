@@ -13,7 +13,7 @@ extension OnboardingAvatarStore {
     public init() {
         let reducer : Reduce<State, Action> = Reduce { state, action in
             switch action {
-            default :
+            default:
                 return .none
             }
         }

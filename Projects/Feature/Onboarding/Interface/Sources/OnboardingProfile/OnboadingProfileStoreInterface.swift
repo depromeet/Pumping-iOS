@@ -39,6 +39,6 @@ public struct OnboadingProfileStore: ReducerProtocol {
 }
 
 public enum GenderType : String {
-    case M = "남성"
-    case W = "여성"
+    case male = "남성"
+    case female = "여성"
 }

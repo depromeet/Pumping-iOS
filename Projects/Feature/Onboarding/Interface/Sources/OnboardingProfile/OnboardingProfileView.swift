@@ -75,36 +75,36 @@ public struct OnboardingProfileView : View {
             
             HStack {
                 Button {
-                    viewStore.send(.setGender(.M))
+                    viewStore.send(.setGender(.male))
                 } label: {
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(viewStore.state.gender == .M ? Color.colorCyanPrimary : Color.colorGrey500, lineWidth : 1)
+                        .stroke(viewStore.state.gender == .male ? Color.colorCyanPrimary : Color.colorGrey500, lineWidth : 1)
                         .frame(height: 50)
                         .overlay {
                             Text("남성")
                                 .font(.pretendard(size: 15, type: .medium))
-                                .foregroundColor(viewStore.state.gender == .M ? .colorGrey000 : .colorGrey500)
+                                .foregroundColor(viewStore.state.gender == .male ? .colorGrey000 : .colorGrey500)
                         }
                         .background(
                             RoundedRectangle(cornerRadius: 12)
-                                .fill(viewStore.state.gender == .M ? Color.colorCyan50 : Color.clear)
+                                .fill(viewStore.state.gender == .male ? Color.colorCyan50 : Color.clear)
                         )
                 }
                 
                 Button {
-                    viewStore.send(.setGender(.W))
+                    viewStore.send(.setGender(.female))
                 } label: {
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(viewStore.state.gender == .W ? Color.colorCyanPrimary : Color.colorGrey500 , lineWidth : 1)
+                        .stroke(viewStore.state.gender == .female ? Color.colorCyanPrimary : Color.colorGrey500 , lineWidth : 1)
                         .frame(height: 50)
                         .overlay {
                             Text("여성")
                                 .font(.pretendard(size: 15, type: .medium))
-                                .foregroundColor(viewStore.state.gender == .W ? .colorGrey000 : .colorGrey500)
+                                .foregroundColor(viewStore.state.gender == .female ? .colorGrey000 : .colorGrey500)
                         }
                         .background(
                             RoundedRectangle(cornerRadius: 12)
-                                .fill(viewStore.state.gender == .W ? Color.colorCyan50 : Color.clear)
+                                .fill(viewStore.state.gender == .female ? Color.colorCyan50 : Color.clear)
                         )
                 }
             }

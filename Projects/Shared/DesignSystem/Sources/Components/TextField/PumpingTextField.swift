@@ -69,6 +69,7 @@ public struct PumpingTextField: View {
                             .foregroundColor(.colorGrey800)
                             .padding(.horizontal, 20)
                             .padding(.trailing, 40)
+//                           텍스트가 maxCount이상 입력되는것을 방지하기 위한 코드 (Ex. maxCount가 15일경우 15자 까지만 입력되고 이후의 입력값은 무시함)
 //                            .onReceive(text.wrappedValue.publisher.collect()) {
 //                                let value = String($0.prefix(maxCount))
 //                                if text.wrappedValue != value && (maxCount != 0){
