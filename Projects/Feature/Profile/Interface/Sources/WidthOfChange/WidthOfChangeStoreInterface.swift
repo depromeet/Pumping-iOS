@@ -15,7 +15,6 @@ public struct WidthOfChangeStore: ReducerProtocol {
     }
 
     public struct State: Equatable {
-        
         public init() {
 
         }
