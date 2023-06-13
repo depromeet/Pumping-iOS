@@ -2,7 +2,7 @@
 //  MyPageRootStoreInterface.swift
 //  FeatureProfileInterface
 //
-//  Created by 김태현 on 2023/05/09.
+//  Created by Derrickk kim on 2023/05/09.
 //
 
 import ComposableArchitecture

@@ -12,7 +12,6 @@ import ComposableArchitecture
 import FeatureHomeInterface
 import FeatureProfileInterface
 import FeatureOnboardingInterface
-import FeatureHome
 import FeatureOnboarding
 import SharedDesignSystem
 

@@ -2,7 +2,7 @@
 //  WidthOfChangeView.swift
 //  FeatureProfileInterface
 //
-//  Created by 김태현 on 2023/05/09.
+//  Created by Derrick kim on 2023/05/09.
 //
 
 import SwiftUI
