@@ -27,177 +27,9 @@ public struct WidthOfChangeView : View {
                     }
                     .offset(x: -25)
 
-                    ZStack {
-                        SharedDesignSystemAsset.Images.widthOfChange_workoutTime.swiftUIImage
-                        VStack(alignment: .leading, spacing: 15) {
-                            HStack(spacing: 5) {
-                                Text("운동시간")
-                                    .font(.pretendard(size: 15, type: .extraBold))
-                                    .foregroundColor(.colorGrey900)
-
-                                Text("45%")
-                                    .font(.pretendard(size: 15, type: .medium))
-                                    .foregroundColor(.colorCyan200)
-                                    .offset(x: 3)
-
-                                SharedDesignSystemAsset.Images.arrowForPercentage.swiftUIImage
-                                    .offset(y: 4)
-                            }
-                            .offset(y: -10)
-
-                            VStack(alignment: .leading, spacing: 5) {
-                                Text("지난주")
-                                    .font(.pretendard(size: 12, type: .extraLight))
-                                    .foregroundColor(.colorGrey600)
-
-                                Text("3시간")
-                                    .font(.pretendard(size: 15, type: .medium))
-                                    .foregroundColor(.colorGrey800)
-                            }
-                        }
-                        .offset(x: -120, y: -15)
-
-                        HStack {
-                            SharedDesignSystemAsset.Images.arrow.swiftUIImage
-
-                            Text("5시간")
-                                .font(.tenada(size: 32))
-                                .baselineOffset(-5)
-                        }
-                        .offset(x: 120, y: -5)
-                    }
-
-                    ZStack {
-                        SharedDesignSystemAsset.Images.widthOfChange_Calorie.swiftUIImage
-                        VStack(alignment: .leading, spacing: 15) {
-                            HStack(spacing: 5) {
-                                Text("칼로리")
-                                    .font(.pretendard(size: 15, type: .extraBold))
-                                    .foregroundColor(.colorGrey900)
-
-                                Text("45%")
-                                    .font(.pretendard(size: 15, type: .medium))
-                                    .foregroundColor(.colorCyan200)
-                                    .offset(x: 3)
-
-                                SharedDesignSystemAsset.Images.arrowForPercentage.swiftUIImage
-                                    .offset(y: 4)
-                            }
-                            .offset(y: -10)
-
-                            VStack(alignment: .leading, spacing: 5) {
-                                Text("지난주")
-                                    .font(.pretendard(size: 12, type: .extraLight))
-                                    .foregroundColor(.colorGrey600)
-
-                                Text("100kcal")
-                                    .font(.pretendard(size: 15, type: .medium))
-                                    .foregroundColor(.colorGrey800)
-                            }
-                        }
-                        .offset(x: -125, y: -15)
-
-                        HStack {
-                            SharedDesignSystemAsset.Images.arrow.swiftUIImage
-
-                            Text("300kcal")
-                                .font(.tenada(size: 32))
-                                .baselineOffset(-5)
-                        }
-                        .offset(x: 95, y: -5)
-                    }
-
-                    ZStack {
-                        SharedDesignSystemAsset.Images.widthOfChange_HearRate.swiftUIImage
-                        VStack(alignment: .leading, spacing: 15) {
-                            HStack(spacing: 5) {
-                                Text("평균 심박수")
-                                    .font(.pretendard(size: 15, type: .extraBold))
-                                    .foregroundColor(.colorGrey900)
-
-                                Text("45%")
-                                    .font(.pretendard(size: 15, type: .medium))
-                                    .foregroundColor(.colorCyan200)
-                                    .offset(x: 3)
-
-                                SharedDesignSystemAsset.Images.arrowForPercentage.swiftUIImage
-                                    .offset(y: 4)
-                            }
-                            .offset(y: -10)
-
-                            VStack(alignment: .leading, spacing: 5) {
-                                Text("지난주")
-                                    .font(.pretendard(size: 12, type: .extraLight))
-                                    .foregroundColor(.colorGrey600)
-
-                                Text("2시간 / 100bpm")
-                                    .font(.pretendard(size: 15, type: .medium))
-                                    .foregroundColor(.colorGrey800)
-                            }
-                        }
-                        .offset(x: -110, y: -15)
-
-                        VStack(alignment: .trailing, spacing: 2) {
-                            Text("평균 5시간 /")
-                                .font(.pretendard(size: 18, type: .medium))
-                                .foregroundColor(.colorGrey900)
-
-                            HStack {
-                                SharedDesignSystemAsset.Images.arrow.swiftUIImage
-
-                                Text("120bpm")
-                                    .font(.tenada(size: 32))
-                                    .baselineOffset(-5)
-                            }
-                        }
-                        .offset(x: 95, y: -5)
-                    }
-
-                    ZStack {
-                        SharedDesignSystemAsset.Images.widthOfChange_MaximumPart.swiftUIImage
-                        VStack(alignment: .leading, spacing: 15) {
-                            HStack(spacing: 5) {
-                                Text("최대운동부위")
-                                    .font(.pretendard(size: 15, type: .extraBold))
-                                    .foregroundColor(.colorGrey900)
-
-                                Text("45%")
-                                    .font(.pretendard(size: 15, type: .medium))
-                                    .foregroundColor(.colorCyan200)
-                                    .offset(x: 3)
-
-                                SharedDesignSystemAsset.Images.arrowForPercentage.swiftUIImage
-                                    .offset(y: 4)
-                            }
-                            .offset(y: -10)
-
-                            VStack(alignment: .leading, spacing: 5) {
-                                Text("지난주")
-                                    .font(.pretendard(size: 12, type: .extraLight))
-                                    .foregroundColor(.colorGrey600)
-
-                                Text("2시간 / 하체")
-                                    .font(.pretendard(size: 15, type: .medium))
-                                    .foregroundColor(.colorGrey800)
-                            }
-                        }
-                        .offset(x: -105, y: -15)
-
-                        VStack(alignment: .trailing, spacing: 2) {
-                            Text("5시간 /")
-                                .font(.pretendard(size: 18, type: .medium))
-                                .foregroundColor(.colorGrey900)
-
-                            HStack {
-                                SharedDesignSystemAsset.Images.arrow.swiftUIImage
-
-                                Text("상체")
-                                    .font(.tenada(size: 32))
-                                    .baselineOffset(-5)
-                            }
-                        }
-                        .offset(x: 130, y: -5)
-                    }
+                    recordItemListView(
+                        previousData: ["3시간","100kcal", "2시간 / 100bpm", "2시간 / 하체"],
+                        currentData: ["5시간","300kcal", "120bpm", "상체"])
                 }
             }
         }.toolbar {
@@ -250,6 +82,78 @@ public struct WidthOfChangeView : View {
                     .foregroundColor(Color.colorGrey200)
                     .frame(maxWidth: 10, maxHeight: 10)
             }
+        }
+    }
+
+    private func recordItemView(_ record: RecordItem) -> some View {
+        ZStack {
+            record.image
+
+            GeometryReader { geometry in
+                VStack(alignment: .leading, spacing: 15) {
+                    HStack(spacing: 5) {
+                        Text(record.title)
+                            .font(.pretendard(size: 15, type: .extraBold))
+                            .foregroundColor(.colorGrey900)
+
+                        Text("45%")
+                            .font(.pretendard(size: 15, type: .medium))
+                            .foregroundColor(.colorCyan200)
+                            .offset(x: 3)
+
+                        SharedDesignSystemAsset.Images.arrowForPercentage.swiftUIImage
+                            .offset(y: 4)
+                    }
+                    .offset(y: -5)
+
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("지난주")
+                            .font(.pretendard(size: 12, type: .extraLight))
+                            .foregroundColor(.colorGrey600)
+
+                        Text(record.previousData)
+                            .font(.pretendard(size: 15, type: .medium))
+                            .foregroundColor(.colorGrey800)
+                    }
+                    .offset(y: 8)
+                }
+                .frame(width: geometry.size.width, alignment: .leading)
+                .offset(x: 20, y: -10)
+
+                VStack(alignment: .trailing, spacing: 2) {
+                    Spacer()
+
+                    if WidthOfChangeType(rawValue: record.title) == .averageHeartRate
+                        || WidthOfChangeType(rawValue: record.title) == .maximumPart {
+                        Text("5시간 /")
+                            .font(.pretendard(size: 18, type: .medium))
+                            .foregroundColor(.colorGrey900)
+                    }
+
+                    HStack {
+                        SharedDesignSystemAsset.Images.arrow.swiftUIImage
+
+                        Text(record.currentData)
+                            .font(.tenada(size: 32))
+                            .baselineOffset(-5)
+                    }
+
+                    Spacer()
+                }
+                .frame(width: geometry.size.width, alignment: .trailing)
+                .offset(x: -15, y: -5)
+            }
+        }
+    }
+
+    private func recordItemListView(previousData: [String], currentData: [String]) -> some View {
+        ForEach(Array(WidthOfChangeType.allCases.enumerated()), id: \.element) { index, type in
+            recordItemView(
+                RecordItem(
+                    image: type.image,
+                    title: type.rawValue,
+                    previousData: previousData[index],
+                    currentData: currentData[index]))
         }
     }
 }
