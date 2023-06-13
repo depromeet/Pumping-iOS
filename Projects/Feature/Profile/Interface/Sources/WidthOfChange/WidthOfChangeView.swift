@@ -238,7 +238,7 @@ public struct WidthOfChangeView : View {
 
             }
 
-            Text("5월 12일 - 19일").font(.headline)
+            Text("5월 12일 - 19일")
                 .font(.pretendard(size: 15, type: .medium))
                 .foregroundColor(Color.colorGrey400)
 
