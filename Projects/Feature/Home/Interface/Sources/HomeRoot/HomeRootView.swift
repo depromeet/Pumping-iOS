@@ -23,33 +23,11 @@ public struct HomeRootView: View {
                     VStack(spacing: 35) {
                         VStack(alignment: .leading, spacing: 0) {
                             VStack(alignment: .leading) {
-                                HStack {
-                                    HStack(spacing: 5) {
-                                        Text("일이삼사오육칠팔구십")
-                                            .font(.pretendard(size: 18, type: .semiBold))
-                                            .foregroundColor(.colorGrey900)
-
-                                        Button {
-
-                                        } label: {
-                                            SharedDesignSystemAsset.Images.dropdown.swiftUIImage
-                                        }
-                                    }
-
-                                    Spacer()
-
-                                    Text("D-7")
-                                        .font(.pretendard(size: 21, type: .semiBold))
-                                        .foregroundColor(.colorCyan200)
-                                }
+                                profileHeaderView()
 
                                 Spacer()
 
-                                TabView {
-                                    recordItemHeaderListView()
-                                }
-                                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-                                .frame(height: 400)
+                                profileTabView()
                             }
                             .padding(.init(top: 20, leading: 15, bottom: 0, trailing: 20))
 
@@ -89,59 +67,50 @@ public struct HomeRootView: View {
 
                         }
                         .padding(.init(top: 0, leading: 15, bottom: 0, trailing: 15))
+
+                        ForEachStore(self.store.scope(
+                            state: \.userRecordList,
+                            action: HomeRootStore.Action.personalRecordCell(id:action:))) {
+                            PersonalRecordCellView(store: $0)
+                        }
                     }
                 }
             }
         }
     }
 
-    func recordItemHeaderView() -> some View {
-        HStack(spacing: 20) {
-            VStack(alignment: .leading, spacing: 40) {
-                VStack(alignment: .leading, spacing: 10) {
-                    VStack(alignment: .leading) {
-                        Text("5위")
-                            .font(.pretendard(size: 13, type: .medium))
-                            .foregroundColor(.colorGrey800)
-
-                        Text("보민")
-                            .font(.tenada(size: 32))
-                            .foregroundColor(.colorGrey900)
-                            .baselineOffset(-5)
-                    }
-
-                    VStack(alignment: .leading) {
-                        Text("운동 시간")
-                            .font(.pretendard(size: 13, type: .medium))
-                            .foregroundColor(.colorGrey800)
-
-                        Text("00:34:00")
-                            .font(.tenada(size: 32))
-                            .foregroundColor(.colorGrey900)
-                            .baselineOffset(-5)
-                    }
-                }
+    private func profileHeaderView() -> some View {
+        HStack {
+            HStack(spacing: 5) {
+                Text("일이삼사오육칠팔구십")
+                    .font(.pretendard(size: 18, type: .semiBold))
+                    .foregroundColor(.colorGrey900)
 
                 Button {
 
                 } label: {
-                    Image(systemName: "heart.fill")
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .foregroundColor(.black)
+                    SharedDesignSystemAsset.Images.dropdown.swiftUIImage
                 }
-                .frame(width: 50, height: 50)
-                .background(.white)
-                .clipShape(Circle())
             }
-            .offset(x: -10)
 
-            SharedDesignSystemAsset.Images.avatar.swiftUIImage
+            Spacer()
+
+            Text("D-7")
+                .font(.pretendard(size: 21, type: .semiBold))
+                .foregroundColor(.colorCyan200)
         }
     }
 
-    func recordItemHeaderListView() -> some View {
-        ForEach(0..<5) { i in
-            recordItemHeaderView()
+    @ViewBuilder
+    private func profileTabView() -> some View {
+        TabView {
+            ForEachStore(self.store.scope(
+                state: \.profileList,
+                action: HomeRootStore.Action.profileBodyCell(id:action:))) {
+                ProfileBodyCellView(store: $0)
+            }
         }
+        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+        .frame(height: 400)
     }
 }

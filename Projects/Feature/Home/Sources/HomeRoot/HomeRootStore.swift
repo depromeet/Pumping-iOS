@@ -17,6 +17,12 @@ extension HomeRootStore {
                 
             case .home:
                 return .none
+
+            case let .profileBodyCell(id, action):
+                return .none
+
+            case let .personalRecordCell(id, action):
+                return .none
             }
         }
         
