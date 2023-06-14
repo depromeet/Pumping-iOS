@@ -8,12 +8,10 @@
 import Foundation
 import ComposableArchitecture
 import FeatureHomeInterface
-import FeatureMyPageInterface
-import FeatureOnboardingInterface
+import FeatureProfileInterface
 import FeatureWorkoutInterface
 import FeatureHome
-import FeatureMyPage
-import FeatureOnboarding
+import FeatureProfile
 import FeatureWorkout
 import SharedDesignSystem
 
@@ -24,7 +22,7 @@ public struct MainTabViewStore: ReducerProtocol {
     public struct State: Equatable {        
         public var home: HomeRootStore.State? = .init()
         public var workout: WorkoutRootStore.State? = .init()
-        public var myPage: MyPageRootStore.State? = .init()
+        public var profile: ProfileRootStore.State? = .init()
         
         public init() { }
     }
@@ -36,7 +34,7 @@ public struct MainTabViewStore: ReducerProtocol {
         
         case home(HomeRootStore.Action)
         case workout(WorkoutRootStore.Action)
-        case myPage(MyPageRootStore.Action)
+        case profile(ProfileRootStore.Action)
     }
     
     public var body: some ReducerProtocol<State, Action> {
@@ -56,7 +54,7 @@ public struct MainTabViewStore: ReducerProtocol {
             case .workout:
                 return .none
                 
-            case .myPage:
+            case .profile:
                 return .none
 
             }
@@ -67,8 +65,8 @@ public struct MainTabViewStore: ReducerProtocol {
         .ifLet(\.workout, action: /Action.workout) {
             WorkoutRootStore()
         }
-        .ifLet(\.myPage, action: /Action.myPage) {
-            MyPageRootStore()
+        .ifLet(\.profile, action: /Action.profile) {
+            ProfileRootStore()
         }
 
     }

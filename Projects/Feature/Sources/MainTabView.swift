@@ -10,11 +10,10 @@ import SwiftUI
 import ComposableArchitecture
 
 import FeatureHomeInterface
-import FeatureMyPageInterface
+import FeatureProfileInterface
 import FeatureOnboardingInterface
 import FeatureWorkoutInterface
 import FeatureHome
-import FeatureMyPage
 import FeatureOnboarding
 import FeatureWorkout
 import SharedDesignSystem
@@ -45,8 +44,8 @@ public struct MainTabView: View {
                         }
                 }
                 
-                IfLetStore(self.store.scope(state: \.myPage, action: { .myPage($0) })) {
-                    MyPageRootView(store: $0)
+                IfLetStore(self.store.scope(state: \.profile, action: { .profile($0) })) {
+                    ProfileRootView(store: $0, profileSubject: .my)
                         .tabItem {
                             Image(systemName: "person")
                             Text("MyPage")
