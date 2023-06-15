@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import SharedDesignSystem
 
 public enum ProfileScene: Hashable {
     case root
@@ -27,9 +28,18 @@ public struct ProfileRootStore: ReducerProtocol {
 
     public struct State: Equatable {
         @BindingState public var path: [ProfileScene] = []
-        
+
         public var hasComparison: Bool = false
         public var widthOfChange: WidthOfChangeStore.State?
+        public var profileWeekDayList: IdentifiedArrayOf<ProfileWeekDayCellStore.State> = [
+            .init(id: .init(), index: 0, weekDay: "월"),
+            .init(id: .init(), index: 1, weekDay: "화"),
+            .init(id: .init(), index: 2, weekDay: "수"),
+            .init(id: .init(), index: 3, weekDay: "목"),
+            .init(id: .init(), index: 4, weekDay: "금"),
+            .init(id: .init(), index: 5, weekDay: "토"),
+            .init(id: .init(), index: 6, weekDay: "일")
+        ]
 
         public init() { }
     }
@@ -41,6 +51,8 @@ public struct ProfileRootStore: ReducerProtocol {
 
         case binding(BindingAction<State>)
         case widthOfChange(WidthOfChangeStore.Action)
+        case profileWeekDayCell(id: ProfileWeekDayCellStore.State.ID,
+                                action: ProfileWeekDayCellStore.Action)
     }
 
     public var body: some ReducerProtocol<State, Action> {

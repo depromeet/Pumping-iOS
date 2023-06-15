@@ -13,6 +13,9 @@ extension ProfileRootStore {
     public init() {
         let reducer : Reduce<State, Action> = Reduce { state, action in
             switch action {
+            case .binding:
+                return .none
+
             case .tapHeartButton:
                 return .none
 
@@ -24,8 +27,11 @@ extension ProfileRootStore {
             case let .tapComparisonButton(isEnabled):
                 state.hasComparison = isEnabled
                 return .none
-                
-            case .binding:
+
+            case let .profileWeekDayCell(id, action):
+                return .none
+
+            case .widthOfChange(_):
                 return .none
             }
         }
