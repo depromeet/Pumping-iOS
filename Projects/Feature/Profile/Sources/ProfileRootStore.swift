@@ -31,13 +31,14 @@ extension ProfileRootStore {
             case let .profileWeekDayCell(id, action):
                 return .none
 
-            case .widthOfChange(_):
+            case let .widthOfChange(action):
                 return .none
             }
         }
 
         self.init(
-            reducer: reducer
+            reducer: reducer,
+            widthOfChangeStore: WidthOfChangeStore()
         )
     }
 }

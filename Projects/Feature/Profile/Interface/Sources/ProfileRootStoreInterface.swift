@@ -19,11 +19,16 @@ public enum ProfileSubject: Hashable {
 }
 
 public struct ProfileRootStore: ReducerProtocol {
-
     private let reducer: Reduce<State, Action>
 
-    public init(reducer: Reduce<State, Action>) {
+    private let widthOfChangeStore: WidthOfChangeStore
+
+    public init(
+        reducer: Reduce<State, Action>,
+        widthOfChangeStore: WidthOfChangeStore
+    ) {
         self.reducer = reducer
+        self.widthOfChangeStore = widthOfChangeStore
     }
 
     public struct State: Equatable {
@@ -58,5 +63,8 @@ public struct ProfileRootStore: ReducerProtocol {
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()
         reducer
+            .ifLet(\.widthOfChange, action: /Action.widthOfChange) {
+                widthOfChangeStore
+            }
     }
 }

@@ -15,5 +15,5 @@ public extension Image {
     static let widthOfChangeCalorie = SharedDesignSystemAsset.Images.widthOfChangeCalorie.swiftUIImage
     static let widthOfChangeWorkoutTime = SharedDesignSystemAsset.Images.widthOfChangeWorkoutTime.swiftUIImage
     static let widthOfChangeHearRate = SharedDesignSystemAsset.Images.widthOfChangeHearRate.swiftUIImage
-    static let widthOfChangeMaxWorkoutPart = SharedDesignSystemAsset.Images.widthOfChangeMaximumPart.swiftUIImage
+    static let widthOfChangeMaxWorkoutPart = SharedDesignSystemAsset.Images.widthOfChangeMaxWorkoutPart.swiftUIImage
 }
