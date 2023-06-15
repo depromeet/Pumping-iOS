@@ -73,6 +73,14 @@ public struct HomeRootView: View {
                             action: HomeRootStore.Action.personalRecordCell(id:action:))) {
                             PersonalRecordCellView(store: $0)
                         }
+
+                        Text("크루 나가기")
+                            .font(.pretendard(size: 14, type: .medium))
+                            .padding(.bottom, 35)
+                            .foregroundColor(Color.colorGrey500)
+                            .onTapGesture {
+
+                            }
                     }
                 }
             }
