@@ -11,5 +11,5 @@ public enum OnboardingScene: Hashable {
     case auth
     case permission
     case profile
-    case crew
+    case avatar
 }

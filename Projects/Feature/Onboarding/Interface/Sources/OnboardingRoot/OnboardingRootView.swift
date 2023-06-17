@@ -17,38 +17,21 @@ public struct OnboardingRootView : View {
     }
     
     public var body: some View {
-        WithViewStore(self.store, observe: { $0 }) { viewStore in
-            NavigationStack(path: viewStore.binding(\.$path)) {
-                VStack {
-                    Text("Root View")
-                }
-                .onAppear {
-                    viewStore.send(.moveToAuth)
-                }
-                .navigationDestination(for: OnboardingScene.self) { scene in
-                    switch scene {
-                    case .auth:
-                        IfLetStore(store.scope(state: \.auth , action: { .auth($0) })) {
-                            OnboardingAuthView(store: $0)
-                        }
-                        
-                    case .permission:
-                        IfLetStore(store.scope(state: \.permission, action: { .permission($0) })) {
-                            OnboardingPermissionView(store: $0)
-                        }
-                        
-                    case .profile:
-                        IfLetStore(store.scope(state: \.profile, action: { .profile($0) })) {
-                            OnboardingProfileView(store: $0)
-                        }
-                        
-                    case .crew:
-                        IfLetStore(store.scope(state: \.crew, action: { .crew($0) })) {
-                            OnboardingCrewView(store: $0)
-                        }
-                        
-                    }
-                }
+        SwitchStore(self.store) {
+            CaseLet(state: /OnboardingRootStore.State.auth, action: OnboardingRootStore.Action.auth) {
+                OnboardingAuthView(store: $0)
+            }
+            
+            CaseLet(state: /OnboardingRootStore.State.permission, action: OnboardingRootStore.Action.permission) {
+                OnboardingPermissionView(store: $0)
+            }
+            
+            CaseLet(state: /OnboardingRootStore.State.profile, action: OnboardingRootStore.Action.profile) {
+                OnboardingProfileView(store: $0)
+            }
+            
+            CaseLet(state: /OnboardingRootStore.State.avatar, action: OnboardingRootStore.Action.avatar) {
+                OnboardingAvatarView(store: $0)
             }
         }
     }

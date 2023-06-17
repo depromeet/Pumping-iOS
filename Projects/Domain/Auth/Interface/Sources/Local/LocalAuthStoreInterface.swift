@@ -6,7 +6,10 @@
 //
 
 import Foundation
+import AuthenticationServices
 
 public protocol LocalAuthStoreInterface {
     func loadToken() -> Token
+    func setUserInfo(userInfo : ASAuthorizationAppleIDCredential)
+    func getUserInfo() -> UserInfo
 }

@@ -12,57 +12,53 @@ public struct OnboardingRootStore: ReducerProtocol {
     private let onboardingAuthStore: OnboardingAuthStore
     private let onboardingPermissionStore: OnboardingPermissionStore
     private let onboardingProfileStore: OnboadingProfileStore
-    private let onboardingCrewStore: OnboardingCrewStore
+    private let onboardingAvatarStore: OnboardingAvatarStore
     
     public init(
         reducer: Reduce<State, Action>,
         onboardingAuthStore: OnboardingAuthStore,
         onboardingPermissionStore: OnboardingPermissionStore,
         onboadingProfileStore: OnboadingProfileStore,
-        onboardingCrewStore: OnboardingCrewStore
+        onboardingAvatarStore: OnboardingAvatarStore
     ) {
         self.reducer = reducer
         self.onboardingAuthStore = onboardingAuthStore
         self.onboardingPermissionStore = onboardingPermissionStore
         self.onboardingProfileStore = onboadingProfileStore
-        self.onboardingCrewStore = onboardingCrewStore
+        self.onboardingAvatarStore = onboardingAvatarStore
     }
     
-    public struct State: Equatable {
-        @BindingState public var path: [OnboardingScene] = []
+    public enum State: Equatable {
+        case auth(OnboardingAuthStore.State)
+        case permission(OnboardingPermissionStore.State)
+        case profile(OnboadingProfileStore.State)
+        case avatar(OnboardingAvatarStore.State)
         
-        public var auth: OnboardingAuthStore.State?
-        public var permission: OnboardingPermissionStore.State?
-        public var profile: OnboadingProfileStore.State?
-        public var crew: OnboardingCrewStore.State?
-        
-        public init() { }
+        public init() {
+            self = .auth(.init())
+        }
     }
     
-    public enum Action: BindableAction, Equatable {
-        case binding(BindingAction<State>)
+    public enum Action: Equatable {
         case auth(OnboardingAuthStore.Action)
         case permission(OnboardingPermissionStore.Action)
         case profile(OnboadingProfileStore.Action)
-        case crew(OnboardingCrewStore.Action)
-        
-        case moveToAuth
+        case avatar(OnboardingAvatarStore.Action)
     }
     
     public var body: some ReducerProtocol<State, Action> {
-        BindingReducer()
         reducer
-            .ifLet(\.auth, action: /Action.auth) {
+            .ifCaseLet(/State.auth, action: /Action.auth) {
                 onboardingAuthStore
             }
-            .ifLet(\.permission, action: /Action.permission) {
+            .ifCaseLet(/State.permission, action: /Action.permission) {
                 onboardingPermissionStore
             }
-            .ifLet(\.profile, action: /Action.profile) {
+            .ifCaseLet(/State.profile, action: /Action.profile) {
                 onboardingProfileStore
             }
-            .ifLet(\.crew, action: /Action.crew) {
-                onboardingCrewStore
+            .ifCaseLet(/State.avatar, action: /Action.avatar) {
+                onboardingAvatarStore
             }
     }
 }

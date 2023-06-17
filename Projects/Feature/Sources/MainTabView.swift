@@ -12,15 +12,17 @@ import ComposableArchitecture
 import FeatureHomeInterface
 import FeatureProfileInterface
 import FeatureOnboardingInterface
+import FeatureWorkoutInterface
 import FeatureHome
 import FeatureOnboarding
+import FeatureWorkout
 import SharedDesignSystem
 
-public struct MainView: View {
-    public let store: StoreOf<MainStore>
+public struct MainTabView: View {
+    public let store: StoreOf<MainTabViewStore>
     
-    public init() {
-        store = .init(initialState: .init(), reducer: MainStore()._printChanges())
+    public init(store: StoreOf<MainTabViewStore>) {
+        self.store = store
     }
     
     public var body: some View {
@@ -33,20 +35,20 @@ public struct MainView: View {
                             Text("Home")
                         }
                 }
+                                
+                IfLetStore(self.store.scope(state: \.workout, action: { .workout($0) })) {
+                    WorkoutRootView(store: $0)
+                        .tabItem {
+                            Image(systemName: "person")
+                            Text("Workout")
+                        }
+                }
                 
-                IfLetStore(self.store.scope(state: \.myPage, action: { .myPage($0) })) {
+                IfLetStore(self.store.scope(state: \.profile, action: { .profile($0) })) {
                     ProfileRootView(store: $0, profileSubject: .my)
                         .tabItem {
                             Image(systemName: "person")
                             Text("MyPage")
-                        }
-                }
-                
-                IfLetStore(self.store.scope(state: \.onboarding, action: { .onboarding($0) })) {
-                    OnboardingRootView(store: $0)
-                        .tabItem {
-                            Image(systemName: "person")
-                            Text("Onboarding")
                         }
                 }
             }
