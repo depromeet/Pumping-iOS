@@ -15,6 +15,7 @@ let targets: [Target] = [
             dependencies: [
                 .domain(implements: .Health),
                 .domain(implements: .Auth),
+                .domain(implements: .Workout),
                 .core
             ]
         )

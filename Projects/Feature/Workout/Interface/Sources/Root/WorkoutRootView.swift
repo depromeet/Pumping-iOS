@@ -56,7 +56,7 @@ public struct WorkoutRootView: View {
                 .background(Color.colorGrey000)
                 .navigationDestination(for: WorkoutScene.self) { scene in
                     switch scene {
-                    case .workoutHome:
+                    case .selectWorkoutCategoryType:
                         IfLetStore(self.store.scope(state: \.workoutHome, action: { .workoutHome($0) })) {
                             WorkoutHomeView(store: $0)
                         }

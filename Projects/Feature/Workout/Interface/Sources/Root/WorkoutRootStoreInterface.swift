@@ -9,7 +9,7 @@ import ComposableArchitecture
 
 public enum WorkoutScene: Hashable {
     case root
-    case workoutHome
+    case selectWorkoutCategoryType
     case workoutStart
     case workoutTimer
     case workoutEnd
