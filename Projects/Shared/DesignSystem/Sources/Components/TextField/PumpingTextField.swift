@@ -13,6 +13,7 @@ public struct PumpingTextField: View {
     private var text: Binding<String>
     private var titleText: String?
     private var placeHolderText: String = ""
+    private var errorText : String?
     private var maxCount: Int
     
     //Text Color
@@ -35,11 +36,19 @@ public struct PumpingTextField: View {
     
     public var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            if let titleText {
-                Text(titleText)
-                    .font(.pretendard(size: 16, type: .bold))
-                    .foregroundColor(.colorGrey800)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+            
+            HStack(spacing: 12) {
+                if let titleText {
+                    Text(titleText)
+                        .font(.pretendard(size: 16, type: .bold))
+                        .foregroundColor(.colorGrey800)
+                }
+                
+                if let errorText, text.wrappedValue.count > maxCount {
+                    Text(errorText)
+                        .font(.pretendard(size: 13, type: .medium))
+                        .foregroundColor(.red)
+                }
             }
             
             ZStack(alignment: .trailing) {
@@ -59,12 +68,14 @@ public struct PumpingTextField: View {
                             .frame(height: 50)
                             .foregroundColor(.colorGrey800)
                             .padding(.horizontal, 20)
-                            .onReceive(text.wrappedValue.publisher.collect()) {
-                                let value = String($0.prefix(maxCount))
-                                if text.wrappedValue != value && (maxCount != 0){
-                                    text.wrappedValue = value
-                                }
-                            }
+                            .padding(.trailing, 40)
+//                           텍스트가 maxCount이상 입력되는것을 방지하기 위한 코드 (Ex. maxCount가 15일경우 15자 까지만 입력되고 이후의 입력값은 무시함)
+//                            .onReceive(text.wrappedValue.publisher.collect()) {
+//                                let value = String($0.prefix(maxCount))
+//                                if text.wrappedValue != value && (maxCount != 0){
+//                                    text.wrappedValue = value
+//                                }
+//                            }
                             .background(Color.clear)
                     }
                     .background(
@@ -85,7 +96,7 @@ public struct PumpingTextField: View {
                     } else {
                         Text("\(text.wrappedValue.count)/\(maxCount)")
                             .font(.pretendard(size: 15, type: .medium))
-                            .foregroundColor(text.wrappedValue.count == maxCount ? .red : .colorGrey500)
+                            .foregroundColor(text.wrappedValue.count > maxCount ? .red : .colorGrey500)
                     }
                 }
                 .padding(.trailing)
@@ -111,6 +122,12 @@ extension PumpingTextField {
         return copy
     }
     
+    public func setErrorText(_ errorText: String) -> Self {
+        var copy = self
+        copy.errorText = errorText
+        return copy
+    }
+    
     public func setMaxCount(_ count: Int) -> Self {
         var copy = self
         copy.maxCount = count
@@ -118,7 +135,7 @@ extension PumpingTextField {
     }
     
     private func getBorderColor() -> Color {
-        if maxCount <= text.wrappedValue.count {
+        if maxCount < text.wrappedValue.count {
             return Color.red
         }
         
@@ -142,4 +159,10 @@ extension View {
                 self
             }
         }
+}
+
+struct PumpingTextField_Previews: PreviewProvider {
+    static var previews: some View {
+        PumpingTextField(text: .constant(""))
+    }
 }

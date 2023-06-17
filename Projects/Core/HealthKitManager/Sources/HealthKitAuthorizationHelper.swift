@@ -28,24 +28,27 @@ public final class HealthKitAuthorizationHelper : HealthKitAuthorizationHelperIn
         ]
     )
     
-    public func checkAuthorizationAndRequest(onSuccess : @escaping () -> Void) {
+    public func checkAuthorizationAndRequest(onSuccess : @escaping () -> Void, onFailure : @escaping () -> Void) {
         // 데이터 접근 가능 여부에 따라 권한 요청 메소드 호출
         if HKHealthStore.isHealthDataAvailable() && !checkAuthorizationStatus() {
-            requestAuthorization(onSuccess: onSuccess)
+            requestAuthorization(onSuccess: onSuccess, onFailure : onFailure)
         }
     }
     
     // 권한 요청 메소드
-    private func requestAuthorization(onSuccess : @escaping () -> Void) {
+    private func requestAuthorization(onSuccess : @escaping () -> Void, onFailure : @escaping () -> Void) {
         self.healthStore.requestAuthorization(toShare: readAndshare, read: readAndshare) { success, error in
-            if error != nil {
-                print(error.debugDescription)
-            } else {
-                if success {
-                    onSuccess()
-                    print("권한이 허락되었습니다")
+            DispatchQueue.main.async {
+                if error != nil {
+                    print(error.debugDescription)
                 } else {
-                    print("권한이 없습니다")
+                    if success {
+                        onSuccess()
+                        print("권한이 허락되었습니다")
+                    } else {
+                        onFailure()
+                        print("권한이 없습니다")
+                    }
                 }
             }
         }
@@ -53,7 +56,6 @@ public final class HealthKitAuthorizationHelper : HealthKitAuthorizationHelperIn
     
     private func checkAuthorizationStatus() -> Bool {
         let authorizationStatus = healthStore.authorizationStatus(for: .workoutType())
-        print(authorizationStatus.rawValue)
         
         switch authorizationStatus {
         case .notDetermined:

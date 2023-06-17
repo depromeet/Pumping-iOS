@@ -21,7 +21,7 @@ public struct OnboardingPermissionStore : ReducerProtocol {
     
     public enum Action: Equatable {
         case moveToNextStep
-        case requestHealthKitAuthorization
+        case failToAuthorize
     }
     
     public var body: some ReducerProtocol<State, Action> {

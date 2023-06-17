@@ -18,3 +18,7 @@ public struct Token: Equatable {
     public let refreshToken: String
     public let expiresAt: String
 }
+
+public extension Token {
+    static let mock = Self(accessToken: "mockAccessToken", refreshToken: "mockRefreshToken", expiresAt: "2023-10-23")
+}

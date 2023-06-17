@@ -9,56 +9,29 @@ import Foundation
 
 import ComposableArchitecture
 import FeatureOnboardingInterface
+import CoreKeyChainStore
 
 extension OnboardingRootStore {
     public init() {
+        
+        @Dependency(\.authClient) var authClient
+        
         let reducer: Reduce<State, Action> = Reduce { state, action in
             switch action {
-            case .binding:
+            case .auth(.moveToNextStep):
+                state = .permission(.init())
                 return .none
                 
-            case .moveToAuth :
-                state.auth = .init(.init(index: 0))
-                state.path.append(.auth)
+            case .permission(.moveToNextStep):
+                state = .profile(.init())
                 return .none
                 
-            case let .auth(action):
-                switch action {
-                case .moveToNextStep :
-                    state.permission = .init()
-                    state.path.append(.permission)
-                default :
-                    return .none
-                }
+            case .profile(.moveToNextStep):
+                state = .avatar(.init())
                 return .none
                 
-            case let .permission(action):
-                switch action {
-                case .moveToNextStep :
-                    state.profile = .init()
-                    state.path.append(.profile)
-                default :
-                    return .none
-                }
+            default :
                 return .none
-                
-            case let .profile(action):
-                switch action {
-                case .moveToNextStep :
-                    state.crew = .init()
-                    state.path.append(.crew)
-                default :
-                    return .none
-                }
-                return .none
-                
-            case let .crew(action):
-                switch action {
-                case .moveToNextStep :
-                    return .none
-                default :
-                    return .none
-                }
             }
         }
         
@@ -67,7 +40,7 @@ extension OnboardingRootStore {
             onboardingAuthStore: OnboardingAuthStore(),
             onboardingPermissionStore: OnboardingPermissionStore(),
             onboadingProfileStore: OnboadingProfileStore(),
-            onboardingCrewStore: OnboardingCrewStore()
+            onboardingAvatarStore: OnboardingAvatarStore()
         )
     }
 }

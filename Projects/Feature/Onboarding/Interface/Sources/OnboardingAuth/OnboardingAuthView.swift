@@ -22,6 +22,9 @@ public struct OnboardingAuthView : View {
 
                 signInWithAppleButton(viewStore: viewStore)
             }
+            .onAppear {
+                viewStore.send(.checkAuthorization)
+            }
             .navigationBarBackButtonHidden(true)
         }
     }
@@ -73,28 +76,33 @@ public struct OnboardingAuthView : View {
     }
     
     private func signInWithAppleButton(viewStore : ViewStoreOf<OnboardingAuthStore>) -> some View {
-
-        SignInWithAppleButton(
-            onRequest: { request in
-                request.requestedScopes = [.fullName, .email]
-            },
-            onCompletion: { result in
-                switch result {
-                case let .success(authResults):
-                    switch authResults.credential {
-                    case let appleIDCredential as ASAuthorizationAppleIDCredential:
-                        viewStore.send(.signInWithApple(appleIDCredential))
-                    default:
-                        break
+        VStack {
+            SignInWithAppleButton(
+                onRequest: { request in
+                    request.requestedScopes = [.fullName, .email]
+                },
+                onCompletion: { result in
+                    switch result {
+                    case let .success(authResults):
+                        switch authResults.credential {
+                        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+                            viewStore.send(.signInWithApple(appleIDCredential))
+                            
+//                        case let passwordCredential as ASPasswordCredential:
+//                            let username = passwordCredential.user
+//                            let password = passwordCredential.password
+                        default:
+                            break
+                        }
+                    case let .failure(error):
+                        viewStore.send(.signInWithAppleError(error.localizedDescription))
                     }
-                case let .failure(error):
-                    viewStore.send(.signInWithAppleError(error.localizedDescription))
                 }
-            }
-        )
-        .frame(height: 50)
-        .signInWithAppleButtonStyle(.whiteOutline)
-
+            )
+            .frame(height: 50)
+            .signInWithAppleButtonStyle(.whiteOutline)
+        }
+        .padding([.horizontal, .bottom])
     }
     
 }

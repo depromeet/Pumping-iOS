@@ -16,7 +16,8 @@ public struct OnboadingProfileStore: ReducerProtocol {
     
     public struct State: Equatable {
         @BindingState public var name : String = ""
-        public var gender : String?
+        public var maxCount : Int = 15
+        public var gender : GenderType?
         @BindingState public var height : Int = 0
         @BindingState public var weight : Int = 0
         public var isSatisfied : Bool = false
@@ -26,7 +27,7 @@ public struct OnboadingProfileStore: ReducerProtocol {
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
-        case setGender(String)
+        case setGender(GenderType)
         case checkAllSatisfied
         case moveToNextStep
     }
@@ -35,4 +36,9 @@ public struct OnboadingProfileStore: ReducerProtocol {
         BindingReducer()
         reducer
     }
+}
+
+public enum GenderType : String {
+    case male = "남성"
+    case female = "여성"
 }

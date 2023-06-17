@@ -9,23 +9,20 @@ import Foundation
 import ComposableArchitecture
 import FeatureHomeInterface
 import FeatureProfileInterface
-import FeatureOnboardingInterface
+import FeatureWorkoutInterface
 import FeatureHome
 import FeatureProfile
-import FeatureOnboarding
+import FeatureWorkout
 import SharedDesignSystem
 
-public struct MainStore: ReducerProtocol {
-    public init() {
-        SharedDesignSystemFontFamily.registerAllCustomFonts()
-    }
+public struct MainTabViewStore: ReducerProtocol {
     
-    public struct State: Equatable {
-        @BindingState public var path: [MainScene] = [] //TODO: 필요성 생각하기
-        
+    public init() {}
+
+    public struct State: Equatable {        
         public var home: HomeRootStore.State? = .init()
-        public var myPage: ProfileRootStore.State? = .init()
-        public var onboarding: OnboardingRootStore.State? = .init()
+        public var workout: WorkoutRootStore.State? = .init()
+        public var profile: ProfileRootStore.State? = .init()
         
         public init() { }
     }
@@ -33,9 +30,11 @@ public struct MainStore: ReducerProtocol {
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         
+        case onAppear
+        
         case home(HomeRootStore.Action)
-        case myPage(ProfileRootStore.Action)
-        case onboarding(OnboardingRootStore.Action)
+        case workout(WorkoutRootStore.Action)
+        case profile(ProfileRootStore.Action)
     }
     
     public var body: some ReducerProtocol<State, Action> {
@@ -46,24 +45,28 @@ public struct MainStore: ReducerProtocol {
             case .binding:
                 return .none
                 
+            case .onAppear:
+                return .none
+                
             case .home:
                 return .none
                 
-            case .myPage:
+            case .workout:
                 return .none
                 
-            case .onboarding:
+            case .profile:
                 return .none
+
             }
         }
         .ifLet(\.home, action: /Action.home) {
             HomeRootStore()
         }
-        .ifLet(\.myPage, action: /Action.myPage) {
-            ProfileRootStore()
+        .ifLet(\.workout, action: /Action.workout) {
+            WorkoutRootStore()
         }
-        .ifLet(\.onboarding, action: /Action.onboarding) {
-            OnboardingRootStore()
+        .ifLet(\.profile, action: /Action.profile) {
+            ProfileRootStore()
         }
 
     }
