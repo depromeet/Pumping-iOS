@@ -24,7 +24,7 @@ public struct WorkoutHomeView : View {
                 HStack {
                     Text("어떤 운동을 할 예정인가요?")
                         .font(.pretendard(size: 24, type: .bold))
-                        .foregroundColor(.colorGrey900)
+                        .foregroundColor(PumpingColor.colorCyan900.swiftUIColor)
                     
                     Spacer()
                 }
