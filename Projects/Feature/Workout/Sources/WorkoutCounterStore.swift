@@ -35,7 +35,7 @@ extension WorkoutCounterStore {
                 if state.count < 1 {
                     return .concatenate([
                         .cancel(id: CounterID.self),
-                        .send(.dismiss)
+                        .send(.dismiss(state.id))
                     ])
                 }
                 return .none

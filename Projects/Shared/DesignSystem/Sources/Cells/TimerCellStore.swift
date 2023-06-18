@@ -14,13 +14,13 @@ public struct TimerCellStore: ReducerProtocol {
         public let id: UUID
         public let title: String
         public var second: Int
-        public var isTapped: Bool
+        public var isActive: Bool
 
-        public init(id: UUID, title: String, second: Int, isTapped: Bool = false) {
+        public init(id: UUID, title: String, second: Int, isActive: Bool = false) {
             self.id = id
             self.title = title
             self.second = second
-            self.isTapped = isTapped
+            self.isActive = isActive
         }
     }
 

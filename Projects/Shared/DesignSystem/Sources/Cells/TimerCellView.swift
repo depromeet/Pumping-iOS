@@ -26,9 +26,9 @@ public struct TimerCellView: View {
                         .font(.pretendard(size: 21, type: .bold))
                     
                     Button(action: {
-                        
+                        viewStore.send(.tapped)
                     }, label: {
-                        (viewStore.isTapped ? PumpingImages.stop : PumpingImages.play)
+                        (viewStore.isActive ? PumpingImages.stop : PumpingImages.play)
                             .swiftUIImage
                             .resizable()
                             .frame(width: 32, height: 32)
@@ -44,11 +44,12 @@ public struct TimerCellView: View {
                     Spacer()
                 }
             }
-            .background(viewStore.isTapped ? PumpingColors.colorCyan900.swiftUIColor : .clear)
             .padding()
+            .background(viewStore.isActive ? PumpingColors.colorCyan100.swiftUIColor : .clear)
+            .cornerRadius(8)
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
-                    .stroke(viewStore.isTapped ? PumpingColors.colorCyan200.swiftUIColor : PumpingColors.colorGrey300.swiftUIColor, lineWidth: 1)
+                    .stroke(viewStore.isActive ? PumpingColors.colorCyan200.swiftUIColor : PumpingColors.colorGrey300.swiftUIColor, lineWidth: 2)
             )
         }
     }

@@ -43,6 +43,7 @@ public struct WorkoutCounterView: View {
                 }
                 Spacer()
             }
+            .navigationBarBackButtonHidden(true)
             .onAppear {
                 viewStore.send(.onAppear)
             }

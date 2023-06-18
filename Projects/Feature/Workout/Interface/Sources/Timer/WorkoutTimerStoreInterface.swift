@@ -38,7 +38,7 @@ public struct WorkoutTimerStore: ReducerProtocol {
         }
         
         public func toSyntax(value: Double) -> String {
-            //TODO: 서버에 넘거야할 값에 따라 value 타입이 달라짐
+            //TODO: 서버에 넘겨야할 값에 따라 value 타입이 달라짐
             switch self {
             case .time: return DateManager.toClockString(from: Int(value))
             case .heatRate: return String(describing: "\(Int(value))bpm")
@@ -56,24 +56,37 @@ public struct WorkoutTimerStore: ReducerProtocol {
     }
     
     public struct State: Equatable {
-        public let workoutCategoryIdentifiers: [WorkoutCategoryIdentifier]
+        public var workoutTimerInfos: [WorkoutTimerInfo] = []
+        
+        public var second: Int = 0
+        public var heartRate: Int = 100
+        public var calorie: Int = 230
+        
+        public var isTimerActive: Bool = false
+        public var currentActiveTimerCellID: UUID?
         
         public var timerCells: IdentifiedArrayOf<TimerCellStore.State> = []
-        
-        public var counter: WorkoutCounterStore.State? = .init()
-        
+        public var counter: WorkoutCounterStore.State? = .init(id: nil)
         
         public init(workoutCategoryIdentifiers: [WorkoutCategoryIdentifier]) {
-            self.workoutCategoryIdentifiers = workoutCategoryIdentifiers
-            self.timerCells = makeIdentifiedArray(from: workoutCategoryIdentifiers)
+            self.workoutTimerInfos = makeWorkoutTimerInfos(from: workoutCategoryIdentifiers)
+            self.timerCells = makeIdentifiedArray(from: self.workoutTimerInfos)
         }
         
-        private func makeIdentifiedArray(from ids: [WorkoutCategoryIdentifier]) -> IdentifiedArrayOf<TimerCellStore.State> {
-            return .init(uniqueElements: ids.map { id in
-                return .init(id: .init(), title: id.rawValue, second: 0)
+        private func makeWorkoutTimerInfos(from workoutCategoryIdentifiers: [WorkoutCategoryIdentifier]) -> [WorkoutTimerInfo] {
+            return workoutCategoryIdentifiers.map { workoutCategoryIdentifier in
+                return .init(id: .init(), categoryIdentifier: workoutCategoryIdentifier)
+            }
+        }
+        
+        private func makeIdentifiedArray(from infos: [WorkoutTimerInfo]) -> IdentifiedArrayOf<TimerCellStore.State> {
+            return .init(uniqueElements: infos.map { info in
+                return .init(id: info.id, title: info.categoryIdentifier.rawValue, second: info.second)
             })
         }
     }
+    
+    public enum TimerID {}
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
@@ -81,12 +94,18 @@ public struct WorkoutTimerStore: ReducerProtocol {
         case onAppear
         
         case endButtonTapped
+        case timerStart
+        case timerTicked
         
         case timerCell(id: TimerCellStore.State.ID, action: TimerCellStore.Action)
         case counter(WorkoutCounterStore.Action)
         
+        case updateTimerCell(index: Int, state: TimerCellStore.State)
+        case updateTimerInfo(index: Int, info: WorkoutTimerInfo)
+        
         //MARK: Navigation
         case goToWorkoutEnd
+        case showCounter(id: UUID)
     }
     
     public var body: some ReducerProtocol<State, Action> {

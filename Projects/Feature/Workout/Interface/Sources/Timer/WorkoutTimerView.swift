@@ -58,7 +58,7 @@ public struct WorkoutTimerView: View {
             .padding(.bottom, 22)
             .padding(.horizontal)
             
-            ScrollView(.horizontal) {
+            ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEachStore(self.store.scope(state: \.timerCells, action: WorkoutTimerStore.Action.timerCell(id:action:))) {
                         TimerCellView(store: $0)
