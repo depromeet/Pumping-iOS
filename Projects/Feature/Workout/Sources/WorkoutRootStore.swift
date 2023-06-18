@@ -18,8 +18,10 @@ extension WorkoutRootStore {
                 return .none
                 
             case .startButtonTapped:
-                state.workoutHome = .init()
-                state.path.append(.selectWorkoutCategoryType)
+//                state.workoutHome = .init()
+//                state.path.append(.selectWorkoutCategoryType)
+                state.workoutTimer = .init()
+                state.path.append(.workoutTimer)
                 return .none
                 
             case let .workoutHome(action):
