@@ -21,6 +21,10 @@ public struct WorkoutStartView: View {
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack {
+                Text("운동을 시작해볼까요?")
+                    .font(.pretendard(size: 24, type: .bold))
+                    .padding(.top)
+                
                 Spacer()
                 
                 Rectangle()
@@ -30,20 +34,12 @@ public struct WorkoutStartView: View {
                 
                 Spacer()
                 
-                Button(action: {
+                PumpingSubmitButton(title: "시작하기", completion: {
                     viewStore.send(.startButtonTapped)
-                }, label: {
-                    Text("운동시작")
-                        .font(.pretendard(size: 18, type: .bold))
-                        .foregroundColor(.colorGrey000)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 52)
                 })
-                .background(Color.colorCyan300)
-                .cornerRadius(12)
                 .padding(.horizontal)
-                .padding(.bottom, 34)
             }
+            .navigationBarBackButtonHidden(true)
         }
     }
 }
