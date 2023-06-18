@@ -79,6 +79,11 @@ public struct WorkoutEndView: View {
             
             Spacer()
             
+            Divider()
+                .frame(height: 54)
+            
+            Spacer()
+            
             VStack(spacing: 4) {
                 Text("소모 칼로리")
                     .font(.pretendard(size: 15, type: .medium))
