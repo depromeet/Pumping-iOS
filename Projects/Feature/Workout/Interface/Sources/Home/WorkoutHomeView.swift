@@ -74,7 +74,7 @@ public struct WorkoutHomeView : View {
                 }
                 
                 VStack(spacing: 8) {
-                    ForEachStore(self.store.scope(state: \.workoutCategoryZip[type]!, action: WorkoutHomeStore.Action.pumpingTextCell(id:action:))) {
+                    ForEachStore(self.store.scope(state: { $0.workoutCategoryZip[type] ?? [] }, action: WorkoutHomeStore.Action.pumpingTextCell(id:action:))) {
                         PumpingTextCellView(store: $0)
                     }
                 }
