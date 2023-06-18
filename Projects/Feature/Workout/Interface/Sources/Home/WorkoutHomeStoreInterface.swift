@@ -15,9 +15,15 @@ import SharedDesignSystem
 public struct WorkoutHomeStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
     
-    public init(reducer: Reduce<State, Action>) {
+    private let pumpingTextCellStore: PumpingTextCellStore
+    
+    public init(
+        reducer: Reduce<State, Action>,
+        pumpingTextCellStore: PumpingTextCellStore
+    ) {
         self.reducer = reducer
         
+        self.pumpingTextCellStore = pumpingTextCellStore
     }
     
     public struct State: Equatable {
@@ -50,8 +56,14 @@ public struct WorkoutHomeStore: ReducerProtocol {
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()
         reducer
+//            .forEach(\.workoutCategoryZip[.whole]!, action: /Action.pumpingTextCell(id:action:)) {
+//                pumpingTextCellStore
+//            }
+//            .forEach(\.workoutCategoryZip[.upper]!, action: /Action.pumpingTextCell(id:action:)) {
+//                pumpingTextCellStore
+//            }
+//            .forEach(\.workoutCategoryZip[.lower]!, action: /Action.pumpingTextCell(id:action:)) {
+//                pumpingTextCellStore
+//            }
     }
-}
-
-extension WorkoutHomeStore {
 }

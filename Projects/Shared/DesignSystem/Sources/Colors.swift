@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-public typealias PumpingColor = SharedDesignSystemAsset.Colors
+public typealias PumpingColors = SharedDesignSystemAsset.Colors
 
 //TODO: 필요성 논의
 public extension Color {

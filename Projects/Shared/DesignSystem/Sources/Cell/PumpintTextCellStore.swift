@@ -10,15 +10,18 @@ import Foundation
 import ComposableArchitecture
 
 public struct PumpingTextCellStore: ReducerProtocol {
+    public init() { }
+    
     public struct State: Equatable, Identifiable {
         public let id: UUID
         public let title: String
         
-        public var isTapped: Bool = true
+        public var isTapped: Bool
         
-        public init(id: UUID, title: String) {
+        public init(id: UUID, title: String, isTapped: Bool = false) {
             self.id = id
             self.title = title
+            self.isTapped = isTapped
         }
     }
     
