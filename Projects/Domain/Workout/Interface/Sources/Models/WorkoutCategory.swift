@@ -17,9 +17,12 @@ public enum WorkoutCategoryIdentifierType: String, CaseIterable {
 public extension WorkoutCategoryIdentifierType {
     var identifiers: [WorkoutCategoryIdentifier] {
         switch self {
-        case .whole: return [.aerobic]
-        case .upper: return [.shoulder, .chest, .arms, .back]
-        case .lower: return [.butt]
+        case .whole:
+            return [.aerobic]
+        case .upper:
+            return [.shoulder, .chest, .arms, .back]
+        case .lower:
+            return [.butt]
         }
     }
 }
@@ -37,9 +40,12 @@ public enum WorkoutCategoryIdentifier: String, CaseIterable {
 public extension WorkoutCategoryIdentifier {
     var type: WorkoutCategoryIdentifierType {
         switch self {
-        case .aerobic: return .whole
-        case .shoulder, .chest, .arms, .back: return .upper
-        case .butt: return .lower
+        case .aerobic:
+            return .whole
+        case .shoulder, .chest, .arms, .back:
+            return .upper
+        case .butt:
+            return .lower
         }
     }
 }

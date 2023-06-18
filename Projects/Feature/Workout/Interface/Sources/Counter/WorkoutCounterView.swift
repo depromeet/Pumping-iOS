@@ -25,16 +25,17 @@ public struct WorkoutCounterView: View {
                 
                 HStack {
                     Spacer()
-
+                    
                     Text("\(viewStore.count)")
-                        .foregroundColor({switch viewStore.count {
-                        case 3:
-                            return PumpingColors.colorCyan200.swiftUIColor
-                        case 2:
-                            return PumpingColors.colorTeal300.swiftUIColor
-                        default:
-                            return PumpingColors.colorGreen400.swiftUIColor
-                        }}())
+                        .foregroundColor({
+                            switch viewStore.count {
+                            case 3:
+                                return PumpingColors.colorCyan200.swiftUIColor
+                            case 2:
+                                return PumpingColors.colorTeal300.swiftUIColor
+                            default:
+                                return PumpingColors.colorGreen400.swiftUIColor
+                            }}())
                         .font(.tenada(size: 200))
                         .baselineOffset(-15)
                     
