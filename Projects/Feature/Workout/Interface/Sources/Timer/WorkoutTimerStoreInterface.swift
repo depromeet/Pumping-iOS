@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+
 import ComposableArchitecture
 
+import DomainWorkoutInterface
 import SharedDesignSystem
 import SharedUtil
 
@@ -54,18 +56,22 @@ public struct WorkoutTimerStore: ReducerProtocol {
     }
     
     public struct State: Equatable {
-        public var timerCells: IdentifiedArrayOf<TimerCellStore.State> = [
-            .init(id: .init(), title: "어깨"),
-            .init(id: .init(), title: "가슴"),
-            .init(id: .init(), title: "팔"),
-            .init(id: .init(), title: "등"),
-        ]
+        public let workoutCategoryIdentifiers: [WorkoutCategoryIdentifier]
+        
+        public var timerCells: IdentifiedArrayOf<TimerCellStore.State> = []
         
         public var counter: WorkoutCounterStore.State? = .init()
         
         
-        public init() {
-            
+        public init(workoutCategoryIdentifiers: [WorkoutCategoryIdentifier]) {
+            self.workoutCategoryIdentifiers = workoutCategoryIdentifiers
+            self.timerCells = makeIdentifiedArray(from: workoutCategoryIdentifiers)
+        }
+        
+        private func makeIdentifiedArray(from ids: [WorkoutCategoryIdentifier]) -> IdentifiedArrayOf<TimerCellStore.State> {
+            return .init(uniqueElements: ids.map { id in
+                return .init(id: .init(), title: id.rawValue, second: 0)
+            })
         }
     }
     
