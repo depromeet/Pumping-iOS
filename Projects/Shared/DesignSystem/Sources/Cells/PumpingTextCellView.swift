@@ -21,17 +21,27 @@ public struct PumpingTextCellView: View {
             HStack {
                 Text(viewStore.state.title)
                     .font(.pretendard(size: 15, type: .medium))
+                    .padding([.top, .bottom], 16)
+                    .padding(.leading, 20)
                 
                 Spacer()
                 
-                //TODO: isTapped가 True이면 이미지 추가
+                if viewStore.isTapped {
+                    PumpingImages.active.swiftUIImage
+                        .resizable()
+                        .frame(width: 28, height: 28)
+                        .padding(.trailing, 17)
+                }
             }
-            .padding()
-//            .background(viewStore.isTapped ? UIColor(cgColor: Color.colorCyan900.cgColor) : )
+            .contentShape(Rectangle())
+            .onTapGesture {
+                viewStore.send(.tapped)
+            }
+            .background(viewStore.isTapped ? PumpingColors.colorCyan100.swiftUIColor : .clear)
             .cornerRadius(8)
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
-                    .stroke(viewStore.isTapped ? Color.colorCyan300 : Color.colorGrey300, lineWidth: 1)
+                    .stroke(viewStore.isTapped ? PumpingColors.colorCyan200.swiftUIColor : PumpingColors.colorGrey300.swiftUIColor, lineWidth: 1)
             )
         }
     }

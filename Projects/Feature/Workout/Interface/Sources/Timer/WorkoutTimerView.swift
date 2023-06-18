@@ -11,7 +11,7 @@ import ComposableArchitecture
 
 import SharedDesignSystem
 
-public struct WorkoutTimerView: View {
+public struct WorkoutTimerView: View {    
     public let store: StoreOf<WorkoutTimerStore>
     
     public init(store: StoreOf<WorkoutTimerStore>) {
@@ -26,103 +26,86 @@ public struct WorkoutTimerView: View {
                     WorkoutCounterView(store: $0)
                 },
                 else: {
-                    timerView(viewStore: viewStore)
+                    VStack {
+                        titleView(viewStore: viewStore)
+                        
+                        resultView(viewStore: viewStore)
+                            .padding(.top, 64)
+                        
+                        PumpingSubmitButton(title: "종료", completion: {
+                            viewStore.send(.endButtonTapped)
+                        })
+                        .padding()
+                    }
+                    .background(Color.colorGrey000)
+                    .navigationBarBackButtonHidden(true)
                 }
             )
         }
     }
     
     @ViewBuilder
-    private func timerCellListView(viewStore: ViewStoreOf<WorkoutTimerStore>) -> some View {
-        ScrollView(.horizontal) {
-            HStack {
-                ForEachStore(self.store.scope(state: \.timerCells, action: WorkoutTimerStore.Action.timerCell(id:action:))) {
-                    TimerCellView(store: $0)
-                }
-            }
-            .padding(.bottom, 24)
-        }
-    }
-    
-    @ViewBuilder
-    private func timerView(viewStore: ViewStoreOf<WorkoutTimerStore>) -> some View {
+    private func titleView(viewStore: ViewStoreOf<WorkoutTimerStore>) -> some View {
         VStack {
-            VStack {
-                HStack {
-                    Text("운동 목록")
-                        .font(.pretendard(size: 24, type: .bold))
-                        .foregroundColor(.colorGrey900)
-                    
-                    Spacer()
-                }
-                .padding(.bottom, 22)
-                .padding(.horizontal)
+            HStack {
+                Text("운동 목록")
+                    .font(.pretendard(size: 24, type: .bold))
+                    .foregroundColor(.colorGrey900)
                 
-                timerCellListView(viewStore: viewStore)
-                    .padding(.leading)
+                Spacer()
             }
-            .frame(maxWidth: .infinity)
-            .cornerRadius(12)
-            .background(Color.colorGrey100)
-            
-            Text("총시간")
-                .font(.pretendard(size: 16, type: .bold))
-                .padding(.top, 60)
-            
-            Text("00:00:40")
-                .font(.pretendard(size: 56, type: .extraBold))
-            
-            Text("심박수")
-                .font(.pretendard(size: 16, type: .bold))
-                .padding(.top, 32)
-            
-            Text("100bpm")
-                .font(.pretendard(size: 56, type: .extraBold))
-            
-            Text("총 칼로리")
-                .font(.pretendard(size: 16, type: .bold))
-                .padding(.top, 32)
-            
-            Text("230Kcal")
-                .font(.pretendard(size: 56, type: .extraBold))
-                .padding(.bottom, 44)
-            
-            Spacer()
-            
-            Button(action: {
-                viewStore.send(.endButtonTapped)
-            }, label: {
-                Text("종료")
-                    .font(.pretendard(size: 18, type: .bold))
-                    .foregroundColor(.colorGrey000)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 52)
-            })
-            .background(Color.colorCyan300)
-            .cornerRadius(12)
+            .padding(.top, 16)
+            .padding(.bottom, 22)
             .padding(.horizontal)
-            .padding(.bottom, 34)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEachStore(self.store.scope(state: \.timerCells, action: WorkoutTimerStore.Action.timerCell(id:action:))) {
+                        TimerCellView(store: $0)
+                    }
+                }
+                .padding(.bottom, 24)
+            }
+            .padding(.leading)
         }
-        .navigationBarBackButtonHidden(true)
         .frame(maxWidth: .infinity)
-        .background(Color.colorGrey000)
+        .cornerRadius(12)
+        .background(Color.colorGrey100)
     }
     
+    @ViewBuilder
+    private func resultView(viewStore: ViewStoreOf<WorkoutTimerStore>) -> some View {
+        VStack {
+            resultTextView(type: .time, value: 40)
+            resultTextView(type: .calorie, value: 100)
+            resultTextView(type: .heatRate, value: 230)
+        }
+    }
     
     @ViewBuilder
-    private func counterView(viewStore : ViewStoreOf<WorkoutTimerStore>) -> some View {
-        VStack {
-            Spacer()
-            
-            HStack {
-                Spacer()
+    private func resultTextView(type: WorkoutTimerStore.ResultType, value: Double) -> some View {
+        VStack(spacing: 16) {
+            HStack(spacing: 8) {
+                type.image
+                    .resizable()
+                    .frame(width: 24, height: 24)
                 
-                Text("1")
-                
-                Spacer()
+                Text(type.title)
+                    .font(.pretendard(size: 16, type: .bold))
+                    .foregroundColor(PumpingColors.colorGrey800.swiftUIColor)
             }
             
-            Spacer()
+            Text(type.toSyntax(value: value))
+                .font(.tenada(size: 56))
+                .baselineOffset(-10)
+                .foregroundColor({switch type {
+                case .time:
+                    return PumpingColors.colorCyan200.swiftUIColor
+                case .heatRate:
+                    return PumpingColors.colorTeal300.swiftUIColor
+                case .calorie:
+                    return PumpingColors.colorGreen400.swiftUIColor
+                }}())
         }
     }
 }

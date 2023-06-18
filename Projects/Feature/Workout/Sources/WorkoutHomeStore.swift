@@ -9,6 +9,8 @@ import Foundation
 import ComposableArchitecture
 
 import FeatureWorkoutInterface
+import SharedDesignSystem
+import SharedUtil
 
 extension WorkoutHomeStore {
     public init() {
@@ -24,12 +26,25 @@ extension WorkoutHomeStore {
                 return .none
                 
             case let .pumpingTextCell(id, action):
-                return .none
+                switch action {
+                case .tapped:
+                    for (key, cells) in state.workoutCategoryZip {
+                        if let index = cells.index(id: id) {
+                            let target = cells[index]
+                            let newTarget = PumpingTextCellStore.State(id: target.id, title: target.title, isTapped: !target.isTapped)
+                            
+                            state.workoutCategoryZip[key]?.update(newTarget, at: index)
+                            break
+                        }
+                    }
+                    return .none
+                }
             }
         }
         
         self.init(
-            reducer: reducer
+            reducer: reducer,
+            pumpingTextCellStore: .init()
         )
     }
 }

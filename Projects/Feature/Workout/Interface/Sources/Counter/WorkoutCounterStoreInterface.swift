@@ -21,10 +21,11 @@ public struct WorkoutCounterStore: ReducerProtocol {
     }
     
     public struct State: Equatable {
+        public let id: UUID?
         public var count: Int = 3
         
-        public init() {
-            
+        public init(id: UUID?) {
+            self.id = id
         }
     }
     
@@ -35,7 +36,7 @@ public struct WorkoutCounterStore: ReducerProtocol {
         
         case ticked
         
-        case dismiss
+        case dismiss(UUID?)
     }
     
     public enum CounterID {}

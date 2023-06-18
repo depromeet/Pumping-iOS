@@ -8,6 +8,9 @@
 import Foundation
 import SwiftUI
 
+public typealias PumpingColors = SharedDesignSystemAsset.Colors
+
+//TODO: 필요성 논의
 public extension Color {
     static let colorBlue100 = Color(asset: SharedDesignSystemAsset.Colors.colorGrey100)
     static let colorBlue200 = Color(asset:SharedDesignSystemAsset.Colors
