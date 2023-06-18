@@ -56,14 +56,5 @@ public struct WorkoutHomeStore: ReducerProtocol {
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()
         reducer
-//            .forEach(\.workoutCategoryZip[.whole]!, action: /Action.pumpingTextCell(id:action:)) {
-//                pumpingTextCellStore
-//            }
-//            .forEach(\.workoutCategoryZip[.upper]!, action: /Action.pumpingTextCell(id:action:)) {
-//                pumpingTextCellStore
-//            }
-//            .forEach(\.workoutCategoryZip[.lower]!, action: /Action.pumpingTextCell(id:action:)) {
-//                pumpingTextCellStore
-//            }
     }
 }
