@@ -6,7 +6,10 @@
 //
 
 import Foundation
+
 import ComposableArchitecture
+
+import SharedDesignSystem
 
 public struct WorkoutEndStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
@@ -16,6 +19,13 @@ public struct WorkoutEndStore: ReducerProtocol {
     }
     
     public struct State: Equatable {
+        public var workoutTime: Int = 10000
+        public var workoutCalorie: Int = 300
+        public var workoutToolCells: IdentifiedArrayOf<PumpingTextCellStore.State> = [
+            .init(id: .init(), title: "어깨"),
+            .init(id: .init(), title: "등")
+        ]
+        
         public init() {
             
         }
@@ -26,6 +36,9 @@ public struct WorkoutEndStore: ReducerProtocol {
         
         case completeButtonTapped
         
+        case pumpingTextCell(id: PumpingTextCellStore.State.ID, action: PumpingTextCellStore.Action)
+        
+        //MARK: Navigation
         case backToRoot
     }
     

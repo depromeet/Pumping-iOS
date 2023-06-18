@@ -20,6 +20,9 @@ extension WorkoutEndStore {
             case .completeButtonTapped:
                 return .send(.backToRoot)
                 
+            case let .pumpingTextCell(id, action):
+                return .none
+                
             case .backToRoot:
                 return .none
             }
