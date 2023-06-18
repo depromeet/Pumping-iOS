@@ -6,9 +6,7 @@
 //
 
 import SwiftUI
-
 import ComposableArchitecture
-
 import SharedDesignSystem
 
 struct ProfileHeartRateView: View {
@@ -23,7 +21,7 @@ struct ProfileHeartRateView: View {
             VStack(alignment: .leading) {
                 HStack(spacing: 4) {
                     SharedDesignSystemAsset.Images.clock.swiftUIImage
-                    Text("심박수 유지")
+                    Text("평균 심박수")
                         .font(.pretendard(size: 15, type: .light))
                 }
 

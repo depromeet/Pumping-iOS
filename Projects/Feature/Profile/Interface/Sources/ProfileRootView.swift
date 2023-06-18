@@ -6,9 +6,7 @@
 //
 
 import SwiftUI
-
 import ComposableArchitecture
-
 import SharedDesignSystem
 
 public struct ProfileRootView : View {
@@ -47,7 +45,8 @@ public struct ProfileRootView : View {
                             }
                             .padding(.leading, 20)
                             .overlay(alignment: .trailing) {
-                                SharedDesignSystemAsset.Images.boy.swiftUIImage
+                                Image
+                                    .boy
                                     .resizable()
                                     .frame(width: 300, height: 250)
                                     .offset(x: 35)
@@ -93,7 +92,12 @@ public struct ProfileRootView : View {
                                 }
                                 .padding(.init(top: 0, leading: 20, bottom: 0, trailing: 20))
 
-                                ProfileWeekDaysView()
+                                HStack {
+                                    ForEachStore(self.store.scope(state: \.profileWeekDayList, action: ProfileRootStore.Action.profileWeekDayCell(id:action:))) {
+                                        ProfileWeekDayCellView(store: $0)
+                                    }
+                                }
+                                .padding()
 
                                 VStack(alignment: .leading) {
                                     ProfileWorkoutTimeView(store: self.store)

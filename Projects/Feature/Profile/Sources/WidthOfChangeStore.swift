@@ -12,7 +12,11 @@ extension WidthOfChangeStore {
     public init() {
         let reducer: Reduce<State, Action> = .init { state, action in
             switch action {
+            case .binding(_):
+                return .none
                 
+            case let .widthOfChangeCell(id, action):
+                return .none
             }
         }
 
