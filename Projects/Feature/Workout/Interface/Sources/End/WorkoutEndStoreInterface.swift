@@ -34,12 +34,14 @@ public struct WorkoutEndStore: ReducerProtocol {
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         
+        case editButtonTapped
         case completeButtonTapped
         
         case pumpingTextCell(id: PumpingTextCellStore.State.ID, action: PumpingTextCellStore.Action)
         
         //MARK: Navigation
         case backToRoot
+        case goToWorkoutRecord
     }
     
     public var body: some ReducerProtocol<State, Action> {

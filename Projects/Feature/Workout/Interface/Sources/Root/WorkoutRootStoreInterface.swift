@@ -9,10 +9,11 @@ import ComposableArchitecture
 
 public enum WorkoutScene: Hashable {
     case root
-    case selectWorkoutCategoryType
-    case workoutStart
-    case workoutTimer
-    case workoutEnd
+    case home
+    case start
+    case timer
+    case end
+    case record
 }
 
 public struct WorkoutRootStore: ReducerProtocol {
@@ -22,13 +23,15 @@ public struct WorkoutRootStore: ReducerProtocol {
     private let workoutStartStore: WorkoutStartStore
     private let workoutTimerStore: WorkoutTimerStore
     private let workoutEndStore: WorkoutEndStore
+    private let workoutRecordStore: WorkoutRecordStore
     
     public init(
         reducer: Reduce<State, Action>,
         workoutHomeStore: WorkoutHomeStore,
         workoutStartStore: WorkoutStartStore,
         workoutTimerStore: WorkoutTimerStore,
-        workoutEndStore: WorkoutEndStore
+        workoutEndStore: WorkoutEndStore,
+        workoutRecordStore: WorkoutRecordStore
     ) {
         self.reducer = reducer
         
@@ -36,6 +39,7 @@ public struct WorkoutRootStore: ReducerProtocol {
         self.workoutStartStore = workoutStartStore
         self.workoutTimerStore = workoutTimerStore
         self.workoutEndStore = workoutEndStore
+        self.workoutRecordStore = workoutRecordStore
     }
     
     public struct State: Equatable {
@@ -45,6 +49,7 @@ public struct WorkoutRootStore: ReducerProtocol {
         public var workoutStart: WorkoutStartStore.State?
         public var workoutTimer: WorkoutTimerStore.State?
         public var workoutEnd: WorkoutEndStore.State?
+        public var workoutRecord: WorkoutRecordStore.State?
         
         public init() {
             
@@ -60,6 +65,7 @@ public struct WorkoutRootStore: ReducerProtocol {
         case workoutStart(WorkoutStartStore.Action)
         case workoutTimer(WorkoutTimerStore.Action)
         case workoutEnd(WorkoutEndStore.Action)
+        case workoutRecord(WorkoutRecordStore.Action)
     }
     
     public var body: some ReducerProtocol<State, Action> {
@@ -76,6 +82,9 @@ public struct WorkoutRootStore: ReducerProtocol {
             }
             .ifLet(\.workoutEnd, action: /Action.workoutEnd) {
                 workoutEndStore
+            }
+            .ifLet(\.workoutRecord, action: /Action.workoutRecord) {
+                workoutRecordStore
             }
     }
 }

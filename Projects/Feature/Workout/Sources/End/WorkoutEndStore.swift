@@ -17,10 +17,16 @@ extension WorkoutEndStore {
             case .binding:
                 return .none
                 
+            case .editButtonTapped:
+                return .send(.goToWorkoutRecord)
+                
             case .completeButtonTapped:
                 return .send(.backToRoot)
                 
             case let .pumpingTextCell(id, action):
+                return .none
+                
+            case .goToWorkoutRecord:
                 return .none
                 
             case .backToRoot:

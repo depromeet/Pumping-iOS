@@ -21,14 +21,14 @@ extension WorkoutRootStore {
 //                state.workoutHome = .init()
 //                state.path.append(.selectWorkoutCategoryType)
                 state.workoutEnd = .init()
-                state.path.append(.workoutEnd)
+                state.path.append(.end)
                 return .none
                 
             case let .workoutHome(action):
                 switch action {
                 case .goToWorkoutStart:
                     state.workoutStart = .init()
-                    state.path.append(.workoutStart)
+                    state.path.append(.start)
                     return .none
                     
                 default:
@@ -38,7 +38,7 @@ extension WorkoutRootStore {
                 switch action {
                 case .goToWorkoutTimer:
                     state.workoutTimer = .init(workoutCategoryIdentifiers: [.back, .aerobic, .butt])
-                    state.path.append(.workoutTimer)
+                    state.path.append(.timer)
                     return .none
                     
                 default:
@@ -49,7 +49,7 @@ extension WorkoutRootStore {
                 switch action {
                 case .goToWorkoutEnd:
                     state.workoutEnd = .init()
-                    state.path.append(.workoutEnd)
+                    state.path.append(.end)
                     return .none
                     
                 default:
@@ -61,9 +61,17 @@ extension WorkoutRootStore {
                     state.path = []
                     return .none
                     
+                case .goToWorkoutRecord:
+                    state.workoutRecord = .init()
+                    state.path.append(.record)
+                    return .none
+                    
                 default:
                     return .none
                 }
+                
+            case let .workoutRecord(action):
+                return .none
             }
         }
         
@@ -72,7 +80,8 @@ extension WorkoutRootStore {
             workoutHomeStore: .init(),
             workoutStartStore: .init(),
             workoutTimerStore: .init(),
-            workoutEndStore: .init()
+            workoutEndStore: .init(),
+            workoutRecordStore: .init()
         )
     }
 }

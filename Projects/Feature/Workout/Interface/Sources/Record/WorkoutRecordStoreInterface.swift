@@ -1,8 +1,8 @@
 //
-//  WorkoutCounterStoreInterface.swift
+//  WorkoutRecordStoreInterface.swift
 //  FeatureWorkoutInterface
 //
-//  Created by 송영모 on 2023/06/06.
+//  Created by 송영모 on 2023/06/18.
 //
 
 import SwiftUI
@@ -12,7 +12,7 @@ import ComposableArchitecture
 import SharedDesignSystem
 import DomainAuth
 
-public struct WorkoutCounterStore: ReducerProtocol {
+public struct WorkoutRecordStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
     
     public init(reducer: Reduce<State, Action>) {
@@ -20,11 +20,8 @@ public struct WorkoutCounterStore: ReducerProtocol {
     }
     
     public struct State: Equatable {
-        public let id: UUID?
-        public var count: Int = 3
-        
-        public init(id: UUID?) {
-            self.id = id
+        public init() {
+            
         }
     }
     
@@ -33,12 +30,8 @@ public struct WorkoutCounterStore: ReducerProtocol {
         
         case onAppear
         
-        case ticked
-        
-        case dismiss(UUID?)
+        case completeButtonTapped
     }
-    
-    public enum CounterID {}
     
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()

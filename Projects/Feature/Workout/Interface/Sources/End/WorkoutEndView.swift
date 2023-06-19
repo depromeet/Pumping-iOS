@@ -116,9 +116,13 @@ public struct WorkoutEndView: View {
                     .font(.pretendard(size: 16, type: .bold))
                     .foregroundColor(Color.colorGrey600)
                 
-                Image(systemName: "highlighter")
-                    .imageScale(.medium)
-                    .foregroundColor(.colorCyan300)
+                Button(action: {
+                    viewStore.send(.editButtonTapped)
+                }, label: {
+                    Image(systemName: "highlighter")
+                        .imageScale(.medium)
+                        .foregroundColor(.colorCyan300)
+                })
             }
             
             ForEachStore(self.store.scope(state: \.workoutToolCells, action: WorkoutEndStore.Action.pumpingTextCell(id:action:))) {

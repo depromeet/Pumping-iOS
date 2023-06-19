@@ -56,24 +56,29 @@ public struct WorkoutRootView: View {
                 .background(Color.colorGrey000)
                 .navigationDestination(for: WorkoutScene.self) { scene in
                     switch scene {
-                    case .selectWorkoutCategoryType:
+                    case .home:
                         IfLetStore(self.store.scope(state: \.workoutHome, action: { .workoutHome($0) })) {
                             WorkoutHomeView(store: $0)
                         }
                         
-                    case .workoutStart:
+                    case .start:
                         IfLetStore(self.store.scope(state: \.workoutStart, action: { .workoutStart($0) })) {
                             WorkoutStartView(store: $0)
                         }
                         
-                    case .workoutTimer:
+                    case .timer:
                         IfLetStore(self.store.scope(state: \.workoutTimer, action: { .workoutTimer($0) })) {
                             WorkoutTimerView(store: $0)
                         }
                         
-                    case .workoutEnd:
+                    case .end:
                         IfLetStore(self.store.scope(state: \.workoutEnd, action: { .workoutEnd($0) })) {
                             WorkoutEndView(store: $0)
+                        }
+                        
+                    case .record:
+                        IfLetStore(self.store.scope(state: \.workoutRecord, action: { .workoutRecord($0) })) {
+                            WorkoutRecordView(store: $0)
                         }
                         
                     default:
