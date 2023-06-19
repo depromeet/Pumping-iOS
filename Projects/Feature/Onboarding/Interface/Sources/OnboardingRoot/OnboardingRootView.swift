@@ -17,21 +17,28 @@ public struct OnboardingRootView : View {
     }
     
     public var body: some View {
-        SwitchStore(self.store) {
-            CaseLet(state: /OnboardingRootStore.State.auth, action: OnboardingRootStore.Action.auth) {
-                OnboardingAuthView(store: $0)
-            }
-            
-            CaseLet(state: /OnboardingRootStore.State.permission, action: OnboardingRootStore.Action.permission) {
-                OnboardingPermissionView(store: $0)
-            }
-            
-            CaseLet(state: /OnboardingRootStore.State.profile, action: OnboardingRootStore.Action.profile) {
-                OnboardingProfileView(store: $0)
-            }
-            
-            CaseLet(state: /OnboardingRootStore.State.avatar, action: OnboardingRootStore.Action.avatar) {
-                OnboardingAvatarView(store: $0)
+        WithViewStore(store) { viewStore in
+            NavigationStack(path: viewStore.binding(\.$path)) {
+                OnboardingAuthView(store: self.store.scope(state: \.auth, action: { .auth($0) }))
+                    .navigationDestination(for: OnboardingScene.self) { scene in
+                        switch scene {
+                        case .permission:
+                            IfLetStore(self.store.scope(state: \.permission, action: { .permission($0) })) {
+                                OnboardingPermissionView(store: $0)
+                            }
+                            
+                        case .profile:
+                            IfLetStore(self.store.scope(state: \.profile, action: { .profile($0) })) {
+                                OnboardingProfileView(store: $0)
+                            }
+                            
+                        case .avatar:
+                            IfLetStore(self.store.scope(state: \.avatar, action: { .avatar($0) })) {
+                                OnboardingAvatarView(store: $0)
+                            }
+                            
+                        }
+                    }
             }
         }
     }

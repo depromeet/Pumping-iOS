@@ -7,8 +7,8 @@
 
 import Foundation
 
-public enum OnboardingScene: Hashable {
-    case auth
+public enum OnboardingScene {
+//    case auth
     case permission
     case profile
     case avatar

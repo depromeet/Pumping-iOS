@@ -24,6 +24,8 @@ public struct MainTabViewStore: ReducerProtocol {
         public var workout: WorkoutRootStore.State? = .init()
         public var profile: ProfileRootStore.State? = .init()
         
+        @BindingState public var showModal: Bool = false
+        
         public init() { }
     }
     
@@ -31,6 +33,7 @@ public struct MainTabViewStore: ReducerProtocol {
         case binding(BindingAction<State>)
         
         case onAppear
+        case toggleModal
         
         case home(HomeRootStore.Action)
         case workout(WorkoutRootStore.Action)
@@ -55,6 +58,10 @@ public struct MainTabViewStore: ReducerProtocol {
                 return .none
                 
             case .profile:
+                return .none
+                
+            case .toggleModal:
+                state.showModal.toggle()
                 return .none
 
             }

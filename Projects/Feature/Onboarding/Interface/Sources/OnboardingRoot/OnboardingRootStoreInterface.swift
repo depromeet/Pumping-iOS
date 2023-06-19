@@ -27,19 +27,21 @@ public struct OnboardingRootStore: ReducerProtocol {
         self.onboardingProfileStore = onboadingProfileStore
         self.onboardingAvatarStore = onboardingAvatarStore
     }
-    
-    public enum State: Equatable {
-        case auth(OnboardingAuthStore.State)
-        case permission(OnboardingPermissionStore.State)
-        case profile(OnboadingProfileStore.State)
-        case avatar(OnboardingAvatarStore.State)
+
+    public struct State:  Equatable {
+        @BindingState public var path: [OnboardingScene] = []
         
-        public init() {
-            self = .auth(.init())
-        }
+        public var auth: OnboardingAuthStore.State = .init()
+        public var permission: OnboardingPermissionStore.State?
+        public var profile: OnboadingProfileStore.State?
+        public var avatar: OnboardingAvatarStore.State?
+        
+        public init() { }
     }
     
-    public enum Action: Equatable {
+    public enum Action: BindableAction, Equatable {
+        case binding(BindingAction<State>)
+        
         case auth(OnboardingAuthStore.Action)
         case permission(OnboardingPermissionStore.Action)
         case profile(OnboadingProfileStore.Action)
@@ -47,17 +49,20 @@ public struct OnboardingRootStore: ReducerProtocol {
     }
     
     public var body: some ReducerProtocol<State, Action> {
+        BindingReducer()
+        
+        Scope(state: \.auth, action: /Action.auth) {
+            onboardingAuthStore
+        }
+        
         reducer
-            .ifCaseLet(/State.auth, action: /Action.auth) {
-                onboardingAuthStore
-            }
-            .ifCaseLet(/State.permission, action: /Action.permission) {
+            .ifLet(\.permission, action: /Action.permission) {
                 onboardingPermissionStore
             }
-            .ifCaseLet(/State.profile, action: /Action.profile) {
+            .ifLet(\.profile, action: /Action.profile) {
                 onboardingProfileStore
             }
-            .ifCaseLet(/State.avatar, action: /Action.avatar) {
+            .ifLet(\.avatar, action: /Action.avatar) {
                 onboardingAvatarStore
             }
     }

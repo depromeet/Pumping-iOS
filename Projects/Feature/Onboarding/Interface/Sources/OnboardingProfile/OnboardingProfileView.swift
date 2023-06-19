@@ -44,9 +44,6 @@ public struct OnboardingProfileView : View {
                     }
                 }
             }
-            .transaction { transaction in
-                transaction.animation = nil
-            }
             .ignoresSafeArea(.keyboard, edges: .bottom)
             .padding()
             .navigationBarBackButtonHidden(true)

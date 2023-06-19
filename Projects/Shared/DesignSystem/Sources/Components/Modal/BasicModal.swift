@@ -11,15 +11,12 @@ import SwiftUI
 public struct BasicModal<Content: View>: View {
     @Binding var isPresented: Bool
     private let content: () -> Content
-    private var opacity: Double
     
     public init(
         isPresented: Binding<Bool>,
-        opacity: Double,
         content: @escaping () -> Content
     ) {
         self._isPresented = isPresented
-        self.opacity = opacity
         self.content = content
     }
     
@@ -27,10 +24,7 @@ public struct BasicModal<Content: View>: View {
         GeometryReader { geometry in
             ZStack {
                 if isPresented {
-                    Color.black.opacity(opacity)
-                        .onTapGesture {
-                            self.isPresented.toggle()
-                        }
+                    Color.black.opacity(0.8)
                         .transition(.opacity)
                     
                     content()
@@ -43,7 +37,6 @@ public struct BasicModal<Content: View>: View {
 extension View {
     public func basicModal<Content: View>(
         isPresented: Binding<Bool>,
-        opacity: Double,
         @ViewBuilder content: @escaping () -> Content
     ) -> some View {
         modifier(
@@ -51,7 +44,6 @@ extension View {
                 content: {
                     BasicModal(
                         isPresented: isPresented,
-                        opacity: opacity,
                         content: content
                     )
                 }
