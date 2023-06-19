@@ -35,11 +35,8 @@ public struct BasicModal<Content: View>: View {
 }
 
 extension View {
-    public func basicModal<Content: View>(
-        isPresented: Binding<Bool>,
-        @ViewBuilder content: @escaping () -> Content
-    ) -> some View {
-        modifier(
+    public func basicModal<Content: View>(isPresented: Binding<Bool>, @ViewBuilder content: @escaping () -> Content) -> some View {
+        self.modifier(
             BasicModalModifier(
                 content: {
                     BasicModal(
@@ -52,8 +49,8 @@ extension View {
     }
 }
 
-fileprivate struct BasicModalModifier<SheetContent>: ViewModifier where SheetContent: View {
-    var content: () -> BasicModal<SheetContent>
+fileprivate struct BasicModalModifier<ModalContent>: ViewModifier where ModalContent: View {
+    var content: () -> BasicModal<ModalContent>
     
     func body(content: Content) -> some View {
         ZStack {
