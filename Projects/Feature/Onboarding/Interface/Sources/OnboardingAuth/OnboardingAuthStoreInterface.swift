@@ -8,6 +8,7 @@
 import Foundation
 import ComposableArchitecture
 import AuthenticationServices
+import DomainAuthInterface
 
 public struct OnboardingAuthStore: ReducerProtocol {
         
@@ -28,6 +29,7 @@ public struct OnboardingAuthStore: ReducerProtocol {
         case isAlreadyAuthorized
         case signInWithApple(ASAuthorizationAppleIDCredential)
         case signInWithAppleError(String)
+        case signInWithAppleResponse(TaskResult<Token>)
         case goToPermission
     }
     

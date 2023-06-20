@@ -7,10 +7,37 @@
 
 import Foundation
 
-public struct SignInWithAppleResponseDTO: Codable {
-    public init() { }
+public struct SignInWithAppleResponseDTO: Decodable, Equatable {
+    let accessToken: String?
+    let expiresAt: String?
+    let loginType: String
+    let oauth2Id: String
+    
+    enum CodingKeys: String, CodingKey {
+        case accessToken
+        case expiresAt = "expiredTime"
+        case loginType
+        case oauth2Id
+    }
+    
+    public init(accessToken: String?,
+                expiresAt: String?,
+                loginType: String,
+                oauth2Id: String) {
+        self.accessToken = accessToken
+        self.expiresAt = expiresAt
+        self.loginType = loginType
+        self.oauth2Id = oauth2Id
+    }
+    
+    public func toDomain() -> Token {
+        return Token(accessToken: accessToken,
+                     expiresAt: expiresAt,
+                     loginType: loginType,
+                     oauth2Id: oauth2Id)
+    }
 }
 
 public extension SignInWithAppleResponseDTO {
-    static let mock = Self()
+    static let mock = Self(accessToken: "MOCKACCESSTOKEN", expiresAt: "2023-06-30", loginType: "APPLE", oauth2Id: "USERID")
 }

@@ -21,19 +21,37 @@ extension OnboardingAuthStore {
             switch action {
             case .checkAuthorization :
                 // TODO: authorizationCode에서 accessToken으로 체크방식을 변경해야함 서버에 authorizationCode를 전달 후 리스폰스로 받은 JWT토큰을 키체인에 저장
-                if !KeyChainStore.shared.load(property: .authorizationCode).isEmpty {
+                if !KeyChainStore.shared.load(property: .accessToken).isEmpty {
                     return .send(.isAlreadyAuthorized)
                 }
                 
                 return .none
                 
             case let .signInWithApple(appleIDCredential):
-                authClient.setUserInfo(appleIDCredential)
+                guard let idTokenData = appleIDCredential.identityToken,
+                      let idToken = String(data: idTokenData, encoding: .utf8) else {
+                    return .none
+                }
+                
+                return .task { [idToken = idToken] in
+                    await .signInWithAppleResponse(
+                        TaskResult {
+                            try await authClient.signInWithApple(idToken)
+                        }
+                    )
+                }
+                                
+            case let .signInWithAppleError(error):
+                // TODO: error를 통해 모달이나 ViewModifier로 뷰에 노출
+                print(error)
+                return .none
+                
+            case let .signInWithAppleResponse(.success(token)):
+                authClient.saveToken(token)
                 
                 return .send(.goToPermission)
                 
-            case let .signInWithAppleError(error):
-                // TODO: error를 통해 모달이나 ViewModifier로 뷰에 노출
+            case let .signInWithAppleResponse(.failure(error)):
                 print(error)
                 return .none
                 

@@ -9,14 +9,22 @@ import Foundation
 import ComposableArchitecture
 import DomainAuthInterface
 import CoreKeyChainStoreInterface
+import CoreNetwork
 
 extension AuthClient: DependencyKey {
     public static let liveValue = AuthClient(
-        setUserInfo: { userInfo in
-            LocalAuthStore().setUserInfo(userInfo: userInfo)
+        signInWithApple: { idToken in
+            let signInWithAppleRequestDTO = SignInWithAppleRequestDTO(idToken: idToken)
+            let apiEndpoint = AuthEndpoint.signInWithApple(signInWithAppleRequestDTO)
+            let response = try await NetworkProvider.shared.sendRequest(apiEndpoint).toDomain()
+            
+            return response
         },
-        getUserInfo: {
-            return LocalAuthStore().getUserInfo()
+        saveToken: { token in
+            LocalAuthStore().saveToken(token: token)
+        },
+        loadToken: {
+            return LocalAuthStore().loadToken()
         }
     )
 }
