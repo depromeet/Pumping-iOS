@@ -1,15 +1,14 @@
 //
-//  HomeStore.swift
-//  FeatureHome
+//  CrewRankingStore.swift
+//  FeatureCrew
 //
-//  Created by Derrick kim on 2023/06/13.
+//  Created by Derrick kim on 2023/06/15.
 //
 
 import ComposableArchitecture
+import FeatureCrewInterface
 
-import FeatureHomeInterface
-
-extension HomeStore {
+extension CrewRankingStore {
     public init() {
         let reducer: Reduce<State, Action> = .init { state, action in
             switch action {
@@ -17,9 +16,7 @@ extension HomeStore {
                 return .none
             }
         }
-        
-        self.init(
-            reducer: reducer
-        )
+
+        self.init(reducer: reducer)
     }
 }

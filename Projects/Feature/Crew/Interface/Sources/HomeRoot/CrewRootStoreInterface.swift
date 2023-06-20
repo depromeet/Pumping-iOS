@@ -1,6 +1,6 @@
 //
-//  HomeRootStoreInterface.swift
-//  FeatureHomeInterface
+//  CrewRootStoreInterface.swift
+//  FeatureCrewInterface
 //
 //  Created by Derrick kim on 2023/06/13.
 //
@@ -12,13 +12,13 @@ public enum HomeScene: Hashable {
     case home
 }
 
-public struct HomeRootStore: ReducerProtocol {
+public struct CrewRootStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
-    private let homeStore: HomeStore
+    private let homeStore: CrewHomeStore
     
     public init(
         reducer: Reduce<State, Action>,
-        homeStore: HomeStore
+        homeStore: CrewHomeStore
     ) {
         self.reducer = reducer
         self.homeStore = homeStore
@@ -43,7 +43,7 @@ public struct HomeRootStore: ReducerProtocol {
             .init(id: .init(), ranking: "4", userName: "데릭", workoutTime: "00:00:00")
         ]
 
-        public var home: HomeStore.State? = .init()
+        public var home: CrewHomeStore.State? = .init()
         
         public init() {
             
@@ -53,7 +53,7 @@ public struct HomeRootStore: ReducerProtocol {
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         
-        case home(HomeStore.Action)
+        case home(CrewHomeStore.Action)
         case profileBodyCell(id: ProfileBodyCellStore.State.ID, action: ProfileBodyCellStore.Action)
         case personalRecordCell(id: PersonalRecordCellStore.State.ID, action: PersonalRecordCellStore.Action)
     }

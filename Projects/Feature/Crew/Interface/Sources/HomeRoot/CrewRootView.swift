@@ -1,6 +1,6 @@
 //
-//  HomeRootView.swift
-//  FeatureHomeInterface
+//  CrewRootView.swift
+//  FeatureCrewInterface
 //
 //  Created by Derrick kim on 2023/06/13.
 //
@@ -9,10 +9,12 @@ import SwiftUI
 import ComposableArchitecture
 import SharedDesignSystem
 
-public struct HomeRootView: View {
-    public let store: StoreOf<HomeRootStore>
+public struct CrewRootView: View {
+    public let store: StoreOf<CrewRootStore>
 
-    public init(store: StoreOf<HomeRootStore>) {
+    public init(
+        store: StoreOf<CrewRootStore>
+    ) {
         self.store = store
     }
 
@@ -24,12 +26,13 @@ public struct HomeRootView: View {
                         VStack(alignment: .leading, spacing: 0) {
                             VStack(alignment: .leading) {
                                 profileHeaderView()
+                                    .offset(y: 55)
 
                                 Spacer()
 
                                 profileTabView()
                             }
-                            .padding(.init(top: 20, leading: 15, bottom: 0, trailing: 20))
+                            .edgesIgnoringSafeArea(.top)
 
                             HStack(spacing: 5) {
                                 SharedDesignSystemAsset.Images.loudSpeaker.swiftUIImage
@@ -70,9 +73,9 @@ public struct HomeRootView: View {
 
                         ForEachStore(self.store.scope(
                             state: \.userRecordList,
-                            action: HomeRootStore.Action.personalRecordCell(id:action:))) {
-                            PersonalRecordCellView(store: $0)
-                        }
+                            action: CrewRootStore.Action.personalRecordCell(id:action:))) {
+                                PersonalRecordCellView(store: $0)
+                            }
 
                         Text("크루 나가기")
                             .font(.pretendard(size: 14, type: .medium))
@@ -83,6 +86,7 @@ public struct HomeRootView: View {
                             }
                     }
                 }
+                .edgesIgnoringSafeArea(.top)
             }
         }
     }
@@ -107,6 +111,7 @@ public struct HomeRootView: View {
                 .font(.pretendard(size: 21, type: .semiBold))
                 .foregroundColor(.colorCyan200)
         }
+        .padding(.init(top: 20, leading: 15, bottom: 0, trailing: 20))
     }
 
     @ViewBuilder
@@ -114,9 +119,9 @@ public struct HomeRootView: View {
         TabView {
             ForEachStore(self.store.scope(
                 state: \.profileList,
-                action: HomeRootStore.Action.profileBodyCell(id:action:))) {
-                ProfileBodyCellView(store: $0)
-            }
+                action: CrewRootStore.Action.profileBodyCell(id:action:))) {
+                    ProfileBodyCellView(store: $0)
+                }
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
         .frame(height: 400)
