@@ -16,29 +16,20 @@ extension ProfileRootStore {
             case .binding:
                 return .none
 
-            case .tapHeartButton:
-                return .none
-
-            case .tapWidthOfChangeButton:
-                state.path = [.widthOfChange]
+            case .profile(.tapWidthOfChangeButton):
+                state.path.append(.widthOfChange)
                 state.widthOfChange = .init()
                 return .none
 
-            case let .tapComparisonButton(isEnabled):
-                state.hasComparison = isEnabled
-                return .none
-
-            case let .profileWeekDayCell(id, action):
-                return .none
-
-            case let .widthOfChange(action):
+            default:
                 return .none
             }
         }
 
         self.init(
             reducer: reducer,
-            widthOfChangeStore: WidthOfChangeStore()
+            profileStore: .init(),
+            widthOfChangeStore: .init()
         )
     }
 }

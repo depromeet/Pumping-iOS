@@ -12,9 +12,9 @@ import ComposableArchitecture
 import SharedDesignSystem
 
 struct ProfileWorkoutDataView: View {
-    private let store: StoreOf<ProfileRootStore>
+    private let store: StoreOf<ProfileStore>
 
-    init(store: StoreOf<ProfileRootStore>) {
+    init(store: StoreOf<ProfileStore>) {
         self.store = store
     }
     
