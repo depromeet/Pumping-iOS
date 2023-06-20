@@ -13,7 +13,10 @@ public struct ProfileRootView : View {
     public let store: StoreOf<ProfileRootStore>
     private let profileSubject: ProfileSubject
 
-    public init(store: StoreOf<ProfileRootStore>, profileSubject: ProfileSubject) {
+    public init(
+        store: StoreOf<ProfileRootStore>,
+        profileSubject: ProfileSubject
+    ) {
         self.store = store
         self.profileSubject = profileSubject
     }

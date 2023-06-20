@@ -135,8 +135,7 @@ public struct ProfileView: View {
     }
 
     @discardableResult
-    private func sendWidthOfChangeOrComparisonButtonAction(by viewStore: ViewStore<ProfileStore.State,
-                                                           ProfileStore.Action>) -> ViewStoreTask {
+    private func sendWidthOfChangeOrComparisonButtonAction(by viewStore: ViewStoreOf<ProfileStore>) -> ViewStoreTask {
         if profileSubject == .my {
             return viewStore.send(.tapWidthOfChangeButton)
         }
