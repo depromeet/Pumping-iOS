@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import FeatureCrewInterface
+import FeatureProfile
 
 extension CrewRootStore {
     public init() {
@@ -15,20 +16,39 @@ extension CrewRootStore {
             case .binding:
                 return .none
                 
-            case .home:
+            case let .crewHome(action):
+                switch action {
+                case .goToProfileView:
+                    state.path.append(.profile)
+                    state.profile = .init()
+                    return .none
+
+                case .goToCrewRankingView:
+                    state.path.append(.crewRanking)
+                    state.crewRanking = .init()
+                    return .none
+
+                default:
+                    return .none
+                }
+
+            case .profile(.tapWidthOfChangeButton):
+                state.path.append(.widthOfChange)
+                state.widthOfChange = .init()
                 return .none
 
-            case let .profileBodyCell(id, action):
-                return .none
-
-            case let .personalRecordCell(id, action):
+            default:
                 return .none
             }
         }
         
         self.init(
             reducer: reducer,
-            homeStore: .init()
+            crewHomeStore: .init(),
+            crewStore: .init(),
+            crewRankingStore: .init(),
+            profileStore: .init(),
+            widthOfChangeStore: .init()
         )
     }
 }

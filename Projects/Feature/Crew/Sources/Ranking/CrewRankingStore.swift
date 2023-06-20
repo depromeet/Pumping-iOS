@@ -17,6 +17,8 @@ extension CrewRankingStore {
             }
         }
 
-        self.init(reducer: reducer)
+        self.init(
+            reducer: reducer
+        )
     }
 }

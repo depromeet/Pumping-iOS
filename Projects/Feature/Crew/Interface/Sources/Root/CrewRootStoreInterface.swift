@@ -7,43 +7,47 @@
 
 import ComposableArchitecture
 import SharedDesignSystem
+import FeatureProfileInterface
 
-public enum HomeScene: Hashable {
-    case home
+public enum CrewScene: Hashable {
+    case crewRanking
+    case profile
+    case widthOfChange
 }
 
 public struct CrewRootStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
-    private let homeStore: CrewHomeStore
+
+    private let crewHomeStore: CrewHomeStore
+    private let crewStore: CrewStore
+    private let crewRankingStore: CrewRankingStore
+    private let profileStore: ProfileStore
+    private let widthOfChangeStore: WidthOfChangeStore
     
     public init(
         reducer: Reduce<State, Action>,
-        homeStore: CrewHomeStore
+        crewHomeStore: CrewHomeStore,
+        crewStore: CrewStore,
+        crewRankingStore: CrewRankingStore,
+        profileStore: ProfileStore,
+        widthOfChangeStore: WidthOfChangeStore
     ) {
         self.reducer = reducer
-        self.homeStore = homeStore
+        self.crewHomeStore = crewHomeStore
+        self.crewStore = crewStore
+        self.crewRankingStore = crewRankingStore
+        self.profileStore = profileStore
+        self.widthOfChangeStore = widthOfChangeStore
     }
     
     public struct State: Equatable {
-        @BindingState public var path: [HomeScene] = []
-
-        public var userRecordList: IdentifiedArrayOf<PersonalRecordCellStore.State> = [
-            .init(id: .init(), avatarName: "몰라", ranking: "4", userName: "보민", numberOfExerciseGoals: "3 / 5회", workoutTime: "02:40"),
-            .init(id: .init(), avatarName: "몰라", ranking: "1", userName: "희원", numberOfExerciseGoals: "3 / 5회", workoutTime: "02:40"),
-            .init(id: .init(), avatarName: "몰라", ranking: "2", userName: "채령", numberOfExerciseGoals: "3 / 5회", workoutTime: "02:40"),
-            .init(id: .init(), avatarName: "몰라", ranking: "5", userName: "영모", numberOfExerciseGoals: "3 / 5회", workoutTime: "02:40"),
-            .init(id: .init(), avatarName: "몰라", ranking: "3", userName: "현우", numberOfExerciseGoals: "3 / 5회", workoutTime: "02:40")
-        ]
-
-        public var profileList: IdentifiedArrayOf<ProfileBodyCellStore.State> = [
-            .init(id: .init(), ranking: "5", userName: "보민", workoutTime: "00:00:00"),
-            .init(id: .init(), ranking: "1", userName: "현우", workoutTime: "00:00:00"),
-            .init(id: .init(), ranking: "2", userName: "영모", workoutTime: "00:00:00"),
-            .init(id: .init(), ranking: "3", userName: "희원", workoutTime: "00:00:00"),
-            .init(id: .init(), ranking: "4", userName: "데릭", workoutTime: "00:00:00")
-        ]
-
-        public var home: CrewHomeStore.State? = .init()
+        @BindingState public var path: [CrewScene] = []
+        
+        public var crewHome: CrewHomeStore.State = .init()
+        public var crew: CrewStore.State = .init()
+        public var crewRanking: CrewRankingStore.State?
+        public var profile: ProfileStore.State?
+        public var widthOfChange: WidthOfChangeStore.State?
         
         public init() {
             
@@ -53,16 +57,33 @@ public struct CrewRootStore: ReducerProtocol {
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         
-        case home(CrewHomeStore.Action)
-        case profileBodyCell(id: ProfileBodyCellStore.State.ID, action: ProfileBodyCellStore.Action)
-        case personalRecordCell(id: PersonalRecordCellStore.State.ID, action: PersonalRecordCellStore.Action)
+        case crewHome(CrewHomeStore.Action)
+        case crew(CrewStore.Action)
+        case crewRanking(CrewRankingStore.Action)
+        case profile(ProfileStore.Action)
+        case widthOfChange(WidthOfChangeStore.Action)
     }
     
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()
+
+        Scope(state: \.crewHome, action: /Action.crewHome) {
+            crewHomeStore
+        }
+
+        Scope(state: \.crew, action: /Action.crew) {
+            crewStore
+        }
+
         reducer
-            .ifLet(\.home, action: /Action.home) {
-                homeStore
+            .ifLet(\.crewRanking, action: /Action.crewRanking) {
+                crewRankingStore
+            }
+            .ifLet(\.profile, action: /Action.profile) {
+                profileStore
+            }
+            .ifLet(\.widthOfChange, action: /Action.widthOfChange) {
+                widthOfChangeStore
             }
     }
 }

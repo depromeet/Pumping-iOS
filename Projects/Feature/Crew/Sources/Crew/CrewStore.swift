@@ -20,6 +20,8 @@ extension CrewStore {
             }
         }
 
-        self.init(reducer: reducer)
+        self.init(
+            reducer: reducer
+        )
     }
 }

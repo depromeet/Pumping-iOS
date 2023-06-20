@@ -10,7 +10,9 @@ import ComposableArchitecture
 public struct CrewStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
 
-    public init(reducer: Reduce<State, Action>) {
+    public init(
+        reducer: Reduce<State, Action>
+    ) {
         self.reducer = reducer
     }
 
@@ -22,6 +24,7 @@ public struct CrewStore: ReducerProtocol {
 
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
+        
         case crewViewDidDisappear
     }
 

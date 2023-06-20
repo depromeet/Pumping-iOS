@@ -11,7 +11,9 @@ import ComposableArchitecture
 public struct CrewView: View {
     public let store: StoreOf<CrewStore>
 
-    public init(store: StoreOf<CrewStore>) {
+    public init(
+        store: StoreOf<CrewStore>
+    ) {
         self.store = store
     }
 
