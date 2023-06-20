@@ -38,7 +38,7 @@ public struct OnboardingProfileView : View {
                         Spacer()
                         
                         PumpingSubmitButton(title : "다음", isEnable : viewStore.isSatisfied) {
-                            viewStore.send(.moveToNextStep)
+                            viewStore.send(.goToAvatar)
                         }
                         
                     }

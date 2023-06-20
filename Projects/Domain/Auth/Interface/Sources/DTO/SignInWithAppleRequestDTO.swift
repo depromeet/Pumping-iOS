@@ -8,6 +8,7 @@
 import Foundation
 
 public struct SignInWithAppleRequestDTO: Decodable {
+//    let idToken: String
     public init() { }
 }
 

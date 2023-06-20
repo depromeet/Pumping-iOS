@@ -26,7 +26,7 @@ struct OnboardingPermissionView: View {
                     
                     PumpingSubmitButton(title: "권한 부여", isEnable: true) {
                         HealthKitAuthorizationHelper.shared.checkAuthorizationAndRequest {
-                            viewStore.send(.moveToNextStep)
+                            viewStore.send(.goToProfile)
                         } onFailure: {
                             viewStore.send(.failToAuthorize)
                         }

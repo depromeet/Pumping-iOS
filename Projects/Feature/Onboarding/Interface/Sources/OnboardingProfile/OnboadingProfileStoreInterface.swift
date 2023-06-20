@@ -29,7 +29,7 @@ public struct OnboadingProfileStore: ReducerProtocol {
         case binding(BindingAction<State>)
         case setGender(GenderType)
         case checkAllSatisfied
-        case moveToNextStep
+        case goToAvatar
     }
     
     public var body: some ReducerProtocol<State, Action> {

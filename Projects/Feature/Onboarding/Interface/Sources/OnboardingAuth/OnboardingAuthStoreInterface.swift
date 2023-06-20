@@ -28,7 +28,7 @@ public struct OnboardingAuthStore: ReducerProtocol {
         case isAlreadyAuthorized
         case signInWithApple(ASAuthorizationAppleIDCredential)
         case signInWithAppleError(String)
-        case moveToNextStep
+        case goToPermission
     }
     
     public var body: some ReducerProtocol<State, Action> {

@@ -30,7 +30,7 @@ public struct RootStore: ReducerProtocol {
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
-            case .onboarding(.avatar(.moveToNextStep)):
+            case .onboarding(.avatar(.goToMain)):
                 state = .mainTab(.init())
                 return .none
                 

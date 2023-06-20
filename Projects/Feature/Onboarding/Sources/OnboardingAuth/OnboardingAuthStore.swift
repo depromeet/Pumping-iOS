@@ -30,7 +30,7 @@ extension OnboardingAuthStore {
             case let .signInWithApple(appleIDCredential):
                 authClient.setUserInfo(appleIDCredential)
                 
-                return .send(.moveToNextStep)
+                return .send(.goToPermission)
                 
             case let .signInWithAppleError(error):
                 // TODO: error를 통해 모달이나 ViewModifier로 뷰에 노출
