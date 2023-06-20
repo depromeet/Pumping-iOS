@@ -7,7 +7,7 @@ let targets: [Target] = [
         implements: .Profile,
         factory: .init(
             dependencies: [
-                .feature(interface: .Home),
+                .feature(interface: .Crew),
                 .feature(interface: .Profile),
                 .feature(interface: .Onboarding),
             ]

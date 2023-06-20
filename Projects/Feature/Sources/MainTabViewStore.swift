@@ -7,10 +7,10 @@
 
 import Foundation
 import ComposableArchitecture
-import FeatureHomeInterface
+import FeatureCrewInterface
 import FeatureProfileInterface
 import FeatureWorkoutInterface
-import FeatureHome
+import FeatureCrew
 import FeatureProfile
 import FeatureWorkout
 import SharedDesignSystem
@@ -20,7 +20,7 @@ public struct MainTabViewStore: ReducerProtocol {
     public init() {}
 
     public struct State: Equatable {        
-        public var home: HomeRootStore.State? = .init()
+        public var home: CrewRootStore.State? = .init()
         public var workout: WorkoutRootStore.State? = .init()
         public var profile: ProfileRootStore.State? = .init()
         
@@ -32,7 +32,7 @@ public struct MainTabViewStore: ReducerProtocol {
         
         case onAppear
         
-        case home(HomeRootStore.Action)
+        case home(CrewRootStore.Action)
         case workout(WorkoutRootStore.Action)
         case profile(ProfileRootStore.Action)
     }
@@ -60,7 +60,7 @@ public struct MainTabViewStore: ReducerProtocol {
             }
         }
         .ifLet(\.home, action: /Action.home) {
-            HomeRootStore()
+            CrewRootStore()
         }
         .ifLet(\.workout, action: /Action.workout) {
             WorkoutRootStore()

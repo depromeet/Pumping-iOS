@@ -32,7 +32,8 @@ public struct WidthOfChangeView : View {
                     }
                 }
             }
-        }.toolbar {
+        }
+        .toolbar {
             ToolbarItem(placement: .principal) {
                 toolbarItemView()
             }
