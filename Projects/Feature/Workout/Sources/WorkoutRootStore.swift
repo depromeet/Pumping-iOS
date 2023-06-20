@@ -19,7 +19,7 @@ extension WorkoutRootStore {
                 
             case .startButtonTapped:
                 state.workoutHome = .init()
-                state.path.append(.workoutHome)
+                state.path.append(.selectWorkoutCategoryType)
                 return .none
                 
             case let .workoutHome(action):
@@ -35,7 +35,7 @@ extension WorkoutRootStore {
             case let .workoutStart(action):
                 switch action {
                 case .goToWorkoutTimer:
-                    state.workoutTimer = .init()
+                    state.workoutTimer = .init(workoutCategoryIdentifiers: [.back, .aerobic, .butt])
                     state.path.append(.workoutTimer)
                     return .none
                     

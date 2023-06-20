@@ -32,10 +32,10 @@ extension WorkoutCounterStore {
                 
             case .ticked:
                 state.count -= 1
-                if state.count < 0 {
+                if state.count < 1 {
                     return .concatenate([
                         .cancel(id: CounterID.self),
-                        .send(.dismiss)
+                        .send(.dismiss(state.id))
                     ])
                 }
                 return .none

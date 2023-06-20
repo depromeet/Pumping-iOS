@@ -8,25 +8,41 @@
 import Foundation
 
 import ComposableArchitecture
+
+import DomainWorkoutInterface
 import SharedDesignSystem
 
 public struct WorkoutHomeStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
     
-    public init(reducer: Reduce<State, Action>) {
+    private let pumpingTextCellStore: PumpingTextCellStore
+    
+    public init(
+        reducer: Reduce<State, Action>,
+        pumpingTextCellStore: PumpingTextCellStore
+    ) {
         self.reducer = reducer
+        
+        self.pumpingTextCellStore = pumpingTextCellStore
     }
     
     public struct State: Equatable {
-        public var workoutMenuList: [IdentifiedArrayOf<PumpingTextCellStore.State>] = [
-            [.init(id: .init(), title: "유산소")],
-            [.init(id: .init(), title: "어깨"), .init(id: .init(), title: "가슴"), .init(id: .init(), title: "팔"), .init(id: .init(), title: "등")],
-            [.init(id: .init(), title: "엉덩이"), .init(id: .init(), title: "다리")]
-        ]
-        
+        public var workoutCategoryZip: [WorkoutCategoryIdentifierType : IdentifiedArrayOf<PumpingTextCellStore.State>] = [:]
         public var startButtonisEnabled: Bool = true
         
-        public init() {}
+        public init() {
+            workoutCategoryZip = [
+                .whole: makeIdentifiedArray(from: .whole),
+                .upper: makeIdentifiedArray(from: .upper),
+                .lower: makeIdentifiedArray(from: .lower),
+            ]
+        }
+        
+        private func makeIdentifiedArray(from type: WorkoutCategoryIdentifierType) -> IdentifiedArrayOf<PumpingTextCellStore.State> {
+            return .init(uniqueElements: type.identifiers.map { id in
+                return .init(id: .init(), title: id.rawValue)
+            })
+        }
     }
     
     public enum Action: BindableAction, Equatable {
