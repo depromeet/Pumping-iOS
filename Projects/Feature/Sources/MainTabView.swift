@@ -9,11 +9,11 @@ import SwiftUI
 
 import ComposableArchitecture
 
-import FeatureHomeInterface
+import FeatureCrewInterface
 import FeatureProfileInterface
 import FeatureOnboardingInterface
 import FeatureWorkoutInterface
-import FeatureHome
+import FeatureCrew
 import FeatureOnboarding
 import FeatureWorkout
 import SharedDesignSystem
@@ -29,7 +29,7 @@ public struct MainTabView: View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             TabView {
                 IfLetStore(self.store.scope(state: \.home, action: { .home($0) })) {
-                    HomeRootView(store: $0)
+                    CrewRootView(store: $0)
                         .tabItem {
                             Image(systemName: "house")
                             Text("Home")
