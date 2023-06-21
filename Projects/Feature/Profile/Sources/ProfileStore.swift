@@ -1,16 +1,16 @@
 //
-//  CrewStore.swift
-//  FeatureCrew
+//  ProfileStore.swift
+//  FeatureProfileInterface
 //
-//  Created by Derrick kim on 2023/06/15.
+//  Created by Derrick kim on 2023/06/18.
 //
 
 import ComposableArchitecture
-import FeatureCrewInterface
+import FeatureProfileInterface
 
-extension CrewStore {
+extension ProfileStore {
     public init() {
-        let reducer: Reduce<State, Action> = .init { state, action in
+        let reducer : Reduce<State, Action> = Reduce { state, action in
             switch action {
             case .binding:
                 return .none

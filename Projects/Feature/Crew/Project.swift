@@ -17,7 +17,8 @@ let project = Project.makeModule(
             implements: .Crew,
             factory: .init(
                 dependencies: [
-                    .feature(interface: .Crew)
+                    .feature(interface: .Crew),
+                    .feature(interface: .Profile)
                 ]
             )
         ),

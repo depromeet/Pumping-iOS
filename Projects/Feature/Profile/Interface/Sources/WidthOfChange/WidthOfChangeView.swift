@@ -12,6 +12,12 @@ import SharedDesignSystem
 public struct WidthOfChangeView : View {
     public let store: StoreOf<WidthOfChangeStore>
 
+    public init(
+        store: StoreOf<WidthOfChangeStore>
+    ) {
+        self.store = store
+    }
+
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             ScrollView {

@@ -10,7 +10,9 @@ import ComposableArchitecture
 public struct CrewRankingStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
 
-    public init(reducer: Reduce<State, Action>) {
+    public init(
+        reducer: Reduce<State, Action>
+    ) {
         self.reducer = reducer
     }
 

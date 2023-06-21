@@ -13,55 +13,47 @@ public enum ProfileScene: Hashable {
     case widthOfChange
 }
 
-public enum ProfileSubject: Hashable {
-    case my
-    case other
-}
-
 public struct ProfileRootStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
 
+    private let profileStore: ProfileStore
     private let widthOfChangeStore: WidthOfChangeStore
 
     public init(
         reducer: Reduce<State, Action>,
+        profileStore: ProfileStore,
         widthOfChangeStore: WidthOfChangeStore
     ) {
         self.reducer = reducer
+        self.profileStore = profileStore
         self.widthOfChangeStore = widthOfChangeStore
     }
 
     public struct State: Equatable {
         @BindingState public var path: [ProfileScene] = []
 
-        public var hasComparison: Bool = false
+        public var profile: ProfileStore.State = .init()
         public var widthOfChange: WidthOfChangeStore.State?
-        public var profileWeekDayList: IdentifiedArrayOf<ProfileWeekDayCellStore.State> = [
-            .init(id: .init(), index: 0, weekDay: "월"),
-            .init(id: .init(), index: 1, weekDay: "화"),
-            .init(id: .init(), index: 2, weekDay: "수"),
-            .init(id: .init(), index: 3, weekDay: "목"),
-            .init(id: .init(), index: 4, weekDay: "금"),
-            .init(id: .init(), index: 5, weekDay: "토"),
-            .init(id: .init(), index: 6, weekDay: "일")
-        ]
 
-        public init() { }
+        public init() {
+
+        }
     }
 
     public enum Action: BindableAction, Equatable {
-        case tapHeartButton
-        case tapWidthOfChangeButton
-        case tapComparisonButton(Bool)
-
         case binding(BindingAction<State>)
+
         case widthOfChange(WidthOfChangeStore.Action)
-        case profileWeekDayCell(id: ProfileWeekDayCellStore.State.ID,
-                                action: ProfileWeekDayCellStore.Action)
+        case profile(ProfileStore.Action)
     }
 
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()
+
+        Scope(state: \.profile, action: /Action.profile) {
+            profileStore
+        }
+
         reducer
             .ifLet(\.widthOfChange, action: /Action.widthOfChange) {
                 widthOfChangeStore
