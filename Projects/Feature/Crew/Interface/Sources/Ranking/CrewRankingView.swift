@@ -18,6 +18,8 @@ public struct CrewRankingView: View {
     }
 
     public var body: some View {
-        Text("Rank View")
+        WithViewStore(self.store, observe: { $0 }) { viewStore in
+            Text("Rank View")
+        }
     }
 }

@@ -45,6 +45,7 @@ public struct CrewHomeStore: ReducerProtocol {
         case goToProfileView
         case goToWidthOfChangeView
         case goToCrewRankingView
+        case presentCrewScreen
 
         case profileBodyCell(id: ProfileBodyCellStore.State.ID, action: ProfileBodyCellStore.Action)
         case personalRecordCell(id: PersonalRecordCellStore.State.ID, action: PersonalRecordCellStore.Action)

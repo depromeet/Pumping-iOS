@@ -18,7 +18,11 @@ public struct CrewView: View {
     }
 
     public var body: some View {
-        Text("Crew View!")
-            .foregroundColor(.white)
+        WithViewStore(self.store, observe: { $0 }) { viewStore in
+            Text("Crew View!")
+                .onDisappear {
+                    viewStore.send(.crewViewDidDisappear)
+                }
+        }
     }
 }

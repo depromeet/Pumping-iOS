@@ -42,16 +42,15 @@ public struct CrewRootStore: ReducerProtocol {
     
     public struct State: Equatable {
         @BindingState public var path: [CrewScene] = []
-        
         public var crewHome: CrewHomeStore.State = .init()
-        public var crew: CrewStore.State = .init()
-        public var crewRanking: CrewRankingStore.State?
+        @BindingState public var showingCrew: Bool = false
+
+        public var crew: CrewStore.State?
         public var profile: ProfileStore.State?
         public var widthOfChange: WidthOfChangeStore.State?
-        
-        public init() {
-            
-        }
+        public var crewRanking: CrewRankingStore.State?
+
+        public init() { }
     }
     
     public enum Action: BindableAction, Equatable {
@@ -71,11 +70,10 @@ public struct CrewRootStore: ReducerProtocol {
             crewHomeStore
         }
 
-        Scope(state: \.crew, action: /Action.crew) {
-            crewStore
-        }
-
         reducer
+            .ifLet(\.crew, action: /Action.crew) {
+                crewStore
+            }
             .ifLet(\.crewRanking, action: /Action.crewRanking) {
                 crewRankingStore
             }

@@ -24,8 +24,10 @@ public struct CrewHomeView: View {
                 VStack(spacing: 35) {
                     VStack(alignment: .leading, spacing: 0) {
                         VStack(alignment: .leading) {
+                            Spacer()
+                                .frame(height: 55)
+
                             profileHeaderView(viewStore: viewStore)
-                                .offset(y: 55)
 
                             Spacer()
 
@@ -99,7 +101,7 @@ public struct CrewHomeView: View {
                     .foregroundColor(.colorGrey900)
 
                 Button {
-                    
+                    viewStore.send(.presentCrewScreen)
                 } label: {
                     SharedDesignSystemAsset.Images.dropdown.swiftUIImage
                 }

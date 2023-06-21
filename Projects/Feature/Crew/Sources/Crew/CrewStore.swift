@@ -15,7 +15,7 @@ extension CrewStore {
             case .binding:
                 return .none
                 
-            case .crewViewDidDisappear:
+            default:
                 return .none
             }
         }
