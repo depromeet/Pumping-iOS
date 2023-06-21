@@ -38,14 +38,11 @@ public struct OnboardingProfileView : View {
                         Spacer()
                         
                         PumpingSubmitButton(title : "다음", isEnable : viewStore.isSatisfied) {
-                            viewStore.send(.moveToNextStep)
+                            viewStore.send(.goToAvatar)
                         }
                         
                     }
                 }
-            }
-            .transaction { transaction in
-                transaction.animation = nil
             }
             .ignoresSafeArea(.keyboard, edges: .bottom)
             .padding()

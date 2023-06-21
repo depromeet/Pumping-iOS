@@ -35,7 +35,7 @@ public struct MainTabView: View {
                             Text("Home")
                         }
                 }
-                                
+                
                 IfLetStore(self.store.scope(state: \.workout, action: { .workout($0) })) {
                     WorkoutRootView(store: $0)
                         .tabItem {
@@ -51,6 +51,9 @@ public struct MainTabView: View {
                             Text("MyPage")
                         }
                 }
+            }
+            .basicModal(isPresented: viewStore.binding(\.$showModal)) {
+                EmptyView()
             }
         }
     }

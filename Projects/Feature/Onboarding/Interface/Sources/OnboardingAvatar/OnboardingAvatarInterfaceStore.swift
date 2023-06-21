@@ -21,7 +21,7 @@ public struct OnboardingAvatarStore : ReducerProtocol {
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
-        case moveToNextStep
+        case goToMain
     }
     
     public var body: some ReducerProtocol<State, Action> {

@@ -7,27 +7,31 @@
 
 import Foundation
 import ComposableArchitecture
-import AuthenticationServices
 
 public struct AuthClient {
-    public var setUserInfo: (ASAuthorizationAppleIDCredential) -> Void
-    public var getUserInfo: @Sendable () -> UserInfo
+    public var signInWithApple: @Sendable (String) async throws -> Token
+    public var saveToken: (Token) -> Void
+    public var loadToken: @Sendable () -> Token
    
-    public init(setUserInfo: @escaping (ASAuthorizationAppleIDCredential) -> Void,
-                getUserInfo: @Sendable @escaping () -> UserInfo) {
-        self.setUserInfo = setUserInfo
-        self.getUserInfo = getUserInfo
+    public init(signInWithApple: @escaping @Sendable (String) async throws -> Token,
+                saveToken: @escaping (Token) -> Void,
+                loadToken: @escaping @Sendable () -> Token) {
+        self.signInWithApple = signInWithApple
+        self.saveToken = saveToken
+        self.loadToken = loadToken
     }
 }
 
 extension AuthClient: TestDependencyKey {
     public static var previewValue = Self(
-        setUserInfo: unimplemented("\(Self.self).setUserInfo"),
-        getUserInfo: unimplemented("\(Self.self).getUserInfo")
+        signInWithApple: unimplemented("\(Self.self).signInWithApple"),
+        saveToken: unimplemented("\(Self.self).saveToken"),
+        loadToken: unimplemented("\(Self.self).loadToken")
     )
     
     public static let testValue = Self(
-        setUserInfo: unimplemented("\(Self.self).setUserInfo"),
-        getUserInfo: unimplemented("\(Self.self).getUserInfo")
+        signInWithApple: unimplemented("\(Self.self).signInWithApple"),
+        saveToken: unimplemented("\(Self.self).saveToken"),
+        loadToken: unimplemented("\(Self.self).loadToken")
     )
 }

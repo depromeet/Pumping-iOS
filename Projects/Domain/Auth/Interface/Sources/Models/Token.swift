@@ -8,17 +8,22 @@
 import Foundation
 
 public struct Token: Equatable {
-    public init(accessToken: String, refreshToken: String, expiresAt: String) {
-        self.accessToken = accessToken
-        self.refreshToken = refreshToken
-        self.expiresAt = expiresAt
-    }
+    public let accessToken: String?
+    public let expiresAt: String?
+    public let loginType: String
+    public let oauth2Id: String
     
-    public let accessToken: String
-    public let refreshToken: String
-    public let expiresAt: String
+    public init(accessToken: String?,
+                expiresAt: String?,
+                loginType: String,
+                oauth2Id: String) {
+        self.accessToken = accessToken
+        self.expiresAt = expiresAt
+        self.loginType = loginType
+        self.oauth2Id = oauth2Id
+    }
 }
 
 public extension Token {
-    static let mock = Self(accessToken: "mockAccessToken", refreshToken: "mockRefreshToken", expiresAt: "2023-10-23")
+    static let mock = Self(accessToken: "mockAccessToken", expiresAt: "2023-10-23", loginType: "Apple", oauth2Id: "MockoAuth2Id")
 }

@@ -16,6 +16,7 @@ let targets: [Target] = [
         factory: .init(
             infoPlist: .extendingDefault(
                 with: [
+                    "BASE_URL": "https://pumpapp.net/api/v1/",
                     "CFBundleShortVersionString": "1.0",
                     "CFBundleVersion": "1",
                     "UILaunchStoryboardName": "LaunchScreen",

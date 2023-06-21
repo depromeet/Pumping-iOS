@@ -18,16 +18,19 @@ extension OnboardingRootStore {
         
         let reducer: Reduce<State, Action> = Reduce { state, action in
             switch action {
-            case .auth(.moveToNextStep):
-                state = .permission(.init())
+            case .auth(.goToPermission):
+                state.path.append(.permission)
+                state.permission = .init()
                 return .none
                 
-            case .permission(.moveToNextStep):
-                state = .profile(.init())
+            case .permission(.goToProfile):
+                state.path.append(.profile)
+                state.profile = .init()
                 return .none
                 
-            case .profile(.moveToNextStep):
-                state = .avatar(.init())
+            case .profile(.goToAvatar):
+                state.path.append(.avatar)
+                state.avatar = .init()
                 return .none
                 
             default :

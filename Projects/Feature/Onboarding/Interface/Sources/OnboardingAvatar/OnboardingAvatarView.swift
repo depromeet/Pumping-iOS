@@ -49,10 +49,10 @@ struct OnboardingAvatarView: View {
     private func buttonView(viewStore : ViewStoreOf<OnboardingAvatarStore>) -> some View {
         PumpingSubmitButton(title: viewStore.isAvatarPicked ? "다음" : "캐릭터 뽑기") {
             if viewStore.isAvatarPicked {
-                viewStore.send(.moveToNextStep)
+                viewStore.send(.goToMain)
             } else {
                 //TODO: 아바타 뽑기 시 로직 작성
-                viewStore.send(.moveToNextStep)
+                viewStore.send(.goToMain)
             }
         }
         .padding([.horizontal, .bottom])

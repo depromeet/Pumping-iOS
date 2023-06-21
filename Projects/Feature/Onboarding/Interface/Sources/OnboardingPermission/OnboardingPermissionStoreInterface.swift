@@ -20,7 +20,7 @@ public struct OnboardingPermissionStore : ReducerProtocol {
     }
     
     public enum Action: Equatable {
-        case moveToNextStep
+        case goToProfile
         case failToAuthorize
     }
     

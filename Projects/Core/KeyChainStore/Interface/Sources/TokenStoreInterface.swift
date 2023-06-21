@@ -1,7 +1,8 @@
 public enum TokenProperties: String {
     case accessToken = "ACCESS-TOKEN"
-    case refreshToken = "REFRESH-TOKEN"
     case expiresAt = "ACCESS-EXPIRES-AT"
+    case loginType = "LOGIN-TYPE"
+    case oauth2Id = "OAUTH2ID"
     
     case userIdentifier = "USER-IDENTIFIER"
     case name = "NAME"
