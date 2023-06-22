@@ -10,6 +10,7 @@ import SwiftUI
 import ComposableArchitecture
 
 import SharedDesignSystem
+import FeatureWorkoutInterface
 
 public struct WorkoutRootView: View {
     public let store: StoreOf<WorkoutRootStore>
@@ -57,28 +58,33 @@ public struct WorkoutRootView: View {
                 .navigationDestination(for: WorkoutScene.self) { scene in
                     switch scene {
                     case .home:
-                        IfLetStore(self.store.scope(state: \.workoutHome, action: { .workoutHome($0) })) {
-                            WorkoutHomeView(store: $0)
+                        IfLetStore(self.store.scope(state: \.workoutHome, action: { .workoutHome($0) })) {_ in
+                            EmptyView()
+//                            WorkoutHomeView(store: $0)
                         }
                         
                     case .start:
-                        IfLetStore(self.store.scope(state: \.workoutStart, action: { .workoutStart($0) })) {
-                            WorkoutStartView(store: $0)
+                        IfLetStore(self.store.scope(state: \.workoutStart, action: { .workoutStart($0) })) {_ in
+                            EmptyView()
+//                            WorkoutStartView(store: $0)
                         }
                         
                     case .timer:
-                        IfLetStore(self.store.scope(state: \.workoutTimer, action: { .workoutTimer($0) })) {
-                            WorkoutTimerView(store: $0)
+                        IfLetStore(self.store.scope(state: \.workoutTimer, action: { .workoutTimer($0) })) {_ in
+                            EmptyView()
+//                            WorkoutTimerView(store: $0)
                         }
                         
                     case .end:
                         IfLetStore(self.store.scope(state: \.workoutEnd, action: { .workoutEnd($0) })) {
-                            WorkoutEndView(store: $0)
+                            EmptyView()
+                            WorkoutEndDIContainer.shared.resolve(store: $0)
                         }
                         
                     case .record:
-                        IfLetStore(self.store.scope(state: \.workoutRecord, action: { .workoutRecord($0) })) {
-                            WorkoutRecordView(store: $0)
+                        IfLetStore(self.store.scope(state: \.workoutRecord, action: { .workoutRecord($0) })) {_ in
+                            EmptyView()
+//                            WorkoutRecordView(store: $0)
                         }
                         
                     default:
