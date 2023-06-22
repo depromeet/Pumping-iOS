@@ -9,7 +9,8 @@ let project = Project.makeModule(
             interface: .Crew,
             factory: .init(
                 dependencies: [
-                    .domain
+                    .domain,
+                    .feature(interface: .Profile)
                 ]
             )
         ),
