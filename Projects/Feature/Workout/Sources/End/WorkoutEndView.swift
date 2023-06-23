@@ -12,14 +12,14 @@ import FeatureWorkoutInterface
 import SharedDesignSystem
 import SharedUtil
 
-extension WorkoutEndView {
-    public init(store: StoreOf<WorkoutEndStore>) {
-        self.init(store: store) {
-            self.makeView(store: store) as! Content
-        }
+public struct WorkoutEndViewImpl: View {
+    private let store: StoreOf<WorkoutEndStore>
+    
+    init(store: StoreOf<WorkoutEndStore>) {
+        self.store = store
     }
     
-    func makeView(store: StoreOf<WorkoutEndStore>) -> some View {
+    public var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             VStack {
                 self.titleView()
@@ -130,5 +130,13 @@ extension WorkoutEndView {
             }
         }
         .padding(.horizontal)
+    }
+}
+
+extension WorkoutEndView<WorkoutEndViewImpl> {
+    public init(store: StoreOf<WorkoutEndStore>) {
+        self.init(store: store) {
+            WorkoutEndViewImpl(store: store)
+        }
     }
 }

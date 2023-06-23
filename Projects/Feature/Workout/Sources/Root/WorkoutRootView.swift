@@ -77,8 +77,7 @@ public struct WorkoutRootView: View {
                         
                     case .end:
                         IfLetStore(self.store.scope(state: \.workoutEnd, action: { .workoutEnd($0) })) {
-                            EmptyView()
-                            WorkoutEndDIContainer.shared.resolve(store: $0)
+                            WorkoutEndView<WorkoutEndViewImpl>(store: $0)
                         }
                         
                     case .record:
