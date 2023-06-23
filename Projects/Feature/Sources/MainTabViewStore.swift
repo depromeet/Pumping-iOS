@@ -19,7 +19,9 @@ public struct MainTabViewStore: ReducerProtocol {
     
     public init() {}
 
-    public struct State: Equatable {        
+    public struct State: Equatable {
+        public var currentScene: MainScene = .home
+        
         public var home: CrewRootStore.State? = .init()
         public var workout: WorkoutRootStore.State? = .init()
         public var profile: ProfileRootStore.State? = .init()
@@ -33,6 +35,7 @@ public struct MainTabViewStore: ReducerProtocol {
         case binding(BindingAction<State>)
         
         case onAppear
+        case selectTab(MainScene)
         case toggleModal
         
         case home(CrewRootStore.Action)
@@ -51,6 +54,14 @@ public struct MainTabViewStore: ReducerProtocol {
             case .onAppear:
                 return .none
                 
+            case let .selectTab(scene):
+                state.currentScene = scene
+                return .none
+                
+            case .toggleModal:
+                state.showModal.toggle()
+                return .none
+                
             case .home:
                 return .none
                 
@@ -59,11 +70,6 @@ public struct MainTabViewStore: ReducerProtocol {
                 
             case .profile:
                 return .none
-                
-            case .toggleModal:
-                state.showModal.toggle()
-                return .none
-
             }
         }
         .ifLet(\.home, action: /Action.home) {
