@@ -21,7 +21,8 @@ public struct WorkoutHomeStore: ReducerProtocol {
     
     public struct State: Equatable {
         public var workoutCategoryCellZip: [WorkoutCategoryIdentifierType : IdentifiedArrayOf<WorkoutCategoryCellStore.State>] = [:]
-        public var startButtonisEnabled: Bool = true
+        
+        public var selectedWorkoutCategoryIdentifiers: [WorkoutCategoryIdentifier] = []
         
         public init() {
             workoutCategoryCellZip = [

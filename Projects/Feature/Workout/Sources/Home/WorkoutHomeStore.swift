@@ -32,7 +32,14 @@ extension WorkoutHomeStore {
                         if let index = workoutCategoryIdentifiedArray.index(id: id) {
                             let target = workoutCategoryIdentifiedArray[index]
                             let newTarget = WorkoutCategoryCellStore.State(id: target.id, workoutCategoryIdentifier: target.workoutCategoryIdentifier, isTapped: !target.isTapped)
+                            
                             state.workoutCategoryCellZip[workoutCategoryID]?.update(newTarget, at: index)
+                            
+                            if !target.isTapped {
+                                state.selectedWorkoutCategoryIdentifiers.append(target.workoutCategoryIdentifier)
+                            } else {
+                                state.selectedWorkoutCategoryIdentifiers.removeAll(where: { $0 == target.workoutCategoryIdentifier })
+                            }
                             break
                         }
                     }

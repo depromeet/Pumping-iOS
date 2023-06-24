@@ -29,7 +29,7 @@ public struct WorkoutHomeView : View {
                     
                     Spacer()
                     
-                    PumpingSubmitButton(title: "다음", completion: {
+                    PumpingSubmitButton(title: "다음", isEnable: !viewStore.selectedWorkoutCategoryIdentifiers.isEmpty, completion: {
                         viewStore.send(.startButtonTapped)
                     })
                     .padding(.horizontal)
