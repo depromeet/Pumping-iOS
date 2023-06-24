@@ -42,31 +42,31 @@ public struct WorkoutHomeView : View {
         }
     }
     
-    @ViewBuilder
     private func titleView() -> some View {
-        HStack {
-            Text("어떤 운동을 할 예정인가요?")
-                .font(.pretendard(size: 24, type: .bold))
-                .foregroundColor(PumpingColors.colorGrey900.swiftUIColor)
+        VStack(spacing: .zero) {
+            HStack {
+                Text("어떤 운동을 할 예정인가요?")
+                    .font(.pretendard(size: 24, type: .bold))
+                    .foregroundColor(PumpingColors.colorGrey900.swiftUIColor)
+                
+                Spacer()
+            }
+            .padding(.top, 48)
+            .padding(.horizontal)
+            .padding(.bottom, 12)
             
-            Spacer()
+            HStack {
+                Text("오늘 할 운동을 모두 선택해 주세요")
+                    .font(.pretendard(size: 15, type: .medium))
+                    .foregroundColor(.colorGrey600)
+                
+                Spacer()
+            }
+            .padding(.horizontal)
+            .padding(.bottom, 40)
         }
-        .padding(.top, 48)
-        .padding(.horizontal)
-        .padding(.bottom, 12)
-        
-        HStack {
-            Text("오늘 할 운동을 모두 선택해 주세요")
-                .font(.pretendard(size: 15, type: .medium))
-                .foregroundColor(.colorGrey600)
-            
-            Spacer()
-        }
-        .padding(.horizontal)
-        .padding(.bottom, 40)
     }
     
-    @ViewBuilder
     private func workoutCategoryListView(viewStore: ViewStoreOf<WorkoutHomeStore>) -> some View {
         VStack(spacing: .zero) {
             ForEach(Array(viewStore.state.workoutCategoryCellZip.keys), id: \.self) { type in

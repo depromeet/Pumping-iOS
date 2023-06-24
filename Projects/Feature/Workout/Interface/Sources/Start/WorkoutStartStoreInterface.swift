@@ -16,6 +16,8 @@ public struct WorkoutStartStore: ReducerProtocol {
     }
     
     public struct State: Equatable {
+        let id: UUID = .init()
+        
         public init() {
 
         }
