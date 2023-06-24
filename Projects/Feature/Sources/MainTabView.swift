@@ -72,7 +72,6 @@ public struct MainTabView: View {
                 
                 Spacer()
             }
-            .frame(maxWidth: .infinity, maxHeight: 101)
             .background(PumpingColors.colorGrey100.swiftUIColor)
             .overlay(
                 Rectangle()
@@ -85,6 +84,7 @@ public struct MainTabView: View {
                 .frame(width: 68, height: 68)
                 .offset(.init(width: 0, height: -20))
         }
+        .frame(maxWidth: .infinity, maxHeight: 101)
     }
     
     @ViewBuilder
@@ -122,6 +122,7 @@ public struct MainTabView: View {
                         )
                 }
             })
+            .padding(.top, 18)
             
             Text(scene.title)
                 .foregroundColor(
