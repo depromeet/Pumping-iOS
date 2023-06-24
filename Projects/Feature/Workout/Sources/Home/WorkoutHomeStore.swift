@@ -25,15 +25,14 @@ extension WorkoutHomeStore {
             case .goToWorkoutStart:
                 return .none
                 
-            case let .pumpingTextCell(id, action):
+            case let .workoutCategoryCell(id, action):
                 switch action {
                 case .tapped:
-                    for (key, cells) in state.workoutCategoryZip {
-                        if let index = cells.index(id: id) {
-                            let target = cells[index]
-                            let newTarget = PumpingTextCellStore.State(id: target.id, title: target.title, isTapped: !target.isTapped)
-                            
-                            state.workoutCategoryZip[key]?.update(newTarget, at: index)
+                    for (workoutCategoryID, workoutCategoryIdentifiedArray) in state.workoutCategoryCellZip {
+                        if let index = workoutCategoryIdentifiedArray.index(id: id) {
+                            let target = workoutCategoryIdentifiedArray[index]
+                            let newTarget = WorkoutCategoryCellStore.State(id: target.id, workoutCategoryIdentifier: target.workoutCategoryIdentifier, isTapped: !target.isTapped)
+                            state.workoutCategoryCellZip[workoutCategoryID]?.update(newTarget, at: index)
                             break
                         }
                     }
@@ -42,9 +41,6 @@ extension WorkoutHomeStore {
             }
         }
         
-        self.init(
-            reducer: reducer,
-            pumpingTextCellStore: .init()
-        )
+        self.init(reducer: reducer)
     }
 }

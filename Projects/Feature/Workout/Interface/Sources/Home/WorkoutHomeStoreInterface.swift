@@ -15,32 +15,25 @@ import SharedDesignSystem
 public struct WorkoutHomeStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
     
-    private let pumpingTextCellStore: PumpingTextCellStore
-    
-    public init(
-        reducer: Reduce<State, Action>,
-        pumpingTextCellStore: PumpingTextCellStore
-    ) {
+    public init(reducer: Reduce<State, Action>) {
         self.reducer = reducer
-        
-        self.pumpingTextCellStore = pumpingTextCellStore
     }
     
     public struct State: Equatable {
-        public var workoutCategoryZip: [WorkoutCategoryIdentifierType : IdentifiedArrayOf<PumpingTextCellStore.State>] = [:]
+        public var workoutCategoryCellZip: [WorkoutCategoryIdentifierType : IdentifiedArrayOf<WorkoutCategoryCellStore.State>] = [:]
         public var startButtonisEnabled: Bool = true
         
         public init() {
-            workoutCategoryZip = [
+            workoutCategoryCellZip = [
                 .whole: makeIdentifiedArray(from: .whole),
                 .upper: makeIdentifiedArray(from: .upper),
                 .lower: makeIdentifiedArray(from: .lower),
             ]
         }
         
-        private func makeIdentifiedArray(from type: WorkoutCategoryIdentifierType) -> IdentifiedArrayOf<PumpingTextCellStore.State> {
+        private func makeIdentifiedArray(from type: WorkoutCategoryIdentifierType) -> IdentifiedArrayOf<WorkoutCategoryCellStore.State> {
             return .init(uniqueElements: type.identifiers.map { id in
-                return .init(id: .init(), title: id.rawValue)
+                return .init(id: .init(), workoutCategoryIdentifier: id)
             })
         }
     }
@@ -49,7 +42,7 @@ public struct WorkoutHomeStore: ReducerProtocol {
         case binding(BindingAction<State>)
         
         case startButtonTapped
-        case pumpingTextCell(id: PumpingTextCellStore.State.ID, action: PumpingTextCellStore.Action)
+        case workoutCategoryCell(id: WorkoutCategoryCellStore.State.ID, action: WorkoutCategoryCellStore.Action)
         case goToWorkoutStart
     }
     

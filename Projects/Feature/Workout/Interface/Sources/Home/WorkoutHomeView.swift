@@ -69,7 +69,7 @@ public struct WorkoutHomeView : View {
     @ViewBuilder
     private func workoutCategoryListView(viewStore: ViewStoreOf<WorkoutHomeStore>) -> some View {
         VStack(spacing: .zero) {
-            ForEach(Array(viewStore.state.workoutCategoryZip.keys), id: \.self) { type in
+            ForEach(Array(viewStore.state.workoutCategoryCellZip.keys), id: \.self) { type in
                 HStack {
                     Text(type.rawValue)
                     
@@ -77,8 +77,8 @@ public struct WorkoutHomeView : View {
                 }
                 
                 VStack(spacing: 8) {
-                    ForEachStore(self.store.scope(state: { $0.workoutCategoryZip[type] ?? [] }, action: WorkoutHomeStore.Action.pumpingTextCell(id:action:))) {
-                        PumpingTextCellView(store: $0)
+                    ForEachStore(self.store.scope(state: { $0.workoutCategoryCellZip[type] ?? [] }, action: WorkoutHomeStore.Action.workoutCategoryCell(id:action:))) {
+                        WorkoutCategoryCellView(store: $0)
                     }
                 }
                 .padding(.top, 12)
