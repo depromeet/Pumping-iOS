@@ -9,6 +9,7 @@ import Foundation
 import ComposableArchitecture
 
 import FeatureWorkoutInterface
+import Domain
 
 extension WorkoutRootStore {
     public init() {
@@ -24,8 +25,8 @@ extension WorkoutRootStore {
                 
             case let .workoutHome(action):
                 switch action {
-                case .goToWorkoutStart:
-                    state.workoutStart = .init()
+                case let .goToWorkoutStart(workoutCategoryIdentifiers):
+                    state.workoutStart = .init(selectedWorkoutCategoryIdentifiers: workoutCategoryIdentifiers)
                     state.path.append(.start)
                     return .none
                     
@@ -34,8 +35,8 @@ extension WorkoutRootStore {
                 }
             case let .workoutStart(action):
                 switch action {
-                case .goToWorkoutTimer:
-                    state.workoutTimer = .init(workoutCategoryIdentifiers: [.back, .aerobic, .butt])
+                case let .goToWorkoutTimer(workoutCategoryIdentifiers):
+                    state.workoutTimer = .init(selectedWorkoutCategoryIdentifiers: workoutCategoryIdentifiers)
                     state.path.append(.timer)
                     return .none
                     

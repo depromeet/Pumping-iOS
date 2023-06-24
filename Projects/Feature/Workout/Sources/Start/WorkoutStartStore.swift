@@ -18,7 +18,7 @@ extension WorkoutStartStore {
                 return .none
                 
             case .startButtonTapped:
-                return .send(.goToWorkoutTimer)
+                return .send(.goToWorkoutTimer(state.selectedWorkoutCategoryIdentifiers))
                 
             case .goToWorkoutTimer:
                 return .none

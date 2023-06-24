@@ -20,7 +20,7 @@ extension WorkoutHomeStore {
                 return .none
                 
             case .startButtonTapped:
-                return .send(.goToWorkoutStart)
+                return .send(.goToWorkoutStart(state.selectedWorkoutCategoryIdentifiers))
                 
             case .goToWorkoutStart:
                 return .none

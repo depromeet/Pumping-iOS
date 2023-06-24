@@ -6,7 +6,10 @@
 //
 
 import Foundation
+
 import ComposableArchitecture
+
+import Domain
 
 public struct WorkoutStartStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
@@ -16,10 +19,10 @@ public struct WorkoutStartStore: ReducerProtocol {
     }
     
     public struct State: Equatable {
-        let id: UUID = .init()
+        public let selectedWorkoutCategoryIdentifiers: [WorkoutCategoryIdentifier]
         
-        public init() {
-
+        public init(selectedWorkoutCategoryIdentifiers: [WorkoutCategoryIdentifier]) {
+            self.selectedWorkoutCategoryIdentifiers = selectedWorkoutCategoryIdentifiers
         }
     }
     
@@ -28,7 +31,7 @@ public struct WorkoutStartStore: ReducerProtocol {
         
         case startButtonTapped
         
-        case goToWorkoutTimer
+        case goToWorkoutTimer([WorkoutCategoryIdentifier])
     }
     
     public var body: some ReducerProtocol<State, Action> {

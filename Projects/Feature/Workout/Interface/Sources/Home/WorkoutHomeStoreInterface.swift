@@ -44,7 +44,7 @@ public struct WorkoutHomeStore: ReducerProtocol {
         
         case startButtonTapped
         case workoutCategoryCell(id: WorkoutCategoryCellStore.State.ID, action: WorkoutCategoryCellStore.Action)
-        case goToWorkoutStart
+        case goToWorkoutStart([WorkoutCategoryIdentifier])
     }
     
     public var body: some ReducerProtocol<State, Action> {

@@ -68,8 +68,8 @@ public struct WorkoutTimerStore: ReducerProtocol {
         public var timerCells: IdentifiedArrayOf<TimerCellStore.State> = []
         public var counter: WorkoutCounterStore.State? = .init(id: nil)
         
-        public init(workoutCategoryIdentifiers: [WorkoutCategoryIdentifier]) {
-            self.workoutTimerInfos = makeWorkoutTimerInfos(from: workoutCategoryIdentifiers)
+        public init(selectedWorkoutCategoryIdentifiers: [WorkoutCategoryIdentifier]) {
+            self.workoutTimerInfos = makeWorkoutTimerInfos(from: selectedWorkoutCategoryIdentifiers)
             self.timerCells = makeIdentifiedArray(from: self.workoutTimerInfos)
         }
         
