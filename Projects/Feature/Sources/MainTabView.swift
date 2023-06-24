@@ -30,8 +30,9 @@ public struct MainTabView: View {
             VStack(spacing: .zero) {
                 tabView(viewStore: viewStore)
                 
-                tabBarView(viewStore: viewStore)
-
+                if viewStore.state.showTabBar {
+                    tabBarView(viewStore: viewStore)
+                }
             }
             .ignoresSafeArea()
         }
@@ -62,7 +63,7 @@ public struct MainTabView: View {
                 Spacer()
                 
                 tabBarItemView(viewStore: viewStore, scene: .home)
-                
+
                 Spacer()
                 Spacer()
                 Spacer()
@@ -97,7 +98,11 @@ public struct MainTabView: View {
             }, label: {
                 if case .workout = scene {
                     scene.image
+                        .renderingMode(.template)
                         .frame(width: 40, height: 40)
+                        .foregroundColor(
+                            viewStore.currentScene == scene ? PumpingColors.colorCyan200.swiftUIColor : PumpingColors.colorGrey900.swiftUIColor
+                        )
                         .background(
                             Circle()
                                 .fill(PumpingColors.colorGrey100.swiftUIColor)
@@ -110,12 +115,18 @@ public struct MainTabView: View {
                         )
                 } else {
                     scene.image
+                        .renderingMode(.template)
                         .frame(width: 28, height: 28)
+                        .foregroundColor(
+                            viewStore.currentScene == scene ? PumpingColors.colorCyan200.swiftUIColor : PumpingColors.colorGrey900.swiftUIColor
+                        )
                 }
             })
             
             Text(scene.title)
-                .foregroundColor(PumpingColors.colorGrey600.swiftUIColor)
+                .foregroundColor(
+                    viewStore.currentScene == scene ? PumpingColors.colorCyan200.swiftUIColor : PumpingColors.colorGrey600.swiftUIColor
+                )
                 .font(.pretendard(size: 12, type: .medium))
                 .padding(.top, scene == .workout ? 28 : 5)
         }

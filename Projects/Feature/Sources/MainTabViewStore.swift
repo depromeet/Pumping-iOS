@@ -26,6 +26,7 @@ public struct MainTabViewStore: ReducerProtocol {
         public var workout: WorkoutRootStore.State? = .init()
         public var profile: ProfileRootStore.State? = .init()
         
+        public var showTabBar: Bool = true
         @BindingState public var showModal: Bool = false
         
         public init() { }
@@ -63,12 +64,21 @@ public struct MainTabViewStore: ReducerProtocol {
                 return .none
                 
             case .home:
+                if state.currentScene == .home {
+                    state.showTabBar = state.home?.path.isEmpty ?? false
+                }
                 return .none
                 
             case .workout:
+                if state.currentScene == .workout {
+                    state.showTabBar = state.workout?.path.isEmpty ?? false
+                }
                 return .none
                 
             case .profile:
+                if state.currentScene == .myPage {
+                    state.showTabBar = state.profile?.path.isEmpty ?? false
+                }
                 return .none
             }
         }
