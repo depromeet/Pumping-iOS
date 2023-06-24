@@ -14,6 +14,12 @@ extension CrewRankingStore {
             switch action {
             case .binding:
                 return .none
+                
+            case let .crewRankingCell(id, action):
+                return .none
+
+            default:
+                return .none
             }
         }
 
