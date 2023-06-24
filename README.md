@@ -22,3 +22,6 @@ Tuist, TCA, SwiftUI Best Practices
 - Tests: 테스트
 - Testing: 테스트를 위한 목업
 - Interface: 인터페이스
+
+### Dependency Graph
+<img src="graph.png">
