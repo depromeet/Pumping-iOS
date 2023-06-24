@@ -24,6 +24,7 @@ public struct WorkoutTimerCellView: View {
                 HStack {
                     Text(DateManager.toClockString(from: viewStore.state.timer.time))
                         .font(.pretendard(size: 21, type: .bold))
+                        .frame(width: 100)
                     
                     Button(action: {
                         viewStore.send(.tapped)
@@ -33,6 +34,8 @@ public struct WorkoutTimerCellView: View {
                             .resizable()
                             .frame(width: 32, height: 32)
                     })
+                    
+                    Spacer()
                 }
                 .padding(.bottom, 24)
                 
@@ -40,7 +43,7 @@ public struct WorkoutTimerCellView: View {
                     Text(viewStore.state.timer.workoutCategoryIdentifier.rawValue)
                         .font(.pretendard(size: 15, type: .medium))
                         .foregroundColor(.colorGrey900)
-                    
+                                            
                     Spacer()
                 }
             }

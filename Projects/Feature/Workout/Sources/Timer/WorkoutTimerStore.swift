@@ -33,9 +33,11 @@ extension WorkoutTimerStore {
                       let targetTimerIndex = state.timers.firstIndex(where: { $0.id == targetTimerCell.id }) else { return .none }
                 
                 var newTimer = state.timers[targetTimerIndex]
-                newTimer.time += Int(Date().timeIntervalSince1970) - newTimer.pinTime
+                let intervalTime = Int(Date().timeIntervalSince1970) - newTimer.pinTime
+                newTimer.time += intervalTime
                 newTimer.pinTime = Int(Date().timeIntervalSince1970)
                 
+                state.time += intervalTime
                 return .send(.updateTimer(index: targetTimerIndex, timer: newTimer))
                 
             case .timerStart:

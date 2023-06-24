@@ -37,12 +37,12 @@ public struct WorkoutTimerStore: ReducerProtocol {
             }
         }
         
-        public func toSyntax(value: Double) -> String {
+        public func toSyntax(value: Int) -> String {
             //TODO: 서버에 넘겨야할 값에 따라 value 타입이 달라짐
             switch self {
-            case .time: return DateManager.toClockString(from: Int(value))
-            case .heatRate: return String(describing: "\(Int(value))bpm")
-            case .calorie: return String(describing: "\(Int(value))Kcal")
+            case .time: return DateManager.toClockString(from: value)
+            case .heatRate: return String(describing: "\(value)bpm")
+            case .calorie: return String(describing: "\(value)Kcal")
             }
         }
     }

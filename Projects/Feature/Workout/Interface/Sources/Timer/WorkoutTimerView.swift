@@ -74,13 +74,13 @@ public struct WorkoutTimerView: View {
     
     private func resultView(viewStore: ViewStoreOf<WorkoutTimerStore>) -> some View {
         VStack {
-            resultTextView(type: .time, value: 40)
-            resultTextView(type: .calorie, value: 100)
-            resultTextView(type: .heatRate, value: 230)
+            resultTextView(type: .time, value: viewStore.state.time)
+            resultTextView(type: .heatRate, value: viewStore.state.heartRate)
+            resultTextView(type: .calorie, value: viewStore.state.calorie)
         }
     }
     
-    private func resultTextView(type: WorkoutTimerStore.ResultType, value: Double) -> some View {
+    private func resultTextView(type: WorkoutTimerStore.ResultType, value: Int) -> some View {
         VStack(spacing: 16) {
             HStack(spacing: 8) {
                 type.image
