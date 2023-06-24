@@ -31,7 +31,7 @@ public struct MainTabView: View {
                 tabView(viewStore: viewStore)
                 
                 tabBarView(viewStore: viewStore)
-                    .frame(maxWidth: .infinity)
+
             }
             .ignoresSafeArea()
         }
@@ -57,26 +57,33 @@ public struct MainTabView: View {
     
     @ViewBuilder
     private func tabBarView(viewStore: ViewStoreOf<MainTabViewStore>) -> some View {
-        HStack {
-            Spacer()
-            
-            tabBarItemView(viewStore: viewStore, scene: .home)
-            
-            Spacer()
+        ZStack {
+            HStack {
+                Spacer()
+                
+                tabBarItemView(viewStore: viewStore, scene: .home)
+                
+                Spacer()
+                Spacer()
+                Spacer()
+                
+                tabBarItemView(viewStore: viewStore, scene: .myPage)
+                
+                Spacer()
+            }
+            .frame(maxWidth: .infinity, maxHeight: 101)
+            .background(PumpingColors.colorGrey100.swiftUIColor)
+            .overlay(
+                Rectangle()
+                    .frame(width: nil, height: 1, alignment: .top)
+                    .foregroundColor(PumpingColors.colorGrey300.swiftUIColor),
+                alignment: .top
+            )
             
             tabBarItemView(viewStore: viewStore, scene: .workout)
                 .frame(width: 68, height: 68)
-                .offset(.init(width: 0, height: -10))
-            
-            
-            Spacer()
-            
-            tabBarItemView(viewStore: viewStore, scene: .myPage)
-                .contentShape(Rectangle())
-            
-            Spacer()
+                .offset(.init(width: 0, height: -20))
         }
-        .background(PumpingColors.colorGrey100.swiftUIColor)
     }
     
     @ViewBuilder
@@ -84,26 +91,33 @@ public struct MainTabView: View {
         viewStore: ViewStoreOf<MainTabViewStore>,
         scene: MainScene
     ) -> some View {
-        VStack {
+        VStack(spacing: .zero) {
             Button(action: {
                 viewStore.send(.selectTab(scene))
             }, label: {
                 if case .workout = scene {
                     scene.image
                         .frame(width: 40, height: 40)
+                        .background(
+                            Circle()
+                                .fill(PumpingColors.colorGrey100.swiftUIColor)
+                                .frame(width: 68, height: 68)
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 34)
+                                .stroke(PumpingColors.colorGrey300.swiftUIColor, lineWidth: 1)
+                                .frame(width: 68, height: 68)
+                        )
                 } else {
                     scene.image
                         .frame(width: 28, height: 28)
                 }
             })
-            .overlay(
-                RoundedRectangle(cornerRadius: 34)
-                    .stroke(Color.white, lineWidth: 2)
-            )
             
             Text(scene.title)
                 .foregroundColor(PumpingColors.colorGrey600.swiftUIColor)
                 .font(.pretendard(size: 12, type: .medium))
+                .padding(.top, scene == .workout ? 28 : 5)
         }
         .onTapGesture {
             viewStore.send(.selectTab(scene))

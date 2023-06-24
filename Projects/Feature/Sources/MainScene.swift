@@ -30,7 +30,7 @@ public enum MainScene: Hashable {
         case .home:
             return PumpingImages.home.swiftUIImage
         case .workout:
-            return PumpingImages.home.swiftUIImage
+            return PumpingImages.workout.swiftUIImage
         case .myPage:
             return PumpingImages.mypage.swiftUIImage
         }
