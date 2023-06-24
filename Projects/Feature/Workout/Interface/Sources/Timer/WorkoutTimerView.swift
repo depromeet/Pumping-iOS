@@ -44,7 +44,6 @@ public struct WorkoutTimerView: View {
         }
     }
     
-    @ViewBuilder
     private func titleView(viewStore: ViewStoreOf<WorkoutTimerStore>) -> some View {
         VStack {
             HStack {
@@ -61,7 +60,7 @@ public struct WorkoutTimerView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEachStore(self.store.scope(state: \.timerCells, action: WorkoutTimerStore.Action.timerCell(id:action:))) {
-                        TimerCellView(store: $0)
+                        WorkoutTimerCellView(store: $0)
                     }
                 }
                 .padding(.bottom, 24)
@@ -73,7 +72,6 @@ public struct WorkoutTimerView: View {
         .background(Color.colorGrey100)
     }
     
-    @ViewBuilder
     private func resultView(viewStore: ViewStoreOf<WorkoutTimerStore>) -> some View {
         VStack {
             resultTextView(type: .time, value: 40)
@@ -82,7 +80,6 @@ public struct WorkoutTimerView: View {
         }
     }
     
-    @ViewBuilder
     private func resultTextView(type: WorkoutTimerStore.ResultType, value: Double) -> some View {
         VStack(spacing: 16) {
             HStack(spacing: 8) {
