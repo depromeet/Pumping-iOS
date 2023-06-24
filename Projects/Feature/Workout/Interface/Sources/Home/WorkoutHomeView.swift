@@ -20,18 +20,21 @@ public struct WorkoutHomeView : View {
     
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
-            VStack(spacing: .zero) {
-                titleView()
-                
-                workoutCategoryListView(viewStore: viewStore)
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: .zero) {
+                    titleView()
+                    
+                    workoutCategoryListView(viewStore: viewStore)
+                        .padding(.horizontal)
+                    
+                    Spacer()
+                    
+                    PumpingSubmitButton(title: "다음", completion: {
+                        viewStore.send(.startButtonTapped)
+                    })
                     .padding(.horizontal)
-                
-                Spacer()
-                
-                PumpingSubmitButton(title: "다음", completion: {
-                    viewStore.send(.startButtonTapped)
-                })
-                .padding(.horizontal)
+                    .padding(.bottom, 30)
+                }
             }
             .navigationBarBackButtonHidden(true)
             .frame(maxWidth: .infinity, maxHeight: .infinity)

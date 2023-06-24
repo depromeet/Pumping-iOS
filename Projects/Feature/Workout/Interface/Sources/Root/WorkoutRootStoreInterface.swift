@@ -8,11 +8,10 @@
 import ComposableArchitecture
 
 public enum WorkoutScene: Hashable {
-    case root
-    case selectWorkoutCategoryType
-    case workoutStart
-    case workoutTimer
-    case workoutEnd
+    case home
+    case start
+    case timer
+    case end
 }
 
 public struct WorkoutRootStore: ReducerProtocol {
@@ -41,7 +40,7 @@ public struct WorkoutRootStore: ReducerProtocol {
     public struct State: Equatable {
         @BindingState public var path: [WorkoutScene] = []
         
-        public var workoutHome: WorkoutHomeStore.State?
+        public var workoutHome: WorkoutHomeStore.State? = .init()
         public var workoutStart: WorkoutStartStore.State?
         public var workoutTimer: WorkoutTimerStore.State?
         public var workoutEnd: WorkoutEndStore.State?
