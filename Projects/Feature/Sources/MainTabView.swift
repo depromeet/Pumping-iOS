@@ -72,6 +72,7 @@ public struct MainTabView: View {
                 
                 Spacer()
             }
+            .frame(maxWidth: .infinity, maxHeight: 101)
             .background(PumpingColors.colorGrey100.swiftUIColor)
             .overlay(
                 Rectangle()
@@ -122,7 +123,6 @@ public struct MainTabView: View {
                         )
                 }
             })
-            .padding(.top, 18)
             
             Text(scene.title)
                 .foregroundColor(
@@ -130,6 +130,7 @@ public struct MainTabView: View {
                 )
                 .font(.pretendard(size: 12, type: .medium))
                 .padding(.top, scene == .workout ? 28 : 5)
+                .padding(.bottom, 20)
         }
         .onTapGesture {
             viewStore.send(.selectTab(scene))
