@@ -8,7 +8,6 @@
 import Foundation
 
 import ComposableArchitecture
-import FeatureOnboardingInterface
 import Feature
 
 public struct RootStore: ReducerProtocol {

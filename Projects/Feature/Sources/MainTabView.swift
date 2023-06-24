@@ -8,15 +8,7 @@
 import SwiftUI
 
 import ComposableArchitecture
-
-import FeatureCrewInterface
-import FeatureProfileInterface
-import FeatureOnboardingInterface
-import FeatureWorkoutInterface
-import FeatureCrew
-import FeatureOnboarding
-import FeatureWorkout
-import SharedDesignSystem
+import Shared
 
 public struct MainTabView: View {
     public let store: StoreOf<MainTabViewStore>

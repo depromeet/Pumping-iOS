@@ -7,13 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
-import FeatureCrewInterface
-import FeatureProfileInterface
-import FeatureWorkoutInterface
-import FeatureCrew
-import FeatureProfile
-import FeatureWorkout
-import SharedDesignSystem
+import Shared
 
 public struct MainTabViewStore: ReducerProtocol {
     
