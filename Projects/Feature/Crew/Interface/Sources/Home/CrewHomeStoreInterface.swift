@@ -18,6 +18,17 @@ public struct CrewHomeStore: ReducerProtocol {
     }
     
     public struct State: Equatable {
+        //CrewList
+        @BindingState public var showCrewListView: Bool = false
+        
+        // CrewJoin
+        @BindingState public var code: String = ""
+        @BindingState public var showCrewJoinView: Bool = false
+        @BindingState public var showCrewJoinDetailView: Bool = false
+        
+        // CrewMake
+        @BindingState public var showCrewMakeView: Bool = false
+
         public var userRecordList: IdentifiedArrayOf<PersonalRecordCellStore.State> = [
             .init(id: .init(), avatarName: "몰라", ranking: "4", userName: "보민", numberOfExerciseGoals: "3 / 5회", workoutTime: "02:40"),
             .init(id: .init(), avatarName: "몰라", ranking: "1", userName: "희원", numberOfExerciseGoals: "3 / 5회", workoutTime: "02:40"),
@@ -45,7 +56,18 @@ public struct CrewHomeStore: ReducerProtocol {
         case goToProfileView
         case goToWidthOfChangeView
         case goToCrewRankingView
-        case presentCrewScreen
+        
+        //CrewList
+        case presentCrewListView
+
+        // CrewJoin
+        case presentCrewJoinView
+        case dismissCrewJoinView
+        case goToCrewJoinDetailView
+        case validateCode
+
+        // CrewMake
+        case presentCrewMakeView
 
         case profileBodyCell(id: ProfileBodyCellStore.State.ID, action: ProfileBodyCellStore.Action)
         case personalRecordCell(id: PersonalRecordCellStore.State.ID, action: PersonalRecordCellStore.Action)

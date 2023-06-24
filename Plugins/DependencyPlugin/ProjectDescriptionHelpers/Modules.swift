@@ -45,6 +45,7 @@ public extension ModulePath {
 
 public extension ModulePath {
     enum Domain: String, CaseIterable {
+        case Crew
         case Workout
         case Auth
         case Health
