@@ -16,6 +16,7 @@ let targets: [Target] = [
                 .core(implements: .Network),
                 .core(implements: .KeyChainStore),
                 .core(implements: .HealthKitManager),
+                .core(implements: .HealthKit),
                 .shared
             ]
         )

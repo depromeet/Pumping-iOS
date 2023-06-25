@@ -9,6 +9,8 @@ import SwiftUI
 import AuthenticationServices
 import ComposableArchitecture
 import SharedDesignSystem
+import Core
+import HealthKit
 
 public struct OnboardingAuthView : View {
     public let store: StoreOf<OnboardingAuthStore>
@@ -20,7 +22,25 @@ public struct OnboardingAuthView : View {
                 
                 Spacer()
 
-                signInWithAppleButton(viewStore: viewStore)
+//                signInWithAppleButton(viewStore: viewStore)
+                PumpingSubmitButton(title: "권한 부여", isEnable: true) {
+                    HealthKitManager.shared.requestAccessWithCompletion()
+                    { success, error in
+                        if success { debugPrint("HealthKit access granted") }
+                        else { print("Error requesting access to HealthKit: \(error)") }
+                    }
+                }
+                
+                PumpingSubmitButton(title: "가져오기", isEnable: true) {
+//                    HealthKitManager.shared.readHealthKitData(type: HKSampleType.quantityType(forIdentifier: .heartRate)!)
+//                    HealthKitManager.shared.bodyMassObserverQueryTriggered()
+                    HealthKitManager.shared.observe()
+//                    HealthKitManager.shared.requestAccessWithCompletion()
+//                    { success, error in
+//                        if success { debugPrint("HealthKit access granted") }
+//                        else { print("Error requesting access to HealthKit: \(error)") }
+//                    }
+                }
             }
             .onAppear {
                 viewStore.send(.checkAuthorization)

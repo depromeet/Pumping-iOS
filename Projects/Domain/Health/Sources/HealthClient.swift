@@ -6,11 +6,13 @@
 //
 
 import Foundation
+import HealthKit
 
 import ComposableArchitecture
 
 import DomainHealthInterface
 import Core
+
 
 extension HealthClient: DependencyKey {
     public static let liveValue = HealthClient(
@@ -18,6 +20,7 @@ extension HealthClient: DependencyKey {
 //            return HealthKitManager.shared.getQuantityTypeSamples(identifier: .heartRate, predicate: , completion: {
 //
 //            })
+//            HealthKitManager.shared.excuteObservingQuentityType(identifier: HKQuantityTypeIdentifier.heartRate)
             return 10
         }
     )

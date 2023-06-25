@@ -26,12 +26,16 @@ struct WatchView: View {
             Spacer()
             
             HStack {
-                Button("Register") {}
+                Button("Register") {
+                    HealthKitManager.shared.observe()
+                }
                     .background(.blue)
              
                 Spacer()
                 
-                Button("OK") {}
+                Button("OK") {
+                    HealthKitManager.shared.setting()
+                }
                     .background(.blue)
             }
             .buttonStyle(.plain)
