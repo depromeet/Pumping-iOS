@@ -6,8 +6,9 @@
 //
 
 import Foundation
+
 import DomainAuthInterface
-import CoreKeyChainStore
+import Core
 
 public final class LocalAuthStore : LocalAuthStoreInterface {
     public func loadToken() -> Token {

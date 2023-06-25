@@ -14,6 +14,8 @@ import SharedDesignSystem
 
 extension WorkoutTimerStore {
     public init() {
+        let BACKGROUND_TIME = 3
+        
         @Dependency(\.continuousClock) var clock
         
         let reducer: Reduce<State, Action> = .init { state, action in
@@ -33,7 +35,9 @@ extension WorkoutTimerStore {
                       let targetTimerIndex = state.timers.firstIndex(where: { $0.id == targetTimerCell.id }) else { return .none }
                 
                 var newTimer = state.timers[targetTimerIndex]
-                let intervalTime = Int(Date().timeIntervalSince1970) - newTimer.pinTime
+                var intervalTime = Int(Date().timeIntervalSince1970) - newTimer.pinTime
+                intervalTime = intervalTime > BACKGROUND_TIME ? intervalTime : 1
+                
                 newTimer.time += intervalTime
                 newTimer.pinTime = Int(Date().timeIntervalSince1970)
                 
