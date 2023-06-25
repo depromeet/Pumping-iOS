@@ -1,13 +1,17 @@
 //
-//  WatchView.swift
+//  RootView.swift
 //  AppWatchExtension
 //
-//  Created by Derrick kim on 2023/04/27.
+//  Created by 송영모 on 2023/06/26.
 //
 
 import SwiftUI
 
-struct WatchView: View {
+import ComposableArchitecture
+
+struct RootView: View {
+    public let store: StoreOf<RootStore>
+    
     var body: some View {
         VStack {
             TabView {
@@ -27,24 +31,18 @@ struct WatchView: View {
             
             HStack {
                 Button("Register") {
-                    HealthKitManager.shared.observe()
+//                    HealthKitManager.shared.observe()
                 }
                     .background(.blue)
              
                 Spacer()
                 
                 Button("OK") {
-                    HealthKitManager.shared.setting()
+//                    HealthKitManager.shared.setting()
                 }
                     .background(.blue)
             }
             .buttonStyle(.plain)
         }
-    }
-}
-
-struct WatchView_Previews: PreviewProvider {
-    static var previews: some View {
-        WatchView()
     }
 }

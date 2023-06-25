@@ -8,10 +8,10 @@
 import SwiftUI
 
 @main
-struct WatchApp: App {
+struct RootApp: App {
     var body: some Scene {
         WindowGroup {
-            WatchView()
+            RootView()
         }
     }
 }

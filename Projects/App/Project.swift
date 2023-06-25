@@ -46,7 +46,7 @@ let targets: [Target] = [
         implements: .WatchExtension,
         factory: .init(
             dependencies: [
-//                .watchShared
+                .watchShared
             ]
         )
     )
