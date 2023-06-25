@@ -8,7 +8,6 @@
 import Foundation
 
 import ComposableArchitecture
-import FeatureOnboardingInterface
 import Feature
 
 public struct RootStore: ReducerProtocol {
@@ -18,7 +17,8 @@ public struct RootStore: ReducerProtocol {
         case mainTab(MainTabViewStore.State)
         
         public init() {
-            self = .onboarding(.init())
+//            self = .onboarding(.init())
+            self = .mainTab(.init())
         }
     }
     

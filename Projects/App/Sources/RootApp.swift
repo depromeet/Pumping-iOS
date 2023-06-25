@@ -8,8 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 import Feature
-import SharedDesignSystem
-import SharedUtil
+import Shared
 
 @main
 struct RootApp: App {

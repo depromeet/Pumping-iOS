@@ -7,23 +7,20 @@
 
 import Foundation
 import ComposableArchitecture
-import FeatureCrewInterface
-import FeatureProfileInterface
-import FeatureWorkoutInterface
-import FeatureCrew
-import FeatureProfile
-import FeatureWorkout
-import SharedDesignSystem
+import Shared
 
 public struct MainTabViewStore: ReducerProtocol {
     
     public init() {}
 
-    public struct State: Equatable {        
+    public struct State: Equatable {
+        public var currentScene: MainScene = .home
+        
         public var home: CrewRootStore.State? = .init()
         public var workout: WorkoutRootStore.State? = .init()
         public var profile: ProfileRootStore.State? = .init()
         
+        public var showTabBar: Bool = true
         @BindingState public var showModal: Bool = false
         
         public init() { }
@@ -33,6 +30,7 @@ public struct MainTabViewStore: ReducerProtocol {
         case binding(BindingAction<State>)
         
         case onAppear
+        case selectTab(MainScene)
         case toggleModal
         
         case home(CrewRootStore.Action)
@@ -51,19 +49,31 @@ public struct MainTabViewStore: ReducerProtocol {
             case .onAppear:
                 return .none
                 
-            case .home:
-                return .none
-                
-            case .workout:
-                return .none
-                
-            case .profile:
+            case let .selectTab(scene):
+                state.currentScene = scene
                 return .none
                 
             case .toggleModal:
                 state.showModal.toggle()
                 return .none
-
+                
+            case .home:
+                if state.currentScene == .home {
+                    state.showTabBar = state.home?.path.isEmpty ?? false
+                }
+                return .none
+                
+            case .workout:
+                if state.currentScene == .workout {
+                    state.showTabBar = state.workout?.path.isEmpty ?? false
+                }
+                return .none
+                
+            case .profile:
+                if state.currentScene == .myPage {
+                    state.showTabBar = state.profile?.path.isEmpty ?? false
+                }
+                return .none
             }
         }
         .ifLet(\.home, action: /Action.home) {

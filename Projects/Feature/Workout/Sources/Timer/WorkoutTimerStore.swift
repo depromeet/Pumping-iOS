@@ -102,7 +102,7 @@ extension WorkoutTimerStore {
                 }
                 
             case .goToWorkoutEnd:
-                return .none
+                return .cancel(id: TimerID.self)
                 
             case let .showCounter(id):
                 state.counter = .init(id: id)
