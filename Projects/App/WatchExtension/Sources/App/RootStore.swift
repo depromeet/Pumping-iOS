@@ -12,16 +12,27 @@ import ComposableArchitecture
 public struct RootStore: ReducerProtocol {
 
     public enum State: Equatable {
+        case home(HomeStore.State)
+        
         public init() {
-            self = .init()
+            self = .home(.init())
         }
     }
     
-    public enum Action: Equatable {}
+    public enum Action: Equatable {
+        case home(HomeStore.Action)
+    }
     
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
-            switch action {}
+            switch action {
+            case .home:
+                return .none
+            }
+        }
+        .ifCaseLet(/State.home, action: /Action.home) {
+            HomeStore()
         }
     }
 }
+

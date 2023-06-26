@@ -12,37 +12,15 @@ import ComposableArchitecture
 struct RootView: View {
     public let store: StoreOf<RootStore>
     
+    public init(store: StoreOf<RootStore>) {
+        self.store = store
+    }
+    
     var body: some View {
-        VStack {
-            TabView {
-                Text("The First Tab")
-                  .tabItem {
-                    Image(systemName: "1.square.fill")
-                    Text("First")
-                  }
-                Text("Another Tab")
-                  .tabItem {
-                    Image(systemName: "2.square.fill")
-                    Text("Second")
-                  }
+        SwitchStore(self.store) {
+            CaseLet(state: /RootStore.State.home, action: RootStore.Action.home) {
+                HomeView(store: $0)
             }
-            
-            Spacer()
-            
-            HStack {
-                Button("Register") {
-//                    HealthKitManager.shared.observe()
-                }
-                    .background(.blue)
-             
-                Spacer()
-                
-                Button("OK") {
-//                    HealthKitManager.shared.setting()
-                }
-                    .background(.blue)
-            }
-            .buttonStyle(.plain)
         }
     }
 }
