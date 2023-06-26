@@ -19,6 +19,10 @@ extension WorkoutStartStore {
             case .binding:
                 return .none
                 
+            case let .setWatchConnectivityDelegate(delegate):
+                state.watchConnectivityDelegate = delegate
+                return .none
+                
             case .startButtonTapped:
                 return .send(.goToWorkoutTimer(state.selectedWorkoutCategoryIdentifiers))
                 

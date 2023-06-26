@@ -13,7 +13,6 @@ import SharedDesignSystem
 
 public struct WorkoutStartView: View {
     public let store: StoreOf<WorkoutStartStore>
-    
     @State private var watchConnectivityDelegate: WorkoutStartWatchConnectivityDelegate?
     
     public init(store: StoreOf<WorkoutStartStore>) {
@@ -42,7 +41,10 @@ public struct WorkoutStartView: View {
                 .padding(.horizontal)
             }
             .onAppear {
-                watchConnectivityDelegate = .init(viewStore: viewStore)
+                let watchConnectivityDelegate = WorkoutStartWatchConnectivityDelegate(viewStore: viewStore)
+                
+                self.watchConnectivityDelegate = watchConnectivityDelegate
+                viewStore.send(.setWatchConnectivityDelegate(watchConnectivityDelegate))
             }
             .navigationBarBackButtonHidden(true)
         }

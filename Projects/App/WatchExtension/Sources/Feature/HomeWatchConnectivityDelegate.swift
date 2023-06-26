@@ -29,6 +29,6 @@ public class HomeWatchConnectivityDelegate: NSObject, WCSessionDelegate {
     }
     
     public func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        debugPrint("watch recieved \(message)")
+        debugPrint("watchOS recieved \(message)")
     }
 }

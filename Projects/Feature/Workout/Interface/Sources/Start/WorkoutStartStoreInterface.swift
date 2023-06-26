@@ -19,6 +19,8 @@ public struct WorkoutStartStore: ReducerProtocol {
     }
     
     public struct State: Equatable {
+        public weak var watchConnectivityDelegate: WorkoutStartWatchConnectivityDelegate?
+        
         public let selectedWorkoutCategoryIdentifiers: [WorkoutCategoryIdentifier]
         
         public init(selectedWorkoutCategoryIdentifiers: [WorkoutCategoryIdentifier]) {
@@ -29,6 +31,7 @@ public struct WorkoutStartStore: ReducerProtocol {
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         
+        case setWatchConnectivityDelegate(WorkoutStartWatchConnectivityDelegate)
         case startButtonTapped
         
         case goToWorkoutTimer([WorkoutCategoryIdentifier])

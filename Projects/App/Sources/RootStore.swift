@@ -17,8 +17,8 @@ public struct RootStore: ReducerProtocol {
         case mainTab(MainTabViewStore.State)
         
         public init() {
-            self = .onboarding(.init())
-//            self = .mainTab(.init())
+//            self = .onboarding(.init())
+            self = .mainTab(.init())
         }
     }
     

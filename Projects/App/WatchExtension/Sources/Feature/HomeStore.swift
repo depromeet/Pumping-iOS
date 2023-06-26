@@ -43,6 +43,7 @@ public struct HomeStore: ReducerProtocol {
                 
             case .test1ButtonTapped:
                 debugPrint("1")
+                state.watchConnectivityDelegate?.session?.sendMessage(["message" : "1"], replyHandler: nil)
                 return .none
                 
             default:
