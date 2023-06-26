@@ -1,5 +1,5 @@
 //
-//  WatchConnectivityDelegate.swift
+//  WorkoutStartWatchConnectivityDelegate.swift
 //  FeatureWorkout
 //
 //  Created by 송영모 on 2023/06/26.
@@ -10,21 +10,22 @@ import WatchConnectivity
 
 import ComposableArchitecture
 
-class WatchConnectivityDelegate: NSObject, WCSessionDelegate {
-    public let viewStore: ViewStoreOf<WorkoutHomeStore>
+public class WorkoutStartWatchConnectivityDelegate: NSObject, WCSessionDelegate {
+    public let viewStore: ViewStoreOf<WorkoutStartStore>
     
-    init(viewStore: ViewStoreOf<WorkoutHomeStore>) {
+    init(viewStore: ViewStoreOf<WorkoutStartStore>) {
         self.viewStore = viewStore
     }
     
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-    }
-    
-    func sessionDidBecomeInactive(_ session: WCSession) {
+    public func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         
     }
     
-    func sessionDidDeactivate(_ session: WCSession) {
+    public func sessionDidBecomeInactive(_ session: WCSession) {
+        
+    }
+    
+    public func sessionDidDeactivate(_ session: WCSession) {
         
     }
 }

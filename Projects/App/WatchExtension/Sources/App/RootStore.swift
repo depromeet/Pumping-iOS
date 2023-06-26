@@ -11,7 +11,11 @@ import ComposableArchitecture
 
 public struct RootStore: ReducerProtocol {
 
-    public enum State: Equatable {}
+    public enum State: Equatable {
+        public init() {
+            self = .init()
+        }
+    }
     
     public enum Action: Equatable {}
     

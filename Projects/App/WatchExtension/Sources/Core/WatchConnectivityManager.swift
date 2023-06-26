@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+public protocol WatchConnectivityManagerType {
+    
+}
+
+public class WatchConnectivityManager: WatchConnectivityManagerType {
+    
+}

@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import WatchConnectivity
+
 import ComposableArchitecture
 
 import FeatureWorkoutInterface
