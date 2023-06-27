@@ -8,6 +8,7 @@
 import Foundation
 
 import ComposableArchitecture
+import HealthKit
 
 public struct HomeStore: ReducerProtocol {
     
@@ -39,11 +40,17 @@ public struct HomeStore: ReducerProtocol {
                 
             case let .setWatchConnectivityDelegate(watchConnectivityDelegate):
                 state.watchConnectivityDelegate = watchConnectivityDelegate
+                HealthKitManager.shared.requestObserverQuery() { (query, samplesOrNil, deletedObjectsOrNil, newAnchor, errorOrNil) in
+                    guard let samples = samplesOrNil, let sample = samples.last as? HKQuantitySample else {
+                        return
+                    }
+                    state.watchConnectivityDelegate?.session?.sendMessage(["message" : sample.quantity.doubleValue(for: HKUnit(from: "count/min"))], replyHandler: nil)
+                }
+                
                 return .none
                 
             case .test1ButtonTapped:
                 debugPrint("1")
-                state.watchConnectivityDelegate?.session?.sendMessage(["message" : "1"], replyHandler: nil)
                 return .none
                 
             default:

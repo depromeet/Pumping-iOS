@@ -20,8 +20,11 @@ public protocol HealthKitManagerType {
     /// HKSampleType에 대한 변경 점을 Observe 하여, 데이터를 계속해서 받아옵니다.
     ///
     /// - Parameters:
-    ///   - toObserve: 구독
-    func requestObserverQuery(toObserve: HKSampleType)
+    ///   - toObserve: 구독 목록
+    func requestObserverQuery(
+        toObserve: Set<HKSampleType>?,
+        updateAnchorQueryHandler: @escaping (HKAnchoredObjectQuery, [HKSample]?, [HKDeletedObject]?, HKQueryAnchor?, Error?) -> Void
+    )
 }
 
 public class HealthKitManager: HealthKitManagerType {
@@ -38,12 +41,33 @@ public class HealthKitManager: HealthKitManagerType {
         }
     }
     
-    public func requestObserverQuery(toObserve: HKSampleType) {
-        let query = HKObserverQuery(sampleType: toObserve, predicate: nil) { (query, completion, errorOrNil) in
-            debugPrint("\(toObserve) changed")
-        }
+    public func requestObserverQuery(
+        toObserve: Set<HKSampleType>? = nil,
+        updateAnchorQueryHandler: @escaping (HKAnchoredObjectQuery, [HKSample]?, [HKDeletedObject]?, HKQueryAnchor?, Error?) -> Void
+    ) {
+        let readDataTypes = toObserve ?? self.dataTypesToRead()
+        
+        for readDataType in readDataTypes {
+            let query = HKObserverQuery(sampleType: readDataType, predicate: nil) { [weak self] (query, completion, errorOrNil) in
+                self?.requestAnchorQuery(toAnchor: readDataType, updateHandler: updateAnchorQueryHandler)
+            }
 
-        self.healthStore.execute(query)
+            self.healthStore.execute(query)
+        }
+    }
+    
+    private func requestAnchorQuery(
+        toAnchor: HKSampleType,
+        updateHandler: @escaping (HKAnchoredObjectQuery, [HKSample]?, [HKDeletedObject]?, HKQueryAnchor?, Error?) -> Void
+    ) {
+        let query = HKAnchoredObjectQuery(
+            type: toAnchor,
+            predicate: nil,
+            anchor: nil,
+            limit: HKObjectQueryNoLimit,
+            resultsHandler: updateHandler)
+        
+        healthStore.execute(query)
     }
     
     private func requestAuthorization(
@@ -55,8 +79,8 @@ public class HealthKitManager: HealthKitManagerType {
         let readDataTypes = read ?? self.dataTypesToRead()
         
         healthStore.requestAuthorization(
-            toShare: toShare,
-            read: read,
+            toShare: writeDataTypes,
+            read: readDataTypes,
             completion: completion
         )
     }
@@ -74,7 +98,6 @@ public class HealthKitManager: HealthKitManagerType {
             )
         }
     }
-    
     
     private func dataTypesToRead() -> Set<HKSampleType> {
         return .init([
