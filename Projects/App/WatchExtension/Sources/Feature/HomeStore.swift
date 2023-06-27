@@ -12,9 +12,8 @@ import HealthKit
 
 public struct HomeStore: ReducerProtocol {
     
-    
     public init() {}
-
+    
     public struct State: Equatable {
         public weak var watchConnectivityDelegate: HomeWatchConnectivityDelegate?
         
@@ -40,11 +39,20 @@ public struct HomeStore: ReducerProtocol {
                 
             case let .setWatchConnectivityDelegate(watchConnectivityDelegate):
                 state.watchConnectivityDelegate = watchConnectivityDelegate
-                HealthKitManager.shared.requestObserverQuery() { (query, samplesOrNil, deletedObjectsOrNil, newAnchor, errorOrNil) in
+                HealthKitManager.shared.requestObserverQuery() { [watchConnectivityDelegate] (query, samplesOrNil, deletedObjectsOrNil, newAnchor, errorOrNil) in
                     guard let samples = samplesOrNil, let sample = samples.last as? HKQuantitySample else {
                         return
                     }
-                    state.watchConnectivityDelegate?.session?.sendMessage(["message" : sample.quantity.doubleValue(for: HKUnit(from: "count/min"))], replyHandler: nil)
+                    
+                    print(sample)
+                    
+                    if sample.sampleType == .quantityType(forIdentifier: .heartRate) {
+                        watchConnectivityDelegate.session?.sendMessage(
+                            ["message" : sample.quantity.doubleValue(for: HKUnit(from: "count/min"))],
+                            replyHandler: nil)
+                    } else if sample.sampleType == .quantityType(forIdentifier: .activeEnergyBurned) {
+                        watchConnectivityDelegate.session?.sendMessage(["message" : sample.quantity.doubleValue(for: HKUnit.kilocalorie())], replyHandler: nil)
+                    }
                 }
                 
                 return .none
