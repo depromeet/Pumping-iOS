@@ -10,10 +10,10 @@ import ComposableArchitecture
 import Shared
 
 struct CrewMakeView: View {
-    public let store: StoreOf<CrewHomeStore>
+    public let store: StoreOf<CrewMakeStore>
     
     public init(
-        store: StoreOf<CrewHomeStore>
+        store: StoreOf<CrewMakeStore>
     ) {
         self.store = store
     }
@@ -38,7 +38,7 @@ struct CrewMakeView: View {
                             
                             Spacer()
                             
-                            PumpingSubmitButton(title : "완료", isEnable: isButtonEnable(crewName: viewStore.crewName) ) {
+                            PumpingSubmitButton(title : "완료", isEnable: viewStore.isSatisfied) {
                                 viewStore.send(.goToCrewMakeCompleteView)
                             }
                             
@@ -70,7 +70,7 @@ struct CrewMakeView: View {
         }
     }
     
-    private func goalCountCounter(viewStore: ViewStoreOf<CrewHomeStore>) -> some View {
+    private func goalCountCounter(viewStore: ViewStoreOf<CrewMakeStore>) -> some View {
         VStack(spacing: 10) {
             HStack {
                 Text("운동 횟수 목표")
@@ -115,9 +115,6 @@ struct CrewMakeView: View {
         }
         .frame(maxWidth: .infinity)
     }
-    
-    private func isButtonEnable(crewName: String) -> Bool {
-        return crewName.count > 0
-    }
+
     
 }

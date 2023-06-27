@@ -10,10 +10,10 @@ import ComposableArchitecture
 import Shared
 
 struct CrewJoinView: View {
-    public let store: StoreOf<CrewHomeStore>
+    public let store: StoreOf<CrewJoinStore>
     
     public init(
-        store: StoreOf<CrewHomeStore>
+        store: StoreOf<CrewJoinStore>
     ) {
         self.store = store
     }
@@ -30,7 +30,7 @@ struct CrewJoinView: View {
                     
                     Spacer()
                     
-                    PumpingSubmitButton(title : "완료", isEnable: isButtonEnable(code: viewStore.code) ) {
+                    PumpingSubmitButton(title : "완료", isEnable: viewStore.isSatisfied ) {
                         viewStore.send(.goToCrewJoinDetailView)
                     }
                     
@@ -62,7 +62,4 @@ struct CrewJoinView: View {
         }
     }
     
-    private func isButtonEnable(code: String) -> Bool {
-        return code.count > 0 && code.count < 16
-    }
 }

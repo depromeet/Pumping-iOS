@@ -34,17 +34,19 @@ public struct CrewListView: View {
                 buttonView(viewStore: viewStore)
             }
             .fullScreenCover(isPresented: viewStore.binding(\.$showCrewJoinView)) {
-                CrewJoinView(store: store)
+                IfLetStore(store.scope(state: \.crewJoin, action: { .crewJoin($0) })) {
+                    CrewJoinView(store: $0)
+                }
             }
             .fullScreenCover(isPresented: viewStore.binding(\.$showCrewMakeView)) {
-                CrewMakeView(store: store)
+                IfLetStore(store.scope(state: \.crewMake, action: { .crewMake($0) })) {
+                    CrewMakeView(store: $0)
+                }
             }
             .padding(23)
         }
     }
-    
-    
-    
+        
     private func buttonView(viewStore : ViewStoreOf<CrewHomeStore>) -> some View {
         HStack {
             Button {

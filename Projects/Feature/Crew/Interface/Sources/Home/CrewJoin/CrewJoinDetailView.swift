@@ -11,11 +11,11 @@ import Shared
 
 struct CrewJoinDetailView: View {
     
-    public let store: StoreOf<CrewHomeStore>
+    public let store: StoreOf<CrewJoinStore>
     @Environment(\.dismiss) var dismiss
     
     public init(
-        store: StoreOf<CrewHomeStore>
+        store: StoreOf<CrewJoinStore>
     ) {
         self.store = store
     }

@@ -5,7 +5,6 @@
 //  Created by Derrick kim on 2023/06/13.
 //
 
-import UIKit
 import ComposableArchitecture
 import FeatureCrewInterface
 import SharedDesignSystem
@@ -23,59 +22,40 @@ extension CrewHomeStore {
             case let .personalRecordCell(id, action):
                 return .none
                 
+            case .getCrewInfo:
+                // initialLoad, refresh시 가져올 크루정보
+                return .none
+                
             case .presentCrewListView:
                 state.showCrewListView = true
                 return .none
-              
-            // CrewJoin
+                
             case .presentCrewJoinView:
+                state.crewJoin = .init()
                 state.showCrewJoinView = true
                 return .none
+
+            case .presentCrewMakeView:
+                state.crewMake = .init()
+                state.showCrewMakeView = true
+                return .none
                 
-            case .dismissCrewJoinView:
-                state.code = ""
-                state.showCrewJoinDetailView = false
+            case .crewJoin(.dismissCrewJoinView):
+                state.crewJoin = nil
                 state.showCrewJoinView = false
                 return .none
                 
-            case .goToCrewJoinDetailView:
-                state.showCrewJoinDetailView = true
-                return .none
-                
-            // CrewMake
-            case .presentCrewMakeView:
-                state.showCrewMakeView = true
-                return .none
-
-            case .goToCrewMakeCompleteView:
-                state.showCrewMakeCompleteView = true
-                return .none
-                
-            case .dismissCrewMakeView:
-                state.crewName = ""
-                state.goalCount = 0
+            case .crewMake(.dismissCrewMakeView):
+                state.crewMake = nil
                 state.showCrewMakeView = false
-                state.showCrewMakeCompleteView = false
                 return .none
                 
-            case .addGoalCount:
-                guard state.goalCount < 7 else {
-                    return .none
-                }
-                
-                state.goalCount += 1
+            case .crewJoin(.isCrewJoinCompleted):
+                // 크루에 성공적으로 합류했을때 리스트를 reload
                 return .none
                 
-            case .subGoalCount:
-                guard state.goalCount != 1 else {
-                    return .none
-                }
-                
-                state.goalCount -= 1
-                return .none
-                
-            case .copyCode:
-                UIPasteboard.general.string = "복사한 값"
+            case .crewMake(.isCrewMakeCompleted):
+                // 크루를 성공적으로 만들었을때 리스트를 reload
                 return .none
                 
             default:
@@ -84,7 +64,9 @@ extension CrewHomeStore {
         }
         
         self.init(
-            reducer: reducer
+            reducer: reducer,
+            crewJoinStore: CrewJoinStore(),
+            crewMakeStore: CrewMakeStore()
         )
     }
 }

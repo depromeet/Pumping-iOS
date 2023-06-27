@@ -10,27 +10,28 @@ import SharedDesignSystem
 
 public struct CrewHomeStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
+    private let crewJoinStore: CrewJoinStore
+    private let crewMakeStore: CrewMakeStore
 
     public init(
-        reducer: Reduce<State, Action>
+        reducer: Reduce<State, Action>,
+        crewJoinStore: CrewJoinStore,
+        crewMakeStore: CrewMakeStore
     ) {
         self.reducer = reducer
+        self.crewJoinStore = crewJoinStore
+        self.crewMakeStore = crewMakeStore
     }
     
     public struct State: Equatable {
-        //CrewList
+        
         @BindingState public var showCrewListView: Bool = false
-        
-        // CrewJoin
         @BindingState public var showCrewJoinView: Bool = false
-        @BindingState public var showCrewJoinDetailView: Bool = false
-        @BindingState public var code: String = ""
-        
-        // CrewMake
         @BindingState public var showCrewMakeView: Bool = false
-        @BindingState public var showCrewMakeCompleteView: Bool = false
-        @BindingState public var crewName: String = ""
-        @BindingState public var goalCount: Int = 1
+        
+        public var crewJoin: CrewJoinStore.State?
+        public var crewMake: CrewMakeStore.State?
+        
 
         public var userRecordList: IdentifiedArrayOf<PersonalRecordCellStore.State> = [
             .init(id: .init(), avatarName: "몰라", ranking: "4", userName: "보민", numberOfExerciseGoals: "3 / 5회", workoutTime: "02:40"),
@@ -55,27 +56,19 @@ public struct CrewHomeStore: ReducerProtocol {
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
+        
+        case getCrewInfo
 
         case goToProfileView
         case goToWidthOfChangeView
         case goToCrewRankingView
         
-        // CrewList
         case presentCrewListView
-
-        // CrewJoin
         case presentCrewJoinView
-        case dismissCrewJoinView
-        case goToCrewJoinDetailView
-        case validateCode
-
-        // CrewMake
         case presentCrewMakeView
-        case dismissCrewMakeView
-        case goToCrewMakeCompleteView
-        case addGoalCount
-        case subGoalCount
-        case copyCode
+        
+        case crewJoin(CrewJoinStore.Action)
+        case crewMake(CrewMakeStore.Action)
 
         case profileBodyCell(id: ProfileBodyCellStore.State.ID, action: ProfileBodyCellStore.Action)
         case personalRecordCell(id: PersonalRecordCellStore.State.ID, action: PersonalRecordCellStore.Action)
@@ -84,5 +77,11 @@ public struct CrewHomeStore: ReducerProtocol {
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()
         reducer
+            .ifLet(\.crewJoin, action: /Action.crewJoin) {
+                crewJoinStore
+            }
+            .ifLet(\.crewMake, action: /Action.crewMake) {
+                crewMakeStore
+            }
     }
 }

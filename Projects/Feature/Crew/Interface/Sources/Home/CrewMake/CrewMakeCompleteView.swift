@@ -10,11 +10,11 @@ import ComposableArchitecture
 import Shared
 
 struct CrewMakeCompleteView: View {
-    public let store: StoreOf<CrewHomeStore>
     @Environment(\.dismiss) var dismiss
+    public let store: StoreOf<CrewMakeStore>
     
     public init(
-        store: StoreOf<CrewHomeStore>
+        store: StoreOf<CrewMakeStore>
     ) {
         self.store = store
     }
@@ -53,7 +53,7 @@ struct CrewMakeCompleteView: View {
         .padding(.top, 44)
     }
     
-    private func crewMakeCompleteButtonView(viewStore: ViewStoreOf<CrewHomeStore>) -> some View {
+    private func crewMakeCompleteButtonView(viewStore: ViewStoreOf<CrewMakeStore>) -> some View {
         VStack {
             Button {
                 viewStore.send(.copyCode)
