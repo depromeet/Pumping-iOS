@@ -21,12 +21,15 @@ public struct CrewHomeView: View {
     public var body: some View {
         WithViewStore(self.store) { viewStore in
             ScrollView(showsIndicators: false) {
-                VStack(spacing: 35) {
-                    profileView(viewStore: viewStore)
+                VStack(spacing: 0) {
+                    profileNavigationView(viewStore: viewStore)
+                    
+                    profileTabView()
                     
                     crewRankingView(viewStore: viewStore)
                 }
             }
+            .background(makeBackgroundView())
             .refreshable {
                 print("Refresh")
             }
@@ -35,40 +38,27 @@ public struct CrewHomeView: View {
             ) {
                 CrewListView(store: store)
             }
-            .edgesIgnoringSafeArea(.top)
+            .navigationBarHidden(true)
         }
     }
     
-    private func profileView(viewStore: ViewStoreOf<CrewHomeStore>) -> some View {
-        VStack(alignment: .leading, spacing: 0) {
-            VStack(alignment: .leading) {
-                Spacer()
-                    .frame(height: 55)
+    private func makeBackgroundView() -> some View {
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                Rectangle()
+                    .fill(Color.colorBlue300)
+                    .frame(height: (geometry.size.height / 2) + 100)
+                    .edgesIgnoringSafeArea(.top)
                 
-                profileHeaderView(viewStore: viewStore)
-                
-                Spacer()
-                
-                profileTabView()
+                Rectangle()
+                    .fill(Color.colorGrey000)
+                    .frame(height: geometry.size.height / 2)
             }
-            .edgesIgnoringSafeArea(.top)
-            
-            HStack(spacing: 5) {
-                SharedDesignSystemAsset.Images.loudSpeaker.swiftUIImage
-                
-                Text("중요한건 꺾였는데도 그냥 하는 마음임")
-                    .font(.pretendard(size: 15, type: .medium))
-                    .foregroundColor(.colorGrey900)
-                
-                Spacer()
-            }
-            .padding(.init(top: 5, leading: 15, bottom: 5, trailing: 0))
-            .background(Color.black.opacity(0.3))
+            .frame(height: geometry.size.height)
         }
-        .background(Color.colorBlue300)
     }
     
-    private func profileHeaderView(viewStore: ViewStoreOf<CrewHomeStore>) -> some View {
+    private func profileNavigationView(viewStore: ViewStoreOf<CrewHomeStore>) -> some View {
         HStack {
             Button {
                 viewStore.send(.presentCrewListView)
@@ -88,53 +78,58 @@ public struct CrewHomeView: View {
                 .font(.pretendard(size: 21, type: .semiBold))
                 .foregroundColor(.colorCyan200)
         }
+        .background(Color.colorBlue300)
         .padding(.init(top: 20, leading: 15, bottom: 0, trailing: 20))
     }
     
-    private func profileTabView() -> some View {
-        TabView {
-            ForEachStore(self.store.scope(
-                state: \.profileList,
-                action: CrewHomeStore.Action.profileBodyCell(id:action:))) {
-                    ProfileBodyCellView(store: $0)
-                }
-        }
-        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-        .frame(height: 400)
-    }
-    
-    
-    private func crewRankingHeaderView(viewStore: ViewStoreOf<CrewHomeStore>) -> some View {
-        HStack {
-            Text("크루 인원")
-                .font(.pretendard(size: 18, type: .semiBold))
+    private func workoutMessageView() -> some View {
+        HStack(spacing: 5) {
+            SharedDesignSystemAsset.Images.loudSpeaker.swiftUIImage
+            
+            Text("중요한건 꺾였는데도 그냥 하는 마음임")
+                .font(.pretendard(size: 15, type: .medium))
                 .foregroundColor(.colorGrey900)
             
             Spacer()
-            
-            Button {
-                viewStore.send(.goToCrewRankingView)
-            } label: {
-                Text("랭킹")
-                    .font(.pretendard(size: 16, type: .semiBold))
-                    .padding(.init(top: 8 ,leading: 10, bottom: 8, trailing: 10))
-                    .foregroundColor(.white)
-                    .overlay(content: {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.white.opacity(0.3))
-                    })
-            }
         }
-        .padding(.init(top: 0, leading: 15, bottom: 0, trailing: 15))
+        .padding(.init(top: 5, leading: 15, bottom: 5, trailing: 0))
+        .background(Color.black.opacity(0.3))
+    }
+    
+    
+    private func profileTabView() -> some View {
+        VStack {
+            TabView {
+                ForEachStore(self.store.scope(
+                    state: \.profileList,
+                    action: CrewHomeStore.Action.profileBodyCell(id:action:))) {
+                        ProfileBodyCellView(store: $0)
+                    }
+            }
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+            
+            workoutMessageView()
+        }
+        
+        .background(Color.colorBlue300)
+        .frame(height: 400)
+        
     }
     
     private func crewRankingView(viewStore: ViewStoreOf<CrewHomeStore>) -> some View {
         VStack(spacing: 0) {
-            crewRankingHeaderView(viewStore: viewStore)
+            HStack {
+                Text("크루 인원")
+                    .font(.pretendard(size: 18, type: .semiBold))
+                    .foregroundColor(.colorGrey900)
+                
+                Spacer()
+            }
             
             crewRankingListView(viewStore: viewStore)
         }
-        .padding(.bottom, 35)
+        .padding(EdgeInsets(top: 30, leading: 15, bottom: 50, trailing: 15))
+        .background(Color.colorGrey000)
     }
     
     private func crewRankingListView(viewStore: ViewStoreOf<CrewHomeStore>) -> some View {
@@ -148,16 +143,16 @@ public struct CrewHomeView: View {
                         }
                 }
             
-            Button {
-                
-            } label: {
-                Text("크루 나가기")
-                    .font(.pretendard(size: 14, type: .medium))
-                
-                    .foregroundColor(Color.colorGrey500)
-            }
-            .padding(.top, 48)
-            .padding(.bottom, 35)
+            //            Button {
+            //
+            //            } label: {
+            //                Text("크루 나가기")
+            //                    .font(.pretendard(size: 14, type: .medium))
+            //
+            //                    .foregroundColor(Color.colorGrey500)
+            //            }
+            //            .padding(.top, 48)
+            //            .padding(.bottom, 35)
         }
     }
 }

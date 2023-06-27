@@ -43,6 +43,7 @@ struct PumpingNavigationBar: ViewModifier {
                     .foregroundColor(.colorGrey900)
                     .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
             }
+            .tint(.colorGrey900)
         }
     }
     
@@ -65,6 +66,7 @@ struct PumpingNavigationBar: ViewModifier {
                     .foregroundColor(.colorGrey900)
                     .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
             }
+            .tint(.colorGrey900)
         }
     }
 }

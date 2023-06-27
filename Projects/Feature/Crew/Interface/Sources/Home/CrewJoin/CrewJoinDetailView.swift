@@ -7,7 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
-import SharedDesignSystem
+import Shared
 
 struct CrewJoinDetailView: View {
     

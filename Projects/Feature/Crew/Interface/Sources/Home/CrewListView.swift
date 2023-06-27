@@ -27,6 +27,8 @@ public struct CrewListView: View {
                     .font(.pretendard(size: 21, type: .semiBold))
                     .foregroundColor(.colorGrey900)
                 
+                // 크루 리스트..
+                
                 Spacer()
                 
                 buttonView(viewStore: viewStore)

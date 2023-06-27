@@ -7,10 +7,9 @@
 
 import SwiftUI
 import ComposableArchitecture
-import SharedDesignSystem
+import Shared
 
 struct CrewJoinView: View {
-    @Environment(\.dismiss) var dismiss
     public let store: StoreOf<CrewHomeStore>
     
     public init(
@@ -39,11 +38,9 @@ struct CrewJoinView: View {
                 .navigationDestination(isPresented: viewStore.binding(\.$showCrewJoinDetailView)) {
                     CrewJoinDetailView(store: store)
                 }
-                .ignoresSafeArea(.keyboard, edges: .bottom)
                 .padding()
                 .pumpingNavigationBar(trailingButtonAction: {
                     viewStore.send(.dismissCrewJoinView)
-                    dismiss()
                 })
             }
             

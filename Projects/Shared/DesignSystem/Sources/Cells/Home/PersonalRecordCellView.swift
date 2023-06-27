@@ -29,7 +29,6 @@ public struct PersonalRecordCellView: View {
                    
             }
             .frame(height: 96)
-            .padding(.horizontal, 15)
         }
     }
     
