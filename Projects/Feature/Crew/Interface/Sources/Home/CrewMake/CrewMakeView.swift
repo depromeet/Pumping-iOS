@@ -96,6 +96,7 @@ struct CrewMakeView: View {
                 Spacer()
                 
                 Text("주 \(viewStore.goalCount)회")
+                    .font(.pretendard(size: 18, type: .semiBold))
                 
                 Spacer()
                 
