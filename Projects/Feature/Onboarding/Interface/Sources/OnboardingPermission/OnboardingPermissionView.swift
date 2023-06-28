@@ -32,7 +32,7 @@ struct OnboardingPermissionView: View {
                 }
             }
             .navigationBarBackButtonHidden(true)
-            .padding()
+            .padding(EdgeInsets(top: 44, leading: 20, bottom: 20, trailing: 20))
         }
     }
     
@@ -49,5 +49,6 @@ struct OnboardingPermissionView: View {
             .font(.pretendard(size: 15, type: .medium))
             .foregroundColor(.colorGrey600)
         }
+        .padding(.bottom, 64)
     }
 }

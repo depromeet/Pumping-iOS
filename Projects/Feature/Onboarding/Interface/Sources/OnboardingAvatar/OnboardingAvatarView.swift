@@ -42,7 +42,7 @@ struct OnboardingAvatarView: View {
                 .font(.pretendard(size: 15, type: .medium))
                 .foregroundColor(.colorGrey600)
         }
-        .padding([.horizontal])
+        .padding(EdgeInsets(top: 44, leading: 20, bottom: 64, trailing: 20))
     }
     
     @ViewBuilder

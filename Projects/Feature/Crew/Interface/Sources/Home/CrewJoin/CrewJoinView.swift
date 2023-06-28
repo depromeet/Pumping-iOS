@@ -30,13 +30,10 @@ struct CrewJoinView: View {
                     
                     Spacer()
                     
-                    PumpingSubmitButton(title : "완료", isEnable: viewStore.isSatisfied ) {
-                        viewStore.send(.goToCrewJoinDetailView)
+                    PumpingSubmitButton(title : "참여하기", isEnable: viewStore.isSatisfied) {
+                        viewStore.send(.crewJoinButtonTapped)
                     }
                     
-                }
-                .navigationDestination(isPresented: viewStore.binding(\.$showCrewJoinDetailView)) {
-                    CrewJoinDetailView(store: store)
                 }
                 .padding()
                 .pumpingNavigationBar(trailingButtonAction: {

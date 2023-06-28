@@ -18,7 +18,7 @@ public struct CrewJoinStore: ReducerProtocol {
 
     public struct State: Equatable {
         
-        @BindingState public var showCrewJoinDetailView: Bool = false
+        @BindingState public var showCrewJoinError: Bool = false
         @BindingState public var code: String = ""
         public var isSatisfied: Bool = false
         
@@ -31,7 +31,7 @@ public struct CrewJoinStore: ReducerProtocol {
         case binding(BindingAction<State>)
         
         case dismissCrewJoinView
-        case goToCrewJoinDetailView
+        case crewJoinButtonTapped
         case isCrewJoinCompleted
         
     }

@@ -42,9 +42,9 @@ public struct PumpingWheelPicker: View {
             Picker("", selection: value) {
                 switch pickerUnit {
                 case .height:
-                    ForEach(140..<201) { Text("\($0)\(pickerUnit.rawValue)").tag($0) }
+                    ForEach(140..<196) { Text("\($0)\(pickerUnit.rawValue)").tag($0) }
                 case .weight:
-                    ForEach(40..<121) { Text("\($0)\(pickerUnit.rawValue)").tag($0) }
+                    ForEach(35..<121) { Text("\($0)\(pickerUnit.rawValue)").tag($0) }
                 case .date:
                     ForEach(1..<8) { Text("\($0)\(pickerUnit.rawValue)").tag($0) }
                 case .people:

@@ -15,17 +15,19 @@ extension CrewJoinStore {
             case .binding:
                 if state.code.count > 0 && state.code.count < 16 {
                     state.isSatisfied = true
+                } else {
+                    state.isSatisfied = false
                 }
+                
                 return .none
                 
             case .dismissCrewJoinView:
                 state.code = ""
-                state.showCrewJoinDetailView = false
                 return .none
-                
-            case .goToCrewJoinDetailView:
-                state.showCrewJoinDetailView = true
-                return .none
+
+            case .crewJoinButtonTapped:
+                // 크루 참여 API
+                return .send(.dismissCrewJoinView)
                 
             default:
                 return .none
