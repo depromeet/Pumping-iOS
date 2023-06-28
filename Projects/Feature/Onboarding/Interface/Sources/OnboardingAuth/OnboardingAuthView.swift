@@ -9,6 +9,8 @@ import SwiftUI
 import AuthenticationServices
 import ComposableArchitecture
 import SharedDesignSystem
+import Core
+import HealthKit
 
 public struct OnboardingAuthView : View {
     public let store: StoreOf<OnboardingAuthStore>

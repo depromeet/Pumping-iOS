@@ -8,7 +8,7 @@ Tuist, TCA, SwiftUI Best Practices
 
 [🚀 블로그](https://medium.com/@mooyoung2309/tuist%EB%A1%9C-micro-architecture-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0-aa0ca97a4f4d) 도 놀러오세요 !
 
-### 4 Layer Module
+### 4 Layer
 계층 구조는 다음과 같습니다.
 - Feature: 기능
 - Domain: 모델
@@ -22,3 +22,8 @@ Tuist, TCA, SwiftUI Best Practices
 - Tests: 테스트
 - Testing: 테스트를 위한 목업
 - Interface: 인터페이스
+
+### Dependencies Graph
+디펜던시 그래프는 다음과 같습니다.
+
+<img src="graph.png">

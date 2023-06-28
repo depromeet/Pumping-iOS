@@ -6,7 +6,8 @@
 //
 
 import Foundation
-import CoreNetworkInterface
+
+import Core
 
 public struct AuthEndpoint {
     public static func signInWithApple(_ requestDTO : SignInWithAppleRequestDTO) -> Endpoint<SignInWithAppleResponseDTO> {

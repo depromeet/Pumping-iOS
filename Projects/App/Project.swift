@@ -57,7 +57,7 @@ let targets: [Target] = [
                 ]),
             entitlements: "Pumping.entitlements",
             dependencies: [
-                //                .watchShared
+                .watchShared
             ]
         )
     )

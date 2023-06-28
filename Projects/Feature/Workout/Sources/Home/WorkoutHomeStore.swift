@@ -14,26 +14,36 @@ import SharedUtil
 
 extension WorkoutHomeStore {
     public init() {
+        @Dependency(\.healthClient) var healthClient
+        
+        healthClient.loadHeartRate()
+        
         let reducer: Reduce<State, Action> = .init { state, action in
             switch action {
             case .binding:
                 return .none
                 
             case .startButtonTapped:
-                return .send(.goToWorkoutStart)
+                return .send(.goToWorkoutStart(state.selectedWorkoutCategoryIdentifiers))
                 
             case .goToWorkoutStart:
                 return .none
                 
-            case let .pumpingTextCell(id, action):
+            case let .workoutCategoryCell(id, action):
                 switch action {
                 case .tapped:
-                    for (key, cells) in state.workoutCategoryZip {
-                        if let index = cells.index(id: id) {
-                            let target = cells[index]
-                            let newTarget = PumpingTextCellStore.State(id: target.id, title: target.title, isTapped: !target.isTapped)
+                    for (workoutCategoryID, workoutCategoryIdentifiedArray) in state.workoutCategoryCellZip {
+                        if let index = workoutCategoryIdentifiedArray.index(id: id) {
+                            let target = workoutCategoryIdentifiedArray[index]
+                            let newTarget = WorkoutCategoryCellStore.State(id: target.id, workoutCategoryIdentifier: target.workoutCategoryIdentifier, isTapped: !target.isTapped)
                             
-                            state.workoutCategoryZip[key]?.update(newTarget, at: index)
+                            state.workoutCategoryCellZip[workoutCategoryID]?.update(newTarget, at: index)
+                            
+                            if !target.isTapped {
+                                state.selectedWorkoutCategoryIdentifiers.append(target.workoutCategoryIdentifier)
+                            } else {
+                                state.selectedWorkoutCategoryIdentifiers.removeAll(where: { $0 == target.workoutCategoryIdentifier })
+                            }
                             break
                         }
                     }
@@ -42,9 +52,6 @@ extension WorkoutHomeStore {
             }
         }
         
-        self.init(
-            reducer: reducer,
-            pumpingTextCellStore: .init()
-        )
+        self.init(reducer: reducer)
     }
 }

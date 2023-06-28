@@ -321,6 +321,7 @@ public extension Target {
         newFactory.name = ModulePath.WatchShared.name + module.rawValue
         newFactory.platform = .watchOS
         newFactory.deploymentTarget = Project.Environment.watchDeploymentTarget
+        newFactory.product = .staticFramework
         newFactory.sources = nil
         
         if module == .DesignSystem {

@@ -6,10 +6,11 @@
 //
 
 import Foundation
+
 import ComposableArchitecture
+
 import DomainAuthInterface
-import CoreKeyChainStoreInterface
-import CoreNetwork
+import Core
 
 extension AuthClient: DependencyKey {
     public static let liveValue = AuthClient(

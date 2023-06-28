@@ -14,6 +14,8 @@ import SharedDesignSystem
 
 extension WorkoutTimerStore {
     public init() {
+        let BACKGROUND_TIME = 3
+        
         @Dependency(\.continuousClock) var clock
         
         let reducer: Reduce<State, Action> = .init { state, action in
@@ -30,13 +32,17 @@ extension WorkoutTimerStore {
                 
             case .timerTicked:
                 guard let targetTimerCell = state.timerCells.first(where: { $0.id == state.currentActiveTimerCellID }),
-                      let targetTimerInfoIndex = state.workoutTimerInfos.firstIndex(where: { $0.id == targetTimerCell.id }) else { return .none }
+                      let targetTimerIndex = state.timers.firstIndex(where: { $0.id == targetTimerCell.id }) else { return .none }
                 
-                var newTimerInfo = state.workoutTimerInfos[targetTimerInfoIndex]
-                newTimerInfo.second += Int(Date().timeIntervalSince1970) - newTimerInfo.startPoint
-                newTimerInfo.startPoint = Int(Date().timeIntervalSince1970)
+                var newTimer = state.timers[targetTimerIndex]
+                var intervalTime = Int(Date().timeIntervalSince1970) - newTimer.pinTime
+                intervalTime = intervalTime > BACKGROUND_TIME ? intervalTime : 1
                 
-                return .send(.updateTimerInfo(index: targetTimerInfoIndex, info: newTimerInfo))
+                newTimer.time += intervalTime
+                newTimer.pinTime = Int(Date().timeIntervalSince1970)
+                
+                state.time += intervalTime
+                return .send(.updateTimer(index: targetTimerIndex, timer: newTimer))
                 
             case .timerStart:
                 return .run { [isTimerActive = state.isTimerActive] send in
@@ -53,18 +59,21 @@ extension WorkoutTimerStore {
                     if id == state.currentActiveTimerCellID {
                         state.currentActiveTimerCellID = nil
                         state.isTimerActive = false
-                        guard let timerInfoIndex = state.workoutTimerInfos.firstIndex(where: { $0.id == id }) else { return .none }
-                        var newTimerInfo = state.workoutTimerInfos[timerInfoIndex]
-                        newTimerInfo.isActive = false
+                        guard let timerIndex = state.timers.firstIndex(where: { $0.id == id }) else { return .none }
+                        var newTimer = state.timers[timerIndex]
+                        newTimer.isActive = false
                         
-                        return .send(.updateTimerInfo(index: timerInfoIndex, info: newTimerInfo))
+                        return .concatenate([
+                            .send(.updateTimer(index: timerIndex, timer: newTimer)),
+                            .cancel(id: TimerID.self)
+                        ])
                     } else {
                         if let prevCellID = state.currentActiveTimerCellID {
-                            guard let timerInfoIndex = state.workoutTimerInfos.firstIndex(where: { $0.id == prevCellID }) else { return .none }
-                            var newTimerInfo = state.workoutTimerInfos[timerInfoIndex]
-                            newTimerInfo.isActive = false
+                            guard let timerIndex = state.timers.firstIndex(where: { $0.id == prevCellID }) else { return .none }
+                            var newTimer = state.timers[timerIndex]
+                            newTimer.isActive = false
                             return .concatenate([
-                                .send(.updateTimerInfo(index: timerInfoIndex, info: newTimerInfo)),
+                                .send(.updateTimer(index: timerIndex, timer: newTimer)),
                                 .send(.showCounter(id: id))
                             ])
                         } else {
@@ -77,9 +86,9 @@ extension WorkoutTimerStore {
                 state.timerCells.update(timerCellState, at: index)
                 return .none
                 
-            case let .updateTimerInfo(index, info):
-                state.workoutTimerInfos[index] = info
-                return .send(.updateTimerCell(index: index, state: .init(id: info.id, title: info.categoryIdentifier.rawValue, second: info.second, isActive: info.isActive)))
+            case let .updateTimer(index, timer):
+                state.timers[index] = timer
+                return .send(.updateTimerCell(index: index, state: .init(id: timer.id, timer: timer)))
                 
             case let .counter(action):
                 switch action {
@@ -88,12 +97,18 @@ extension WorkoutTimerStore {
                     state.currentActiveTimerCellID = id
                     state.isTimerActive = true
                     
-                    guard let timerInfoIndex = state.workoutTimerInfos.firstIndex(where: { $0.id == id }) else { return .none }
-                    let targetTimerInfo = state.workoutTimerInfos[timerInfoIndex]
-                    let newTimerInfo = WorkoutTimerInfo(id: targetTimerInfo.id, categoryIdentifier: targetTimerInfo.categoryIdentifier, second: targetTimerInfo.second, startPoint: Int(Date().timeIntervalSince1970), isActive: true)
-
+                    guard let timerIndex = state.timers.firstIndex(where: { $0.id == id }) else { return .none }
+                    let targetTimer = state.timers[timerIndex]
+                    let newTimer = PumpingTimer(
+                        id: targetTimer.id,
+                        workoutCategoryIdentifier: targetTimer.workoutCategoryIdentifier,
+                        time: targetTimer.time,
+                        pinTime: Int(Date().timeIntervalSince1970),
+                        isActive: true
+                    )
+                    
                     return .concatenate([
-                        .send(.updateTimerInfo(index: timerInfoIndex, info: newTimerInfo)),
+                        .send(.updateTimer(index: timerIndex, timer: newTimer)),
                         .send(.timerStart)
                     ])
                     
