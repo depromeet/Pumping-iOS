@@ -11,7 +11,9 @@ import ComposableArchitecture
 
 public struct HomeView: View {
     public let store: StoreOf<HomeStore>
-    @State private var watchConnectivityDelegate: HomeWatchConnectivityDelegate?
+    
+    @State public var watchConnectivityDelegate: HomeWatchConnectivityDelegate?
+    @State public var workoutDelegate: HomeWorkoutDelegate?
     
     public init(store: StoreOf<HomeStore>) {
         self.store = store
@@ -20,21 +22,25 @@ public struct HomeView: View {
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack(spacing: .zero) {
-                Text("recive")
+                Text("heartrate: \(workoutDelegate?.heartRate ?? 0)")
                 
-                Button("Send1") {
-                    viewStore.send(.test1ButtonTapped)
-                }
+                Text("calorie: \(viewStore.calorie)")
                 
-                Button("Send2") {
-                    viewStore.send(.test2ButtonTapped)
+                Button("start") {
+                    viewStore.send(.startButtonTapped)
                 }
             }
             .onAppear {
                 let watchConnectivityDelegate = HomeWatchConnectivityDelegate(viewStore: viewStore)
+                let workoutDelegate = HomeWorkoutDelegate(viewStore: viewStore)
                 
                 self.watchConnectivityDelegate = watchConnectivityDelegate
+                self.workoutDelegate = workoutDelegate
+                
                 viewStore.send(.setWatchConnectivityDelegate(watchConnectivityDelegate))
+                viewStore.send(.setWorkoutDelegate(workoutDelegate))
+                
+                workoutDelegate.requestAuth()
             }
             .ignoresSafeArea()
         }
