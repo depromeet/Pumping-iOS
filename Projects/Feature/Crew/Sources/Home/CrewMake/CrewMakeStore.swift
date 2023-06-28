@@ -16,6 +16,8 @@ extension CrewMakeStore {
             case .binding:
                 if state.crewName.count > 0 && state.crewName.count < 16 {
                     state.isSatisfied = true
+                } else {
+                    state.isSatisfied = false
                 }
                 return .none
                 
