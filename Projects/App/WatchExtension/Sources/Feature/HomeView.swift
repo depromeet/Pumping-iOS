@@ -12,8 +12,8 @@ import ComposableArchitecture
 public struct HomeView: View {
     public let store: StoreOf<HomeStore>
     
-    @State public var watchConnectivityDelegate: HomeWatchConnectivityDelegate?
-    @State public var workoutDelegate: HomeWorkoutDelegate?
+    public var watchConnectivityDelegate: HomeWatchConnectivityDelegate = .init()
+    public var workoutDelegate: HomeWorkoutDelegate = .init()
     
     public init(store: StoreOf<HomeStore>) {
         self.store = store
@@ -22,26 +22,25 @@ public struct HomeView: View {
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack(spacing: .zero) {
-                Text("heartrate: \(workoutDelegate?.heartRate ?? 0)")
+                Text("heartrate: \(viewStore.heartRate)")
                 
                 Text("calorie: \(viewStore.calorie)")
                 
                 Button("start") {
-                    viewStore.send(.startButtonTapped)
+                    workoutDelegate.startWorkout(workoutType: .functionalStrengthTraining)
                 }
             }
             .onAppear {
-                let watchConnectivityDelegate = HomeWatchConnectivityDelegate(viewStore: viewStore)
-                let workoutDelegate = HomeWorkoutDelegate(viewStore: viewStore)
-                
-                self.watchConnectivityDelegate = watchConnectivityDelegate
-                self.workoutDelegate = workoutDelegate
-                
-                viewStore.send(.setWatchConnectivityDelegate(watchConnectivityDelegate))
-                viewStore.send(.setWorkoutDelegate(workoutDelegate))
-                
                 workoutDelegate.requestAuth()
             }
+            .onReceive(workoutDelegate.$heartRate, perform: { heartRate in
+                viewStore.send(.setHeartRate(Int(heartRate)))
+                watchConnectivityDelegate.sendMessage(key: "heartRate", value: heartRate)
+            })
+            .onReceive(workoutDelegate.$calorie, perform: { calorie in
+                viewStore.send(.setCalorie(Int(calorie)))
+                watchConnectivityDelegate.sendMessage(key: "calorie", value: calorie)
+            })
             .ignoresSafeArea()
         }
     }

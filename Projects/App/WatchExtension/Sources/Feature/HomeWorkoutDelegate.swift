@@ -10,9 +10,7 @@ import HealthKit
 import ComposableArchitecture
 import WatchConnectivity
 
-public class HomeWorkoutDelegate: NSObject {
-    public weak var viewStore: ViewStoreOf<HomeStore>?
-    
+public class HomeWorkoutDelegate: NSObject, ObservableObject {
     private let healthStore = HKHealthStore()
     
     private var workout: HKWorkout?
@@ -22,10 +20,7 @@ public class HomeWorkoutDelegate: NSObject {
     var workoutSessionState: HKWorkoutSessionState = .notStarted
     
     @Published public var heartRate: Double = 0
-    
-    public init(viewStore: ViewStoreOf<HomeStore>) {
-        self.viewStore = viewStore
-    }
+    @Published public var calorie: Double = 0
     
     func pause() {
         workoutSession?.pause()
@@ -153,7 +148,7 @@ extension HomeWorkoutDelegate: HKLiveWorkoutBuilderDelegate {
                 case HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned):
                     let calorieUnit = HKUnit.kilocalorie()
                     let calorie = statistics.sumQuantity()?.doubleValue(for: calorieUnit) ?? 0
-                    self.viewStore?.send(.setCalorie(Int(calorie)))
+                    self.calorie = calorie
                     debugPrint("calorie \(calorie)")
                     
                 default:
