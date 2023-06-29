@@ -14,6 +14,8 @@ import SharedDesignSystem
 public struct WorkoutRootView: View {
     public let store: StoreOf<WorkoutRootStore>
     
+    @StateObject private var watchConnectivityDelegate: WatchConnectivityDelegate = .init()
+    
     public init(store: StoreOf<WorkoutRootStore>) {
         self.store = store
     }
@@ -33,6 +35,7 @@ public struct WorkoutRootView: View {
                         case .timer:
                             IfLetStore(self.store.scope(state: \.workoutTimer, action: { .workoutTimer($0) })) {
                                 WorkoutTimerView(store: $0)
+                                    .environmentObject(watchConnectivityDelegate)
                             }
                             
                         case .end:

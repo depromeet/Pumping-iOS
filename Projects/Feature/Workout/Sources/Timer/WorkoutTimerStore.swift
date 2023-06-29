@@ -82,6 +82,14 @@ extension WorkoutTimerStore {
                     }
                 }
                 
+            case let .updateHeartRate(heartRate):
+                state.heartRate = heartRate
+                return .none
+                
+            case let .updateCalorie(calorie):
+                state.calorie = calorie
+                return .none
+                
             case let .updateTimerCell(index, timerCellState):
                 state.timerCells.update(timerCellState, at: index)
                 return .none
