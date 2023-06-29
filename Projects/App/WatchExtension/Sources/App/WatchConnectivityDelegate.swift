@@ -10,7 +10,7 @@ import WatchConnectivity
 
 import ComposableArchitecture
 
-public class HomeWatchConnectivityDelegate: NSObject, WCSessionDelegate {
+public class WatchConnectivityDelegate: NSObject, ObservableObject, WCSessionDelegate {
     public weak var session: WCSession?
     
     init(session: WCSession = .default) {

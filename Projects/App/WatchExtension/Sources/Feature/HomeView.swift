@@ -12,8 +12,8 @@ import ComposableArchitecture
 public struct HomeView: View {
     public let store: StoreOf<HomeStore>
     
-    public var watchConnectivityDelegate: HomeWatchConnectivityDelegate = .init()
-    public var workoutDelegate: HomeWorkoutDelegate = .init()
+    @EnvironmentObject private var workoutDelegate: WorkoutDelegate
+    @EnvironmentObject private var watchConnectivityDelegate: WatchConnectivityDelegate
     
     public init(store: StoreOf<HomeStore>) {
         self.store = store

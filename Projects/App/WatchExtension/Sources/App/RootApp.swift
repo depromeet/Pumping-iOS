@@ -10,14 +10,14 @@ import ComposableArchitecture
 
 @main
 struct RootApp: App {
+    @StateObject private var workoutDelegate = WorkoutDelegate()
+    @StateObject private var watchConnectivityDelegate = WatchConnectivityDelegate()
+    
     @SceneBuilder var body: some Scene {
         WindowGroup {
             RootView(store: .init(initialState: RootStore.State(), reducer: RootStore()._printChanges()))
-                .onAppear {
-                    HealthKitManager.shared.requestAuthorization() { _, _ in
-
-                    }
-                }
+                .environmentObject(workoutDelegate)
+                .environmentObject(watchConnectivityDelegate)
         }
     }
 }
