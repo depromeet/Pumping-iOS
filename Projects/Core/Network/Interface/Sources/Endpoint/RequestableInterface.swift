@@ -12,4 +12,5 @@ public protocol Requestable {
     var httpMethod : HTTPMethod { get }
     var queryParameters: Encodable? { get }
     var bodyParameters: Encodable? { get }
+    var headers: [String : String]? { get }
 }

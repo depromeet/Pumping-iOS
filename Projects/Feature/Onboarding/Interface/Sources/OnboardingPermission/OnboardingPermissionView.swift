@@ -15,24 +15,26 @@ struct OnboardingPermissionView: View {
     
     public var body: some View {
         WithViewStore(self.store) { viewStore in
-            VStack(alignment : .leading) {
-                permissionTitleView()
+            ZStack {
+                Image.permission
+                    .frame(maxWidth: .infinity)
                 
-                Color.colorGreen700
-                    .frame(height: 353)
-                
-                Spacer()
-                
-                PumpingSubmitButton(title: "권한 부여", isEnable: true) {
-                    HealthKitAuthorizationHelper.shared.checkAuthorizationAndRequest {
-                        viewStore.send(.goToProfile)
-                    } onFailure: {
-                        viewStore.send(.failToAuthorize)
+                VStack(alignment : .leading) {
+                    permissionTitleView()
+                                        
+                    Spacer()
+                    
+                    PumpingSubmitButton(title: "권한 부여", isEnable: true) {
+                        HealthKitAuthorizationHelper.shared.checkAuthorizationAndRequest {
+                            viewStore.send(.goToProfile)
+                        } onFailure: {
+                            viewStore.send(.failToAuthorize)
+                        }
                     }
                 }
+                .padding(EdgeInsets(top: 44, leading: 20, bottom: 20, trailing: 20))
             }
             .navigationBarBackButtonHidden(true)
-            .padding(EdgeInsets(top: 44, leading: 20, bottom: 20, trailing: 20))
         }
     }
     

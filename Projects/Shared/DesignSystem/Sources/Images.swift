@@ -29,4 +29,5 @@ public extension Image {
     static let crewRankingLowerBody = SharedDesignSystemAsset.Images.crewRankingLowerBody.swiftUIImage
     static let crewRankingWorkoutCumulativeTime = SharedDesignSystemAsset.Images.crewRankingWorkoutCumulativeTime.swiftUIImage
     static let strongArm = SharedDesignSystemAsset.Images.strongArm.swiftUIImage
+    static let permission = SharedDesignSystemAsset.Images.permission.swiftUIImage
 }

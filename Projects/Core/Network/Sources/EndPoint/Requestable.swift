@@ -77,10 +77,11 @@ extension Requestable {
             urlRequest.httpBody = httpBody
         }
         
-        //MARK: Header Authorization 추가 Interceptor 대신
-        //        urlRequest.setValue("Bearer ", forHTTPHeaderField: "Authorization")
-        
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        if let headers {
+            headers.forEach { key, value in
+                urlRequest.setValue(value, forHTTPHeaderField: key)
+            }
+        }        
         urlRequest.httpMethod = httpMethod.rawValue
         
         return urlRequest

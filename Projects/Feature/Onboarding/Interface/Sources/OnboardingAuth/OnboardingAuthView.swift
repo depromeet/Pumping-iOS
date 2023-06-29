@@ -86,8 +86,7 @@ public struct OnboardingAuthView : View {
                     case let .success(authResults):
                         switch authResults.credential {
                         case let appleIDCredential as ASAuthorizationAppleIDCredential:
-                            viewStore.send(.goToPermission)
-//                            viewStore.send(.signInWithApple(appleIDCredential))
+                            viewStore.send(.signInWithApple(appleIDCredential))
                             
                         default:
                             break

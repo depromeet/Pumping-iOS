@@ -20,6 +20,19 @@ extension AuthClient: DependencyKey {
             
             return response
         },
+        signUp: { userInfo in
+            let signUpRequestDTO = SignUpRequestDTO(name: userInfo.name,
+                                                    gender: userInfo.gender.rawValue,
+                                                    height: userInfo.height,
+                                                    weight: userInfo.weight,
+                                                    characterType: userInfo.characterType.rawValue,
+                                                    loginType: userInfo.loginType,
+                                                    oauth2Id: userInfo.oauth2Id)
+            let apiEndpoint = AuthEndpoint.signUp(signUpRequestDTO)
+            let response = try await NetworkProvider.shared.sendRequest(apiEndpoint).toDomain()
+            
+            return response
+        },
         saveToken: { token in
             LocalAuthStore().saveToken(token: token)
         },

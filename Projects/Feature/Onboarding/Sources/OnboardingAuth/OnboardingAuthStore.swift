@@ -20,8 +20,8 @@ extension OnboardingAuthStore {
         let reducer : Reduce<State, Action> = Reduce { state, action in
             switch action {
             case .checkAuthorization :
-                // TODO: authorizationCode에서 accessToken으로 체크방식을 변경해야함 서버에 authorizationCode를 전달 후 리스폰스로 받은 JWT토큰을 키체인에 저장
-                if !KeyChainStore.shared.load(property: .accessToken).isEmpty {
+                
+                if KeyChainStore.shared.validateToken() {
                     return .send(.isAlreadyAuthorized)
                 }
                 
@@ -42,12 +42,18 @@ extension OnboardingAuthStore {
                 }
                                 
             case let .signInWithAppleError(error):
-                // TODO: error를 통해 모달이나 ViewModifier로 뷰에 노출
                 print(error)
                 return .none
                 
             case let .signInWithAppleResponse(.success(token)):
                 authClient.saveToken(token)
+                
+                // 엑세스토큰이 만료되어 다시 애플로그인을 통해 로그인 시 엑세스토큰이 리턴되기 때문에
+                // 다시 signUp을 할 필요가 없어서 메인 화면으로 보냄
+                // signUp전에는 엑세스토큰이 nil로 옴
+                if token.accessToken != nil {
+                    return .send(.isAlreadyAuthorized)
+                }
                 
                 return .send(.goToPermission)
                 

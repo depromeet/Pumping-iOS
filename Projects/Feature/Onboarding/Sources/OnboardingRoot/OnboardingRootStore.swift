@@ -9,6 +9,7 @@ import Foundation
 
 import ComposableArchitecture
 import FeatureOnboardingInterface
+import Domain
 import CoreKeyChainStore
 
 extension OnboardingRootStore {
@@ -33,6 +34,52 @@ extension OnboardingRootStore {
                 state.avatar = .init()
                 return .none
                 
+            case .avatar(.signUp):
+                let token = authClient.loadToken()
+                
+                guard let name = state.profile?.name,
+                      let gender = state.profile?.gender,
+                      let height = state.profile?.height,
+                      let weight = state.profile?.weight,
+                      let characterType = state.avatar?.pickedCharacter,
+                      let loginType = token.loginType,
+                      let oauth2Id = token.oauth2Id else {
+                    return .none
+                }
+                
+                let userInfo = UserInfo(name: name,
+                                        gender: gender,
+                                        height: height,
+                                        weight: weight,
+                                        characterType: characterType,
+                                        loginType: loginType,
+                                        oauth2Id: oauth2Id)
+                
+                return .task { [userInfo = userInfo] in
+                    await .signUp(
+                        TaskResult {
+                            try await authClient.signUp(userInfo)
+                        }
+                    )
+                }
+                
+            case let .signUp(.success(token)):
+                print(token)
+                
+                authClient.saveToken(token)
+                
+                return .send(.goToMain)
+                
+            case let .signUp(.failure(error)):
+                print(error.localizedDescription)
+                return .none
+                
+            case .goToMain:
+                state.permission = nil
+                state.profile = nil
+                state.avatar = nil
+                return .none
+                                
             default :
                 return .none
             }

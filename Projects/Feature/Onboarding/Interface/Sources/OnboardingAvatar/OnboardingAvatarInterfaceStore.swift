@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import Domain
 
 public struct OnboardingAvatarStore : ReducerProtocol {
     private let reducer: Reduce<State, Action>
@@ -15,12 +16,15 @@ public struct OnboardingAvatarStore : ReducerProtocol {
     }
     
     public struct State: Equatable {
+        public var pickedCharacter: CharacterType?
         public var isAvatarPicked : Bool = false
         public init() {}
     }
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
+        case getRandomCharacter
+        case signUp
         case goToMain
     }
     

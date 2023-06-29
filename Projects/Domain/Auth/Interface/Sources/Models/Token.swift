@@ -10,13 +10,13 @@ import Foundation
 public struct Token: Equatable {
     public let accessToken: String?
     public let expiresAt: String?
-    public let loginType: String
-    public let oauth2Id: String
+    public let loginType: String?
+    public let oauth2Id: String?
     
     public init(accessToken: String?,
                 expiresAt: String?,
-                loginType: String,
-                oauth2Id: String) {
+                loginType: String?,
+                oauth2Id: String?) {
         self.accessToken = accessToken
         self.expiresAt = expiresAt
         self.loginType = loginType

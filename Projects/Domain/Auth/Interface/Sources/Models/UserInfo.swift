@@ -8,30 +8,37 @@
 import Foundation
 
 public struct UserInfo : Equatable {
-    public init(userIdentifier: String?,
-                name: String?,
-                email: String?,
-                identityToken: String?,
-                authorizationCode: String?
-    ) {
-        self.userIdentifier = userIdentifier
-        self.name = name
-        self.email = email
-        self.identityToken = identityToken
-        self.authorizationCode = authorizationCode
-    }
+    public let name: String
+    public let gender: GenderType
+    public let height: Int
+    public let weight: Int
+    public let characterType: CharacterType
+    public let loginType: String
+    public let oauth2Id: String
     
-    public let userIdentifier : String?
-    public let name : String?
-    public let email : String?
-    public let identityToken : String?
-    public let authorizationCode : String?
+    public init(name: String,
+                gender: GenderType,
+                height: Int,
+                weight: Int,
+                characterType: CharacterType,
+                loginType: String,
+                oauth2Id: String) {
+        self.name = name
+        self.gender = gender
+        self.height = height
+        self.weight = weight
+        self.characterType = characterType
+        self.loginType = loginType
+        self.oauth2Id = oauth2Id
+    }
 }
 
 public extension UserInfo {
-    static let mock = Self(userIdentifier: "mockUserID",
-                           name: "현우",
-                           email: "parkhj0423@naver.com",
-                           identityToken: "mockIdentifyToken",
-                           authorizationCode: "mockAuthroziationCode")
+    static let mock = UserInfo(name: "박현우",
+                               gender: .male,
+                               height: 185,
+                               weight: 80,
+                               characterType: .b,
+                               loginType: "APPLE",
+                               oauth2Id: "mockoAuth2Id")
 }
