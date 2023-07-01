@@ -60,8 +60,6 @@ public struct CrewHomeStore: ReducerProtocol {
         case getCrewInfo
 
         case goToProfileView
-        case goToWidthOfChangeView
-        case goToCrewRankingView
         
         case presentCrewListView
         case presentCrewJoinView

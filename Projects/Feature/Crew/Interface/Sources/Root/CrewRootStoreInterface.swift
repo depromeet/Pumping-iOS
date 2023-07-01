@@ -11,7 +11,7 @@ import FeatureProfileInterface
 
 public enum CrewScene: Hashable {
     case crewRanking
-//    case profile
+    case profile
 //    case widthOfChange
 }
 
@@ -20,22 +20,18 @@ public struct CrewRootStore: ReducerProtocol {
 
     private let crewHomeStore: CrewHomeStore
     private let crewRankingStore: CrewRankingStore
-//    private let profileStore: ProfileStore
-//    private let widthOfChangeStore: WidthOfChangeStore
-    
+    private let profileStore: ProfileStore
+
     public init(
         reducer: Reduce<State, Action>,
         crewHomeStore: CrewHomeStore,
-        crewStore: CrewStore,
-        crewRankingStore: CrewRankingStore
-//        profileStore: ProfileStore,
-//        widthOfChangeStore: WidthOfChangeStore
+        crewRankingStore: CrewRankingStore,
+        profileStore: ProfileStore
     ) {
         self.reducer = reducer
         self.crewHomeStore = crewHomeStore
         self.crewRankingStore = crewRankingStore
-//        self.profileStore = profileStore
-//        self.widthOfChangeStore = widthOfChangeStore
+        self.profileStore = profileStore
     }
     
     public struct State: Equatable {
@@ -43,8 +39,7 @@ public struct CrewRootStore: ReducerProtocol {
         public var crewHome: CrewHomeStore.State = .init()
         @BindingState public var showingCrew: Bool = false
 
-//        public var profile: ProfileStore.State?
-//        public var widthOfChange: WidthOfChangeStore.State?
+        public var profile: ProfileStore.State?
         public var crewRanking: CrewRankingStore.State?
 
         public init() { }
@@ -55,8 +50,7 @@ public struct CrewRootStore: ReducerProtocol {
         
         case crewHome(CrewHomeStore.Action)
         case crewRanking(CrewRankingStore.Action)
-//        case profile(ProfileStore.Action)
-//        case widthOfChange(WidthOfChangeStore.Action)
+        case profile(ProfileStore.Action)
     }
     
     public var body: some ReducerProtocol<State, Action> {
@@ -65,15 +59,13 @@ public struct CrewRootStore: ReducerProtocol {
         Scope(state: \.crewHome, action: /Action.crewHome) {
             crewHomeStore
         }
+
         reducer
             .ifLet(\.crewRanking, action: /Action.crewRanking) {
                 crewRankingStore
             }
-//            .ifLet(\.profile, action: /Action.profile) {
-//                profileStore
-//            }
-//            .ifLet(\.widthOfChange, action: /Action.widthOfChange) {
-//                widthOfChangeStore
-//            }
+            .ifLet(\.profile, action: /Action.profile) {
+                profileStore
+            }
     }
 }

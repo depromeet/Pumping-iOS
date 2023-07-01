@@ -76,7 +76,6 @@ public struct CrewRankingView: View {
                     .resizable()
                     .foregroundColor(Color.colorGrey700)
                     .frame(maxWidth: 10, maxHeight: 10)
-
             }
 
             Text("5월 12일 - 19일")

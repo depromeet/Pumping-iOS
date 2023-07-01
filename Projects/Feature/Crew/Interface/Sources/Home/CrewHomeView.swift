@@ -142,17 +142,6 @@ public struct CrewHomeView: View {
                             viewStore.send(.goToProfileView)
                         }
                 }
-            
-            //            Button {
-            //
-            //            } label: {
-            //                Text("크루 나가기")
-            //                    .font(.pretendard(size: 14, type: .medium))
-            //
-            //                    .foregroundColor(Color.colorGrey500)
-            //            }
-            //            .padding(.top, 48)
-            //            .padding(.bottom, 35)
         }
     }
 }
