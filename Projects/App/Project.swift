@@ -37,6 +37,11 @@ let targets: [Target] = [
     .app(
         implements: .Watch,
         factory: .init(
+            infoPlist: .extendingDefault(
+                with: [
+                    "NSHealthShareUsageDescription" : "이 앱은 운동, 수면 및 건강 정보를 추적하고 관리하기 위해 HealthKit 데이터를 공유할 수 있습니다.",
+                    "NSHealthUpdateUsageDescription" : "이 앱은 운동, 수면 및 건강 정보를 추적하고 관리하기 위해 HealthKit 데이터를 기록할 수 있습니다.",
+                ]),
             dependencies: [
                 .app(implements: .WatchExtension)
             ]
@@ -45,8 +50,14 @@ let targets: [Target] = [
     .app(
         implements: .WatchExtension,
         factory: .init(
+            infoPlist: .extendingDefault(
+                with: [
+                    "NSHealthShareUsageDescription" : "이 앱은 운동, 수면 및 건강 정보를 추적하고 관리하기 위해 HealthKit 데이터를 공유할 수 있습니다.",
+                    "NSHealthUpdateUsageDescription" : "이 앱은 운동, 수면 및 건강 정보를 추적하고 관리하기 위해 HealthKit 데이터를 기록할 수 있습니다.",
+                ]),
+            entitlements: "Pumping.entitlements",
             dependencies: [
-//                .watchShared
+                .watchShared
             ]
         )
     )

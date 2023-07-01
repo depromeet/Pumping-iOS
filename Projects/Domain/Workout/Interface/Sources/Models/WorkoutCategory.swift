@@ -28,7 +28,7 @@ public extension WorkoutCategoryIdentifierType {
 }
 
 //MARK: WorkoutCategoryIdentifier
-public enum WorkoutCategoryIdentifier: String, CaseIterable {
+public enum WorkoutCategoryIdentifier: String, CaseIterable, Equatable {
     case aerobic = "유산소"
     case shoulder = "어깨"
     case chest = "가슴"

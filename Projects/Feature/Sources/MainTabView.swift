@@ -75,7 +75,7 @@ public struct MainTabView: View {
             
             tabBarItemView(viewStore: viewStore, scene: .workout)
                 .frame(width: 68, height: 68)
-                .offset(.init(width: 0, height: -20))
+                .offset(.init(width: 0, height: -15))
         }
         .frame(maxWidth: .infinity, maxHeight: 101)
     }

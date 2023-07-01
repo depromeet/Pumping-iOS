@@ -36,7 +36,7 @@ public struct CrewRootView: View {
 //                                ProfileView(store: $0, profileSubject: .my)
 //                                    .toolbarRole(.editor)
 //                            }
-                            
+
 //                        case .widthOfChange:
 //                            IfLetStore(self.store.scope(state: \.widthOfChange, action: { .widthOfChange($0) })) {
 //                                WidthOfChangeView(store: $0)

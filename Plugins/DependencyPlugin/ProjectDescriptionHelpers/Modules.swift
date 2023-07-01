@@ -58,6 +58,7 @@ public extension ModulePath {
 
 public extension ModulePath {
     enum Core: String, CaseIterable {
+        case HealthKit
         case HealthKitManager
         case KeyChainStore
         case Network

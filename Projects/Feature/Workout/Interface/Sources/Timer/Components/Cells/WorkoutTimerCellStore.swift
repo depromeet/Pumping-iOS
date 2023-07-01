@@ -1,34 +1,31 @@
 //
-//  PumpintTextCellStore.swift
-//  SharedDesignSystem
+//  WorkoutTimerCellStore.swift
+//  FeatureWorkoutInterface
 //
-//  Created by 송영모 on 2023/05/26.
+//  Created by 송영모 on 2023/06/24.
 //
 
 import Foundation
 
 import ComposableArchitecture
 
-public struct PumpingTextCellStore: ReducerProtocol {
-    public init() { }
-    
+import Domain
+
+public struct WorkoutTimerCellStore: ReducerProtocol {
     public struct State: Equatable, Identifiable {
         public let id: UUID
-        public let title: String
-        
-        public var isTapped: Bool
-        
-        public init(id: UUID, title: String, isTapped: Bool = false) {
+        public let timer: PumpingTimer
+
+        public init(id: UUID, timer: PumpingTimer) {
             self.id = id
-            self.title = title
-            self.isTapped = isTapped
+            self.timer = timer
         }
     }
-    
+
     public enum Action: Equatable {
         case tapped
     }
-    
+
     public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
         switch action {
         case .tapped:

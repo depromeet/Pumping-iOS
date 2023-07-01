@@ -36,7 +36,11 @@ let targets: [Target] = [
     ),
     .domain(
         interface: .Health,
-        factory: .init()
+        factory: .init(
+            dependencies: [
+                .core
+            ]
+        )
     )
 ]
 
