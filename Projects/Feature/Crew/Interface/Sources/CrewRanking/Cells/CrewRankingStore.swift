@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import SharedDesignSystem
 
 public enum CrewRankingType: String {
     case upperBody = "상체 머신"
