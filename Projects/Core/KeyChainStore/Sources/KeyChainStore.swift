@@ -10,8 +10,7 @@ public final class KeyChainStore: TokenStore {
     }
     
     private func isTokenExpired() -> Bool {
-        let expired = load(property: .expiresAt).toDateWithCustomFormat("yyyy-MM-dd'T'HH:mm:ss")
-        
+        let expired = load(property: .expiresAt).toDateWithCustomFormat("yyyy-MM-dd'T'HH:mm:ss.SS")
         return Date() > expired
     }
     

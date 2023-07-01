@@ -26,7 +26,6 @@ public struct CrewRootStore: ReducerProtocol {
     public init(
         reducer: Reduce<State, Action>,
         crewHomeStore: CrewHomeStore,
-        crewStore: CrewStore,
         crewRankingStore: CrewRankingStore
 //        profileStore: ProfileStore,
 //        widthOfChangeStore: WidthOfChangeStore
