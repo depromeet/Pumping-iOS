@@ -47,11 +47,11 @@ public struct ProfileBodyCellView: View {
                     Button {
 
                     } label: {
-                        Image(systemName: "heart.fill")
+                        SharedDesignSystemAsset.Images.thumbsUp.swiftUIImage
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .foregroundColor(.black)
                     }
-                    .frame(width: 50, height: 50)
+                    .frame(width: 60, height: 60)
                     .background(.white)
                     .clipShape(Circle())
                 }
