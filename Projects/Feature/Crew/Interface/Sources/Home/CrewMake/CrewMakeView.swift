@@ -39,7 +39,7 @@ struct CrewMakeView: View {
                             Spacer()
                             
                             PumpingSubmitButton(title : "완료", isEnable: viewStore.isSatisfied) {
-                                viewStore.send(.goToCrewMakeCompleteView)
+                                viewStore.send(.makeCrew)
                             }
                             
                         }

@@ -7,10 +7,13 @@
 
 import ComposableArchitecture
 import FeatureCrewInterface
+import Domain
 import UIKit
 
 extension CrewMakeStore {
     public init() {
+        @Dependency(\.crewClient) var crewClient
+        
         let reducer: Reduce<State, Action> = .init { state, action in
             switch action {
             case .binding:
@@ -49,6 +52,23 @@ extension CrewMakeStore {
                 
             case .copyCode:
                 UIPasteboard.general.string = "복사한 값"
+                return .none
+                
+            case .makeCrew:
+                return .task { [crewName = state.crewName, goalCount = state.goalCount] in
+                    await .makeCrewResponse(
+                        TaskResult {
+                            try await crewClient.makeCrew(crewName, goalCount)
+                        }
+                    )
+                }
+                
+            case let .makeCrewResponse(.success(crewInfo)):
+                print(crewInfo)
+                return .send(.goToCrewMakeCompleteView)
+                
+            case let .makeCrewResponse(.failure(error)):
+                print(error)
                 return .none
                 
             default:
