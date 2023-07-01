@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import Domain
 
 public struct OnboardingRootStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
@@ -28,7 +29,7 @@ public struct OnboardingRootStore: ReducerProtocol {
         self.onboardingAvatarStore = onboardingAvatarStore
     }
 
-    public struct State:  Equatable {
+    public struct State: Equatable {
         @BindingState public var path: [OnboardingScene] = []
         
         public var auth: OnboardingAuthStore.State = .init()
@@ -46,6 +47,8 @@ public struct OnboardingRootStore: ReducerProtocol {
         case permission(OnboardingPermissionStore.Action)
         case profile(OnboadingProfileStore.Action)
         case avatar(OnboardingAvatarStore.Action)
+        case signUp(TaskResult<Token>)
+        case goToMain
     }
     
     public var body: some ReducerProtocol<State, Action> {

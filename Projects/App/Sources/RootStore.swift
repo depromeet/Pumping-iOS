@@ -17,8 +17,8 @@ public struct RootStore: ReducerProtocol {
         case mainTab(MainTabViewStore.State)
         
         public init() {
-//            self = .onboarding(.init())
-            self = .mainTab(.init())
+            self = .onboarding(.init())
+//            self = .mainTab(.init())
         }
     }
     
@@ -30,7 +30,7 @@ public struct RootStore: ReducerProtocol {
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
-            case .onboarding(.avatar(.goToMain)):
+            case .onboarding(.goToMain):
                 state = .mainTab(.init())
                 return .none
                 

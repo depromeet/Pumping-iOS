@@ -29,8 +29,13 @@ public final class LocalAuthStore : LocalAuthStoreInterface {
             KeyChainStore.shared.save(property: .expiresAt, value: expiresAt)
         }
         
-        KeyChainStore.shared.save(property: .loginType, value: token.loginType)
-        KeyChainStore.shared.save(property: .oauth2Id, value: token.oauth2Id)
+        if let loginType = token.loginType {
+            KeyChainStore.shared.save(property: .loginType, value: loginType)
+        }
+        
+        if let oauth2Id = token.oauth2Id {
+            KeyChainStore.shared.save(property: .oauth2Id, value: oauth2Id)
+        }
     }
     
 }

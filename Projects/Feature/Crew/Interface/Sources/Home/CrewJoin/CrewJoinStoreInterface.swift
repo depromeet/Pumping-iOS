@@ -1,13 +1,13 @@
 //
-//  CrewStoreInterface.swift
+//  CrewJoinStoreInterface.swift
 //  FeatureCrewInterface
 //
-//  Created by Derrick kim on 2023/06/15.
+//  Created by 박현우 on 2023/06/27.
 //
 
 import ComposableArchitecture
 
-public struct CrewStore: ReducerProtocol {
+public struct CrewJoinStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
 
     public init(
@@ -17,6 +17,11 @@ public struct CrewStore: ReducerProtocol {
     }
 
     public struct State: Equatable {
+        
+        @BindingState public var showCrewJoinError: Bool = false
+        @BindingState public var code: String = ""
+        public var isSatisfied: Bool = false
+        
         public init() {
 
         }
@@ -25,7 +30,10 @@ public struct CrewStore: ReducerProtocol {
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         
-        case crewViewDidDisappear
+        case dismissCrewJoinView
+        case crewJoinButtonTapped
+        case isCrewJoinCompleted
+        
     }
 
     public var body: some ReducerProtocol<State, Action> {

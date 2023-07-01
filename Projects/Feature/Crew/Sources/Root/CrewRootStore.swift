@@ -28,21 +28,6 @@ extension CrewRootStore {
                     state.crewRanking = .init()
                     return .none
 
-                case .presentCrewScreen:
-                    state.showingCrew = true
-                    state.crew = .init()
-                    return .none
-
-                default:
-                    return .none
-                }
-
-            case let .crew(action):
-                switch action {
-                case .crewViewDidDisappear:
-                    state.showingCrew = false
-                    return .none
-
                 default:
                     return .none
                 }
@@ -60,7 +45,6 @@ extension CrewRootStore {
         self.init(
             reducer: reducer,
             crewHomeStore: .init(),
-            crewStore: .init(),
             crewRankingStore: .init()
 //            profileStore: .init(),
 //            widthOfChangeStore: .init()

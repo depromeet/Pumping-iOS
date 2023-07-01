@@ -12,6 +12,7 @@ public enum TokenProperties: String {
 }
 
 public protocol TokenStore {
+    func validateToken() -> Bool
     func save(property: TokenProperties, value: String)
     func load(property: TokenProperties) -> String
     func delete(property: TokenProperties)

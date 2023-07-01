@@ -16,11 +16,17 @@ struct OnboardingAvatarView: View {
     public var body: some View {
         WithViewStore(self.store) { viewStore in
             ZStack {
-                Color.colorGreen700
-                    .frame(height: 353)
+                
+                if let character = viewStore.state.pickedCharacter {
+                    Text(character.rawValue)
+                } else {
+                    // lottie
+                    Color.colorGreen700
+                        .frame(height: 353)
+                }
                 
                 VStack(alignment : .leading) {
-                    avatarTitleView()
+                    avatarTitleView(viewStore: viewStore)
                     
                     Spacer()
                     
@@ -32,27 +38,26 @@ struct OnboardingAvatarView: View {
         }
     }
     
-    private func avatarTitleView() -> some View {
+    private func avatarTitleView(viewStore : ViewStoreOf<OnboardingAvatarStore>) -> some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("내 캐릭터를 뽑아보세요")
+            Text(viewStore.isAvatarPicked ? "내 캐릭터가 생성되었어요!" : "내 캐릭터를 뽑아보세요")
                 .font(.pretendard(size: 24, type: .bold))
                 .foregroundColor(.colorGrey900)
             
-            Text("랜덤으로 캐릭터가 만들어져요.")
+            Text(viewStore.isAvatarPicked ? "이제 운동 크루를 시작해볼까요?" : "랜덤으로 캐릭터가 만들어져요.")
                 .font(.pretendard(size: 15, type: .medium))
                 .foregroundColor(.colorGrey600)
         }
-        .padding([.horizontal])
+        .padding(EdgeInsets(top: 44, leading: 20, bottom: 64, trailing: 20))
     }
     
     @ViewBuilder
     private func buttonView(viewStore : ViewStoreOf<OnboardingAvatarStore>) -> some View {
-        PumpingSubmitButton(title: viewStore.isAvatarPicked ? "다음" : "캐릭터 뽑기") {
+        PumpingSubmitButton(title: viewStore.isAvatarPicked ? "완료" : "캐릭터 뽑기") {
             if viewStore.isAvatarPicked {
-                viewStore.send(.goToMain)
+                viewStore.send(.signUp)
             } else {
-                //TODO: 아바타 뽑기 시 로직 작성
-                viewStore.send(.goToMain)
+                viewStore.send(.getRandomCharacter)
             }
         }
         .padding([.horizontal, .bottom])

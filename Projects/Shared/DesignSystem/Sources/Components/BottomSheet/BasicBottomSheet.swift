@@ -39,13 +39,3 @@ fileprivate struct BasicBottomSheetModifier<BottomSheetContent: View>: ViewModif
             }
     }
 }
-
-
-struct BasicBottomSheet_Previews: PreviewProvider {
-    static var previews: some View {
-        EmptyView()
-            .basicBottomSheet(isPresented: .constant(true), detents: [.medium]) {
-                Text("hello")
-            }
-    }
-}

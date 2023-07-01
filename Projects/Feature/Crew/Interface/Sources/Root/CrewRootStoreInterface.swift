@@ -19,7 +19,6 @@ public struct CrewRootStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
 
     private let crewHomeStore: CrewHomeStore
-    private let crewStore: CrewStore
     private let crewRankingStore: CrewRankingStore
 //    private let profileStore: ProfileStore
 //    private let widthOfChangeStore: WidthOfChangeStore
@@ -34,7 +33,6 @@ public struct CrewRootStore: ReducerProtocol {
     ) {
         self.reducer = reducer
         self.crewHomeStore = crewHomeStore
-        self.crewStore = crewStore
         self.crewRankingStore = crewRankingStore
 //        self.profileStore = profileStore
 //        self.widthOfChangeStore = widthOfChangeStore
@@ -45,9 +43,8 @@ public struct CrewRootStore: ReducerProtocol {
         public var crewHome: CrewHomeStore.State = .init()
         @BindingState public var showingCrew: Bool = false
 
-        public var crew: CrewStore.State?
-        public var profile: ProfileStore.State?
-        public var widthOfChange: WidthOfChangeStore.State?
+//        public var profile: ProfileStore.State?
+//        public var widthOfChange: WidthOfChangeStore.State?
         public var crewRanking: CrewRankingStore.State?
 
         public init() { }
@@ -57,7 +54,6 @@ public struct CrewRootStore: ReducerProtocol {
         case binding(BindingAction<State>)
         
         case crewHome(CrewHomeStore.Action)
-        case crew(CrewStore.Action)
         case crewRanking(CrewRankingStore.Action)
 //        case profile(ProfileStore.Action)
 //        case widthOfChange(WidthOfChangeStore.Action)
@@ -69,11 +65,7 @@ public struct CrewRootStore: ReducerProtocol {
         Scope(state: \.crewHome, action: /Action.crewHome) {
             crewHomeStore
         }
-
         reducer
-            .ifLet(\.crew, action: /Action.crew) {
-                crewStore
-            }
             .ifLet(\.crewRanking, action: /Action.crewRanking) {
                 crewRankingStore
             }

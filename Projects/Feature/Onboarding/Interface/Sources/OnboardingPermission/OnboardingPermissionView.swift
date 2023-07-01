@@ -16,12 +16,12 @@ struct OnboardingPermissionView: View {
     public var body: some View {
         WithViewStore(self.store) { viewStore in
             ZStack {
-                Color.colorGreen700
-                    .frame(height: 353)
+                Image.permission
+                    .frame(maxWidth: .infinity)
                 
                 VStack(alignment : .leading) {
                     permissionTitleView()
-                    
+                                        
                     Spacer()
                     
                     PumpingSubmitButton(title: "권한 부여", isEnable: true) {
@@ -32,9 +32,9 @@ struct OnboardingPermissionView: View {
                         }
                     }
                 }
+                .padding(EdgeInsets(top: 44, leading: 20, bottom: 20, trailing: 20))
             }
             .navigationBarBackButtonHidden(true)
-            .padding()
         }
     }
     
@@ -51,5 +51,6 @@ struct OnboardingPermissionView: View {
             .font(.pretendard(size: 15, type: .medium))
             .foregroundColor(.colorGrey600)
         }
+        .padding(.bottom, 64)
     }
 }

@@ -11,3 +11,5 @@
 @_exported import DomainHealthInterface
 @_exported import DomainWorkout
 @_exported import DomainWorkoutInterface
+@_exported import DomainCrew
+@_exported import DomainCrewInterface

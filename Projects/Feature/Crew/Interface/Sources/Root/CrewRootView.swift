@@ -8,6 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 import FeatureProfileInterface
+import SharedDesignSystem
 
 public struct CrewRootView: View {
     public let store: StoreOf<CrewRootStore>
@@ -22,12 +23,6 @@ public struct CrewRootView: View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             NavigationStack(path: viewStore.binding(\.$path)) {
                 CrewHomeView(store: self.store.scope(state: \.crewHome, action: { .crewHome($0) }))
-                    .sheet(isPresented: viewStore.binding(\.$showingCrew)) {
-                        IfLetStore(self.store.scope(state: \.crew, action: { .crew($0) })) {
-                            CrewView(store: $0)
-                                .presentationDetents([.medium, .large])
-                        }
-                    }
                     .navigationDestination(for: CrewScene.self) { scene in
                         switch scene {
                         case .crewRanking:
@@ -41,7 +36,7 @@ public struct CrewRootView: View {
 //                                ProfileView(store: $0, profileSubject: .my)
 //                                    .toolbarRole(.editor)
 //                            }
-//                            
+
 //                        case .widthOfChange:
 //                            IfLetStore(self.store.scope(state: \.widthOfChange, action: { .widthOfChange($0) })) {
 //                                WidthOfChangeView(store: $0)

@@ -15,12 +15,19 @@ public struct Endpoint<R>: Networkable {
     public var path: String
     public var httpMethod: HTTPMethod
     public var queryParameters: Encodable?
-    public var bodyParameters : Encodable?
+    public var bodyParameters: Encodable?
+    public var headers: [String : String]?
     
-    public init(path: String, httpMethod: HTTPMethod, queryParameters: Encodable? = nil, bodyParameters : Encodable? = nil) {
+    public init(path: String,
+                httpMethod: HTTPMethod,
+                queryParameters: Encodable? = nil,
+                bodyParameters : Encodable? = nil,
+                headers: [String : String]? = ["Content-Type" : "application/json"]
+    ) {
         self.path = path
         self.httpMethod = httpMethod
         self.queryParameters = queryParameters
         self.bodyParameters = bodyParameters
+        self.headers = headers
     }
 }

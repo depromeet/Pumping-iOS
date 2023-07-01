@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import Domain
 
 public struct OnboadingProfileStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
@@ -36,9 +37,4 @@ public struct OnboadingProfileStore: ReducerProtocol {
         BindingReducer()
         reducer
     }
-}
-
-public enum GenderType : String {
-    case male = "남성"
-    case female = "여성"
 }
