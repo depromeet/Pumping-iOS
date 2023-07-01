@@ -40,9 +40,22 @@ public struct WorkoutTimerStore: ReducerProtocol {
         public func toSyntax(value: Double) -> String {
             //TODO: 서버에 넘겨야할 값에 따라 value 타입이 달라짐
             switch self {
-            case .time: return DateManager.toClockString(from: Int(value))
-            case .heatRate: return String(describing: "\(Int(value))bpm")
-            case .calorie: return String(describing: "\(Int(value))Kcal")
+            case .time:
+                return DateManager.toClockString(from: Int(value))
+                
+            case .heatRate:
+                if value == 0 {
+                    return "-"
+                } else {
+                    return String(describing: "\(Int(value))bpm")
+                }
+                
+            case .calorie:
+                if value == 0 {
+                    return "-"
+                } else {
+                    return String(describing: "\(Int(value))Kcal")
+                }
             }
         }
     }
@@ -60,8 +73,10 @@ public struct WorkoutTimerStore: ReducerProtocol {
         
         public var timers: [PumpingTimer] = []
         public var time: Int = 0
-        public var heartRate: Double = 100.0
-        public var calorie: Double = 230.0
+        public var heartRateToCalc: Double = 0.0
+        public var heartRateToShow: Double = 0.0
+        public var calorieToCalc: Double = 0.0
+        public var calorieToShow: Double = 0.0
         
         public var isTimerActive: Bool = false
         public var currentActiveTimerCellID: UUID?

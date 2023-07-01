@@ -37,15 +37,16 @@ public class WatchConnectivityDelegate: NSObject, ObservableObject ,WCSessionDel
     }
     
     public func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        for m in message {
-            if m.key == "heartRate" {
-                guard let heartRate = m.value as? Double else { break }
-                self.heartRate = heartRate
-            } else if m.key == "calorie" {
-                guard let calorie = m.value as? Double else { break }
-                self.calorie = calorie
+        DispatchQueue.main.async {
+            for m in message {
+                if m.key == "heartRate" {
+                    guard let heartRate = m.value as? Double else { break }
+                    self.heartRate = heartRate
+                } else if m.key == "calorie" {
+                    guard let calorie = m.value as? Double else { break }
+                    self.calorie = calorie
+                }
             }
         }
-        debugPrint("iOS recieved \(message)")
     }
 }

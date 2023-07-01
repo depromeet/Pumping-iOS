@@ -136,7 +136,6 @@ extension WorkoutDelegate: HKLiveWorkoutBuilderDelegate {
                 case HKQuantityType.quantityType(forIdentifier: .heartRate):
                     let heartRateUnit = HKUnit.count().unitDivided(by: HKUnit.minute())
                     let heartRate = statistics.mostRecentQuantity()?.doubleValue(for: heartRateUnit) ?? 0
-                    //                viewStore?.send(.setHeartRate(10))
                     self.heartRate = heartRate
                     debugPrint("heart \(heartRate)")
                     

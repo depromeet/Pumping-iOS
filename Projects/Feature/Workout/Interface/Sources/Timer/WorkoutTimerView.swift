@@ -83,8 +83,8 @@ public struct WorkoutTimerView: View {
     private func resultView(viewStore: ViewStoreOf<WorkoutTimerStore>) -> some View {
         VStack {
             resultTextView(type: .time, value: Double(viewStore.state.time))
-            resultTextView(type: .heatRate, value: viewStore.state.heartRate)
-            resultTextView(type: .calorie, value: viewStore.state.calorie)
+            resultTextView(type: .heatRate, value: viewStore.state.heartRateToShow)
+            resultTextView(type: .calorie, value: viewStore.state.calorieToShow)
         }
     }
     
