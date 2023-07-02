@@ -39,12 +39,12 @@ public struct WorkoutTimerView: View {
                         })
                         .padding()
                     }
-                    .onReceive(watchConnectivityDelegate.$heartRate, perform: { heartRate in
+                    .onReceive(watchConnectivityDelegate.$heartRate) { heartRate in
                         viewStore.send(.updateHeartRate(heartRate))
-                    })
-                    .onReceive(watchConnectivityDelegate.$calorie, perform: { calorie in
+                    }
+                    .onReceive(watchConnectivityDelegate.$calorie) { calorie in
                         viewStore.send(.updateCalorie(calorie))
-                    })
+                    }
                     .background(Color.colorGrey000)
                     .navigationBarBackButtonHidden(true)
                 }
