@@ -7,9 +7,15 @@
 
 import Foundation
 import CoreNetworkInterface
+import CoreKeyChainStore
 
 public struct CrewEndpoint {
     public static func makeCrew(_ requestDTO: MakeCrewRequestDTO) -> Endpoint<MakeCrewResponseDTO> {
-        return Endpoint(path: "crew/create", httpMethod: .post, bodyParameters: requestDTO)
+        let accessToken = KeyChainStore.shared.load(property: .accessToken)
+        
+        return Endpoint(path: "crews",
+                        httpMethod: .post,
+                        bodyParameters: requestDTO,
+                        headers: ["Authorization" : "Bearer \(accessToken)"])
     }
 }

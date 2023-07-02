@@ -22,7 +22,7 @@ public struct Endpoint<R>: Networkable {
                 httpMethod: HTTPMethod,
                 queryParameters: Encodable? = nil,
                 bodyParameters : Encodable? = nil,
-                headers: [String : String]? = ["Content-Type" : "application/json"]
+                headers: [String : String]? = nil
     ) {
         self.path = path
         self.httpMethod = httpMethod
