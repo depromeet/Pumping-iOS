@@ -77,7 +77,10 @@ public struct MainTabViewStore: ReducerProtocol {
             }
         }
         .ifLet(\.home, action: /Action.home) {
-            CrewRootStore()._printChanges()
+            CrewRootStore(
+                profileStore: .init(),
+                widthOfChangeStore: .init()
+            )._printChanges()
         }
         .ifLet(\.workout, action: /Action.workout) {
             WorkoutRootStore()._printChanges()

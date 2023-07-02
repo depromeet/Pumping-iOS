@@ -7,10 +7,13 @@
 
 import ComposableArchitecture
 import FeatureCrewInterface
-//import FeatureProfile
+import FeatureProfileInterface
 
 extension CrewRootStore {
-    public init() {
+    public init(
+        profileStore: ProfileStore,
+        widthOfChangeStore: WidthOfChangeStore
+    ) {
         let reducer: Reduce<State, Action> = .init { state, action in
             switch action {
             case .binding:
@@ -18,10 +21,10 @@ extension CrewRootStore {
                 
             case let .crewHome(action):
                 switch action {
-//                case .goToProfileView:
-//                    state.path.append(.profile)
-//                    state.profile = .init()
-//                    return .none
+                case .goToProfileView:
+                    state.path.append(.profile)
+                    state.profile = .init()
+                    return .none
 
                 case .goToCrewRankingView:
                     state.path.append(.crewRanking)
@@ -32,10 +35,10 @@ extension CrewRootStore {
                     return .none
                 }
 
-//            case .profile(.tapWidthOfChangeButton):
-//                state.path.append(.widthOfChange)
-//                state.widthOfChange = .init()
-//                return .none
+            case .profile(.tapWidthOfChangeButton):
+                state.path.append(.widthOfChange)
+                state.widthOfChange = .init()
+                return .none
 
             default:
                 return .none
@@ -45,9 +48,9 @@ extension CrewRootStore {
         self.init(
             reducer: reducer,
             crewHomeStore: .init(),
-            crewRankingStore: .init()
-//            profileStore: .init(),
-//            widthOfChangeStore: .init()
+            crewRankingStore: .init(),
+            profileStore: profileStore,
+            widthOfChangeStore: widthOfChangeStore
         )
     }
 }

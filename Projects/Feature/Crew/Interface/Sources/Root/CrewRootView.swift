@@ -31,17 +31,17 @@ public struct CrewRootView: View {
                                     .toolbarRole(.editor)
                             }
                             
-//                        case .profile:
-//                            IfLetStore(self.store.scope(state: \.profile, action: { .profile($0) })) {
-//                                ProfileView(store: $0, profileSubject: .my)
-//                                    .toolbarRole(.editor)
-//                            }
+                        case .profile:
+                            IfLetStore(self.store.scope(state: \.profile, action: { .profile($0) })) {
+                                ProfileView(store: $0, profileSubject: .my)
+                                    .toolbarRole(.editor)
+                            }
 
-//                        case .widthOfChange:
-//                            IfLetStore(self.store.scope(state: \.widthOfChange, action: { .widthOfChange($0) })) {
-//                                WidthOfChangeView(store: $0)
-//                                    .toolbarRole(.editor)
-//                            }
+                        case .widthOfChange:
+                            IfLetStore(self.store.scope(state: \.widthOfChange, action: { .widthOfChange($0) })) {
+                                WidthOfChangeView(store: $0)
+                                    .toolbarRole(.editor)
+                            }
                         }
                     }
             }
