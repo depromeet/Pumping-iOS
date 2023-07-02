@@ -14,10 +14,6 @@ import SharedUtil
 
 extension WorkoutHomeStore {
     public init() {
-        @Dependency(\.healthClient) var healthClient
-        
-        healthClient.loadHeartRate()
-        
         let reducer: Reduce<State, Action> = .init { state, action in
             switch action {
             case .binding:

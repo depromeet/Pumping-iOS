@@ -124,7 +124,7 @@ public struct WorkoutTimerStore: ReducerProtocol {
         case updateTimerCell(index: Int, state: WorkoutTimerCellStore.State)
         
         //MARK: Navigation
-        case goToWorkoutEnd
+        case goToWorkoutEnd(timers: [PumpingTimer])
         case showCounter(id: UUID)
     }
     

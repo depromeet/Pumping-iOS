@@ -6,9 +6,7 @@
 //
 
 import SwiftUI
-
 import ComposableArchitecture
-
 import Shared
 
 public struct WorkoutTimerCellView: View {

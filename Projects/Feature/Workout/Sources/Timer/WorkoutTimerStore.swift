@@ -28,7 +28,7 @@ extension WorkoutTimerStore {
                 return .none
                 
             case .endButtonTapped:
-                return .send(.goToWorkoutEnd)
+                return .send(.goToWorkoutEnd(timers: state.timers))
                 
             case .timerTicked:
                 guard let targetTimerCell = state.timerCells.first(where: { $0.id == state.currentActiveTimerCellID }),

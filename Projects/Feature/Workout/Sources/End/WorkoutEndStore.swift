@@ -20,6 +20,9 @@ extension WorkoutEndStore {
             case .completeButtonTapped:
                 return .send(.backToRoot)
                 
+            case let .timerSummaryCells(id, action):
+                return .none
+                
             case .backToRoot:
                 return .none
             }
