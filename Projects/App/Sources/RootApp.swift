@@ -6,22 +6,15 @@
 //
 
 import SwiftUI
+
 import ComposableArchitecture
+
 import Feature
 import Shared
 import Core
 
-//class AppDelegate: NSObject, UIApplicationDelegate {
-//    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-//        HealthKitManager.shared.setting()
-//        return true
-//    }
-//}
-
 @main
-struct RootApp: App {
-//    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    
+struct RootApp: App {    
     var body: some Scene {
         WindowGroup {
             RootView(store: .init(initialState: RootStore.State(), reducer: RootStore()._printChanges()))
