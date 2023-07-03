@@ -12,16 +12,29 @@ import FeatureWorkoutInterface
 
 extension WorkoutEndStore {
     public init() {
+        
+        @Dependency(\.workoutClient) var workoutClient
+
         let reducer: Reduce<State, Action> = .init { state, action in
             switch action {
             case .binding:
                 return .none
                 
             case .completeButtonTapped:
-                return .send(.backToRoot)
+                return .send(.makeWorkoutRequest(timer: state.timers))
                 
-            case let .timerSummaryCells(id, action):
+            case .timerSummaryCells:
                 return .none
+                
+            case let .makeWorkoutRequest(timers):
+                return .task { [timers = timers] in
+                    await .makeWorkoutResponse(id: TaskResult {
+                        try await workoutClient.makeWorkout(timers)
+                    })
+                }
+                
+            case .makeWorkoutResponse:
+                return .send(.backToRoot)
                 
             case .backToRoot:
                 return .none
