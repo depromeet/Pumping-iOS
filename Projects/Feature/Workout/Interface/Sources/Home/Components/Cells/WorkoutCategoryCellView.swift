@@ -21,7 +21,7 @@ public struct WorkoutCategoryCellView: View {
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             HStack {
-                Text(viewStore.state.workoutCategoryIdentifier.rawValue)
+                Text(viewStore.state.workoutCategoryIdentifier.title)
                     .font(.pretendard(size: 15, type: .medium))
                     .padding([.top, .bottom], 16)
                     .padding(.leading, 20)

@@ -25,7 +25,7 @@ public struct WorkoutTimerSummaryCellView: View {
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             HStack {
-                Text(viewStore.state.timer.workoutCategoryIdentifier.rawValue)
+                Text(viewStore.state.timer.workoutCategoryIdentifier.title)
                     .font(.pretendard(size: 15, type: .medium))
                     .padding([.top, .bottom], 16)
                     .padding(.leading, 20)
