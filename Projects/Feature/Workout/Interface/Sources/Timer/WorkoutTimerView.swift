@@ -28,8 +28,9 @@ public struct WorkoutTimerView: View {
                     WorkoutCounterView(store: $0)
                 },
                 else: {
-                    VStack {
+                    VStack(spacing: .zero) {
                         titleView(viewStore: viewStore)
+                            .padding(.top, 16)
                         
                         resultView(viewStore: viewStore)
                             .padding(.top, 64)
