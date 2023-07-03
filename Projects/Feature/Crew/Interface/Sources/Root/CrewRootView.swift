@@ -6,7 +6,9 @@
 //
 
 import SwiftUI
+
 import ComposableArchitecture
+
 import FeatureProfileInterface
 import SharedDesignSystem
 
@@ -34,6 +36,12 @@ public struct CrewRootView: View {
                         case .profile:
                             IfLetStore(self.store.scope(state: \.profile, action: { .profile($0) })) {
                                 ProfileView(store: $0, profileSubject: .my)
+                                    .toolbarRole(.editor)
+                            }
+
+                        case .widthOfChange:
+                            IfLetStore(self.store.scope(state: \.widthOfChange, action: { .widthOfChange($0) })) {
+                                WidthOfChangeView(store: $0)
                                     .toolbarRole(.editor)
                             }
                         }
