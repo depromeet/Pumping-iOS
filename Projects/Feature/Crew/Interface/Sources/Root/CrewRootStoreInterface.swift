@@ -22,13 +22,14 @@ public struct CrewRootStore: ReducerProtocol {
     private let crewRankingStore: CrewRankingStore
     private let profileStore: ProfileStore
     private let widthOfChangeStore: WidthOfChangeStore
-    
+
     public init(
         reducer: Reduce<State, Action>,
         crewHomeStore: CrewHomeStore,
         crewRankingStore: CrewRankingStore,
         profileStore: ProfileStore,
         widthOfChangeStore: WidthOfChangeStore
+        profileStore: ProfileStore
     ) {
         self.reducer = reducer
         self.crewHomeStore = crewHomeStore
@@ -64,15 +65,13 @@ public struct CrewRootStore: ReducerProtocol {
         Scope(state: \.crewHome, action: /Action.crewHome) {
             crewHomeStore
         }
+
         reducer
             .ifLet(\.crewRanking, action: /Action.crewRanking) {
                 crewRankingStore
             }
-//            .ifLet(\.profile, action: /Action.profile) {
-//                profileStore
-//            }
-//            .ifLet(\.widthOfChange, action: /Action.widthOfChange) {
-//                widthOfChangeStore
-//            }
+            .ifLet(\.profile, action: /Action.profile) {
+                profileStore
+            }
     }
 }

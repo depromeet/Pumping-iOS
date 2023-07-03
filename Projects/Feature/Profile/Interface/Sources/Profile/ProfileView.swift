@@ -24,39 +24,39 @@ public struct ProfileView: View {
     public var body: some View {
         WithViewStore(self.store) { viewStore in
             GeometryReader { geometry in
-                VStack(spacing: 0) {
-                    VStack {
-                        HStack {
-                            VStack(alignment: .leading, spacing: 30) {
+                ScrollView {
+                    VStack(spacing: 10) {
+                        VStack {
+                            HStack {
+                                VStack(alignment: .leading, spacing: 30) {
 
-                                ProfileHeaderView(profileSubject: profileSubject)
+                                    ProfileHeaderView(profileSubject: profileSubject)
 
-                                Button {
+                                    Button {
 
-                                } label: {
-                                    Image(systemName: "heart.fill")
-                                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                        .foregroundColor(.black)
+                                    } label: {
+                                        SharedDesignSystemAsset.Images.thumbsUp.swiftUIImage
+                                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                            .foregroundColor(.black)
+                                    }
+                                    .frame(width: 60, height: 60)
+                                    .background(.white)
+                                    .clipShape(Circle())
                                 }
-                                .frame(width: 50, height: 50)
-                                .background(.white)
-                                .clipShape(Circle())
+
+                                Spacer()
                             }
-
-                            Spacer()
+                            .padding(.leading, 20)
+                            .overlay(alignment: .trailing) {
+                                Image
+                                    .boy
+                                    .resizable()
+                                    .frame(width: 280, height: 220)
+                                    .offset(x: 35, y: 10)
+                            }
                         }
-                        .padding(.leading, 20)
-                        .overlay(alignment: .trailing) {
-                            Image
-                                .boy
-                                .resizable()
-                                .frame(width: 300, height: 250)
-                                .offset(x: 35)
-                        }
-                    }
-                    .frame(height: geometry.size.height * 0.32)
+                        .frame(height: geometry.size.height * 0.32)
 
-                    ScrollView {
                         VStack {
                             Spacer()
                                 .padding(.top, 15)
@@ -129,7 +129,6 @@ public struct ProfileView: View {
                 }
                 .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
                 .background(Color.colorGrey50)
-
             }
         }
     }

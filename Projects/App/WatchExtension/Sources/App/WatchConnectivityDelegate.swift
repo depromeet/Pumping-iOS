@@ -10,18 +10,20 @@ import WatchConnectivity
 
 import ComposableArchitecture
 
-public class HomeWatchConnectivityDelegate: NSObject, WCSessionDelegate {
-    public weak var viewStore: ViewStoreOf<HomeStore>?
+public class WatchConnectivityDelegate: NSObject, ObservableObject, WCSessionDelegate {
     public weak var session: WCSession?
     
-    init(viewStore: ViewStoreOf<HomeStore>, session: WCSession = .default) {
-        self.viewStore = viewStore
+    init(session: WCSession = .default) {
         self.session = session
         
         super.init()
         
         self.session?.delegate = self
         self.session?.activate()
+    }
+    
+    public func sendMessage(key: String, value: Double) {
+        self.session?.sendMessage([key: value], replyHandler: nil)
     }
     
     public func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {

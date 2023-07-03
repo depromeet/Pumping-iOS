@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+
 import FeatureCrewInterface
 import FeatureProfileInterface
 
@@ -50,7 +51,8 @@ extension CrewRootStore {
             crewHomeStore: .init(),
             crewRankingStore: .init(),
             profileStore: profileStore,
-            widthOfChangeStore: widthOfChangeStore
+            widthOfChangeStore: widthOfChangeStore,
+            profileStore: .init()
         )
     }
 }

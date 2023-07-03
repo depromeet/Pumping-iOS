@@ -10,6 +10,9 @@ import Foundation
 import HealthKit
 
 public protocol HealthKitManagerType {
+    /// HealthStore
+    var healthStore: HKHealthStore { get }
+    
     /// HealthKit에 대한 인증을 진행하고, 백그라운드 딜리버리를 등록합니다.
     ///
     /// - Parameters:
@@ -29,8 +32,7 @@ public protocol HealthKitManagerType {
 
 public class HealthKitManager: HealthKitManagerType {
     public static let shared = HealthKitManager()
-    
-    private let healthStore = HKHealthStore()
+    public let healthStore = HKHealthStore()
     
     public func requestAuthorizationAndRegisterBackgroundDelivery(
         toShare: Set<HKSampleType>? = nil,
@@ -39,6 +41,14 @@ public class HealthKitManager: HealthKitManagerType {
         requestAuthorization(toShare: toShare, read: read) { [weak self] (success, errorOrNil) in
             self?.registerBackgroundDelivery(targets: read)
         }
+    }
+    
+    public func requestAuthorizationAndObserverQuery(
+        toShare: Set<HKSampleType>? = nil,
+        toObserve: Set<HKSampleType>? = nil
+    ) {
+        let writeDataTypes = toShare ?? self.dataTypesToWrite()
+        let readDataTypes = toObserve ?? self.dataTypesToRead()
     }
     
     public func requestObserverQuery(
@@ -70,7 +80,7 @@ public class HealthKitManager: HealthKitManagerType {
         healthStore.execute(query)
     }
     
-    private func requestAuthorization(
+    public func requestAuthorization(
         toShare: Set<HKSampleType>? = nil,
         read: Set<HKSampleType>? = nil,
         completion: @escaping (Bool, Error?) -> Void
@@ -78,9 +88,22 @@ public class HealthKitManager: HealthKitManagerType {
         let writeDataTypes = toShare ?? self.dataTypesToWrite()
         let readDataTypes = read ?? self.dataTypesToRead()
         
+        let typesToShare: Set = [
+            HKQuantityType.workoutType()
+        ]
+
+        let typesToRead: Set = [
+            // 심박수와 칼로리 소모만 가져옴
+            HKQuantityType.quantityType(forIdentifier: .heartRate)!,
+            HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
+//            HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
+//            HKQuantityType.quantityType(forIdentifier: .distanceCycling)!,
+            HKObjectType.activitySummaryType()
+        ]
+        
         healthStore.requestAuthorization(
-            toShare: writeDataTypes,
-            read: readDataTypes,
+            toShare: typesToShare,
+            read: typesToRead,
             completion: completion
         )
     }
@@ -101,15 +124,14 @@ public class HealthKitManager: HealthKitManagerType {
     
     private func dataTypesToRead() -> Set<HKSampleType> {
         return .init([
-            HKObjectType.quantityType(forIdentifier: .heartRate)!,
-            HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
+            HKQuantityType.quantityType(forIdentifier: .heartRate)!,
+            HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
         ])
     }
     
     private func dataTypesToWrite() -> Set<HKSampleType> {
         return .init([
-            HKObjectType.quantityType(forIdentifier: .heartRate)!,
-            HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
+            HKQuantityType.workoutType()
         ])
     }
 }

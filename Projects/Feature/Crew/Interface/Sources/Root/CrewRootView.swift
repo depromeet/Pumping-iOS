@@ -6,7 +6,9 @@
 //
 
 import SwiftUI
+
 import ComposableArchitecture
+
 import FeatureProfileInterface
 import SharedDesignSystem
 
@@ -23,12 +25,12 @@ public struct CrewRootView: View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             NavigationStack(path: viewStore.binding(\.$path)) {
                 CrewHomeView(store: self.store.scope(state: \.crewHome, action: { .crewHome($0) }))
+                    .navigationBarTitleDisplayMode(.inline)
                     .navigationDestination(for: CrewScene.self) { scene in
                         switch scene {
                         case .crewRanking:
                             IfLetStore(self.store.scope(state: \.crewRanking, action: { .crewRanking($0) })) {
                                 CrewRankingView(store: $0)
-                                    .toolbarRole(.editor)
                             }
                             
                         case .profile:
