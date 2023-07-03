@@ -29,7 +29,6 @@ public struct CrewRootStore: ReducerProtocol {
         crewRankingStore: CrewRankingStore,
         profileStore: ProfileStore,
         widthOfChangeStore: WidthOfChangeStore
-        profileStore: ProfileStore
     ) {
         self.reducer = reducer
         self.crewHomeStore = crewHomeStore

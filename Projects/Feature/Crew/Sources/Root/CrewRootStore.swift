@@ -26,11 +26,12 @@ extension CrewRootStore {
                     state.path.append(.profile)
                     state.profile = .init()
                     return .none
-
-                case .goToCrewRankingView:
-                    state.path.append(.crewRanking)
-                    state.crewRanking = .init()
-                    return .none
+                
+                //TODO: 머지 컨플릭트 해결후 버그
+//                case .goToCrewRankingView:
+//                    state.path.append(.crewRanking)
+//                    state.crewRanking = .init()
+//                    return .none
 
                 default:
                     return .none
@@ -51,8 +52,7 @@ extension CrewRootStore {
             crewHomeStore: .init(),
             crewRankingStore: .init(),
             profileStore: profileStore,
-            widthOfChangeStore: widthOfChangeStore,
-            profileStore: .init()
+            widthOfChangeStore: widthOfChangeStore
         )
     }
 }
