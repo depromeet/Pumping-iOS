@@ -30,7 +30,8 @@ public final class HealthKitAuthorizationHelper : HealthKitAuthorizationHelperIn
     
     public func checkAuthorizationAndRequest(onSuccess : @escaping () -> Void, onFailure : @escaping () -> Void) {
         // 데이터 접근 가능 여부에 따라 권한 요청 메소드 호출
-        if HKHealthStore.isHealthDataAvailable() && !checkAuthorizationStatus() {
+//        if HKHealthStore.isHealthDataAvailable() && !checkAuthorizationStatus() {
+            if HKHealthStore.isHealthDataAvailable() {
             requestAuthorization(onSuccess: onSuccess, onFailure : onFailure)
         }
     }

@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+
 import ComposableArchitecture
-import SharedDesignSystem
-import CoreHealthKitManager
+
+import Core
+import Shared
+
 
 struct OnboardingPermissionView: View {
     public let store: StoreOf<OnboardingPermissionStore>
@@ -25,10 +28,12 @@ struct OnboardingPermissionView: View {
                     Spacer()
                     
                     PumpingSubmitButton(title: "권한 부여", isEnable: true) {
-                        HealthKitAuthorizationHelper.shared.checkAuthorizationAndRequest {
-                            viewStore.send(.goToProfile)
-                        } onFailure: {
-                            viewStore.send(.failToAuthorize)
+                        HealthKitManager.shared.requestAuthorization { (success, errorOrNil) in
+                            if success {
+                                viewStore.send(.goToProfile)
+                            } else {
+                                viewStore.send(.failToAuthorize)
+                            }
                         }
                     }
                 }

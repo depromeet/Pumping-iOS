@@ -39,7 +39,7 @@ public struct RootStore: ReducerProtocol {
                 state = .mainTab(.init())
                 return .none
                 
-            default :
+            default:
                 return .none
                 
             }

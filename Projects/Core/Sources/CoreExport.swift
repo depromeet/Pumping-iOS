@@ -9,7 +9,5 @@
 @_exported import CoreNetworkInterface
 @_exported import CoreKeyChainStore
 @_exported import CoreKeyChainStoreInterface
-@_exported import CoreHealthKitManager
-@_exported import CoreHealthKitManagerInterface
 @_exported import CoreHealthKit
 @_exported import CoreHealthKitInterface
