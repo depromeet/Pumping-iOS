@@ -12,6 +12,9 @@ public struct PumpingTimer: Equatable {
     public let workoutCategoryIdentifier: WorkoutCategoryIdentifier
     public var time: Int
     
+    public var heartRates: [Double]
+    public var calorie: Double
+    
     public var pinTime: Int
     public var isActive: Bool
     
@@ -19,12 +22,16 @@ public struct PumpingTimer: Equatable {
         id: UUID,
         workoutCategoryIdentifier: WorkoutCategoryIdentifier,
         time: Int = 0,
+        heartRates: [Double] = [],
+        calorie: Double = 0,
         pinTime: Int = 0,
         isActive: Bool = false
     ) {
         self.id = id
         self.workoutCategoryIdentifier = workoutCategoryIdentifier
         self.time = time
+        self.heartRates = heartRates
+        self.calorie = calorie
         self.pinTime = pinTime
         self.isActive = isActive
     }

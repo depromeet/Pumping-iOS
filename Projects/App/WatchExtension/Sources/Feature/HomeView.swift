@@ -11,7 +11,9 @@ import ComposableArchitecture
 
 public struct HomeView: View {
     public let store: StoreOf<HomeStore>
-    @State private var watchConnectivityDelegate: HomeWatchConnectivityDelegate?
+    
+    @EnvironmentObject private var workoutDelegate: WorkoutDelegate
+    @EnvironmentObject private var watchConnectivityDelegate: WatchConnectivityDelegate
     
     public init(store: StoreOf<HomeStore>) {
         self.store = store
@@ -20,22 +22,25 @@ public struct HomeView: View {
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack(spacing: .zero) {
-                Text("recive")
+                Text("heartrate: \(viewStore.heartRate)")
                 
-                Button("Send1") {
-                    viewStore.send(.test1ButtonTapped)
-                }
+                Text("calorie: \(viewStore.calorie)")
                 
-                Button("Send2") {
-                    viewStore.send(.test2ButtonTapped)
+                Button("start") {
+                    workoutDelegate.startWorkout(workoutType: .functionalStrengthTraining)
                 }
             }
             .onAppear {
-                let watchConnectivityDelegate = HomeWatchConnectivityDelegate(viewStore: viewStore)
-                
-                self.watchConnectivityDelegate = watchConnectivityDelegate
-                viewStore.send(.setWatchConnectivityDelegate(watchConnectivityDelegate))
+                workoutDelegate.requestAuth()
             }
+            .onReceive(workoutDelegate.$heartRate, perform: { heartRate in
+                viewStore.send(.setHeartRate(Int(heartRate)))
+                watchConnectivityDelegate.sendMessage(key: "heartRate", value: heartRate)
+            })
+            .onReceive(workoutDelegate.$calorie, perform: { calorie in
+                viewStore.send(.setCalorie(Int(calorie)))
+                watchConnectivityDelegate.sendMessage(key: "calorie", value: calorie)
+            })
             .ignoresSafeArea()
         }
     }

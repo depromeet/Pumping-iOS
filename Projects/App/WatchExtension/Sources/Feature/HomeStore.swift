@@ -15,7 +15,8 @@ public struct HomeStore: ReducerProtocol {
     public init() {}
     
     public struct State: Equatable {
-        public weak var watchConnectivityDelegate: HomeWatchConnectivityDelegate?
+        public var heartRate: Int = 0
+        public var calorie: Int = 0
         
         public init() { }
     }
@@ -23,10 +24,8 @@ public struct HomeStore: ReducerProtocol {
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         
-        case setWatchConnectivityDelegate(HomeWatchConnectivityDelegate)
-        
-        case test1ButtonTapped
-        case test2ButtonTapped
+        case setHeartRate(Int)
+        case setCalorie(Int)
     }
     
     public var body: some ReducerProtocol<State, Action> {
@@ -37,31 +36,12 @@ public struct HomeStore: ReducerProtocol {
             case .binding:
                 return .none
                 
-            case let .setWatchConnectivityDelegate(watchConnectivityDelegate):
-                state.watchConnectivityDelegate = watchConnectivityDelegate
-                HealthKitManager.shared.requestObserverQuery() { [watchConnectivityDelegate] (query, samplesOrNil, deletedObjectsOrNil, newAnchor, errorOrNil) in
-                    guard let samples = samplesOrNil, let sample = samples.last as? HKQuantitySample else {
-                        return
-                    }
-                    
-                    print(sample)
-                    
-                    if sample.sampleType == .quantityType(forIdentifier: .heartRate) {
-                        watchConnectivityDelegate.session?.sendMessage(
-                            ["message" : sample.quantity.doubleValue(for: HKUnit(from: "count/min"))],
-                            replyHandler: nil)
-                    } else if sample.sampleType == .quantityType(forIdentifier: .activeEnergyBurned) {
-                        watchConnectivityDelegate.session?.sendMessage(["message" : sample.quantity.doubleValue(for: HKUnit.kilocalorie())], replyHandler: nil)
-                    }
-                }
-                
+            case let .setHeartRate(heartRate):
+                state.heartRate = heartRate
                 return .none
                 
-            case .test1ButtonTapped:
-                debugPrint("1")
-                return .none
-                
-            default:
+            case let .setCalorie(calorie):
+                state.calorie = calorie
                 return .none
             }
         }

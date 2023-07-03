@@ -46,8 +46,8 @@ extension WorkoutRootStore {
                 
             case let .workoutTimer(action):
                 switch action {
-                case .goToWorkoutEnd:
-                    state.workoutEnd = .init()
+                case let .goToWorkoutEnd(timers):
+                    state.workoutEnd = .init(timers: timers)
                     state.path.append(.end)
                     return .none
                     

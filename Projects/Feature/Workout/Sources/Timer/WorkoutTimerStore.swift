@@ -28,7 +28,7 @@ extension WorkoutTimerStore {
                 return .none
                 
             case .endButtonTapped:
-                return .send(.goToWorkoutEnd)
+                return .send(.goToWorkoutEnd(timers: state.timers))
                 
             case .timerTicked:
                 guard let targetTimerCell = state.timerCells.first(where: { $0.id == state.currentActiveTimerCellID }),
@@ -81,6 +81,35 @@ extension WorkoutTimerStore {
                         }
                     }
                 }
+                
+            case let .updateHeartRate(heartRate):
+                state.heartRateToCalc = heartRate
+                
+                if let id = state.currentActiveTimerCellID {
+                    state.heartRateToShow = heartRate
+                    guard let timerIndex = state.timerCells.firstIndex(where: { $0.id == id }) else { return .none }
+                    var targetTimer = state.timers[timerIndex]
+                    targetTimer.heartRates.append(heartRate)
+
+                    return .send(.updateTimer(index: timerIndex, timer: targetTimer))
+                }
+                
+                return .none
+                
+            case let .updateCalorie(calorie):
+                let diff = calorie - state.calorieToCalc
+                state.calorieToCalc = calorie
+                
+                if let id = state.currentActiveTimerCellID {
+                    state.calorieToShow += diff
+                    guard let timerIndex = state.timerCells.firstIndex(where: { $0.id == id }) else { return .none }
+                    var targetTimer = state.timers[timerIndex]
+                    targetTimer.calorie += diff
+                    
+                    return .send(.updateTimer(index: timerIndex, timer: targetTimer))
+                }
+                
+                return .none
                 
             case let .updateTimerCell(index, timerCellState):
                 state.timerCells.update(timerCellState, at: index)

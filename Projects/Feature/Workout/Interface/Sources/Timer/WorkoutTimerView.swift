@@ -14,6 +14,8 @@ import SharedDesignSystem
 public struct WorkoutTimerView: View {    
     public let store: StoreOf<WorkoutTimerStore>
     
+    @EnvironmentObject private var watchConnectivityDelegate: WatchConnectivityDelegate
+    
     public init(store: StoreOf<WorkoutTimerStore>) {
         self.store = store
     }
@@ -36,6 +38,12 @@ public struct WorkoutTimerView: View {
                             viewStore.send(.endButtonTapped)
                         })
                         .padding()
+                    }
+                    .onReceive(watchConnectivityDelegate.$heartRate) { heartRate in
+                        viewStore.send(.updateHeartRate(heartRate))
+                    }
+                    .onReceive(watchConnectivityDelegate.$calorie) { calorie in
+                        viewStore.send(.updateCalorie(calorie))
                     }
                     .background(Color.colorGrey000)
                     .navigationBarBackButtonHidden(true)
@@ -74,13 +82,13 @@ public struct WorkoutTimerView: View {
     
     private func resultView(viewStore: ViewStoreOf<WorkoutTimerStore>) -> some View {
         VStack {
-            resultTextView(type: .time, value: viewStore.state.time)
-            resultTextView(type: .heatRate, value: viewStore.state.heartRate)
-            resultTextView(type: .calorie, value: viewStore.state.calorie)
+            resultTextView(type: .time, value: Double(viewStore.state.time))
+            resultTextView(type: .heatRate, value: viewStore.state.heartRateToShow)
+            resultTextView(type: .calorie, value: viewStore.state.calorieToShow)
         }
     }
     
-    private func resultTextView(type: WorkoutTimerStore.ResultType, value: Int) -> some View {
+    private func resultTextView(type: WorkoutTimerStore.ResultType, value: Double) -> some View {
         VStack(spacing: 16) {
             HStack(spacing: 8) {
                 type.image

@@ -7,6 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
+import Domain
 
 public struct WorkoutEndStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
@@ -16,8 +17,22 @@ public struct WorkoutEndStore: ReducerProtocol {
     }
     
     public struct State: Equatable {
-        public init() {
-            
+        public var timers: [PumpingTimer] = []
+        public var timerSummaryCells: IdentifiedArrayOf<WorkoutTimerSummaryCellStore.State> = []
+        public var totalTime: Int = 0
+        public var totalCalorie: Int = 0
+        
+        public init(timers: [PumpingTimer]) {
+            self.timers = timers
+            self.timerSummaryCells = makeTimerSummaryCells(from: timers)
+            self.totalTime = timers.map(\.time).reduce(0, +)
+            self.totalCalorie = Int(timers.map(\.calorie).reduce(0, +))
+        }
+        
+        private func makeTimerSummaryCells(from timers: [PumpingTimer]) -> IdentifiedArrayOf<WorkoutTimerSummaryCellStore.State> {
+            return .init(uniqueElements: timers.map { timer in
+                return .init(id: .init(), timer: timer)
+            })
         }
     }
     
@@ -25,6 +40,8 @@ public struct WorkoutEndStore: ReducerProtocol {
         case binding(BindingAction<State>)
         
         case completeButtonTapped
+        
+        case timerSummaryCells(id: WorkoutTimerSummaryCellStore.State.ID, action: WorkoutTimerSummaryCellStore.Action)
         
         case backToRoot
     }
