@@ -34,10 +34,14 @@ public class WatchConnectivityDelegate: NSObject, ObservableObject ,WCSessionDel
         }
     }
     
-    public func sendTimers(timers: [PumpingTimer]) {
+    public func sendPumpingTimerData(from timers: [PumpingTimer], isHardPush: Bool = false) {
         DispatchQueue.main.async {
             do {
-                let data = try JSONEncoder().encode(timers)
+                let pumpingTimerData = PumpingTimerData(
+                    timers: timers,
+                    updatedTime: Date().timeIntervalSince1970,
+                    isHardPush: isHardPush)
+                let data = try JSONEncoder().encode(pumpingTimerData)
                 self.session?.sendMessageData(data, replyHandler: nil)
                 debugPrint("iOS send data: \(data)")
             } catch {

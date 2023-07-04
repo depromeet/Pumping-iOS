@@ -13,6 +13,8 @@ import ComposableArchitecture
 public class WatchConnectivityDelegate: NSObject, ObservableObject, WCSessionDelegate {
     public weak var session: WCSession?
     
+    @Published public var pumpingTimerData: PumpingTimerData = .init(timers: [], updatedTime: Date().timeIntervalSince1970)
+    
     init(session: WCSession = .default) {
         self.session = session
         
@@ -29,6 +31,10 @@ public class WatchConnectivityDelegate: NSObject, ObservableObject, WCSessionDel
         }
     }
     
+    public func sendPumpingTimerData() {
+        
+    }
+    
     public func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
     }
     
@@ -41,8 +47,9 @@ public class WatchConnectivityDelegate: NSObject, ObservableObject, WCSessionDel
     public func session(_ session: WCSession, didReceiveMessageData messageData: Data) {
         DispatchQueue.main.async {
             do {
-                let timers = try JSONDecoder().decode([PumpingTimer].self, from: messageData)
-                debugPrint("watchOS recieved \(timers)")
+                let pumpingTimerData = try JSONDecoder().decode(PumpingTimerData.self, from: messageData)
+                self.pumpingTimerData = pumpingTimerData
+                debugPrint("watchOS recieved \(pumpingTimerData)")
             } catch {
                 debugPrint(error)
             }

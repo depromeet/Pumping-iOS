@@ -36,10 +36,7 @@ public struct WorkoutTimerView: View {
                         
                         PumpingSubmitButton(title: "종료", completion: {
 //                            viewStore.send(.endButtonTapped)
-                            watchConnectivityDelegate.sendMessage(key: "timer", value: viewStore.state.timers.last)
-                            watchConnectivityDelegate.sendMessage(key: "timer1", value: 1)
-//                            watchConnectivityDelegate.sendMessageData(data: viewStore.timers)
-                            watchConnectivityDelegate.sendTimers(timers: viewStore.state.timers)
+                            watchConnectivityDelegate.sendPumpingTimerData(from: viewStore.state.timers)
                         })
                         .padding()
                     }
@@ -48,7 +45,6 @@ public struct WorkoutTimerView: View {
                     }
                     .onReceive(watchConnectivityDelegate.$calorie) { calorie in
                         viewStore.send(.updateCalorie(calorie))
-                        watchConnectivityDelegate.sendTimers(timers: viewStore.state.timers)
                         watchConnectivityDelegate.sendMessage(key: "timer", value: viewStore.state.timers)
                     }
                     .background(Color.colorGrey000)
