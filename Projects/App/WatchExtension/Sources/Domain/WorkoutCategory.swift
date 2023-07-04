@@ -1,8 +1,8 @@
 //
-//  PumpingWorkoutCategoryIdentifier.swift
-//  DomainWorkoutInterface
+//  WorkoutCategory.swift
+//  AppWatchExtension
 //
-//  Created by 송영모 on 2023/06/17.
+//  Created by 송영모 on 2023/07/04.
 //
 
 import Foundation

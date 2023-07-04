@@ -7,7 +7,10 @@
 
 import Foundation
 import WatchConnectivity
+
 import ComposableArchitecture
+
+import Domain
 
 public class WatchConnectivityDelegate: NSObject, ObservableObject ,WCSessionDelegate {
     public weak var session: WCSession?
@@ -24,6 +27,25 @@ public class WatchConnectivityDelegate: NSObject, ObservableObject ,WCSessionDel
         self.session?.activate()
     }
     
+    public func sendMessage(key: String, value: Any) {
+        DispatchQueue.main.async {
+            self.session?.sendMessage([key: value], replyHandler: nil)
+            debugPrint("iOS send key: \(key) value: \(value)")
+        }
+    }
+    
+    public func sendTimers(timers: [PumpingTimer]) {
+        DispatchQueue.main.async {
+            do {
+                let data = try JSONEncoder().encode(timers)
+                self.session?.sendMessageData(data, replyHandler: nil)
+                debugPrint("iOS send data: \(data)")
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
     public func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         
     }
@@ -34,6 +56,12 @@ public class WatchConnectivityDelegate: NSObject, ObservableObject ,WCSessionDel
     
     public func sessionDidDeactivate(_ session: WCSession) {
         
+    }
+    
+    public func session(_ session: WCSession, didReceiveMessageData messageData: Data) {
+        DispatchQueue.main.async {
+            debugPrint("iOS recieved \(messageData)")
+        }
     }
     
     public func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
