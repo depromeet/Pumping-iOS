@@ -7,9 +7,12 @@
 
 import ComposableArchitecture
 import FeatureCrewInterface
+import Domain
 
 extension CrewJoinStore {
     public init() {
+        @Dependency(\.crewClient) var crewClient
+        
         let reducer: Reduce<State, Action> = .init { state, action in
             switch action {
             case .binding:
@@ -25,9 +28,22 @@ extension CrewJoinStore {
                 state.code = ""
                 return .none
 
-            case .crewJoinButtonTapped:
-                // 크루 참여 API
+            case .joinCrew:
+                return .task { [code = state.code] in
+                    await .joinCrewResponse(
+                        TaskResult {
+                            try await crewClient.joinCrew(code)
+                        }
+                    )
+                }
+                
+            case let .joinCrewResponse(.success(crewInfo)):
+                print(crewInfo)
                 return .send(.dismissCrewJoinView)
+                
+            case let .joinCrewResponse(.failure(error)):
+                print(error.localizedDescription)
+                return .none
                 
             default:
                 return .none

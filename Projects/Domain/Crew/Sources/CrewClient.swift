@@ -11,13 +11,22 @@ import DomainCrewInterface
 import CoreNetwork
 
 extension CrewClient: DependencyKey {
-    public static let liveValue = CrewClient { crewName, goalCount in
-        let makeCrewRequestDTO = MakeCrewRequestDTO(crewName: crewName, goalCount: goalCount)
-        let apiEndpoint = CrewEndpoint.makeCrew(makeCrewRequestDTO)
-        let response = try await NetworkProvider.shared.sendRequest(apiEndpoint).toDomain()
-        
-        return response        
-    }
+    public static let liveValue = CrewClient(
+        makeCrew: { crewName, goalCount in
+            let makeCrewRequestDTO = MakeCrewRequestDTO(crewName: crewName, goalCount: goalCount)
+            let apiEndpoint = CrewEndpoint.makeCrew(makeCrewRequestDTO)
+            let response = try await NetworkProvider.shared.sendRequest(apiEndpoint).toDomain()
+            
+            return response
+        },
+        joinCrew: { code in
+            let apiEndpoint = CrewEndpoint.joinCrew(code)
+            let response = try await NetworkProvider.shared.sendRequest(apiEndpoint).toDomain()
+            
+            return response
+        }
+    )
+    
 }
 
 extension DependencyValues {

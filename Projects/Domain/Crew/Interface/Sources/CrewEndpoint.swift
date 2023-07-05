@@ -18,4 +18,12 @@ public struct CrewEndpoint {
                         bodyParameters: requestDTO,
                         headers: ["Authorization" : "Bearer \(accessToken)"])
     }
+    
+    public static func joinCrew(_ code: String) -> Endpoint<MakeCrewResponseDTO> {
+        let accessToken = KeyChainStore.shared.load(property: .accessToken)
+        
+        return Endpoint(path: "crews/join/\(code)",
+                        httpMethod: .post,
+                        headers: ["Authorization" : "Bearer \(accessToken)"])
+    }
 }
