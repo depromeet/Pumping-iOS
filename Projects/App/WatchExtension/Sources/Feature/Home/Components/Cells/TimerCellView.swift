@@ -19,14 +19,12 @@ public struct TimerCellView: View {
     
     public var body: some View {
         WithViewStore(self.store) { viewStore in
-            VStack {
+            VStack(alignment: .center) {
                 Text("\(viewStore.timer.workoutCategoryIdentifier.rawValue)")
                 
                 Spacer()
                 
-                Text("\(viewStore.timer.time)")
-                Text("\(viewStore.timer.calorie)")
-                Text("\(viewStore.timer.heartRateSum)")
+                resultListView(viewStore: viewStore)
                 
                 Spacer()
             }
@@ -34,7 +32,7 @@ public struct TimerCellView: View {
     }
     
     private func resultListView(viewStore: ViewStoreOf<TimerCellStore>) -> some View {
-        VStack {
+        VStack(alignment: .leading, spacing: 16) {
             resultView(type: .time, value: Double(viewStore.state.timer.time))
             resultView(type: .heatRate, value: viewStore.state.timer.heartRateSum / Double(viewStore.state.timer.heartRateCount))
             resultView(type: .calorie, value: viewStore.state.timer.calorie)
@@ -42,28 +40,22 @@ public struct TimerCellView: View {
     }
     
     private func resultView(type: TimerCellStore.ResultType, value: Double) -> some View {
-        VStack(spacing: 16) {
-            HStack(spacing: 8) {
+            HStack(spacing: 12) {
                 type.image
                     .resizable()
-                    .frame(width: 24, height: 24)
+                    .frame(width: 25, height: 25)
                 
-                Text(type.title)
-                    .font(.pretendard(size: 16, type: .bold))
-                    .foregroundColor(PumpingColors.colorGrey800.swiftUIColor)
+                Text(type.toSyntax(value: value))
+                    .font(.tenada(size: 20))
+                    .fontWeight(.bold)
+                    .foregroundColor({switch type {
+                    case .time:
+                        return PumpingColors.colorCyan200.swiftUIColor
+                    case .heatRate:
+                        return PumpingColors.colorTeal300.swiftUIColor
+                    case .calorie:
+                        return PumpingColors.colorGreen400.swiftUIColor
+                    }}())
             }
-            
-            Text(type.toSyntax(value: value))
-                .font(.tenada(size: 56))
-                .baselineOffset(-10)
-                .foregroundColor({switch type {
-                case .time:
-                    return PumpingColors.colorCyan200.swiftUIColor
-                case .heatRate:
-                    return PumpingColors.colorTeal300.swiftUIColor
-                case .calorie:
-                    return PumpingColors.colorGreen400.swiftUIColor
-                }}())
-        }
     }
 }
