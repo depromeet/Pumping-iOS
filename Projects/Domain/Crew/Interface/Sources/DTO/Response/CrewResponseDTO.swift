@@ -1,5 +1,5 @@
 //
-//  MakeCrewResponseDTO.swift
+//  CrewResponseDTO.swift
 //  DomainCrewInterface
 //
 //  Created by 박현우 on 2023/07/01.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct MakeCrewResponseDTO: Codable {
+public struct CrewResponseDTO: Codable {
     
     let crewId: String
     let crewName: String
@@ -33,6 +33,6 @@ public struct MakeCrewResponseDTO: Codable {
     }
 }
 
-public extension MakeCrewResponseDTO {
-    static let mock = MakeCrewResponseDTO(crewId: "1", crewName: "8이팅", goalCount: 3, code: "XCKDd2ew", participants: ["현우", "영모", "태현"])
+public extension CrewResponseDTO {
+    static let mock = CrewResponseDTO(crewId: "1", crewName: "8이팅", goalCount: 3, code: "XCKDd2ew", participants: ["현우", "영모", "태현"])
 }
