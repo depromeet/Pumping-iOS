@@ -62,7 +62,7 @@ public class WorkoutDelegate: NSObject, ObservableObject {
         }
     }
     
-    func requestAuth() {
+    func requestAuthorization(completion: @escaping (Bool, Error?) -> Void) {
         let typesToShare: Set = [
             HKQuantityType.workoutType()
         ]
@@ -70,22 +70,9 @@ public class WorkoutDelegate: NSObject, ObservableObject {
         let typesToRead: Set = [
             HKQuantityType.quantityType(forIdentifier: .heartRate)!,
             HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
-            HKObjectType.activitySummaryType()
         ]
         
-        healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { (success, error) in
-            DispatchQueue.main.async {
-                if error != nil {
-                    print(error.debugDescription)
-                } else {
-                    if success {
-                        print("권한이 허락되었습니다")
-                    } else {
-                        print("권한이 없습니다")
-                    }
-                }
-            }
-        }
+        healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead, completion: completion)
     }
 }
 

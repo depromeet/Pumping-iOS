@@ -27,11 +27,13 @@ public struct HomeView: View {
                 Text("calorie: \(viewStore.calorie)")
                 
                 Button("start") {
-                    workoutDelegate.startWorkout(workoutType: .functionalStrengthTraining)
+                    
                 }
             }
             .onAppear {
-                workoutDelegate.requestAuth()
+                workoutDelegate.requestAuthorization { (success, errorOrNil) in
+                    workoutDelegate.startWorkout(workoutType: .functionalStrengthTraining)
+                }
             }
             .onReceive(workoutDelegate.$heartRate, perform: { heartRate in
                 viewStore.send(.setHeartRate(Int(heartRate)))
@@ -41,6 +43,9 @@ public struct HomeView: View {
                 viewStore.send(.setCalorie(Int(calorie)))
                 watchConnectivityDelegate.sendMessage(key: "calorie", value: calorie)
             })
+            .onReceive(watchConnectivityDelegate.$pumpingTimerData) { pumpingTimerData in
+                
+            }
             .ignoresSafeArea()
         }
     }

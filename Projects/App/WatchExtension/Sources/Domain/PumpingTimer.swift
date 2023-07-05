@@ -18,7 +18,7 @@ public struct PumpingTimer: Codable, Equatable {
     
     public var pinTime: Int
     public var isActive: Bool
-    
+        
     public init(
         id: UUID,
         workoutCategoryIdentifier: WorkoutCategoryIdentifier,
