@@ -322,7 +322,7 @@ public extension Target {
         newFactory.platform = .watchOS
         newFactory.deploymentTarget = Project.Environment.watchDeploymentTarget
         newFactory.product = .staticFramework
-        newFactory.sources = nil
+        newFactory.sources = .sources
         
         if module == .DesignSystem {
             newFactory.resources = ["Resources/**"]

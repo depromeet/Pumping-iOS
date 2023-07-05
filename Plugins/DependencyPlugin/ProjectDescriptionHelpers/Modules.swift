@@ -83,6 +83,7 @@ public extension ModulePath {
 
 public extension ModulePath {
     enum WatchShared: String, CaseIterable {
+        case Util
         case DesignSystem
         case ThirdPartyLib
         

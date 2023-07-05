@@ -8,6 +8,7 @@
 import SwiftUI
 
 import ComposableArchitecture
+import WatchSharedDesignSystem
 
 public struct TimerCellView: View {
     public let store: StoreOf<TimerCellStore>
@@ -29,6 +30,14 @@ public struct TimerCellView: View {
                 
                 Spacer()
             }
+        }
+    }
+    
+    private func summaryView(title: String) -> some View {
+        HStack {
+            PumpingImages.iconHeartbeat.swiftUIImage
+            
+            Text(title)
         }
     }
 }
