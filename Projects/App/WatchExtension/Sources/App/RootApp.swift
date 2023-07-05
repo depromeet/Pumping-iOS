@@ -6,7 +6,10 @@
 //
 
 import SwiftUI
+
 import ComposableArchitecture
+
+import WatchSharedDesignSystem
 
 @main
 struct RootApp: App {
@@ -18,6 +21,9 @@ struct RootApp: App {
             RootView(store: .init(initialState: RootStore.State(), reducer: RootStore()._printChanges()))
                 .environmentObject(workoutDelegate)
                 .environmentObject(watchConnectivityDelegate)
+                .onAppear {
+                    WatchSharedDesignSystemFontFamily.registerAllCustomFonts()
+                }
         }
     }
 }

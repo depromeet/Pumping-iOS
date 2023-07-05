@@ -44,10 +44,11 @@ public struct TimerCellView: View {
                 type.image
                     .resizable()
                     .frame(width: 25, height: 25)
+                    .offset(x: 0, y: 3) //FIXME: 폰트 버그 해결 후 제거
                 
                 Text(type.toSyntax(value: value))
                     .font(.tenada(size: 20))
-                    .fontWeight(.bold)
+                    .baselineOffset(-10)
                     .foregroundColor({switch type {
                     case .time:
                         return PumpingColors.colorCyan200.swiftUIColor
