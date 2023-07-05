@@ -9,7 +9,7 @@ import SwiftUI
 
 import ComposableArchitecture
 
-public struct WorkoutTimerCellView: View {
+public struct TimerCellView: View {
     public let store: StoreOf<TimerCellStore>
     
     public init(store: StoreOf<TimerCellStore>) {
@@ -19,9 +19,15 @@ public struct WorkoutTimerCellView: View {
     public var body: some View {
         WithViewStore(self.store) { viewStore in
             VStack {
+                Text("\(viewStore.timer.workoutCategoryIdentifier.rawValue)")
+                
+                Spacer()
+                
                 Text("\(viewStore.timer.time)")
                 Text("\(viewStore.timer.calorie)")
                 Text("\(viewStore.timer.heartRateSum)")
+                
+                Spacer()
             }
         }
     }

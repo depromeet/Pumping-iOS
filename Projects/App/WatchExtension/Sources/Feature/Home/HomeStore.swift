@@ -22,7 +22,11 @@ public struct HomeStore: ReducerProtocol {
         public var heartRate: Int = 0
         public var calorie: Int = 0
         
-        public init() { }
+        public init() {
+            timerCells.append(.init(id: .init(), timer: .init(id: .init(), workoutCategoryIdentifier: .aerobic, time: 300, heartRateSum: 300.0, heartRateCount: 10, calorie: 100.0, pinTime: 10, isActive: true)))
+            timerCells.append(.init(id: .init(), timer: .init(id: .init(), workoutCategoryIdentifier: .aerobic, time: 300, heartRateSum: 300.0, heartRateCount: 10, calorie: 100.0, pinTime: 10, isActive: true)))
+            timerCells.append(.init(id: .init(), timer: .init(id: .init(), workoutCategoryIdentifier: .aerobic, time: 300, heartRateSum: 300.0, heartRateCount: 10, calorie: 100.0, pinTime: 10, isActive: true)))
+        }
     }
     
     public enum Action: BindableAction, Equatable {
@@ -34,6 +38,8 @@ public struct HomeStore: ReducerProtocol {
         case setCalorie(Int)
         
         case sinkPumpingTimerData(PumpingTimerData)
+        
+        case timerCell(id: UUID, action: TimerCellStore.Action)
     }
     
     public var body: some ReducerProtocol<State, Action> {
@@ -65,6 +71,9 @@ public struct HomeStore: ReducerProtocol {
                     state.pumpingTimerData = pumpingTimerData
                     return .send(.setPumpingTimers(pumpingTimerData.timers))
                 }
+                return .none
+                
+            case .timerCell:
                 return .none
             }
         }

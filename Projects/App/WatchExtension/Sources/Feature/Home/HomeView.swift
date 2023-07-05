@@ -22,12 +22,9 @@ public struct HomeView: View {
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack(spacing: .zero) {
-                Text("heartrate: \(viewStore.heartRate)")
-                
-                Text("calorie: \(viewStore.calorie)")
-                
-                Button("start") {
-                    
+                TabView {
+                    endView()
+                    timerListView()
                 }
             }
             .onAppear {
@@ -47,6 +44,21 @@ public struct HomeView: View {
                 
             }
             .ignoresSafeArea()
+        }
+    }
+    
+    //TODO: 모든 운동 종료 기능 추가
+    private func endView() -> some View {
+        VStack {
+            Button("종료") {
+                
+            }
+        }
+    }
+    
+    private func timerListView() -> some View {
+        ForEachStore(self.store.scope(state: \.timerCells, action: HomeStore.Action.timerCell(id:action:))) {
+            TimerCellView(store: $0)
         }
     }
 }
