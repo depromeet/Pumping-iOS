@@ -18,11 +18,9 @@ struct OnboardingAvatarView: View {
             ZStack {
                 
                 if let character = viewStore.state.pickedCharacter {
-                    Text(character.rawValue)
+                    PumpingLottieView(asset: AnimationAsset.confetti)
                 } else {
-                    // lottie
-                    Color.colorGreen700
-                        .frame(height: 353)
+                    PumpingLottieView(asset: AnimationAsset.confetti)
                 }
                 
                 VStack(alignment : .leading) {
