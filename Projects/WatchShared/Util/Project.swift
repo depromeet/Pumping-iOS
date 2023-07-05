@@ -12,17 +12,9 @@ import DependencyPlugin
 let project = Project.makeModule(
     name: ModulePath.WatchShared.name+ModulePath.WatchShared.Util.rawValue,
     targets: [
-        .shared(
-            interface: .Util,
-            factory: .init()
-        ),
-        .shared(
+        .watchShared(
             implements: .Util,
-            factory: .init(
-                dependencies: [
-                    .shared(interface: .Util)
-                ]
-            )
+            factory: .init()
         ),
     ]
 )

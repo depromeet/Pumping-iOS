@@ -312,7 +312,6 @@ public extension Target {
         newFactory.product = .staticFramework
         newFactory.deploymentTarget = Project.Environment.watchDeploymentTarget
         
-        
         return make(factory: newFactory)
     }
     

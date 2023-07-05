@@ -11,6 +11,7 @@ import HealthKit
 import ComposableArchitecture
 
 import WatchSharedDesignSystem
+import WatchSharedUtil
 
 public struct HomeStore: ReducerProtocol {
     
@@ -55,6 +56,7 @@ public struct HomeStore: ReducerProtocol {
                 }
             }
         }
+    }
     
     public struct State: Equatable {
         public var pumpingTimerData: PumpingTimerData = .init(timers: [], updatedTime: Date().timeIntervalSince1970)
