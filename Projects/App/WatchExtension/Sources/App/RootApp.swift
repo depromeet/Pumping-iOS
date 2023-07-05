@@ -27,26 +27,3 @@ struct RootApp: App {
         }
     }
 }
-
-//TODO: workout session 으로 마이그레이션 후 주석 제거
-
-//@main
-//struct RootApp: App {
-//    @StateObject private var workoutManager = WorkoutManager()
-//
-//    @SceneBuilder var body: some Scene {
-//        WindowGroup {
-//            NavigationStack {
-//                StartView()
-//            }
-//            .onAppear {
-//                workoutManager.requestAuthorization()
-//            }
-//            .sheet(isPresented: $workoutManager.showingSummaryView) {
-//                SummaryView()
-//            }
-//            .environmentObject(workoutManager)
-//        }
-//    }
-//}
-//
