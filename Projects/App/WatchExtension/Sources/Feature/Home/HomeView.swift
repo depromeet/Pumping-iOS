@@ -22,24 +22,11 @@ public struct HomeView: View {
     
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
-            GeometryReader { proxy in
                 TabView {
                     endView()
-                        .frame(width: proxy.size.width, height: proxy.size.height)
-                    
-                    timerListView(size: proxy.size)
+
+                    timerListView()
                 }
-                /*
-                ScrollView(.horizontal) {
-                    HStack {
-                        endView()
-                            .frame(width: proxy.size.width, height: proxy.size.height)
-                        
-                        timerListView(size: proxy.size)
-                    }
-                }
-                 */
-            }
             .onAppear {
                 workoutDelegate.requestAuthorization { (success, errorOrNil) in
                     workoutDelegate.startWorkout(workoutType: .functionalStrengthTraining)
@@ -54,7 +41,7 @@ public struct HomeView: View {
                 watchConnectivityDelegate.sendMessage(key: "calorie", value: calorie)
             })
             .onReceive(watchConnectivityDelegate.$pumpingTimerData) { pumpingTimerData in
-                
+                viewStore.send(.sinkPumpingTimerData(pumpingTimerData))
             }
             .ignoresSafeArea()
         }
@@ -69,10 +56,9 @@ public struct HomeView: View {
         }
     }
     
-    private func timerListView(size: CGSize) -> some View {
+    private func timerListView() -> some View {
         ForEachStore(self.store.scope(state: \.timerCells, action: HomeStore.Action.timerCell(id:action:))) {
             TimerCellView(store: $0)
-                .frame(width: size.width, height: size.height)
         }
     }
 }

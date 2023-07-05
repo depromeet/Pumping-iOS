@@ -13,8 +13,8 @@ import WatchSharedDesignSystem
 
 @main
 struct RootApp: App {
-    @StateObject private var workoutDelegate = WorkoutDelegate()
-    @StateObject private var watchConnectivityDelegate = WatchConnectivityDelegate()
+    private var workoutDelegate = WorkoutDelegate()
+    private var watchConnectivityDelegate = WatchConnectivityDelegate()
     
     @SceneBuilder var body: some Scene {
         WindowGroup {

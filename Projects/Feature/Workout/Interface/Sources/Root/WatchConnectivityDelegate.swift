@@ -40,7 +40,7 @@ public class WatchConnectivityDelegate: NSObject, ObservableObject ,WCSessionDel
                 let pumpingTimerData = PumpingTimerData(
                     timers: timers,
                     updatedTime: Date().timeIntervalSince1970,
-                    isHardPush: isHardPush)
+                    isHardPush: true)
                 let data = try JSONEncoder().encode(pumpingTimerData)
                 self.session?.sendMessageData(data, replyHandler: nil)
                 debugPrint("iOS send data: \(data)")

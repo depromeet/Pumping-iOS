@@ -35,10 +35,12 @@ public struct WorkoutTimerView: View {
                             .padding(.top, 64)
                         
                         PumpingSubmitButton(title: "종료", completion: {
-//                            viewStore.send(.endButtonTapped)
-                            watchConnectivityDelegate.sendPumpingTimerData(from: viewStore.state.timers)
+                            viewStore.send(.endButtonTapped)
                         })
                         .padding()
+                    }
+                    .onChange(of: viewStore.state.time) { _ in
+                        watchConnectivityDelegate.sendPumpingTimerData(from: viewStore.state.timers)
                     }
                     .onReceive(watchConnectivityDelegate.$heartRate) { heartRate in
                         viewStore.send(.updateHeartRate(heartRate))

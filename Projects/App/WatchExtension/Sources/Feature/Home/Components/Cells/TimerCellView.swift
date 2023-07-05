@@ -40,7 +40,7 @@ public struct TimerCellView: View {
     private func resultListView(viewStore: ViewStoreOf<TimerCellStore>) -> some View {
         VStack(alignment: .leading, spacing: 16) {
             resultView(type: .time, value: Double(viewStore.state.timer.time))
-            resultView(type: .heatRate, value: viewStore.state.timer.heartRateSum / Double(viewStore.state.timer.heartRateCount))
+            resultView(type: .heatRate, value: viewStore.state.timer.heartRateSum / Double(viewStore.state.timer.heartRateCount == 0 ? 1 : viewStore.state.timer.heartRateCount))
             resultView(type: .calorie, value: viewStore.state.timer.calorie)
         }
     }

@@ -18,18 +18,14 @@ public struct HomeStore: ReducerProtocol {
     public init() {}
     
     public struct State: Equatable {
-        public var pumpingTimerData: PumpingTimerData = .init(timers: [], updatedTime: Date().timeIntervalSince1970)
-        public var pumpingTimers: [PumpingTimer] = []
-        public var timerCells: IdentifiedArrayOf<TimerCellStore.State> = []
+        @BindingState public var pumpingTimerData: PumpingTimerData = .init(timers: [], updatedTime: Date().timeIntervalSince1970)
+        @BindingState public var pumpingTimers: [PumpingTimer] = []
+        @BindingState public var timerCells: IdentifiedArrayOf<TimerCellStore.State> = []
         
         public var heartRate: Int = 0
         public var calorie: Int = 0
         
-        public init() {
-            timerCells.append(.init(id: .init(), timer: .init(id: .init(), workoutCategoryIdentifier: .aerobic, time: 300, heartRateSum: 300.0, heartRateCount: 10, calorie: 100.0, pinTime: 10, isActive: true)))
-            timerCells.append(.init(id: .init(), timer: .init(id: .init(), workoutCategoryIdentifier: .aerobic, time: 300, heartRateSum: 300.0, heartRateCount: 10, calorie: 100.0, pinTime: 10, isActive: true)))
-            timerCells.append(.init(id: .init(), timer: .init(id: .init(), workoutCategoryIdentifier: .aerobic, time: 300, heartRateSum: 300.0, heartRateCount: 10, calorie: 100.0, pinTime: 10, isActive: true)))
-        }
+        public init() { }
     }
     
     public enum Action: BindableAction, Equatable {
@@ -37,6 +33,7 @@ public struct HomeStore: ReducerProtocol {
         
         case setPumpingTimerData(PumpingTimerData)
         case setPumpingTimers([PumpingTimer])
+        case setTimerCells(IdentifiedArrayOf<TimerCellStore.State>)
         case setHeartRate(Int)
         case setCalorie(Int)
         
@@ -59,6 +56,15 @@ public struct HomeStore: ReducerProtocol {
                 
             case let .setPumpingTimers(pumpingTimers):
                 state.pumpingTimers = pumpingTimers
+                
+                let timerCells: IdentifiedArrayOf<TimerCellStore.State> = .init(uniqueElements: pumpingTimers.map {
+                    .init(id: $0.id, timer: $0)
+                })
+                
+                return .send(.setTimerCells(timerCells))
+                
+            case let .setTimerCells(timerCells):
+                state.timerCells = timerCells
                 return .none
                 
             case let .setHeartRate(heartRate):
@@ -71,8 +77,10 @@ public struct HomeStore: ReducerProtocol {
                 
             case let .sinkPumpingTimerData(pumpingTimerData):
                 if state.pumpingTimerData.updatedTime < pumpingTimerData.updatedTime + 1000 || state.pumpingTimerData.isHardPush {
-                    state.pumpingTimerData = pumpingTimerData
-                    return .send(.setPumpingTimers(pumpingTimerData.timers))
+                    if !pumpingTimerData.timers.isEmpty {
+                        state.pumpingTimerData = pumpingTimerData
+                        return .send(.setPumpingTimers(pumpingTimerData.timers))
+                    }
                 }
                 return .none
                 
