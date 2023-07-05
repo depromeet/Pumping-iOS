@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 import ComposableArchitecture
 
@@ -21,11 +22,23 @@ public struct HomeView: View {
     
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
-            VStack(spacing: .zero) {
+            GeometryReader { proxy in
                 TabView {
                     endView()
-                    timerListView()
+                        .frame(width: proxy.size.width, height: proxy.size.height)
+                    
+                    timerListView(size: proxy.size)
                 }
+                /*
+                ScrollView(.horizontal) {
+                    HStack {
+                        endView()
+                            .frame(width: proxy.size.width, height: proxy.size.height)
+                        
+                        timerListView(size: proxy.size)
+                    }
+                }
+                 */
             }
             .onAppear {
                 workoutDelegate.requestAuthorization { (success, errorOrNil) in
@@ -56,9 +69,10 @@ public struct HomeView: View {
         }
     }
     
-    private func timerListView() -> some View {
+    private func timerListView(size: CGSize) -> some View {
         ForEachStore(self.store.scope(state: \.timerCells, action: HomeStore.Action.timerCell(id:action:))) {
             TimerCellView(store: $0)
+                .frame(width: size.width, height: size.height)
         }
     }
 }

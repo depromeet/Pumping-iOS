@@ -24,7 +24,13 @@ public struct TimerCellView: View {
                 
                 Spacer()
                 
-                resultListView(viewStore: viewStore)
+                HStack {
+                    Spacer()
+                    
+                    resultListView(viewStore: viewStore)
+                    
+                    Spacer()
+                }
                 
                 Spacer()
             }
