@@ -33,11 +33,37 @@ public struct TimerCellView: View {
         }
     }
     
-    private func summaryView(title: String) -> some View {
-        HStack {
-            PumpingImages.iconHeartbeat.swiftUIImage
+    private func resultListView(viewStore: ViewStoreOf<TimerCellStore>) -> some View {
+        VStack {
+            resultView(type: .time, value: Double(viewStore.state.timer.time))
+            resultView(type: .heatRate, value: viewStore.state.timer.heartRateSum / Double(viewStore.state.timer.heartRateCount))
+            resultView(type: .calorie, value: viewStore.state.timer.calorie)
+        }
+    }
+    
+    private func resultView(type: TimerCellStore.ResultType, value: Double) -> some View {
+        VStack(spacing: 16) {
+            HStack(spacing: 8) {
+                type.image
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                
+                Text(type.title)
+                    .font(.pretendard(size: 16, type: .bold))
+                    .foregroundColor(PumpingColors.colorGrey800.swiftUIColor)
+            }
             
-            Text(title)
+            Text(type.toSyntax(value: value))
+                .font(.tenada(size: 56))
+                .baselineOffset(-10)
+                .foregroundColor({switch type {
+                case .time:
+                    return PumpingColors.colorCyan200.swiftUIColor
+                case .heatRate:
+                    return PumpingColors.colorTeal300.swiftUIColor
+                case .calorie:
+                    return PumpingColors.colorGreen400.swiftUIColor
+                }}())
         }
     }
 }
