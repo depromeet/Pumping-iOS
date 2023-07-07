@@ -8,6 +8,7 @@
 import Foundation
 
 // MARK: - Welcome
+
 public struct MakeWorkoutRequestDTO: Codable {
     let timers: [TimerDTO]
     
@@ -17,6 +18,7 @@ public struct MakeWorkoutRequestDTO: Codable {
 }
 
 // MARK: - Timer
+
 public struct TimerDTO: Codable {
     let time, heartbeat, calories: Int
     let workoutPart: String
@@ -24,6 +26,7 @@ public struct TimerDTO: Codable {
 }
 
 // MARK: - WorkoutSet
+
 public struct WorkoutSetDTO: Codable {
     let machine: String
     let kg, sets: Int
