@@ -12,7 +12,10 @@ public struct PumpingTimerData: Codable, Equatable {
     public let updatedTime: Double
     public let isHardPush: Bool
     
-    public init(timers: [PumpingTimer], updatedTime: Double, isHardPush: Bool = false) {
+    public init(
+        timers: [PumpingTimer],
+        updatedTime: Double,
+        isHardPush: Bool = false) {
         self.timers = timers
         self.updatedTime = updatedTime
         self.isHardPush = isHardPush
