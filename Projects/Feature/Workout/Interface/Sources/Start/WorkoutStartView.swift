@@ -20,10 +20,10 @@ public struct WorkoutStartView: View {
     
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
-            VStack {
+            VStack(spacing: .zero) {
                 Text("운동을 시작해볼까요?")
                     .font(.pretendard(size: 24, type: .bold))
-                    .padding(.top)
+                    .padding(.top, 50)
                 
                 Spacer()
                 

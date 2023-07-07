@@ -38,7 +38,7 @@ public struct WorkoutTimerCellView: View {
                 .padding(.bottom, 24)
                 
                 HStack {
-                    Text(viewStore.state.timer.workoutCategoryIdentifier.rawValue)
+                    Text(viewStore.state.timer.workoutCategoryIdentifier.title)
                         .font(.pretendard(size: 15, type: .medium))
                         .foregroundColor(.colorGrey900)
                                             

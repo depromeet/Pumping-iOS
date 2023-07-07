@@ -8,7 +8,6 @@
 import Foundation
 import ComposableArchitecture
 import FeatureOnboardingInterface
-import CoreHealthKitManager
 
 extension OnboardingPermissionStore {
     public init() {

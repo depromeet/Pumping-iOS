@@ -36,3 +36,15 @@ public struct PumpingTimer: Equatable {
         self.isActive = isActive
     }
 }
+
+public extension PumpingTimer {
+    func toDTO() -> TimerDTO {
+        return .init(
+            time: time,
+            heartbeat: Int(heartRates.reduce(0, +)),
+            calories: Int(calorie),
+            workoutPart: workoutCategoryIdentifier.rawValue,
+            workoutSets: [] //TODO: 운동 세트 기록 기능 추가 후 개발
+        )
+    }
+}

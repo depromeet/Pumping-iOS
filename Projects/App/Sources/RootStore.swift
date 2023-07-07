@@ -8,6 +8,7 @@
 import Foundation
 
 import ComposableArchitecture
+
 import Feature
 
 public struct RootStore: ReducerProtocol {
@@ -38,7 +39,7 @@ public struct RootStore: ReducerProtocol {
                 state = .mainTab(.init())
                 return .none
                 
-            default :
+            default:
                 return .none
                 
             }

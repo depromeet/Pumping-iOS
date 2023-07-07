@@ -58,6 +58,7 @@ extension WorkoutRootStore {
                 switch action {
                 case .backToRoot:
                     state.path = []
+                    state.workoutHome = .init()
                     return .none
                     
                 default:

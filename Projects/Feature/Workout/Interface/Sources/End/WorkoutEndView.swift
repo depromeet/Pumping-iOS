@@ -19,8 +19,9 @@ public struct WorkoutEndView: View {
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             VStack {
-                VStack {
+                VStack(spacing: .zero) {
                     titleView()
+                        .padding(.horizontal)
                         .padding(.top, 44)
                     
                     SharedDesignSystemAsset.Images.boy.swiftUIImage
@@ -44,7 +45,7 @@ public struct WorkoutEndView: View {
     }
     
     private func titleView() -> some View {
-        VStack {
+        VStack(spacing: 12) {
             HStack {
                 Text("운동을 모두 끝냈어요!")
                     .font(.pretendard(size: 24, type: .bold))
@@ -52,8 +53,6 @@ public struct WorkoutEndView: View {
                 
                 Spacer()
             }
-            .padding(.horizontal)
-            .padding(.bottom, 12)
             
             HStack {
                 Text("오늘 한 운동 세트를 기록할 수 있어요")
@@ -62,7 +61,6 @@ public struct WorkoutEndView: View {
                 
                 Spacer()
             }
-            .padding(.horizontal)
         }
     }
     
@@ -80,6 +78,12 @@ public struct WorkoutEndView: View {
                         .font(.pretendard(size: 24, type: .bold))
                         .foregroundColor(.colorGrey900)
                 }
+                .frame(maxWidth: .infinity)
+                
+                Spacer()
+                
+                Divider()
+                    .frame(maxHeight: 54)
                 
                 Spacer()
                 
@@ -92,6 +96,7 @@ public struct WorkoutEndView: View {
                         .font(.pretendard(size: 24, type: .bold))
                         .foregroundColor(.colorGrey900)
                 }
+                .frame(maxWidth: .infinity)
                 
                 Spacer()
             }
@@ -104,7 +109,7 @@ public struct WorkoutEndView: View {
     }
     
     private func workoutListView(viewStore: ViewStoreOf<WorkoutEndStore>) -> some View {
-        VStack {
+        VStack(spacing: .zero) {
             HStack {
                 Text("오늘 한 운동")
                     .font(.pretendard(size: 18, type: .bold))
@@ -112,11 +117,15 @@ public struct WorkoutEndView: View {
                 
                 Spacer()
                 
+                //TODO: 세트기록 기능 추가 후 사용
+                /*
                 Text("세트 기록")
                     .font(.pretendard(size: 16, type: .bold))
                     .foregroundColor(Color.colorGrey600)
+                 */
             }
             .padding(.horizontal)
+            .padding(.bottom, 10)
             
             VStack(spacing: 10) {
                 ForEachStore(self.store.scope(state: \.timerSummaryCells, action: WorkoutEndStore.Action.timerSummaryCells(id:action:))) {
