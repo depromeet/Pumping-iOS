@@ -25,6 +25,8 @@ public struct ProfileView: View {
         WithViewStore(self.store) { viewStore in
             ScrollView {
                 headerView()
+                
+                workoutSummaryView()
             }
         }
     }
@@ -74,15 +76,35 @@ public struct ProfileView: View {
         }
     }
     
-    private func weekView() -> some View {
+    private func workoutSummaryView() -> some View {
         HStack {
-            //TODO: 요일 리스트 뷰 만들기
+            weekView()
         }
     }
     
-    private func workoutSummaryView() -> some View {
-        HStack {
-            
+    private func weekView() -> some View {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = Locale(identifier: "ko_kr")
+        
+        return HStack {
+            ForEach(calendar.shortWeekdaySymbols, id: \.self) { weekday in
+                VStack {
+                    Text("n일차")
+                        .font(.pretendard(size: 10, type: .light))
+                        .foregroundColor(.colorGrey900)
+                        .padding(.init(top: 7, leading: 6, bottom: 0, trailing: 6))
+
+                    Circle()
+                        .fill(Color.colorCyanPrimary)
+                        .padding(.init(top: 4, leading: 6, bottom: 6, trailing: 6))
+                        .overlay(alignment: .center) {
+                            Text(weekday)
+                                .foregroundColor(.colorGrey50)
+                                .font(.pretendard(size: 14, type: .medium))
+                                .multilineTextAlignment(.center)
+                        }
+                }
+            }
         }
     }
     
