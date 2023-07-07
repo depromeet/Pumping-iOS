@@ -23,6 +23,7 @@ public struct CrewMakeStore: ReducerProtocol {
         @BindingState public var crewName: String = ""
         @BindingState public var goalCount: Int = 1
         public var isSatisfied: Bool = false
+        public var receivedCrewInfo: CrewInfo?
         
         public init() {
 

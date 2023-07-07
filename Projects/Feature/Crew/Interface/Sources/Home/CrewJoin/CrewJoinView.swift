@@ -31,7 +31,7 @@ struct CrewJoinView: View {
                     Spacer()
                     
                     PumpingSubmitButton(title : "참여하기", isEnable: viewStore.isSatisfied) {
-                        viewStore.send(.crewJoinButtonTapped)
+                        viewStore.send(.joinCrew)
                     }
                     
                 }

@@ -51,7 +51,7 @@ extension CrewMakeStore {
                 return .none
                 
             case .copyCode:
-                UIPasteboard.general.string = "복사한 값"
+                UIPasteboard.general.string = state.receivedCrewInfo?.code
                 return .none
                 
             case .makeCrew:
@@ -65,6 +65,7 @@ extension CrewMakeStore {
                 
             case let .makeCrewResponse(.success(crewInfo)):
                 print(crewInfo)
+                state.receivedCrewInfo = crewInfo
                 return .send(.goToCrewMakeCompleteView)
                 
             case let .makeCrewResponse(.failure(error)):

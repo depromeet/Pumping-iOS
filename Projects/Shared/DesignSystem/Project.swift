@@ -12,7 +12,12 @@ import DependencyPlugin
 let targets: [Target] = [
     .shared(
         implements: .DesignSystem,
-        factory: TargetFactory(dependencies: [.external(name: "ComposableArchitecture")])
+        factory: .init(
+            dependencies: [
+                .external(name: "ComposableArchitecture"),
+                .external(name: "Lottie")
+            ]
+        )
     )
 ]
 
@@ -21,6 +26,7 @@ let project: Project = .init(
     targets: targets,
     resourceSynthesizers: [
         .assets(),
-        .fonts()
+        .fonts(),
+        .custom(name: "JSON", parser: .json, extensions: ["json"])
     ]
 )

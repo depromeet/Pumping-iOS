@@ -8,11 +8,11 @@
 import Foundation
 
 public struct CrewInfo: Equatable {
-    let crewId: String
-    let crewName: String
-    let goalCount: Int
-    let code: String
-    let participants: [String]
+    public let crewId: String
+    public let crewName: String
+    public let goalCount: Int
+    public let code: String
+    public let participants: [String]
     
     public init(crewId: String,
                 crewName: String,

@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import Domain
 
 public struct CrewJoinStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
@@ -31,7 +32,8 @@ public struct CrewJoinStore: ReducerProtocol {
         case binding(BindingAction<State>)
         
         case dismissCrewJoinView
-        case crewJoinButtonTapped
+        case joinCrew
+        case joinCrewResponse(TaskResult<CrewInfo>)
         case isCrewJoinCompleted
         
     }

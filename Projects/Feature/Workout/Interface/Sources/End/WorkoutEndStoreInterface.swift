@@ -41,8 +41,12 @@ public struct WorkoutEndStore: ReducerProtocol {
         
         case completeButtonTapped
         
+        case makeWorkoutRequest(timer: [PumpingTimer])
+        case makeWorkoutResponse(id: TaskResult<String>)
+        
         case timerSummaryCells(id: WorkoutTimerSummaryCellStore.State.ID, action: WorkoutTimerSummaryCellStore.Action)
         
+        //MARK: navigation
         case backToRoot
     }
     
