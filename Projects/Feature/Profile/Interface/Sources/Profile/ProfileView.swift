@@ -24,12 +24,12 @@ public struct ProfileView: View {
     public var body: some View {
         WithViewStore(self.store) { viewStore in
             ScrollView {
-                profileView()
+                headerView()
             }
         }
     }
     
-    private func profileView() -> some View {
+    private func headerView() -> some View {
         HStack {
             VStack(alignment: .leading) {
                 Text("5위")
@@ -71,6 +71,24 @@ public struct ProfileView: View {
             PumpingImages.boy.swiftUIImage
                 .resizable()
                 .frame(width: 280, height: 220)
+        }
+    }
+    
+    private func weekView() -> some View {
+        HStack {
+            //TODO: 요일 리스트 뷰 만들기
+        }
+    }
+    
+    private func workoutSummaryView() -> some View {
+        HStack {
+            
+        }
+    }
+    
+    private func workoutSummaryItemView() -> some View {
+        HStack {
+            
         }
     }
 }
