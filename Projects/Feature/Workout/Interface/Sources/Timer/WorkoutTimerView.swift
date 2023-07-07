@@ -32,7 +32,7 @@ public struct WorkoutTimerView: View {
                         titleView(viewStore: viewStore)
                             .padding(.top, 16)
                         
-                        resultView(viewStore: viewStore)
+                        resultListView(viewStore: viewStore)
                             .padding(.top, 64)
                         
                         PumpingSubmitButton(title: "종료", completion: {
@@ -40,11 +40,15 @@ public struct WorkoutTimerView: View {
                         })
                         .padding()
                     }
+                    .onChange(of: viewStore.state.time) { _ in
+                        watchConnectivityDelegate.sendPumpingTimerData(from: viewStore.state.timers)
+                    }
                     .onReceive(watchConnectivityDelegate.$heartRate) { heartRate in
                         viewStore.send(.updateHeartRate(heartRate))
                     }
                     .onReceive(watchConnectivityDelegate.$calorie) { calorie in
                         viewStore.send(.updateCalorie(calorie))
+                        watchConnectivityDelegate.sendMessage(key: "timer", value: viewStore.state.timers)
                     }
                     .background(Color.colorGrey000)
                     .navigationBarBackButtonHidden(true)
@@ -81,15 +85,15 @@ public struct WorkoutTimerView: View {
         .background(Color.colorGrey100)
     }
     
-    private func resultView(viewStore: ViewStoreOf<WorkoutTimerStore>) -> some View {
+    private func resultListView(viewStore: ViewStoreOf<WorkoutTimerStore>) -> some View {
         VStack {
-            resultTextView(type: .time, value: Double(viewStore.state.time))
-            resultTextView(type: .heatRate, value: viewStore.state.heartRateToShow)
-            resultTextView(type: .calorie, value: viewStore.state.calorieToShow)
+            resultView(type: .time, value: Double(viewStore.state.time))
+            resultView(type: .heatRate, value: viewStore.state.heartRateToShow)
+            resultView(type: .calorie, value: viewStore.state.calorieToShow)
         }
     }
     
-    private func resultTextView(type: WorkoutTimerStore.ResultType, value: Double) -> some View {
+    private func resultView(type: WorkoutTimerStore.ResultType, value: Double) -> some View {
         VStack(spacing: 16) {
             HStack(spacing: 8) {
                 type.image

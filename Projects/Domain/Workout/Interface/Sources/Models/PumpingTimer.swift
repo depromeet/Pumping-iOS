@@ -7,12 +7,13 @@
 
 import Foundation
 
-public struct PumpingTimer: Equatable {
+public struct PumpingTimer: Codable, Equatable {
     public let id: UUID
     public let workoutCategoryIdentifier: WorkoutCategoryIdentifier
     public var time: Int
     
-    public var heartRates: [Double]
+    public var heartRateSum: Double
+    public var heartRateCount: Int
     public var calorie: Double
     
     public var pinTime: Int
@@ -22,7 +23,8 @@ public struct PumpingTimer: Equatable {
         id: UUID,
         workoutCategoryIdentifier: WorkoutCategoryIdentifier,
         time: Int = 0,
-        heartRates: [Double] = [],
+        heartRateSum: Double = 0.0,
+        heartRateCount: Int = 0,
         calorie: Double = 0,
         pinTime: Int = 0,
         isActive: Bool = false
@@ -30,7 +32,8 @@ public struct PumpingTimer: Equatable {
         self.id = id
         self.workoutCategoryIdentifier = workoutCategoryIdentifier
         self.time = time
-        self.heartRates = heartRates
+        self.heartRateSum = heartRateSum
+        self.heartRateCount = heartRateCount
         self.calorie = calorie
         self.pinTime = pinTime
         self.isActive = isActive

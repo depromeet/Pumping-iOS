@@ -89,7 +89,8 @@ extension WorkoutTimerStore {
                     state.heartRateToShow = heartRate
                     guard let timerIndex = state.timerCells.firstIndex(where: { $0.id == id }) else { return .none }
                     var targetTimer = state.timers[timerIndex]
-                    targetTimer.heartRates.append(heartRate)
+                    targetTimer.heartRateSum += heartRate
+                    targetTimer.heartRateCount += 1
 
                     return .send(.updateTimer(index: timerIndex, timer: targetTimer))
                 }

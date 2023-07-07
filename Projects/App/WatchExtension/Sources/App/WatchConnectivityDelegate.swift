@@ -13,6 +13,8 @@ import ComposableArchitecture
 public class WatchConnectivityDelegate: NSObject, ObservableObject, WCSessionDelegate {
     public weak var session: WCSession?
     
+    @Published public var pumpingTimerData: PumpingTimerData = .init(timers: [], updatedTime: Date().timeIntervalSince1970)
+    
     init(session: WCSession = .default) {
         self.session = session
         
@@ -23,14 +25,34 @@ public class WatchConnectivityDelegate: NSObject, ObservableObject, WCSessionDel
     }
     
     public func sendMessage(key: String, value: Double) {
-        self.session?.sendMessage([key: value], replyHandler: nil)
+        DispatchQueue.main.async {
+            self.session?.sendMessage([key: value], replyHandler: nil)
+            debugPrint("watchOS send key: \(key) value: \(value)")
+        }
     }
     
-    public func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+    public func sendPumpingTimerData() {
         
     }
     
+    public func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+    }
+    
     public func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        debugPrint("watchOS recieved \(message)")
+        DispatchQueue.main.async {
+            debugPrint("watchOS recieved \(message)")
+        }
+    }
+    
+    public func session(_ session: WCSession, didReceiveMessageData messageData: Data) {
+        DispatchQueue.main.async {
+            do {
+                let pumpingTimerData = try JSONDecoder().decode(PumpingTimerData.self, from: messageData)
+                self.pumpingTimerData = pumpingTimerData
+                debugPrint("watchOS recieved \(pumpingTimerData)")
+            } catch {
+                debugPrint(error)
+            }
+        }
     }
 }

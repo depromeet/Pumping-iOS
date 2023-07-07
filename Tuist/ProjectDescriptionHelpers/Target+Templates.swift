@@ -312,7 +312,6 @@ public extension Target {
         newFactory.product = .staticFramework
         newFactory.deploymentTarget = Project.Environment.watchDeploymentTarget
         
-        
         return make(factory: newFactory)
     }
     
@@ -322,7 +321,7 @@ public extension Target {
         newFactory.platform = .watchOS
         newFactory.deploymentTarget = Project.Environment.watchDeploymentTarget
         newFactory.product = .staticFramework
-        newFactory.sources = nil
+        newFactory.sources = .sources
         
         if module == .DesignSystem {
             newFactory.resources = ["Resources/**"]

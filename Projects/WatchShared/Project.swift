@@ -13,6 +13,7 @@ let targets: [Target] = [
     .watchShared(
         factory: .init(
             dependencies: [
+                .watchShared(implements: .Util),
                 .watchShared(implements: .DesignSystem),
                 .watchShared(implements: .ThirdPartyLib)
             ]

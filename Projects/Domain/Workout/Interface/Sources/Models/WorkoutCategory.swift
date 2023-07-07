@@ -8,6 +8,7 @@
 import Foundation
 
 //MARK: WorkoutCategoryIdentifierType
+
 public enum WorkoutCategoryIdentifierType: String, CaseIterable {
     case whole = "전신"
     case upper = "상체"
@@ -28,6 +29,7 @@ public extension WorkoutCategoryIdentifierType {
 }
 
 //MARK: WorkoutCategoryIdentifier
+
 public enum WorkoutCategoryIdentifier: String, CaseIterable, Equatable {
     case aerobic = "AEROBIC"
     case shoulder = "SHOULDER"
