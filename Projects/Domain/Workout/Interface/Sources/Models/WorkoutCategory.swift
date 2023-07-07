@@ -30,7 +30,7 @@ public extension WorkoutCategoryIdentifierType {
 
 //MARK: WorkoutCategoryIdentifier
 
-public enum WorkoutCategoryIdentifier: String, CaseIterable, Equatable {
+public enum WorkoutCategoryIdentifier: String, CaseIterable, Equatable, Codable {
     case aerobic = "AEROBIC"
     case shoulder = "SHOULDER"
     case chest = "CHEST"
