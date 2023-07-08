@@ -6,17 +6,13 @@
 //
 
 import SwiftUI
-
-import SwiftUI
 import ComposableArchitecture
 import SharedDesignSystem
 
 public struct CrewListView: View {
     public let store: StoreOf<CrewHomeStore>
     
-    public init(
-        store: StoreOf<CrewHomeStore>
-    ) {
+    public init(store: StoreOf<CrewHomeStore>) {
         self.store = store
     }
     
@@ -32,6 +28,9 @@ public struct CrewListView: View {
                 Spacer()
                 
                 buttonView(viewStore: viewStore)
+            }
+            .onAppear {
+                viewStore.send(.fetchCrew)
             }
             .fullScreenCover(isPresented: viewStore.binding(\.$showCrewJoinView)) {
                 IfLetStore(store.scope(state: \.crewJoin, action: { .crewJoin($0) })) {
