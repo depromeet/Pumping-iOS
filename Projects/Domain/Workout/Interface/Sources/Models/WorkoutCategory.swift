@@ -28,7 +28,7 @@ public extension WorkoutCategory {
     }
 }
 
-//MARK: WorkoutCategoryIdentifier
+//MARK: WorkoutPart
 
 public enum WorkoutPart: String, CaseIterable, Equatable, Codable {
     case aerobic = "AEROBIC"

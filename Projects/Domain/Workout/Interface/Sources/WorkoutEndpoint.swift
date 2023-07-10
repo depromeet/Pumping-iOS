@@ -14,7 +14,7 @@ public struct WorkoutEndpoint {
     public static func fetchWorkout(userId: String? = nil) -> Endpoint<FetchWorkoutResponseDTO> {
         let accessToken = KeyChainStore.shared.load(property: .accessToken)
         
-        return Endpoint(path: "workout" + (userId == nil ? "" : "/\(String(describing: userId))"),
+        return Endpoint(path: "workout/" + String(describing: userId),
                         httpMethod: .get,
                         headers: ["Authorization" : "Bearer \(accessToken)"])
     }
