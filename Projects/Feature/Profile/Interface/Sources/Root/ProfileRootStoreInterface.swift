@@ -16,24 +16,24 @@ public enum ProfileScene: Hashable {
 public struct ProfileRootStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
 
-    private let profileStore: ProfileStore
-    private let widthOfChangeStore: WidthOfChangeStore
+    private let profileHomeStore: ProfileHomeStore
+    private let profileWidthOfChangeStore: ProfileWidthOfChangeStore
 
     public init(
         reducer: Reduce<State, Action>,
-        profileStore: ProfileStore,
-        widthOfChangeStore: WidthOfChangeStore
+        profileHomeStore: ProfileHomeStore,
+        profileWidthOfChangeStore: ProfileWidthOfChangeStore
     ) {
         self.reducer = reducer
-        self.profileStore = profileStore
-        self.widthOfChangeStore = widthOfChangeStore
+        self.profileHomeStore = profileHomeStore
+        self.profileWidthOfChangeStore = profileWidthOfChangeStore
     }
 
     public struct State: Equatable {
         @BindingState public var path: [ProfileScene] = []
 
-        public var profile: ProfileStore.State = .init()
-        public var widthOfChange: WidthOfChangeStore.State?
+        public var home: ProfileHomeStore.State = .init(type: .my)
+        public var widthOfChange: ProfileWidthOfChangeStore.State?
 
         public init() {
 
@@ -43,8 +43,8 @@ public struct ProfileRootStore: ReducerProtocol {
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
 
-        case widthOfChange(WidthOfChangeStore.Action)
-        case profile(ProfileStore.Action)
+        case home(ProfileHomeStore.Action)
+        case widthOfChange(ProfileWidthOfChangeStore.Action)
     }
 
     public var body: some ReducerProtocol<State, Action> {
@@ -52,11 +52,11 @@ public struct ProfileRootStore: ReducerProtocol {
 
         reducer
             .ifLet(\.widthOfChange, action: /Action.widthOfChange) {
-                widthOfChangeStore
+                profileWidthOfChangeStore
             }
         
-        Scope(state: \.profile, action: /Action.profile) {
-            profileStore
+        Scope(state: \.home, action: /Action.home) {
+            profileHomeStore
         }
     }
 }

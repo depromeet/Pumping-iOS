@@ -6,7 +6,9 @@
 //
 
 import Foundation
+
 import ComposableArchitecture
+
 import Shared
 
 public struct MainTabViewStore: ReducerProtocol {
@@ -78,8 +80,8 @@ public struct MainTabViewStore: ReducerProtocol {
         }
         .ifLet(\.home, action: /Action.home) {
             CrewRootStore(
-                profileStore: .init(),
-                widthOfChangeStore: .init()
+                profileHomeStore: .init(),
+                profileWidthOfChangeStore: .init()
             )._printChanges()
         }
         .ifLet(\.workout, action: /Action.workout) {

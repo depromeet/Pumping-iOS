@@ -34,14 +34,14 @@ public struct CrewRootView: View {
                             }
                             
                         case .profile:
-                            IfLetStore(self.store.scope(state: \.profile, action: { .profile($0) })) {
-                                ProfileView(store: $0, profileSubject: .my)
+                            IfLetStore(self.store.scope(state: \.profileHome, action: { .profileHome($0) })) {
+                                ProfileHomeView(store: $0)
                                     .toolbarRole(.editor)
                             }
 
                         case .widthOfChange:
-                            IfLetStore(self.store.scope(state: \.widthOfChange, action: { .widthOfChange($0) })) {
-                                WidthOfChangeView(store: $0)
+                            IfLetStore(self.store.scope(state: \.profileWidthOfChange, action: { .profileWidthOfChange($0) })) {
+                                ProfileWidthOfChangeView(store: $0)
                                     .toolbarRole(.editor)
                             }
                         }

@@ -12,8 +12,8 @@ import FeatureProfileInterface
 
 extension CrewRootStore {
     public init(
-        profileStore: ProfileStore,
-        widthOfChangeStore: WidthOfChangeStore
+        profileHomeStore: ProfileHomeStore,
+        profileWidthOfChangeStore: ProfileWidthOfChangeStore
     ) {
         let reducer: Reduce<State, Action> = .init { state, action in
             switch action {
@@ -24,7 +24,7 @@ extension CrewRootStore {
                 switch action {
                 case .goToProfileView:
                     state.path.append(.profile)
-                    state.profile = .init()
+                    state.profileHome = .init(type: .other)//TODO: other이 아닌경우 체크 해야함
                     return .none
                 
                 //TODO: 머지 컨플릭트 해결후 버그
@@ -37,9 +37,9 @@ extension CrewRootStore {
                     return .none
                 }
 
-            case .profile(.tapWidthOfChangeButton):
+            case .profileHome(.tapWidthOfChangeButton):
                 state.path.append(.widthOfChange)
-                state.widthOfChange = .init()
+                state.profileWidthOfChange = .init()
                 return .none
 
             default:
@@ -49,10 +49,10 @@ extension CrewRootStore {
         
         self.init(
             reducer: reducer,
+            profileHomeStore: profileHomeStore,
+            profileWidthOfChangeStore: profileWidthOfChangeStore,
             crewHomeStore: .init(),
-            crewRankingStore: .init(),
-            profileStore: profileStore,
-            widthOfChangeStore: widthOfChangeStore
+            crewRankingStore: .init()
         )
     }
 }

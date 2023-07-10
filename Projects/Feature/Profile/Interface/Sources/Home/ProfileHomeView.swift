@@ -9,16 +9,11 @@ import SwiftUI
 import ComposableArchitecture
 import SharedDesignSystem
 
-public struct ProfileView: View {
-    public let store: StoreOf<ProfileStore>
-    private let profileSubject: ProfileSubject
+public struct ProfileHomeView: View {
+    public let store: StoreOf<ProfileHomeStore>
     
-    public init(
-        store: StoreOf<ProfileStore>,
-        profileSubject: ProfileSubject
-    ) {
+    public init(store: StoreOf<ProfileHomeStore>) {
         self.store = store
-        self.profileSubject = profileSubject
     }
     
     public var body: some View {
@@ -130,7 +125,7 @@ public struct ProfileView: View {
         }
     }
     
-    private func workoutSummaryItemView(type: ProfileStore.WorkoutSummaryType, myType: ProfileStore.WorkoutSummaryType? = nil) -> some View {
+    private func workoutSummaryItemView(type: ProfileHomeStore.WorkoutSummaryType, myType: ProfileHomeStore.WorkoutSummaryType? = nil) -> some View {
         VStack {
             HStack {
                 type.icon

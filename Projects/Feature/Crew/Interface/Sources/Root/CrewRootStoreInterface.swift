@@ -18,33 +18,36 @@ public enum CrewScene: Hashable {
 public struct CrewRootStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
 
+    public let profileHomeStore: ProfileHomeStore
+    public let profileWidthOfChangeStore: ProfileWidthOfChangeStore
+    
     private let crewHomeStore: CrewHomeStore
     private let crewRankingStore: CrewRankingStore
-    private let profileStore: ProfileStore
-    private let widthOfChangeStore: WidthOfChangeStore
 
     public init(
         reducer: Reduce<State, Action>,
+        profileHomeStore: ProfileHomeStore,
+        profileWidthOfChangeStore: ProfileWidthOfChangeStore,
         crewHomeStore: CrewHomeStore,
-        crewRankingStore: CrewRankingStore,
-        profileStore: ProfileStore,
-        widthOfChangeStore: WidthOfChangeStore
+        crewRankingStore: CrewRankingStore
     ) {
         self.reducer = reducer
+        
+        self.profileHomeStore = profileHomeStore
+        self.profileWidthOfChangeStore = profileWidthOfChangeStore
         self.crewHomeStore = crewHomeStore
         self.crewRankingStore = crewRankingStore
-        self.profileStore = profileStore
-        self.widthOfChangeStore = widthOfChangeStore
     }
     
     public struct State: Equatable {
         @BindingState public var path: [CrewScene] = []
-        public var crewHome: CrewHomeStore.State = .init()
         @BindingState public var showingCrew: Bool = false
 
-        public var profile: ProfileStore.State?
-        public var widthOfChange: WidthOfChangeStore.State?
+        // child
+        public var crewHome: CrewHomeStore.State = .init()
         public var crewRanking: CrewRankingStore.State?
+        public var profileHome: ProfileHomeStore.State?
+        public var profileWidthOfChange: ProfileWidthOfChangeStore.State?
 
         public init() { }
     }
@@ -54,8 +57,8 @@ public struct CrewRootStore: ReducerProtocol {
         
         case crewHome(CrewHomeStore.Action)
         case crewRanking(CrewRankingStore.Action)
-        case profile(ProfileStore.Action)
-        case widthOfChange(WidthOfChangeStore.Action)
+        case profileHome(ProfileHomeStore.Action)
+        case profileWidthOfChange(ProfileWidthOfChangeStore.Action)
     }
     
     public var body: some ReducerProtocol<State, Action> {
@@ -69,8 +72,8 @@ public struct CrewRootStore: ReducerProtocol {
             .ifLet(\.crewRanking, action: /Action.crewRanking) {
                 crewRankingStore
             }
-            .ifLet(\.profile, action: /Action.profile) {
-                profileStore
+            .ifLet(\.profileHome, action: /Action.profileHome) {
+                profileHomeStore
             }
     }
 }

@@ -12,18 +12,17 @@ import ComposableArchitecture
 import Domain
 import Shared
 
-public enum ProfileSubject: Hashable {
-    case my
-    case other
-}
-
-public struct ProfileStore: ReducerProtocol {
+public struct ProfileHomeStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
 
     public init(
         reducer: Reduce<State, Action>
     ) {
         self.reducer = reducer
+    }
+    
+    public enum ProfileHomeType {
+        case my, other
     }
     
     public enum WorkoutSummaryType {
@@ -79,14 +78,12 @@ public struct ProfileStore: ReducerProtocol {
     }
 
     public struct State: Equatable {
-        @BindingState public var path: [ProfileScene] = []
-
-        public var hasComparison: Bool = false
+        public let type: ProfileHomeType
         
         public var selectedDay: Int = 0
 
-        public init() {
-            
+        public init(type: ProfileHomeType) {
+            self.type = type
         }
     }
 
@@ -100,6 +97,7 @@ public struct ProfileStore: ReducerProtocol {
     
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()
+        
         reducer
     }
 }
