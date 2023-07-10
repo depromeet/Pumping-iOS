@@ -140,6 +140,7 @@ public struct ProfileView: View {
             
             HStack {
                 Text(type.value)
+                    .font(<#T##font: Font?##Font?#>)
                 
                 Text(type.prefix)
             }
