@@ -134,20 +134,27 @@ public struct ProfileView: View {
         VStack {
             HStack {
                 type.icon
+                    .resizable()
+                    .frame(width: 18, height: 18)
                 
                 Text(type.title)
+                    .font(.pretendard(type: .h2))
+                    .foregroundColor(type.color)
             }
             
             HStack {
                 Text(type.value)
-                    .font(<#T##font: Font?##Font?#>)
+                    .font(.pretendard(type: .h2))
+                    .foregroundColor(type.color)
                 
                 Text(type.prefix)
+                    .font(.pretendard(type: .h5))
+                    .foregroundColor(type.color)
             }
             
             if let myType = myType {
                 HStack {
-                    Text(String(describing: "\(type.value) \(type.prefix)"))
+                    Text(String(describing: "\(myType.value) \(myType.prefix)"))
                 }
             }
         }

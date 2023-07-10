@@ -67,6 +67,15 @@ public struct ProfileStore: ReducerProtocol {
             case let .part(_, v): return String(describing: "/\(v)분")
             }
         }
+        
+        var color: Color {
+            switch self {
+            case .time: return PumpingColors.colorCyan500.swiftUIColor
+            case .heartRate: return PumpingColors.colorTeal300.swiftUIColor
+            case .calorie: return PumpingColors.colorGreen600.swiftUIColor
+            case .part: return PumpingColors.colorBlue400.swiftUIColor
+            }
+        }
     }
 
     public struct State: Equatable {
