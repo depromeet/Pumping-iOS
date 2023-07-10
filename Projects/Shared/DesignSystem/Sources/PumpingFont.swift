@@ -11,11 +11,36 @@ public extension Font {
     /// Pumping 서비스의 Custom Font를 반환하는 함수 입니다.
     ///
     /// - Parameters:
-    ///     - size: Pumping 폰트의 사이즈 타입
+    ///     - family: Pumping 폰트 패밀리
+    ///     - size: Pumping 폰트 사이즈
     ///
     /// - Returns: Pumping의 Custom Font
-    static func pumpingFont(size: Font.PumpingFontSize) -> Font {
-        return .custom(size.weight.fileName, size: size.size)
+    static func pumpingFont(
+        family: Font.PumpingFontFamily = .pretendard,
+        size: Font.PumpingFontSize) -> Font {
+            return .custom(
+                pumpingFontFileName(
+                    family: family,
+                    weight: size.weight(family: family)),
+                size: size.width(family: family))
+    }
+    
+    static func pumpingFontFileName(family: Font.PumpingFontFamily, weight: Font.PumpingFontWeight) -> String {
+        switch family {
+        case .pretendard:
+            switch weight {
+            case .black: return "Pretendard-Black"
+            case .bold: return "Pretendard-Bold"
+            case .extraBold: return "Pretendard-ExtraBold"
+            case .extraLight: return "Pretendard-ExtraLight"
+            case .light: return "Pretendard-Light"
+            case .medium: return "Pretendard-Medium"
+            case .semiBold: return "Pretendard-SemiBold"
+            case .thin: return "Pretendard-Thin"
+            }
+        case .tenada:
+            return "Tenada"
+        }
     }
 }
 
@@ -40,44 +65,19 @@ public extension Font {
     ///   - semiBold
     ///   - thin
     enum PumpingFontWeight {
-        case black(PumpingFontFamily)
-        case bold(PumpingFontFamily)
-        case extraBold(PumpingFontFamily)
-        case extraLight(PumpingFontFamily)
-        case light(PumpingFontFamily)
-        case medium(PumpingFontFamily)
-        case semiBold(PumpingFontFamily)
-        case thin(PumpingFontFamily)
-        
-        ///   각 폰트 패밀리의 파일 네임을 가져옵니다.
-        var fileName: String {
-            switch self {
-                // pretendard
-            case .black(.pretendard): return "Pretendard-Black"
-            case .bold(.pretendard): return "Pretendard-Bold"
-            case .extraBold(.pretendard): return "Pretendard-ExtraBold"
-            case .extraLight(.pretendard): return "Pretendard-ExtraLight"
-            case .light(.pretendard): return "Pretendard-Light"
-            case .medium(.pretendard): return "Pretendard-Medium"
-            case .semiBold(.pretendard): return "Pretendard-SemiBold"
-            case .thin(.pretendard): return "Pretendard-Thin"
-                
-                // thenada
-            case .black(.tenada): return "Tenada"
-            case .bold(.tenada): return "Tenada"
-            case .extraBold(.tenada): return "Tenada"
-            case .extraLight(.tenada): return "Tenada"
-            case .light(.tenada): return "Tenada"
-            case .medium(.tenada): return "Tenada"
-            case .semiBold(.tenada): return "Tenada"
-            case .thin(.tenada): return "Tenada"
-            }
-        }
+        case black
+        case bold
+        case extraBold
+        case extraLight
+        case light
+        case medium
+        case semiBold
+        case thin
     }
     
     /// Pumping 서비스의 Font Size의 목록입니다.
     ///
-    ///   - h0: tenada 폰트에만 적용합니다.
+    ///   - h0
     ///   - h1
     ///   - h2
     ///   - h3
@@ -90,58 +90,66 @@ public extension Font {
     ///   - caption1
     ///   - caption2
     enum PumpingFontSize {
-        case h0(PumpingFontFamily)
-        case h1(PumpingFontFamily)
-        case h2(PumpingFontFamily)
-        case h3(PumpingFontFamily)
-        case h4(PumpingFontFamily)
-        case h5(PumpingFontFamily)
-        case body1(PumpingFontFamily)
-        case body2(PumpingFontFamily)
-        case body3(PumpingFontFamily)
-        case body4(PumpingFontFamily)
-        case caption1(PumpingFontFamily)
-        case caption2(PumpingFontFamily)
+        case h0
+        case h1
+        case h2
+        case h3
+        case h4
+        case h5
+        case body1
+        case body2
+        case body3
+        case body4
+        case caption1
+        case caption2
         
-        var weight: Font.PumpingFontWeight {
-            switch self {
-                //extraBold
-            case .h0(_), .h1(.tenada), .h2(.tenada), .h3(.tenada), .h4(.tenada), .h5(.tenada), .body1(.tenada), .body2(.tenada), .body3(.tenada), .body4(.tenada), .caption1(.tenada), .caption2(.tenada):
-                return .extraBold(.tenada)
+        func weight(family: PumpingFontFamily) -> Font.PumpingFontWeight {
+            switch family {
+            case .pretendard:
+                switch self {
+                case .h0, .h1, .h2, .h3, .h4, .h5, .caption1, .caption2:
+                    return .semiBold
+                    
+                case .body1, .body2, .body3, .body4:
+                    return .medium
+                }
                 
-                //semiBold
-            case .h1(.pretendard), .h2(.pretendard), .h3(.pretendard), .h4(.pretendard), .h5(.pretendard), .caption1(.pretendard), .caption2(.pretendard):
-                return .semiBold(.pretendard)
-                
-                //medium
-            case .body1(.pretendard), .body2(.pretendard), .body3(.pretendard), .body4(.pretendard):
-                return .medium(.pretendard)
+            case .tenada: return .extraBold
             }
         }
         
-        var size: CGFloat {
-            switch self {
-                // pretendard
-            case .h1(.pretendard): return 32
-            case .h2(.pretendard): return 24
-            case .h3(.pretendard): return 21
-            case .h4(.pretendard): return 18
-                
-                // thenada
-            case .h1(.tenada): return 36
-            case .h2(.tenada): return 32
-            case .h3(.tenada): return 28
-            case .h4(.tenada): return 18
-                
-                // default
-            case .h0: return 56
-            case .h5: return 16
-            case .body1: return 15
-            case .body2: return 14
-            case .body3: return 13
-            case .body4: return 12
-            case .caption1: return 11
-            case .caption2: return 10
+        func width(family: PumpingFontFamily) -> CGFloat {
+            switch family {
+            case .pretendard:
+                switch self {
+                case .h0: return 56
+                case .h1: return 32
+                case .h2: return 24
+                case .h3: return 21
+                case .h4: return 18
+                case .h5: return 16
+                case .body1: return 15
+                case .body2: return 14
+                case .body3: return 13
+                case .body4: return 12
+                case .caption1: return 11
+                case .caption2: return 10
+                }
+            case .tenada:
+                switch self {
+                case .h0: return 56
+                case .h1: return 36
+                case .h2: return 32
+                case .h3: return 28
+                case .h4: return 18
+                case .h5: return 16
+                case .body1: return 15
+                case .body2: return 14
+                case .body3: return 13
+                case .body4: return 12
+                case .caption1: return 11
+                case .caption2: return 10
+                }
             }
         }
     }

@@ -8,16 +8,15 @@
 import SwiftUI
 
 struct TenadaFont: ViewModifier {
-    let sizeType: Font.FontSizeType
+    let size: Font.PumpingFontSize
     
-    public init(type fontSizeType: Font.FontSizeType) {
-        self.sizeType = fontSizeType
+    public init(size: Font.PumpingFontSize) {
+        self.size = size
     }
     
     func body(content: Content) -> some View {
         content
-            .font(.tenada(size: sizeType.size))
+            .font(.pumpingFont(family: .tenada, size: size))
+            .baselineOffset(-size.width(family: .tenada)/7)
     }
 }
-
-
