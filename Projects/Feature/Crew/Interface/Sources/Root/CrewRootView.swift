@@ -38,7 +38,7 @@ public struct CrewRootView: View {
                                 ProfileHomeView(store: $0)
                                     .toolbarRole(.editor)
                             }
-
+                            
                         case .widthOfChange:
                             IfLetStore(self.store.scope(state: \.profileWidthOfChange, action: { .profileWidthOfChange($0) })) {
                                 ProfileWidthOfChangeView(store: $0)
@@ -47,6 +47,7 @@ public struct CrewRootView: View {
                         }
                     }
             }
+            .accentColor(PumpingColors.colorGrey800.swiftUIColor)
         }
     }
 }

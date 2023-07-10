@@ -18,11 +18,15 @@ public struct ProfileHomeView: View {
     
     public var body: some View {
         WithViewStore(self.store) { viewStore in
-            VStack(spacing: .zero) {
-                headerView()
-                
-                workoutBottomView(viewStore: viewStore)
-                    .background(PumpingColors.colorGrey100.swiftUIColor)
+            ScrollView {
+                VStack(spacing: .zero) {
+                    headerView()
+                    
+                    workoutBottomView(viewStore: viewStore)
+                        .frame(maxHeight: .infinity)
+                        .background(PumpingColors.colorGrey100.swiftUIColor)
+                }
+                .frame(maxHeight: .infinity)
             }
             .background(PumpingColors.colorGrey000.swiftUIColor)
         }
@@ -64,6 +68,7 @@ public struct ProfileHomeView: View {
                 .frame(width: 60, height: 60)
                 .background(.white)
                 .clipShape(Circle())
+                .padding(.bottom, 24)
             }
             
             Spacer()
@@ -79,6 +84,7 @@ public struct ProfileHomeView: View {
                 .padding()
             
             weekView()
+                .padding(.horizontal)
             
             workoutSummaryView(viewStore: viewStore)
                 .background(PumpingColors.colorGrey200.swiftUIColor)
@@ -87,6 +93,7 @@ public struct ProfileHomeView: View {
             
             Spacer()
         }
+        .frame(maxHeight: .infinity)
     }
     
     private func workoutSummaryView(viewStore: ViewStoreOf<ProfileHomeStore>) -> some View {
