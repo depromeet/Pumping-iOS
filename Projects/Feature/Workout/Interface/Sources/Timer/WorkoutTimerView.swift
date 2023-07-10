@@ -38,6 +38,7 @@ public struct WorkoutTimerView: View {
                         
                         PumpingSubmitButton(title: "종료", completion: {
                             viewStore.send(.endButtonTapped)
+                            watchConnectivityDelegate.sendMessage(key: "control", value: WatchConnectivityControl.end.rawValue)
                         })
                         .padding()
                     }
