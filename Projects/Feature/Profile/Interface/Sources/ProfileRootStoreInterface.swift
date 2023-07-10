@@ -50,13 +50,13 @@ public struct ProfileRootStore: ReducerProtocol {
     public var body: some ReducerProtocol<State, Action> {
         BindingReducer()
 
-        Scope(state: \.profile, action: /Action.profile) {
-            profileStore
-        }
-
         reducer
             .ifLet(\.widthOfChange, action: /Action.widthOfChange) {
                 widthOfChangeStore
             }
+        
+        Scope(state: \.profile, action: /Action.profile) {
+            profileStore
+        }
     }
 }

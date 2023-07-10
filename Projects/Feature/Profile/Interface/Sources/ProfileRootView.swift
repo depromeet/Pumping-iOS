@@ -11,14 +11,9 @@ import SharedDesignSystem
 
 public struct ProfileRootView : View {
     public let store: StoreOf<ProfileRootStore>
-    private let profileSubject: ProfileSubject
 
-    public init(
-        store: StoreOf<ProfileRootStore>,
-        profileSubject: ProfileSubject
-    ) {
+    public init(store: StoreOf<ProfileRootStore>) {
         self.store = store
-        self.profileSubject = profileSubject
     }
 
     public var body: some View {
