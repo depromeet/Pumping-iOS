@@ -27,8 +27,8 @@ public struct WorkoutHomeStore: ReducerProtocol {
         public init() {
             workoutCategoryCellZip = [
                 .whole: makeIdentifiedArray(from: .whole),
-                .upper: makeIdentifiedArray(from: .upper),
-                .lower: makeIdentifiedArray(from: .lower),
+                .up: makeIdentifiedArray(from: .up),
+                .down: makeIdentifiedArray(from: .down),
             ]
         }
         
