@@ -57,7 +57,6 @@ public class WorkoutDelegate: NSObject, ObservableObject {
         let startDate = Date()
         workoutSession?.startActivity(with: startDate)
         liveWorkoutBuilder?.beginCollection(withStart: startDate) { (success, error) in
-            //TODO: ViewStore로 Action 처리
             debugPrint("live workout builder begin: \(success) \(String(describing: error))")
         }
     }

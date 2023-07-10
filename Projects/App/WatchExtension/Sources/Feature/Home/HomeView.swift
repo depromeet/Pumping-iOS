@@ -43,6 +43,14 @@ public struct HomeView: View {
             .onReceive(watchConnectivityDelegate.$pumpingTimerData) { pumpingTimerData in
                 viewStore.send(.sinkPumpingTimerData(pumpingTimerData))
             }
+            .onReceive(watchConnectivityDelegate.$watchConnectivityControl) { control in
+                switch control {
+                case .start:
+                    workoutDelegate.startWorkout(workoutType: .functionalStrengthTraining)
+                case .end:
+                    workoutDelegate.endWorkout()
+                }
+            }
             .ignoresSafeArea()
         }
     }
