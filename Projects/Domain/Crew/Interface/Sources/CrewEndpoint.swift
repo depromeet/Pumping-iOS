@@ -10,7 +10,15 @@ import CoreNetworkInterface
 import CoreKeyChainStore
 
 public struct CrewEndpoint {
-    public static func makeCrew(_ requestDTO: MakeCrewRequestDTO) -> Endpoint<CrewResponseDTO> {
+    public static func fetchCrew() -> Endpoint<[CrewInfoResponseDTO]> {
+        let accessToken = KeyChainStore.shared.load(property: .accessToken)
+        
+        return Endpoint(path: "crews",
+                        httpMethod: .get,
+                        headers: ["Authorization" : "Bearer \(accessToken)"])
+    }
+    
+    public static func makeCrew(_ requestDTO: MakeCrewRequestDTO) -> Endpoint<CrewDetailResponseDTO> {
         let accessToken = KeyChainStore.shared.load(property: .accessToken)
         
         return Endpoint(path: "crews",
@@ -19,7 +27,7 @@ public struct CrewEndpoint {
                         headers: ["Authorization" : "Bearer \(accessToken)"])
     }
     
-    public static func joinCrew(_ code: String) -> Endpoint<CrewResponseDTO> {
+    public static func joinCrew(_ code: String) -> Endpoint<CrewDetailResponseDTO> {
         let accessToken = KeyChainStore.shared.load(property: .accessToken)
         
         return Endpoint(path: "crews/join/\(code)",

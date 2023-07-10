@@ -7,24 +7,41 @@
 
 import ComposableArchitecture
 import FeatureCrewInterface
+import Domain
 import SharedDesignSystem
 
 extension CrewHomeStore {
     public init() {
+        @Dependency(\.crewClient) var crewClient
+        
         let reducer: Reduce<State, Action> = .init { state, action in
             switch action {
             case .binding:
                 return .none
-
+                
             case let .profileBodyCell(id, action):
                 return .none
-
+                
             case let .personalRecordCell(id, action):
                 return .none
                 
-            case .getCrewInfo:
-                // initialLoad, refresh시 가져올 크루정보
+            case .fetchCrew:
+                return .task {
+                    await .fetchCrewResponse(
+                        TaskResult {
+                            try await crewClient.fetchCrew()
+                        }
+                    )
+                }
+
+            case let .fetchCrewResponse(.success(crewInfo)):
+                print(crewInfo)
                 return .none
+
+            case let .fetchCrewResponse(.failure(error)):
+                print(error)
+                return .none
+                
                 
             case .presentCrewListView:
                 state.showCrewListView = true
@@ -34,7 +51,7 @@ extension CrewHomeStore {
                 state.crewJoin = .init()
                 state.showCrewJoinView = true
                 return .none
-
+                
             case .presentCrewMakeView:
                 state.crewMake = .init()
                 state.showCrewMakeView = true

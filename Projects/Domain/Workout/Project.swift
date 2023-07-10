@@ -4,10 +4,14 @@ import DependencyPlugin
 
 let project = Project.makeModule(
     name: ModulePath.Domain.name+ModulePath.Domain.Workout.rawValue,
-    targets: [    
+    targets: [
         .domain(
             interface: .Workout,
-            factory: .init()
+            factory: .init(
+                dependencies: [
+                    .core
+                ]
+            )
         ),
         .domain(
             implements: .Workout,
@@ -29,7 +33,7 @@ let project = Project.makeModule(
             tests: .Workout,
             factory: .init(
                 dependencies: [
-                    .domain(testing: .Workout)
+                    .domain(testing: .Workout),
                 ]
             )
         ),

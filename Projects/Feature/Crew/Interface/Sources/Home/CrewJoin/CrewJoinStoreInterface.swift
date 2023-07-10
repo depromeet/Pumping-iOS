@@ -33,7 +33,7 @@ public struct CrewJoinStore: ReducerProtocol {
         
         case dismissCrewJoinView
         case joinCrew
-        case joinCrewResponse(TaskResult<CrewInfo>)
+        case joinCrewResponse(TaskResult<CrewDetail>)
         case isCrewJoinCompleted
         
     }

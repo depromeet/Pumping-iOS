@@ -12,6 +12,15 @@ import CoreNetwork
 
 extension CrewClient: DependencyKey {
     public static let liveValue = CrewClient(
+        fetchCrew: {
+            let apiEndpoint = CrewEndpoint.fetchCrew()
+            let responseDTOList = try await NetworkProvider.shared.sendRequest(apiEndpoint)
+            let responseList = responseDTOList.map {
+                CrewInfo(crewName: $0.crewName, crewId: $0.crewId, createDate: $0.createDate)
+            }
+            
+            return responseList
+        },
         makeCrew: { crewName, goalCount in
             let makeCrewRequestDTO = MakeCrewRequestDTO(crewName: crewName, goalCount: goalCount)
             let apiEndpoint = CrewEndpoint.makeCrew(makeCrewRequestDTO)

@@ -31,7 +31,7 @@ public struct CrewHomeView: View {
             }
             .background(makeBackgroundView())
             .refreshable {
-                print("Refresh")
+                viewStore.send(.fetchCrew)
             }
             .basicBottomSheet(isPresented: viewStore.binding(\.$showCrewListView),
                               detents: [.height(500)]

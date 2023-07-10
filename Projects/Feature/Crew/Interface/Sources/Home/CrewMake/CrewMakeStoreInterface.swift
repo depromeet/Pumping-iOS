@@ -23,7 +23,7 @@ public struct CrewMakeStore: ReducerProtocol {
         @BindingState public var crewName: String = ""
         @BindingState public var goalCount: Int = 1
         public var isSatisfied: Bool = false
-        public var receivedCrewInfo: CrewInfo?
+        public var receivedCrewInfo: CrewDetail?
         
         public init() {
 
@@ -39,7 +39,7 @@ public struct CrewMakeStore: ReducerProtocol {
         case subGoalCount
         case copyCode
         case makeCrew
-        case makeCrewResponse(TaskResult<CrewInfo>)
+        case makeCrewResponse(TaskResult<CrewDetail>)
         case isCrewMakeCompleted
         
     }

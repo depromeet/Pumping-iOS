@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import Domain
 import SharedDesignSystem
 
 public struct CrewHomeStore: ReducerProtocol {
@@ -57,7 +58,8 @@ public struct CrewHomeStore: ReducerProtocol {
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         
-        case getCrewInfo
+        case fetchCrew
+        case fetchCrewResponse(TaskResult<[CrewInfo]>)
 
         case goToProfileView
         
