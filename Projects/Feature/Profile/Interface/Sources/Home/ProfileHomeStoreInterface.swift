@@ -76,11 +76,13 @@ public struct ProfileHomeStore: ReducerProtocol {
     }
 
     public struct State: Equatable {
+        public let userId: String?
         public let type: ProfileHomeType
         
         public var selectedDay: Int = 0
 
-        public init(type: ProfileHomeType) {
+        public init(userId: String?, type: ProfileHomeType) {
+            self.userId = userId
             self.type = type
         }
     }
@@ -88,6 +90,7 @@ public struct ProfileHomeStore: ReducerProtocol {
     public enum Action: BindableAction, Equatable {
         case tapMyButton
         case tapWidthOfChangeButton
+        case tapDayButton(Int)
 
         case binding(BindingAction<State>)
     }
