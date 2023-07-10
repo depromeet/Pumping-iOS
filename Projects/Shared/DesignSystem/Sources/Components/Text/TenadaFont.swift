@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-struct TenadaFont: ViewModifier {
+public struct TenadaFont: ViewModifier {
     let size: Font.PumpingFontSize
     
     public init(size: Font.PumpingFontSize) {
         self.size = size
     }
     
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
-            .font(.pumpingFont(family: .tenada, size: size))
+            .font(.tenada(size: size))
             .baselineOffset(-size.width(family: .tenada)/7)
     }
 }

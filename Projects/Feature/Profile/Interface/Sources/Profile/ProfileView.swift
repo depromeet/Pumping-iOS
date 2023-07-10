@@ -138,17 +138,17 @@ public struct ProfileView: View {
                     .frame(width: 18, height: 18)
                 
                 Text(type.title)
-                    .font(.pretendard(type: .h2))
-                    .foregroundColor(type.color)
+                    .font(.pretendard(size: .body1))
+                    .foregroundColor(PumpingColors.colorGrey900.swiftUIColor)
             }
             
             HStack {
                 Text(type.value)
-                    .font(.pretendard(type: .h2))
+                    .modifier(TenadaFont(size: .h2))
                     .foregroundColor(type.color)
                 
                 Text(type.prefix)
-                    .font(.pretendard(type: .h5))
+                    .modifier(TenadaFont(size: .h5))
                     .foregroundColor(type.color)
             }
             

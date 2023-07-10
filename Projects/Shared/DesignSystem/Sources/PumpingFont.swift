@@ -8,6 +8,26 @@
 import SwiftUI
 
 public extension Font {
+    /// Pumping 서비스의 Pretendard 폰트를 반환하는 함수 입니다.
+    ///
+    /// - Parameters:
+    ///     - size: Pumping 폰트 사이즈
+    ///
+    /// - Returns: Pumping의 Pretendard Font
+    static func pretendard(size: Font.PumpingFontSize) -> Font {
+        return pumpingFont(family: .pretendard, size: size)
+    }
+    
+    /// Pumping 서비스의 Tenada 폰트를 반환하는 함수 입니다.
+    ///
+    /// - Parameters:
+    ///     - size: Pumping 폰트 사이즈
+    ///
+    /// - Returns: Pumping의 Tenada Font
+    static func tenada(size: Font.PumpingFontSize) -> Font {
+        return pumpingFont(family: .tenada, size: size)
+    }
+    
     /// Pumping 서비스의 Custom Font를 반환하는 함수 입니다.
     ///
     /// - Parameters:
@@ -15,17 +35,24 @@ public extension Font {
     ///     - size: Pumping 폰트 사이즈
     ///
     /// - Returns: Pumping의 Custom Font
-    static func pumpingFont(
+    static private func pumpingFont(
         family: Font.PumpingFontFamily = .pretendard,
         size: Font.PumpingFontSize) -> Font {
-            return .custom(
-                pumpingFontFileName(
-                    family: family,
-                    weight: size.weight(family: family)),
-                size: size.width(family: family))
+            let weight = pumpingFontWeight(family: family, size: size)
+            let fileName = pumpingFontFileName(family: family, weight: weight)
+            let width = size.width(family: family)
+            
+            return .custom(fileName, size: width)
     }
     
-    static func pumpingFontFileName(family: Font.PumpingFontFamily, weight: Font.PumpingFontWeight) -> String {
+    /// Pumping 서비스의 Custom Font의 File Name를 반환하는 함수 입니다.
+    ///
+    /// - Parameters:
+    ///     - family: Pumping 폰트 패밀리
+    ///     - weight: Pumping 폰트 무게
+    ///
+    /// - Returns: Pumping의 Custom Font의 FIle Name
+    static private func pumpingFontFileName(family: Font.PumpingFontFamily, weight: Font.PumpingFontWeight) -> String {
         switch family {
         case .pretendard:
             switch weight {
@@ -40,6 +67,28 @@ public extension Font {
             }
         case .tenada:
             return "Tenada"
+        }
+    }
+    
+    /// Pumping 서비스의 Custom Font의 Weight를 반환하는 함수 입니다.
+    ///
+    /// - Parameters:
+    ///     - family: Pumping 폰트 패밀리
+    ///     - size: Pumping 폰트 사이즈
+    ///
+    /// - Returns: Pumping의 Custom Font의 Weight
+    static private func pumpingFontWeight(family: Font.PumpingFontFamily, size: Font.PumpingFontSize) -> PumpingFontWeight {
+        switch family {
+        case .pretendard:
+            switch size {
+            case .h0, .h1, .h2, .h3, .h4, .h5, .caption1, .caption2:
+                return .semiBold
+                
+            case .body1, .body2, .body3, .body4:
+                return .medium
+            }
+            
+        case .tenada: return .extraBold
         }
     }
 }
@@ -102,21 +151,6 @@ public extension Font {
         case body4
         case caption1
         case caption2
-        
-        func weight(family: PumpingFontFamily) -> Font.PumpingFontWeight {
-            switch family {
-            case .pretendard:
-                switch self {
-                case .h0, .h1, .h2, .h3, .h4, .h5, .caption1, .caption2:
-                    return .semiBold
-                    
-                case .body1, .body2, .body3, .body4:
-                    return .medium
-                }
-                
-            case .tenada: return .extraBold
-            }
-        }
         
         func width(family: PumpingFontFamily) -> CGFloat {
             switch family {

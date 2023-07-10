@@ -8,7 +8,7 @@
 import SwiftUI
 
 public extension Font {
-    //TODO: 마이그레이션 예정
+    /// 마이그레이션 예정 입니다.
     /// 기존의 pretendard, tenada 폰트 뿐 아니라 다양한 폰트를 적용할 수 있도록 코드를 작성
     /// Font.pumpingFont로 접근하여 사용가능함.
     /// ThenadaFont는 ViewModifier에서 사용할 예정으로 타입으로 만드는 것을 허용
@@ -16,6 +16,10 @@ public extension Font {
         return .custom("\(type.name)", size: fontSize)
     }
     
+    /// 마이그레이션 예정 입니다.
+    /// 기존의 pretendard, tenada 폰트 뿐 아니라 다양한 폰트를 적용할 수 있도록 코드를 작성
+    /// Font.pumpingFont로 접근하여 사용가능함.
+    /// ThenadaFont는 ViewModifier에서 사용할 예정으로 타입으로 만드는 것을 허용
     static func tenada(size fontSize: CGFloat) -> Font {
         return .custom("Tenada", size: fontSize)
     }
