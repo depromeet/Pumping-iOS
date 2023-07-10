@@ -5,8 +5,12 @@
 //  Created by Derrick kim on 2023/06/18.
 //
 
+import SwiftUI
+
 import ComposableArchitecture
-import SharedDesignSystem
+
+import Domain
+import Shared
 
 public enum ProfileSubject: Hashable {
     case my
@@ -20,6 +24,49 @@ public struct ProfileStore: ReducerProtocol {
         reducer: Reduce<State, Action>
     ) {
         self.reducer = reducer
+    }
+    
+    public enum WorkoutSummaryType {
+        case time(Int)
+        case heartRate(Int)
+        case calorie(Int)
+        case part(WorkoutCategoryIdentifier, Int)
+        
+        var icon: Image {
+            switch self {
+            case .time: return PumpingImages.iconTimer.swiftUIImage
+            case .heartRate: return PumpingImages.iconHeartRate.swiftUIImage
+            case .calorie: return PumpingImages.iconFire.swiftUIImage
+            case .part: return PumpingImages.iconTimer.swiftUIImage
+            }
+        }
+        
+        var title: String {
+            switch self {
+            case .time: return "누적 운동 시간"
+            case .heartRate: return "평균 심박수"
+            case .calorie: return "칼로리"
+            case .part: return "최대 운동 부위"
+            }
+        }
+        
+        var value: String {
+            switch self {
+            case let .time(v): return DateManager.toClockString(from: v)
+            case let .heartRate(v): return String(describing: v)
+            case let .calorie(v): return String(describing: v)
+            case let .part(id, _): return String(describing: "\(id.title)")
+            }
+        }
+        
+        var prefix: String {
+            switch self {
+            case .time: return ""
+            case .heartRate: return "bpm"
+            case .calorie: return "kcal"
+            case let .part(_, v): return String(describing: "/\(v)분")
+            }
+        }
     }
 
     public struct State: Equatable {

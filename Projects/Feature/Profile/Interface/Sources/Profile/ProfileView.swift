@@ -26,6 +26,8 @@ public struct ProfileView: View {
             ScrollView {
                 headerView()
                 
+                weekView()
+                
                 workoutSummaryView()
             }
         }
@@ -70,6 +72,8 @@ public struct ProfileView: View {
                 .clipShape(Circle())
             }
             
+            Spacer()
+            
             PumpingImages.boy.swiftUIImage
                 .resizable()
                 .frame(width: 280, height: 220)
@@ -77,8 +81,26 @@ public struct ProfileView: View {
     }
     
     private func workoutSummaryView() -> some View {
-        HStack {
-            weekView()
+        VStack {
+            HStack {
+                workoutSummaryItemView(type: .time(200))
+                
+                Spacer()
+            }
+            
+            HStack {
+                workoutSummaryItemView(type: .heartRate(200))
+                
+                Spacer()
+                
+                workoutSummaryItemView(type: .calorie(200))
+            }
+            
+            HStack {
+                workoutSummaryItemView(type: .part(.aerobic, 200))
+                
+                Spacer()
+            }
         }
     }
     
@@ -108,9 +130,25 @@ public struct ProfileView: View {
         }
     }
     
-    private func workoutSummaryItemView() -> some View {
-        HStack {
+    private func workoutSummaryItemView(type: ProfileStore.WorkoutSummaryType, myType: ProfileStore.WorkoutSummaryType? = nil) -> some View {
+        VStack {
+            HStack {
+                type.icon
+                
+                Text(type.title)
+            }
             
+            HStack {
+                Text(type.value)
+                
+                Text(type.prefix)
+            }
+            
+            if let myType = myType {
+                HStack {
+                    Text(String(describing: "\(type.value) \(type.prefix)"))
+                }
+            }
         }
     }
 }
