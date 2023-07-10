@@ -13,3 +13,5 @@
 @_exported import DomainWorkoutInterface
 @_exported import DomainCrew
 @_exported import DomainCrewInterface
+@_exported import DomainWatchConnectivity
+@_exported import DomainWatchConnectivityInterface

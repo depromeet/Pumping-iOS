@@ -9,7 +9,8 @@ import SwiftUI
 
 import ComposableArchitecture
 
-import SharedDesignSystem
+import Domain
+import Shared
 
 public struct WorkoutTimerView: View {    
     public let store: StoreOf<WorkoutTimerStore>
