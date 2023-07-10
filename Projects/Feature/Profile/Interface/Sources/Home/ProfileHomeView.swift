@@ -18,18 +18,18 @@ public struct ProfileHomeView: View {
     
     public var body: some View {
         WithViewStore(self.store) { viewStore in
-            ScrollView {
+            VStack(spacing: .zero) {
                 headerView()
                 
-                weekView()
-                
-                workoutSummaryView(viewStore: viewStore)
+                workoutBottomView(viewStore: viewStore)
+                    .background(PumpingColors.colorGrey100.swiftUIColor)
             }
+            .background(PumpingColors.colorGrey000.swiftUIColor)
         }
     }
     
     private func headerView() -> some View {
-        HStack {
+        HStack(alignment: .bottom) {
             VStack(alignment: .leading) {
                 Text("5위")
                     .font(.pretendard(size: 13, type: .extraLight))
@@ -45,13 +45,12 @@ public struct ProfileHomeView: View {
                     .background(.white.opacity(0.3))
                     .cornerRadius(12)
                     
-                    Text("보민")
-                        .font(.tenada(size: 32))
+                    Text("채령")
+                        .modifier(TenadaFont(size: .h2))
                         .foregroundColor(.white)
-                        .baselineOffset(-10)
                 }
                 
-                Text("원래 영웅은\n성공전이 어두운법")
+                Text("원래 영웅은 성공전이 어두운법")
                     .font(.pretendard(size: 15, type: .light))
                     .foregroundColor(.colorGrey700)
                 
@@ -70,55 +69,78 @@ public struct ProfileHomeView: View {
             Spacer()
             
             PumpingImages.boy.swiftUIImage
-                .resizable()
-                .frame(width: 280, height: 220)
+        }
+        .padding(.horizontal)
+    }
+    
+    private func workoutBottomView(viewStore: ViewStoreOf<ProfileHomeStore>) -> some View {
+        VStack(spacing: .zero) {
+            workoutSummaryHeaderView(viewStore: viewStore)
+                .padding()
+            
+            weekView()
+            
+            workoutSummaryView(viewStore: viewStore)
+                .background(PumpingColors.colorGrey200.swiftUIColor)
+                .cornerRadius(12)
+                .padding()
+            
+            Spacer()
         }
     }
     
     private func workoutSummaryView(viewStore: ViewStoreOf<ProfileHomeStore>) -> some View {
         VStack {
             HStack {
-                Text("운동량")
-                
-                Spacer()
-                
-                switch viewStore.type {
-                case .my:
-                    HStack {
-                        Button("나와 비교") {
-                            viewStore.send(.tapMyButton)
-                        }
-                    }
-                    
-                case .other:
-                    HStack {
-                        Button("변화폭") {
-                            viewStore.send(.tapWidthOfChangeButton)
-                        }
-                    }
-                }
-            }
-            
-            HStack {
                 workoutSummaryItemView(type: .time(200))
-                
                 Spacer()
             }
+            .padding(.bottom, 43)
+            
+            Divider()
             
             HStack {
                 workoutSummaryItemView(type: .heartRate(200))
-                
                 Spacer()
-                
                 workoutSummaryItemView(type: .calorie(200))
             }
+            .padding(.bottom, 43)
+            
+            Divider()
             
             HStack {
                 workoutSummaryItemView(type: .part(.aerobic, 200))
-                
                 Spacer()
             }
+            .padding(.bottom, 43)
         }
+        .padding()
+    }
+    
+    private func workoutSummaryHeaderView(viewStore: ViewStoreOf<ProfileHomeStore>) -> some View {
+        HStack {
+            Text("운동량")
+                .font(.pretendard(size: .h4))
+            
+            Spacer()
+            
+            switch viewStore.type {
+            case .my:
+                HStack {
+                    Button("나와 비교") {
+                        viewStore.send(.tapMyButton)
+                    }
+                }
+                
+            case .other:
+                HStack {
+                    Button("변화폭") {
+                        viewStore.send(.tapWidthOfChangeButton)
+                    }
+                }
+            }
+        }
+
     }
     
     private func weekView() -> some View {
@@ -148,8 +170,8 @@ public struct ProfileHomeView: View {
     }
     
     private func workoutSummaryItemView(type: ProfileHomeStore.WorkoutSummaryType, myType: ProfileHomeStore.WorkoutSummaryType? = nil) -> some View {
-        VStack {
-            HStack {
+        VStack(alignment: .leading, spacing: 2) {
+            HStack(spacing: 2) {
                 type.icon
                     .resizable()
                     .frame(width: 18, height: 18)
@@ -159,7 +181,7 @@ public struct ProfileHomeView: View {
                     .foregroundColor(PumpingColors.colorGrey900.swiftUIColor)
             }
             
-            HStack {
+            HStack(spacing: 4) {
                 Text(type.value)
                     .modifier(TenadaFont(size: .h2))
                     .foregroundColor(type.color)
