@@ -16,10 +16,16 @@ extension ProfileRootStore {
             case .binding:
                 return .none
 
-            case .home(.tapWidthOfChangeButton):
-                state.path.append(.widthOfChange)
-                state.widthOfChange = .init()
-                return .none
+            case let .home(action):
+                switch action {
+                case .tapWidthOfChangeButton:
+                    state.widthOfChange = .init()
+                    state.path.append(.widthOfChange)
+                    return .none
+                    
+                default:
+                    return .none
+                }
 
             default:
                 return .none

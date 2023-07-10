@@ -23,7 +23,7 @@ public struct ProfileHomeView: View {
                 
                 weekView()
                 
-                workoutSummaryView()
+                workoutSummaryView(viewStore: viewStore)
             }
         }
     }
@@ -75,8 +75,30 @@ public struct ProfileHomeView: View {
         }
     }
     
-    private func workoutSummaryView() -> some View {
+    private func workoutSummaryView(viewStore: ViewStoreOf<ProfileHomeStore>) -> some View {
         VStack {
+            HStack {
+                Text("운동량")
+                
+                Spacer()
+                
+                switch viewStore.type {
+                case .my:
+                    HStack {
+                        Button("나와 비교") {
+                            viewStore.send(.tapMyButton)
+                        }
+                    }
+                    
+                case .other:
+                    HStack {
+                        Button("변화폭") {
+                            viewStore.send(.tapWidthOfChangeButton)
+                        }
+                    }
+                }
+            }
+            
             HStack {
                 workoutSummaryItemView(type: .time(200))
                 

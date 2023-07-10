@@ -9,7 +9,7 @@ import Foundation
 
 public struct PumpingTimer: Codable, Equatable {
     public let id: UUID
-    public let workoutCategoryIdentifier: WorkoutCategoryIdentifier
+    public let workoutCategoryIdentifier: WorkoutPart
     public var time: Int
     
     public var heartRateSum: Double
@@ -21,7 +21,7 @@ public struct PumpingTimer: Codable, Equatable {
     
     public init(
         id: UUID,
-        workoutCategoryIdentifier: WorkoutCategoryIdentifier,
+        workoutCategoryIdentifier: WorkoutPart,
         time: Int = 0,
         heartRateSum: Double = 0.0,
         heartRateCount: Int = 0,

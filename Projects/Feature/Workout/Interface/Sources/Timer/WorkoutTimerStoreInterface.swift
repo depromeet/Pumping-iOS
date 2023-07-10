@@ -68,7 +68,7 @@ public struct WorkoutTimerStore: ReducerProtocol {
     }
     
     public struct State: Equatable {
-        public let selectedWorkoutCategoryIdentifiers: [WorkoutCategoryIdentifier]
+        public let selectedWorkoutCategoryIdentifiers: [WorkoutPart]
         
         public var timers: [PumpingTimer] = []
         public var time: Int = 0
@@ -83,14 +83,14 @@ public struct WorkoutTimerStore: ReducerProtocol {
         public var timerCells: IdentifiedArrayOf<WorkoutTimerCellStore.State> = []
         public var counter: WorkoutCounterStore.State? = .init(id: nil)
         
-        public init(selectedWorkoutCategoryIdentifiers: [WorkoutCategoryIdentifier]) {
+        public init(selectedWorkoutCategoryIdentifiers: [WorkoutPart]) {
             self.selectedWorkoutCategoryIdentifiers = selectedWorkoutCategoryIdentifiers
             
             self.timers = self.makeTimers(from: selectedWorkoutCategoryIdentifiers)
             self.timerCells = self.makeTimerCells(from: self.timers)
         }
         
-        private func makeTimers(from workoutCategoryIdentifiers: [WorkoutCategoryIdentifier]) -> [PumpingTimer] {
+        private func makeTimers(from workoutCategoryIdentifiers: [WorkoutPart]) -> [PumpingTimer] {
             return workoutCategoryIdentifiers.map { workoutCategoryIdentifier in
                 return .init(id: .init(), workoutCategoryIdentifier: workoutCategoryIdentifier)
             }

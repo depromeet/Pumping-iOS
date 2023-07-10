@@ -17,11 +17,11 @@ public struct WorkoutCategoryCellStore: ReducerProtocol {
     public struct State: Equatable, Identifiable {
         public let id: UUID
         
-        public var workoutCategoryIdentifier: WorkoutCategoryIdentifier
+        public var workoutCategoryIdentifier: WorkoutPart
         
         public var isTapped: Bool
         
-        public init(id: UUID, workoutCategoryIdentifier: WorkoutCategoryIdentifier, isTapped: Bool = false) {
+        public init(id: UUID, workoutCategoryIdentifier: WorkoutPart, isTapped: Bool = false) {
             self.id = id
             self.workoutCategoryIdentifier = workoutCategoryIdentifier
             self.isTapped = isTapped

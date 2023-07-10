@@ -10,19 +10,25 @@ import Foundation
 import ComposableArchitecture
 
 public struct WorkoutClient {
+    public var fetchWorkout: @Sendable () async throws -> FetchWorkoutResponseDTO
     public var makeWorkout: @Sendable ([PumpingTimer]) async throws -> String
-   
-    public init(makeWorkout: @escaping @Sendable ([PumpingTimer]) async throws -> String) {
-        self.makeWorkout = makeWorkout
-    }
+    
+    public init(
+        fetchWorkout: @escaping @Sendable () async throws -> FetchWorkoutResponseDTO,
+        makeWorkout: @escaping @Sendable ([PumpingTimer]) async throws -> String) {
+            self.fetchWorkout = fetchWorkout
+            self.makeWorkout = makeWorkout
+        }
 }
 
 extension WorkoutClient: TestDependencyKey {
     public static var previewValue = Self(
+        fetchWorkout: unimplemented("\(Self.self).fetchWorkout"),
         makeWorkout: unimplemented("\(Self.self).makeWorkout")
     )
     
     public static let testValue = Self(
+        fetchWorkout: unimplemented("\(Self.self).fetchWorkout"),
         makeWorkout: unimplemented("\(Self.self).makeWorkout")
     )
 }

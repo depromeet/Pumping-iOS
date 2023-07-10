@@ -13,13 +13,18 @@ import DomainWorkoutInterface
 import Core
 
 extension WorkoutClient: DependencyKey {
-    public static let liveValue = WorkoutClient { timers in
-        let makeWorkoutRequestDTO = MakeWorkoutRequestDTO(timers: timers.map { $0.toDTO() })
-        let apiEndpoint = WorkoutEndpoint.makeWorkout(makeWorkoutRequestDTO)
-        let response = try await NetworkProvider.shared.sendRequest(apiEndpoint).toDomain()
-        
-        return response
-    }
+    public static let liveValue = WorkoutClient(
+        fetchWorkout: { in
+            let apiEndpoint = WorkoutEndpoint
+        },
+        makeWorkout: { timers in
+            let makeWorkoutRequestDTO = MakeWorkoutRequestDTO(timers: timers.map { $0.toDTO() })
+            let apiEndpoint = WorkoutEndpoint.makeWorkout(makeWorkoutRequestDTO)
+            let response = try await NetworkProvider.shared.sendRequest(apiEndpoint).toDomain()
+            
+            return response
+        }
+    )
 }
 
 extension DependencyValues {

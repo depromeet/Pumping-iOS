@@ -7,22 +7,22 @@
 
 import Foundation
 
-//MARK: WorkoutCategoryIdentifierType
+//MARK: WorkoutCategory
 
-public enum WorkoutCategoryIdentifierType: String, CaseIterable {
-    case whole = "전신"
-    case upper = "상체"
-    case lower = "하체"
+public enum WorkoutCategory: String, CaseIterable, Codable {
+    case whole = "WHOLE"
+    case up = "UP"
+    case down = "DOWN"
 }
 
-public extension WorkoutCategoryIdentifierType {
-    var identifiers: [WorkoutCategoryIdentifier] {
+public extension WorkoutCategory {
+    var parts: [WorkoutPart] {
         switch self {
         case .whole:
             return [.aerobic]
-        case .upper:
+        case .up:
             return [.shoulder, .chest, .arm, .back]
-        case .lower:
+        case .down:
             return [.hip]
         }
     }
@@ -30,7 +30,7 @@ public extension WorkoutCategoryIdentifierType {
 
 //MARK: WorkoutCategoryIdentifier
 
-public enum WorkoutCategoryIdentifier: String, CaseIterable, Equatable, Codable {
+public enum WorkoutPart: String, CaseIterable, Equatable, Codable {
     case aerobic = "AEROBIC"
     case shoulder = "SHOULDER"
     case chest = "CHEST"
@@ -40,7 +40,7 @@ public enum WorkoutCategoryIdentifier: String, CaseIterable, Equatable, Codable 
     case leg = "LEG"
 }
 
-public extension WorkoutCategoryIdentifier {
+public extension WorkoutPart {
     var title: String {
         switch self {
         case .aerobic: return "유산소"
@@ -53,11 +53,11 @@ public extension WorkoutCategoryIdentifier {
         }
     }
     
-    var type: WorkoutCategoryIdentifierType {
+    var category: WorkoutCategory {
         switch self {
         case .aerobic: return .whole
-        case .shoulder, .chest, .arm, .back: return .upper
-        case .hip, .leg: return .lower
+        case .shoulder, .chest, .arm, .back: return .up
+        case .hip, .leg: return .down
         }
     }
 }

@@ -15,9 +15,7 @@ import Shared
 public struct ProfileHomeStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
 
-    public init(
-        reducer: Reduce<State, Action>
-    ) {
+    public init(reducer: Reduce<State, Action>) {
         self.reducer = reducer
     }
     
@@ -29,7 +27,7 @@ public struct ProfileHomeStore: ReducerProtocol {
         case time(Int)
         case heartRate(Int)
         case calorie(Int)
-        case part(WorkoutCategoryIdentifier, Int)
+        case part(WorkoutPart, Int)
         
         var icon: Image {
             switch self {
@@ -88,9 +86,8 @@ public struct ProfileHomeStore: ReducerProtocol {
     }
 
     public enum Action: BindableAction, Equatable {
-        case tapHeartButton
+        case tapMyButton
         case tapWidthOfChangeButton
-        case tapComparisonButton(Bool)
 
         case binding(BindingAction<State>)
     }
