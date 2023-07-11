@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import FeatureProfileInterface
 
-extension ProfileStore {
+extension ProfileHomeStore {
     public init() {
         let reducer : Reduce<State, Action> = Reduce { state, action in
             switch action {

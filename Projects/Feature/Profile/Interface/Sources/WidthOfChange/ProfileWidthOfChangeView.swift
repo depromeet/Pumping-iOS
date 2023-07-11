@@ -9,12 +9,10 @@ import SwiftUI
 import ComposableArchitecture
 import SharedDesignSystem
 
-public struct WidthOfChangeView : View {
-    public let store: StoreOf<WidthOfChangeStore>
+public struct ProfileWidthOfChangeView : View {
+    public let store: StoreOf<ProfileWidthOfChangeStore>
 
-    public init(
-        store: StoreOf<WidthOfChangeStore>
-    ) {
+    public init(store: StoreOf<ProfileWidthOfChangeStore>) {
         self.store = store
     }
 
@@ -33,7 +31,7 @@ public struct WidthOfChangeView : View {
                     }
                     .offset(x: -25)
 
-                    ForEachStore(self.store.scope(state: \.widthOfChangeList, action: WidthOfChangeStore.Action.widthOfChangeCell(id:action:))) {
+                    ForEachStore(self.store.scope(state: \.widthOfChangeList, action: ProfileWidthOfChangeStore.Action.widthOfChangeCell(id:action:))) {
                         WidthOfChangeCellView(store: $0)
                     }
                 }

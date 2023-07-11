@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import SharedDesignSystem
 
-public struct WidthOfChangeStore: ReducerProtocol {
+public struct ProfileWidthOfChangeStore: ReducerProtocol {
     private let reducer: Reduce<State, Action>
 
     public init(reducer: Reduce<State, Action>) {

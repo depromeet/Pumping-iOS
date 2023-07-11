@@ -43,7 +43,7 @@ public struct MainTabView: View {
             }
         case .myPage:
             IfLetStore(self.store.scope(state: \.profile, action: { .profile($0) })) {
-                ProfileRootView(store: $0, profileSubject: .my)
+                ProfileRootView(store: $0)
             }
         }
     }

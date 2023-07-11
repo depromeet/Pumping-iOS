@@ -20,20 +20,20 @@ public struct WorkoutHomeStore: ReducerProtocol {
     }
     
     public struct State: Equatable {
-        public var workoutCategoryCellZip: [WorkoutCategoryIdentifierType : IdentifiedArrayOf<WorkoutCategoryCellStore.State>] = [:]
+        public var workoutCategoryCellZip: [WorkoutCategory : IdentifiedArrayOf<WorkoutCategoryCellStore.State>] = [:]
         
-        public var selectedWorkoutCategoryIdentifiers: [WorkoutCategoryIdentifier] = []
+        public var selectedWorkoutCategoryIdentifiers: [WorkoutPart] = []
         
         public init() {
             workoutCategoryCellZip = [
                 .whole: makeIdentifiedArray(from: .whole),
-                .upper: makeIdentifiedArray(from: .upper),
-                .lower: makeIdentifiedArray(from: .lower),
+                .up: makeIdentifiedArray(from: .up),
+                .down: makeIdentifiedArray(from: .down),
             ]
         }
         
-        private func makeIdentifiedArray(from type: WorkoutCategoryIdentifierType) -> IdentifiedArrayOf<WorkoutCategoryCellStore.State> {
-            return .init(uniqueElements: type.identifiers.map { id in
+        private func makeIdentifiedArray(from type: WorkoutCategory) -> IdentifiedArrayOf<WorkoutCategoryCellStore.State> {
+            return .init(uniqueElements: type.parts.map { id in
                 return .init(id: .init(), workoutCategoryIdentifier: id)
             })
         }
@@ -44,7 +44,7 @@ public struct WorkoutHomeStore: ReducerProtocol {
         
         case startButtonTapped
         case workoutCategoryCell(id: WorkoutCategoryCellStore.State.ID, action: WorkoutCategoryCellStore.Action)
-        case goToWorkoutStart([WorkoutCategoryIdentifier])
+        case goToWorkoutStart([WorkoutPart])
     }
     
     public var body: some ReducerProtocol<State, Action> {

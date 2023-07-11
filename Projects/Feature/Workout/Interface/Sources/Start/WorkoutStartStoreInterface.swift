@@ -19,9 +19,9 @@ public struct WorkoutStartStore: ReducerProtocol {
     }
     
     public struct State: Equatable {
-        public let selectedWorkoutCategoryIdentifiers: [WorkoutCategoryIdentifier]
+        public let selectedWorkoutCategoryIdentifiers: [WorkoutPart]
         
-        public init(selectedWorkoutCategoryIdentifiers: [WorkoutCategoryIdentifier]) {
+        public init(selectedWorkoutCategoryIdentifiers: [WorkoutPart]) {
             self.selectedWorkoutCategoryIdentifiers = selectedWorkoutCategoryIdentifiers
         }
     }
@@ -31,7 +31,7 @@ public struct WorkoutStartStore: ReducerProtocol {
         
         case startButtonTapped
         
-        case goToWorkoutTimer([WorkoutCategoryIdentifier])
+        case goToWorkoutTimer([WorkoutPart])
     }
     
     public var body: some ReducerProtocol<State, Action> {
