@@ -9,7 +9,8 @@ import SwiftUI
 
 import ComposableArchitecture
 
-import SharedDesignSystem
+import Domain
+import Shared
 
 public struct WorkoutTimerView: View {    
     public let store: StoreOf<WorkoutTimerStore>
@@ -37,6 +38,7 @@ public struct WorkoutTimerView: View {
                         
                         PumpingSubmitButton(title: "종료", completion: {
                             viewStore.send(.endButtonTapped)
+                            watchConnectivityDelegate.sendMessage(key: "control", value: WatchConnectivityControl.end.rawValue)
                         })
                         .padding()
                     }

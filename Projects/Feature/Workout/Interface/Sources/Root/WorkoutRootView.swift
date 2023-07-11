@@ -9,7 +9,8 @@ import SwiftUI
 
 import ComposableArchitecture
 
-import SharedDesignSystem
+import Shared
+import Domain
 
 public struct WorkoutRootView: View {
     public let store: StoreOf<WorkoutRootStore>

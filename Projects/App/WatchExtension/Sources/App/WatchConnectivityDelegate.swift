@@ -14,6 +14,7 @@ public class WatchConnectivityDelegate: NSObject, ObservableObject, WCSessionDel
     public weak var session: WCSession?
     
     @Published public var pumpingTimerData: PumpingTimerData = .init(timers: [], updatedTime: Date().timeIntervalSince1970)
+    @Published public var watchConnectivityControl: WatchConnectivityControl = .start
     
     init(session: WCSession = .default) {
         self.session = session
@@ -41,6 +42,13 @@ public class WatchConnectivityDelegate: NSObject, ObservableObject, WCSessionDel
     public func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         DispatchQueue.main.async {
             debugPrint("watchOS recieved \(message)")
+            for m in message {
+                if m.key == "control" {
+                    guard let value = m.value as? Int else { break }
+                    
+                    self.watchConnectivityControl = WatchConnectivityControl.toDomain(int: value)
+                }
+            }
         }
     }
     

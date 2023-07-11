@@ -5,12 +5,11 @@
 //  Created by 송영모 on 2023/06/26.
 //
 
-import Foundation
 import WatchConnectivity
 
 import ComposableArchitecture
 
-import Domain
+import DomainWorkoutInterface
 
 public class WatchConnectivityDelegate: NSObject, ObservableObject ,WCSessionDelegate {
     public weak var session: WCSession?
@@ -18,7 +17,7 @@ public class WatchConnectivityDelegate: NSObject, ObservableObject ,WCSessionDel
     @Published public var heartRate: Double = 0.0
     @Published public var calorie: Double = 0.0
     
-    init(session: WCSession = .default) {
+    public init(session: WCSession = .default) {
         self.session = session
         
         super.init()
