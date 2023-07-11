@@ -17,7 +17,7 @@ public struct TargetFactory {
     var productName: String?
     var bundleId: String?
     var deploymentTarget: DeploymentTarget?
-    var infoPlist: InfoPlist
+    var infoPlist: InfoPlist?
     var sources: SourceFilesList?
     var resources: ResourceFileElements?
     var copyFiles: [CopyFilesAction]?
@@ -38,7 +38,7 @@ public struct TargetFactory {
         productName: String? = nil,
         bundleId: String? = nil,
         deploymentTarget: DeploymentTarget? = nil,
-        infoPlist: InfoPlist = .default,
+        infoPlist: InfoPlist? = .default,
         sources: SourceFilesList? = .sources,
         resources: ResourceFileElements? = nil,
         copyFiles: [CopyFilesAction]? = nil,
@@ -112,18 +112,21 @@ public extension Target {
             newFactory.product = .app
             newFactory.name = Project.Environment.appName
             newFactory.bundleId = Project.Environment.bundlePrefix
+            newFactory.resources = ["Resources/**"]
             newFactory.productName = "Pumping"
         case .Watch:
             newFactory.platform = .watchOS
             newFactory.product = .watch2App
             newFactory.bundleId = Project.Environment.bundlePrefix + ".watch"
             newFactory.sources = nil
+            newFactory.resources = ["Resources/**"]
             newFactory.deploymentTarget = Project.Environment.watchDeploymentTarget
         case .WatchExtension:
             newFactory.platform = .watchOS
             newFactory.product = .watch2Extension
             newFactory.bundleId = Project.Environment.bundlePrefix + ".watch.extension"
             newFactory.sources = .watchExtensionSources
+            newFactory.resources = ["Resources/**"]
             newFactory.deploymentTarget = Project.Environment.watchDeploymentTarget
         }
         return make(factory: newFactory)
@@ -309,7 +312,7 @@ public extension Target {
         newFactory.name = ModulePath.WatchShared.name
         newFactory.sources = nil
         newFactory.platform = .watchOS
-        newFactory.product = .staticFramework
+        newFactory.product = .framework
         newFactory.deploymentTarget = Project.Environment.watchDeploymentTarget
         
         return make(factory: newFactory)
@@ -320,12 +323,12 @@ public extension Target {
         newFactory.name = ModulePath.WatchShared.name + module.rawValue
         newFactory.platform = .watchOS
         newFactory.deploymentTarget = Project.Environment.watchDeploymentTarget
-        newFactory.product = .staticFramework
+        newFactory.product = .framework
         newFactory.sources = .sources
         
         if module == .DesignSystem {
             newFactory.resources = ["Resources/**"]
-            newFactory.product = .staticFramework
+            newFactory.product = .framework
         }
         
         return make(factory: newFactory)

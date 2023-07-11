@@ -12,7 +12,11 @@ import DependencyPlugin
 let targets: [Target] = [
     .watchShared(
         implements: .DesignSystem,
-        factory: .init()
+        factory: .init(infoPlist: .extendingDefault(
+            with: [
+                "CFBundleShortVersionString": "1.0",
+                "CFBundleVersion": "1"
+            ]))
     )
 ]
 

@@ -19,6 +19,8 @@ let targets: [Target] = [
                     "BASE_URL": "https://pumpapp.net/api/v1/",
                     "CFBundleShortVersionString": "1.0",
                     "CFBundleVersion": "1",
+                    "CFBundleName": "Pumping",
+                    "CFBundleIconName": "AppIcon",
                     "UILaunchStoryboardName": "LaunchScreen",
                     "UIApplicationSceneManifest": [
                         "UIApplicationSupportsMultipleScenes": false,
@@ -39,8 +41,8 @@ let targets: [Target] = [
         factory: .init(
             infoPlist: .extendingDefault(
                 with: [
-                    "NSHealthShareUsageDescription" : "이 앱은 운동, 수면 및 건강 정보를 추적하고 관리하기 위해 HealthKit 데이터를 공유할 수 있습니다.",
-                    "NSHealthUpdateUsageDescription" : "이 앱은 운동, 수면 및 건강 정보를 추적하고 관리하기 위해 HealthKit 데이터를 기록할 수 있습니다.",
+                    "CFBundleShortVersionString": "1.0",
+                    "CFBundleVersion": "1",
                 ]),
             dependencies: [
                 .app(implements: .WatchExtension)
@@ -52,6 +54,8 @@ let targets: [Target] = [
         factory: .init(
             infoPlist: .extendingDefault(
                 with: [
+                    "CFBundleShortVersionString": "1.0",
+                    "CFBundleVersion": "1",
                     "NSHealthShareUsageDescription" : "이 앱은 운동, 수면 및 건강 정보를 추적하고 관리하기 위해 HealthKit 데이터를 공유할 수 있습니다.",
                     "NSHealthUpdateUsageDescription" : "이 앱은 운동, 수면 및 건강 정보를 추적하고 관리하기 위해 HealthKit 데이터를 기록할 수 있습니다.",
                 ]),
