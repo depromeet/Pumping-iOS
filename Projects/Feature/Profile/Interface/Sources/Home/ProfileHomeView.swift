@@ -25,10 +25,38 @@ public struct ProfileHomeView: View {
                     workoutBottomView(viewStore: viewStore)
                         .frame(maxHeight: .infinity)
                         .background(PumpingColors.colorGrey100.swiftUIColor)
+                    
+                    Button(action: {
+                        viewStore.send(.tapWithdrawButton)
+                    }, label: {
+                        Text("계정 탈퇴하기")
+                            .font(.pretendard(size: .body2))
+                            .foregroundColor(PumpingColors.colorGrey500.swiftUIColor)
+                    })
+                    .padding(.bottom, 40)
                 }
                 .frame(maxHeight: .infinity)
             }
-            .background(PumpingColors.colorGrey000.swiftUIColor)
+            .background(makeBackgroundView())
+            .onAppear {
+                viewStore.send(.onAppear)
+            }
+        }
+    }
+    
+    private func makeBackgroundView() -> some View {
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                Rectangle()
+                    .fill(Color.colorBlue500)
+                    .frame(height: (geometry.size.height / 2) + 100)
+                    .edgesIgnoringSafeArea(.top)
+                
+                Rectangle()
+                    .fill(Color.colorGrey100)
+                    .frame(height: geometry.size.height / 2)
+            }
+            .frame(height: geometry.size.height)
         }
     }
     
@@ -99,7 +127,7 @@ public struct ProfileHomeView: View {
     private func workoutSummaryView(viewStore: ViewStoreOf<ProfileHomeStore>) -> some View {
         VStack {
             HStack {
-                workoutSummaryItemView(type: .time(200))
+                workoutSummaryItemView(type: .time(viewStore.state.time))
                 Spacer()
             }
             .padding(.bottom, 43)
@@ -107,16 +135,16 @@ public struct ProfileHomeView: View {
             Divider()
             
             HStack {
-                workoutSummaryItemView(type: .heartRate(200))
+                workoutSummaryItemView(type: .heartRate(viewStore.state.heartRate))
                 Spacer()
-                workoutSummaryItemView(type: .calorie(200))
+                workoutSummaryItemView(type: .calorie(viewStore.state.calorie))
             }
             .padding(.bottom, 43)
             
             Divider()
             
             HStack {
-                workoutSummaryItemView(type: .part(.aerobic, 200))
+                workoutSummaryItemView(type: .maxWorkout(viewStore.state.maxWorkoutCategory, viewStore.state.maxWorkoutTime))
                 Spacer()
             }
             .padding(.bottom, 43)

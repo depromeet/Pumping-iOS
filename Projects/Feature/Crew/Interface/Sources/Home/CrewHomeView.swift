@@ -188,9 +188,6 @@ public struct CrewHomeView: View {
                 state: \.userRecordList,
                 action: CrewHomeStore.Action.personalRecordCell(id:action:))) {
                     PersonalRecordCellView(store: $0)
-                        .onTapGesture {
-                            viewStore.send(.goToProfileView)
-                        }
                 }
         }
     }

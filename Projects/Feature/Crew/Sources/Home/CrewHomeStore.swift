@@ -38,7 +38,12 @@ extension CrewHomeStore {
                 return .none
                 
             case let .personalRecordCell(id, action):
-                return .none
+                guard let userRecord = state.userRecordList.first(where: { $0.id == id }) else { return .none }
+                //FIXME: 상상 코딩 부분 - 셀을 누르면 userId를 profile View로 넘겨줌. 그리고 profile View에서 onAppear로 fetching
+                switch action {
+                case .tapped:
+                    return .send(.goToProfileView(userRecord.userId))
+                }
                 
             case .fetchUserRequest:
                 return .task {
@@ -97,7 +102,7 @@ extension CrewHomeStore {
                 
                 state.userRecordList = .init(
                     uniqueElements: bypassCrewInfo.memberInfo.enumerated().map { index, member in
-                        return .init(id: .init(), avatarName: member.profileImage, ranking: "\(index+1)", userName: member.userName, numberOfExerciseGoals: "\(member.goalCount)", workoutTime: DateManager.toClockString(from: member.workoutTime ?? 0))
+                        return .init(id: .init(), userId: member.userId, avatarName: member.profileImage, ranking: "\(index+1)", userName: member.userName, numberOfExerciseGoals: "\(member.goalCount)", workoutTime: DateManager.toClockString(from: member.workoutTime ?? 0))
                 })
                 
                 return .none

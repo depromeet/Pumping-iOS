@@ -72,7 +72,7 @@ public struct CrewHomeStore: ReducerProtocol {
         case personalRecordCell(id: PersonalRecordCellStore.State.ID, action: PersonalRecordCellStore.Action)
         
         // navigation
-        case goToProfileView
+        case goToProfileView(String)
     }
     
     public var body: some ReducerProtocol<State, Action> {
