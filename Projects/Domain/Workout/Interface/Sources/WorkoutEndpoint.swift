@@ -13,8 +13,10 @@ import CoreKeyChainStore
 public struct WorkoutEndpoint {
     public static func fetchWorkout(userId: String? = nil) -> Endpoint<FetchWorkoutResponseDTO> {
         let accessToken = KeyChainStore.shared.load(property: .accessToken)
+        var path = "workout/"
+        path += userId ?? ""
         
-        return Endpoint(path: "workout/" + String(describing: userId),
+        return Endpoint(path: path,
                         httpMethod: .get,
                         headers: ["Authorization" : "Bearer \(accessToken)"])
     }

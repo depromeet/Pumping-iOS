@@ -47,7 +47,9 @@ public struct OnboardingRootStore: ReducerProtocol {
         case permission(OnboardingPermissionStore.Action)
         case profile(OnboadingProfileStore.Action)
         case avatar(OnboardingAvatarStore.Action)
+        
         case signUp(TaskResult<Token>)
+        
         case goToMain
     }
     

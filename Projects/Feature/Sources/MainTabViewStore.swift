@@ -9,6 +9,7 @@ import Foundation
 
 import ComposableArchitecture
 
+import Domain
 import Shared
 
 public struct MainTabViewStore: ReducerProtocol {
@@ -25,7 +26,8 @@ public struct MainTabViewStore: ReducerProtocol {
         public var showTabBar: Bool = true
         @BindingState public var showModal: Bool = false
         
-        public init() { }
+        public init() {
+        }
     }
     
     public enum Action: BindableAction, Equatable {

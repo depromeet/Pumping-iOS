@@ -53,4 +53,10 @@ public final class KeyChainStore: TokenStore {
         
         SecItemDelete(query)
     }
+    
+    public func deleteAll() {
+        TokenProperties.allCases.forEach {
+            delete(property: $0)
+        }
+    }
 }

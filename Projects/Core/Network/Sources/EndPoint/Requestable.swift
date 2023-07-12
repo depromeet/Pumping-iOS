@@ -10,12 +10,20 @@ import CoreNetworkInterface
 import SharedUtil
 
 extension Requestable {
-    private func makeURLComponents() throws -> URLComponents? {
+    private func makeURLComponents(isBypass: Bool) throws -> URLComponents? {
         guard let baseURL = Bundle.main.infoDictionary?["BASE_URL"] as? String else {
             throw NetworkError.urlRequestError(.makeURLError)
         }
         
-        return URLComponents(string: baseURL + path)
+        guard let prefix = Bundle.main.infoDictionary?["BASE_URL_PREFIX"] as? String else {
+            throw NetworkError.urlRequestError(.makeURLError)
+        }
+        
+        guard let bypassPrefix = Bundle.main.infoDictionary?["BASE_URL_BYPASS_PREFIX"] as? String else {
+            throw NetworkError.urlRequestError(.makeURLError)
+        }
+        
+        return isBypass ? URLComponents(string: baseURL + bypassPrefix + path) : URLComponents(string: baseURL + prefix + path)
     }
     
     private func getQueryParameters() throws -> [URLQueryItem]? {
@@ -57,9 +65,8 @@ extension Requestable {
         return encodedBody
     }
     
-    public func makeURLRequest() throws -> URLRequest {
-        
-        guard var urlComponent = try makeURLComponents() else {
+    public func makeURLRequest(isBypass: Bool) throws -> URLRequest {
+        guard var urlComponent = try makeURLComponents(isBypass: isBypass) else {
             throw NetworkError.urlRequestError(.urlComponentError)
         }
         

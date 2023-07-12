@@ -9,7 +9,7 @@ import Foundation
 import Shared
 import SwiftUI
 
-public enum CharacterType: String, CaseIterable {
+public enum CharacterType: String, CaseIterable, Codable {
     case a = "A"
     case b = "B"
     case c = "C"
@@ -22,7 +22,7 @@ public enum CharacterType: String, CaseIterable {
     case j = "J"
     case k = "K"
     case l = "L"
-    
+
     public func getCharacterImage(body: Bool = true, head: Bool = false) -> Image {
         switch self {
         case .a:

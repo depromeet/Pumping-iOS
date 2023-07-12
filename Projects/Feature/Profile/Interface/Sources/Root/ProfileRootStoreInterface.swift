@@ -6,7 +6,9 @@
 //
 
 import ComposableArchitecture
-import SharedDesignSystem
+
+import Core
+import Shared
 
 public enum ProfileScene: Hashable {
     case root
@@ -32,11 +34,11 @@ public struct ProfileRootStore: ReducerProtocol {
     public struct State: Equatable {
         @BindingState public var path: [ProfileScene] = []
 
-        public var home: ProfileHomeStore.State = .init(userId: "", type: .my)
+        public var home: ProfileHomeStore.State = .init(userId: KeyChainStore.shared.load(property: .userId), type: .my)
         public var widthOfChange: ProfileWidthOfChangeStore.State?
 
         public init() {
-
+            
         }
     }
 

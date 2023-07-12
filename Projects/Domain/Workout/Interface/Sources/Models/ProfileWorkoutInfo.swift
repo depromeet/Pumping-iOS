@@ -8,14 +8,14 @@
 import Foundation
 
 // MARK: - ProfileWorkoutInfo
-public struct ProfileWorkoutInfo {
+public struct ProfileWorkoutInfo: Equatable {
     public let workouts: [ProfileWorkout]
 }
 
 // MARK: - ProfileWorkout
-public struct ProfileWorkout: Codable {
-    let workoutDate: String
-    let totalTime, averageHeartbeat, totalCalories: Int
-    let maxWorkoutPart: WorkoutCategory
-    let maxWorkoutPartTime: Int
+public struct ProfileWorkout: Equatable {
+    public let workoutDate: String
+    public let totalTime, averageHeartbeat, totalCalories: Int
+    public let maxWorkoutPart: WorkoutCategory
+    public let maxWorkoutPartTime: Int
 }

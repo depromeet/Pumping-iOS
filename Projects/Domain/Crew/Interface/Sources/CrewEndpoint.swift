@@ -10,6 +10,14 @@ import CoreNetworkInterface
 import CoreKeyChainStore
 
 public struct CrewEndpoint {
+    public static func bypassFetchCrew(_ requestDTO: BypassFetchCrewRequestDTO) -> Endpoint<BypassFetchCrewResponseDTO> {
+        return Endpoint(
+            path: "crew",
+            httpMethod: .post,
+            bodyParameters: requestDTO
+        )
+    }
+    
     public static func fetchCrew() -> Endpoint<CrewInfoResponseDTO> {
         let accessToken = KeyChainStore.shared.load(property: .accessToken)
         

@@ -15,3 +15,5 @@
 @_exported import DomainCrewInterface
 @_exported import DomainWatchConnectivity
 @_exported import DomainWatchConnectivityInterface
+@_exported import DomainUser
+@_exported import DomainUserInterface

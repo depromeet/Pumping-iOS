@@ -16,7 +16,9 @@ let targets: [Target] = [
         factory: .init(
             infoPlist: .extendingDefault(
                 with: [
-                    "BASE_URL": "https://pumpapp.net/api/v1/",
+                    "BASE_URL": "https://pumpapp.net/",
+                    "BASE_URL_PREFIX": "api/v1/",
+                    "BASE_URL_BYPASS_PREFIX": "bypass/",
                     "CFBundleShortVersionString": "1.0",
                     "CFBundleVersion": "1",
                     "CFBundleName": "Pumping",

@@ -81,11 +81,14 @@ public extension Font {
         switch family {
         case .pretendard:
             switch size {
-            case .h0, .h1, .h2, .h3, .h4, .h5, .caption1, .caption2:
-                return .semiBold
+            case .h0, .h1, .h2, .h3, .h4, .h5:
+                return .bold
                 
             case .body1, .body2, .body3, .body4:
                 return .medium
+                
+            case .caption1, .caption2:
+                return .semiBold
             }
             
         case .tenada: return .extraBold
