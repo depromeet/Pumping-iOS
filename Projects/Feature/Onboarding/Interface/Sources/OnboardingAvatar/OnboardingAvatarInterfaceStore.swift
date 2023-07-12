@@ -23,7 +23,7 @@ public struct OnboardingAvatarStore : ReducerProtocol {
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
-        case getRandomCharacter
+        case getRandomCharacter(selctedGender: GenderType?)
         case signUp
         case goToMain
     }

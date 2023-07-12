@@ -34,7 +34,7 @@ public struct OnboardingRootView : View {
                             
                         case .avatar:
                             IfLetStore(self.store.scope(state: \.avatar, action: { .avatar($0) })) {
-                                OnboardingAvatarView(store: $0)
+                                OnboardingAvatarView(selectedGender: viewStore.state.profile?.gender, store: $0)
                             }
                             
                         }

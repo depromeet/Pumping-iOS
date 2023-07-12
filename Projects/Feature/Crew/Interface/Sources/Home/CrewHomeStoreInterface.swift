@@ -33,7 +33,8 @@ public struct CrewHomeStore: ReducerProtocol {
         public var crewJoin: CrewJoinStore.State?
         public var crewMake: CrewMakeStore.State?
         
-
+        public var crewList: [CrewInfo] = []
+        
         public var userRecordList: IdentifiedArrayOf<PersonalRecordCellStore.State> = [
             .init(id: .init(), avatarName: "몰라", ranking: "4", userName: "보민", numberOfExerciseGoals: "3 / 5회", workoutTime: "02:40"),
             .init(id: .init(), avatarName: "몰라", ranking: "1", userName: "희원", numberOfExerciseGoals: "3 / 5회", workoutTime: "02:40"),

@@ -33,6 +33,7 @@ public struct SignInWithAppleResponseDTO: Decodable, Equatable {
     public func toDomain() -> Token {
         return Token(accessToken: accessToken,
                      expiresAt: expiresAt,
+                     userId: nil,
                      loginType: loginType,
                      oauth2Id: oauth2Id)
     }

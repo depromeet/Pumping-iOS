@@ -14,8 +14,8 @@ extension OnboardingAvatarStore {
     public init() {
         let reducer : Reduce<State, Action> = Reduce { state, action in
             switch action {
-            case .getRandomCharacter:
-                state.pickedCharacter = getRandomCharacter()
+            case let .getRandomCharacter(genderType):
+                state.pickedCharacter = getRandomCharacter(genderType: genderType)
                 state.isAvatarPicked = true
                 return .none
                 
@@ -28,10 +28,22 @@ extension OnboardingAvatarStore {
             reducer: reducer
         )
         
-        func getRandomCharacter() -> CharacterType {
-            let allCases = CharacterType.allCases
-            let randomIndex = Int.random(in: 0..<allCases.count)
-            return allCases[randomIndex]
+        func getRandomCharacter(genderType: GenderType?) -> CharacterType? {
+            guard let genderType else {
+                return nil
+            }
+            
+            var characterTypes: [CharacterType] = []
+            
+            switch genderType {
+            case .male:
+                characterTypes = [.a, .b, .c, .d, .e, .f]
+            case .female:
+                characterTypes = [.g, .h, .i, .j, .k, .l]
+            }
+            
+            let randomIndex = Int.random(in: 0..<characterTypes.count)
+            return characterTypes[randomIndex]
         }
     }
 }

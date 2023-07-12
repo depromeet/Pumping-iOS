@@ -15,6 +15,7 @@ public final class LocalAuthStore : LocalAuthStoreInterface {
         return Token(
             accessToken: KeyChainStore.shared.load(property: .accessToken),
             expiresAt: KeyChainStore.shared.load(property: .expiresAt),
+            userId: KeyChainStore.shared.load(property: .userId),
             loginType: KeyChainStore.shared.load(property: .loginType),
             oauth2Id: KeyChainStore.shared.load(property: .oauth2Id)
         )
@@ -27,6 +28,10 @@ public final class LocalAuthStore : LocalAuthStoreInterface {
         
         if let expiresAt = token.expiresAt {
             KeyChainStore.shared.save(property: .expiresAt, value: expiresAt)
+        }
+        
+        if let userId = token.userId {
+            KeyChainStore.shared.save(property: .userId, value: userId)
         }
         
         if let loginType = token.loginType {

@@ -34,14 +34,14 @@ extension CrewHomeStore {
                     )
                 }
 
-            case let .fetchCrewResponse(.success(crewInfo)):
-                print(crewInfo)
+            case let .fetchCrewResponse(.success(crewList)):
+                state.crewList = crewList
+                print(crewList)
                 return .none
 
             case let .fetchCrewResponse(.failure(error)):
                 print(error)
                 return .none
-                
                 
             case .presentCrewListView:
                 state.showCrewListView = true

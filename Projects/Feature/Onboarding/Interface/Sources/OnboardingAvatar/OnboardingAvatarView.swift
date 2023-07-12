@@ -8,19 +8,21 @@
 import Foundation
 import SwiftUI
 import ComposableArchitecture
+import Domain
 import SharedDesignSystem
 
 struct OnboardingAvatarView: View {
+    public let selectedGender: GenderType?
     public let store: StoreOf<OnboardingAvatarStore>
     
     public var body: some View {
         WithViewStore(self.store) { viewStore in
             ZStack {
                 
-                if let character = viewStore.state.pickedCharacter {
-                    PumpingLottieView(asset: AnimationAsset.confetti)
+                if viewStore.state.pickedCharacter != nil {
+                    viewStore.pickedCharacter?.getCharacterImage()
                 } else {
-                    PumpingLottieView(asset: AnimationAsset.confetti)
+                    PumpingLottieView(asset: AnimationAsset.characterLoop, contentMode: .scaleToFill)
                 }
                 
                 VStack(alignment : .leading) {
@@ -55,7 +57,7 @@ struct OnboardingAvatarView: View {
             if viewStore.isAvatarPicked {
                 viewStore.send(.signUp)
             } else {
-                viewStore.send(.getRandomCharacter)
+                viewStore.send(.getRandomCharacter(selctedGender: selectedGender))
             }
         }
         .padding([.horizontal, .bottom])
