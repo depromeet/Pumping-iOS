@@ -32,7 +32,7 @@ public struct ProfileRootStore: ReducerProtocol {
     public struct State: Equatable {
         @BindingState public var path: [ProfileScene] = []
 
-        public var home: ProfileHomeStore.State = .init(type: .my)
+        public var home: ProfileHomeStore.State = .init(userId: "", type: .my)
         public var widthOfChange: ProfileWidthOfChangeStore.State?
 
         public init() {

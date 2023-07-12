@@ -10,7 +10,7 @@ import CoreNetworkInterface
 import CoreKeyChainStore
 
 public struct CrewEndpoint {
-    public static func fetchCrew() -> Endpoint<[CrewInfoResponseDTO]> {
+    public static func fetchCrew() -> Endpoint<CrewInfoResponseDTO> {
         let accessToken = KeyChainStore.shared.load(property: .accessToken)
         
         return Endpoint(path: "crews",

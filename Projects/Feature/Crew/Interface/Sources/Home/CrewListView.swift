@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 import ComposableArchitecture
 import SharedDesignSystem
 
@@ -22,8 +23,9 @@ public struct CrewListView: View {
                 Text("크루")
                     .font(.pretendard(size: 21, type: .semiBold))
                     .foregroundColor(.colorGrey900)
+                    .padding(.bottom, 50)
                 
-                // 크루 리스트..
+                crewListView(viewStore: viewStore)
                 
                 Spacer()
                 
@@ -43,6 +45,26 @@ public struct CrewListView: View {
                 }
             }
             .padding(23)
+        }
+    }
+    
+    private func crewListView(viewStore : ViewStoreOf<CrewHomeStore>) -> some View {
+        VStack(alignment: .leading, spacing: 20) {
+            ForEach(viewStore.crewList, id: \.self.crewId) { crew in
+                HStack {
+                    Text(crew.crewName)
+                        .font(.pretendard(size: 16, type: .semiBold))
+                        .foregroundColor(.colorGrey600)
+                    
+                    Spacer()
+                    
+                    Button {
+                        UIPasteboard.general.string = crew.code
+                    } label: {
+                        PumpingImages.crewcode.swiftUIImage
+                    }
+                }
+            }
         }
     }
         
