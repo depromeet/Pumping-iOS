@@ -47,11 +47,10 @@ public struct OnboardingRootStore: ReducerProtocol {
         case permission(OnboardingPermissionStore.Action)
         case profile(OnboadingProfileStore.Action)
         case avatar(OnboardingAvatarStore.Action)
-        case signUp(TaskResult<Token>)
-        case fetchCrewRequest
-        case fetchCrewResponse(TaskResult<[CrewInfo]>)
         
-        case goToMain([CrewInfo])
+        case signUp(TaskResult<Token>)
+        
+        case goToMain
     }
     
     public var body: some ReducerProtocol<State, Action> {

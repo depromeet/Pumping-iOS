@@ -13,11 +13,18 @@ import SharedDesignSystem
 extension CrewHomeStore {
     public init() {
         @Dependency(\.crewClient) var crewClient
+        @Dependency(\.userClient) var userClient
         
         let reducer: Reduce<State, Action> = .init { state, action in
             switch action {
             case .binding:
                 return .none
+                
+            case .onAppear:
+                return .concatenate([
+                    .send(.fetchCrewRequest),
+                    .send(.fetchUserRequest)
+                ])
                 
             case .tapCrewJoinButton:
                 return .send(.presentCrewJoinView)
@@ -31,7 +38,20 @@ extension CrewHomeStore {
             case let .personalRecordCell(id, action):
                 return .none
                 
-            case .fetchCrew:
+            case .fetchUserRequest:
+                return .task {
+                    await .fetchUserResponse(
+                        TaskResult {
+                            try await userClient.fetchUser()
+                        }
+                    )
+                }
+                
+            case let .fetchUserResponse(.success(userInfo)):
+                state.currentCrewId = userInfo.currentCrew
+                return .none
+                
+            case .fetchCrewRequest:
                 return .task {
                     await .fetchCrewResponse(
                         TaskResult {

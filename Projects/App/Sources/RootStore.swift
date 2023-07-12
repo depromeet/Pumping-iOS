@@ -33,8 +33,8 @@ public struct RootStore: ReducerProtocol {
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
-            case let .onboarding(.goToMain(crewList)):
-                state = .mainTab(.init(crewList: crewList))
+            case .onboarding(.goToMain):
+                state = .mainTab(.init())
                 return .none
                 
             default:

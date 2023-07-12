@@ -15,13 +15,12 @@ public final class NetworkProvider : NetworkProviderInterface {
     public func sendRequest<N: Networkable, T: Decodable>(_ endpoint: N) async throws -> T where N.Response == T {
         do {
             let urlRequest: URLRequest = try endpoint.makeURLRequest()
-//            print(urlRequest.url?.absoluteString)
-//            print(urlRequest.httpBody)
             let (data, response) = try await URLSession.shared.data(for: urlRequest, delegate: nil)
-//            print(try? JSONSerialization.jsonObject(with: urlRequest.httpBody!, options: []))
             guard let response = response as? HTTPURLResponse else {
                 throw NetworkError.noResponseError
             }
+            print(response)
+            print(String(data: data, encoding: .utf8))
             
             if let emptyResponse = try JSONDecoder().decode(EmptyData.self, from: data) as? T, data.isEmpty {
                 return emptyResponse

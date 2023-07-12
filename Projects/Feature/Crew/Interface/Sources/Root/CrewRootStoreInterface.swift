@@ -51,8 +51,8 @@ public struct CrewRootStore: ReducerProtocol {
         public var profileHome: ProfileHomeStore.State?
         public var profileWidthOfChange: ProfileWidthOfChangeStore.State?
 
-        public init(crewList: [CrewInfo]) {
-            self.crewHome = .init(crewList: crewList)
+        public init() {
+            self.crewHome = .init()
         }
     }
     

@@ -6,7 +6,10 @@
 //
 
 import ComposableArchitecture
-import Domain
+
+import DomainUserInterface
+import DomainCrewInterface
+
 import SharedDesignSystem
 
 public struct CrewHomeStore: ReducerProtocol {
@@ -32,7 +35,8 @@ public struct CrewHomeStore: ReducerProtocol {
         public var crewJoin: CrewJoinStore.State?
         public var crewMake: CrewMakeStore.State?
         
-        public var crewList: [CrewInfo]
+        public var crewList: [CrewInfo] = []
+        public var currentCrewId: String?
         
         public var userRecordList: IdentifiedArrayOf<PersonalRecordCellStore.State> = []
 //        [
@@ -52,18 +56,22 @@ public struct CrewHomeStore: ReducerProtocol {
 //            .init(id: .init(), ranking: "4", userName: "데릭", workoutTime: "00:00:00")
 //        ]
 
-        public init(crewList: [CrewInfo]) {
-            self.crewList = crewList
+        public init() {
+            
         }
     }
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         
+        case onAppear
+        
         case tapCrewJoinButton
         case tapCrewMakeButton
         
-        case fetchCrew
+        case fetchUserRequest
+        case fetchUserResponse(TaskResult<UserInfo>)
+        case fetchCrewRequest
         case fetchCrewResponse(TaskResult<[CrewInfo]>)
         
         case presentCrewListView

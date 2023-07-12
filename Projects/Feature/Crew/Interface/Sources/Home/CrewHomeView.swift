@@ -33,12 +33,15 @@ public struct CrewHomeView: View {
             }
             .background(makeBackgroundView())
             .refreshable {
-                viewStore.send(.fetchCrew)
+                viewStore.send(.fetchCrewRequest)
             }
             .basicBottomSheet(isPresented: viewStore.binding(\.$showCrewListView),
                               detents: [.height(500)]
             ) {
                 CrewListView(store: store)
+            }
+            .onAppear {
+                viewStore.send(.onAppear)
             }
             .navigationBarHidden(true)
         }

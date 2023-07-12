@@ -16,6 +16,7 @@ extension OnboardingRootStore {
     public init() {
         @Dependency(\.authClient) var authClient
         @Dependency(\.crewClient) var crewClient
+        @Dependency(\.userClient) var userClient
         
         let reducer: Reduce<State, Action> = Reduce { state, action in
             switch action {
@@ -25,7 +26,7 @@ extension OnboardingRootStore {
                 return .none
                 
             case .auth(.isAlreadyAuthorized):
-                return .send(.fetchCrewRequest)
+                return .send(.goToMain)
                 
             case .permission(.goToProfile):
                 state.path.append(.profile)
@@ -71,23 +72,11 @@ extension OnboardingRootStore {
             case let .signUp(.success(token)):
                 print(token)
                 authClient.saveToken(token)
-                return .send(.fetchCrewRequest)
+                return .send(.goToMain)
                 
             case let .signUp(.failure(error)):
                 print(error.localizedDescription)
                 return .none
-                
-            case .fetchCrewRequest:
-                return .task {
-                    await .fetchCrewResponse(
-                        TaskResult {
-                            try await crewClient.fetchCrew()
-                        }
-                    )
-                }
-                
-            case let .fetchCrewResponse(.success(crewList)):
-                return .send(.goToMain(crewList))
                 
             case .goToMain:
                 state.permission = nil

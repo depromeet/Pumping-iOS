@@ -19,15 +19,14 @@ public struct MainTabViewStore: ReducerProtocol {
     public struct State: Equatable {
         public var currentScene: MainScene = .home
         
-        public var home: CrewRootStore.State?
+        public var home: CrewRootStore.State? = .init()
         public var workout: WorkoutRootStore.State? = .init()
         public var profile: ProfileRootStore.State? = .init()
         
         public var showTabBar: Bool = true
         @BindingState public var showModal: Bool = false
         
-        public init(crewList: [CrewInfo]) {
-            self.home = .init(crewList: crewList)
+        public init() {
         }
     }
     
