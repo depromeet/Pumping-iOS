@@ -24,7 +24,7 @@ public struct WorkoutEndView: View {
                         .padding(.horizontal)
                         .padding(.top, 44)
                     
-                    SharedDesignSystemAsset.Images.boy.swiftUIImage
+                    SharedDesignSystemAsset.Images.imgEndWorkout.swiftUIImage
                 }
                 .background(Color.colorCyan300)
                 
@@ -48,7 +48,7 @@ public struct WorkoutEndView: View {
         VStack(spacing: 12) {
             HStack {
                 Text("운동을 모두 끝냈어요!")
-                    .font(.pretendard(size: 24, type: .bold))
+                    .font(.pretendard(size: .h2))
                     .foregroundColor(SharedDesignSystemAsset.Colors.colorGrey100.swiftUIColor)
                 
                 Spacer()
@@ -56,7 +56,7 @@ public struct WorkoutEndView: View {
             
             HStack {
                 Text("오늘 한 운동 세트를 기록할 수 있어요")
-                    .font(.pretendard(size: 15, type: .medium))
+                    .font(.pretendard(size: .body1))
                     .foregroundColor(.colorGrey000)
                 
                 Spacer()
@@ -71,11 +71,11 @@ public struct WorkoutEndView: View {
                 
                 VStack(spacing: 4) {
                     Text("오늘 운동 시간")
-                        .font(.pretendard(size: 15, type: .medium))
+                        .font(.pretendard(size: .body1))
                         .foregroundColor(.colorCyan300)
                     
                     Text(DateManager.toClockString(from: viewStore.state.totalTime))
-                        .font(.pretendard(size: 24, type: .bold))
+                        .font(.pretendard(size: .h2))
                         .foregroundColor(.colorGrey900)
                 }
                 .frame(maxWidth: .infinity)
@@ -89,11 +89,11 @@ public struct WorkoutEndView: View {
                 
                 VStack(spacing: 4) {
                     Text("소모 칼로리")
-                        .font(.pretendard(size: 15, type: .medium))
+                        .font(.pretendard(size: .body1))
                         .foregroundColor(.colorCyan300)
                     
                     Text("\(viewStore.state.totalCalorie)kcal")
-                        .font(.pretendard(size: 24, type: .bold))
+                        .font(.pretendard(size: .h2))
                         .foregroundColor(.colorGrey900)
                 }
                 .frame(maxWidth: .infinity)

@@ -52,10 +52,26 @@ public struct WorkoutTimerView: View {
                         viewStore.send(.updateCalorie(calorie))
                         watchConnectivityDelegate.sendMessage(key: "timer", value: viewStore.state.timers)
                     }
-                    .background(Color.colorGrey000)
+                    .background(makeBackgroundView())
                     .navigationBarBackButtonHidden(true)
                 }
             )
+        }
+    }
+    
+    private func makeBackgroundView() -> some View {
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                Rectangle()
+                    .fill(Color.colorGrey100)
+                    .frame(height: (geometry.size.height / 4))
+                    .edgesIgnoringSafeArea(.top)
+                
+                Rectangle()
+                    .fill(Color.colorGrey000)
+                    .frame(height: (geometry.size.height))
+            }
+            .frame(height: geometry.size.height)
         }
     }
     

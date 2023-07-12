@@ -16,6 +16,14 @@ public enum WorkoutCategory: String, CaseIterable, Codable {
 }
 
 public extension WorkoutCategory {
+    var title: String {
+        switch self {
+        case .whole: return "전신"
+        case .up: return "상체"
+        case .down: return "하체"
+        }
+    }
+    
     var parts: [WorkoutPart] {
         switch self {
         case .whole:
