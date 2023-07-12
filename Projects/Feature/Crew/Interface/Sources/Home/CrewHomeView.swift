@@ -9,6 +9,8 @@ import SwiftUI
 import ComposableArchitecture
 import SharedDesignSystem
 
+import Core
+
 public struct CrewHomeView: View {
     public let store: StoreOf<CrewHomeStore>
     
@@ -20,11 +22,10 @@ public struct CrewHomeView: View {
         WithViewStore(self.store) { viewStore in
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
-                    profileNavigationView(viewStore: viewStore)
-                    
                     if viewStore.profileList.isEmpty {
                         emptyProfileTabView(viewStore: viewStore)
                     } else {
+                        profileNavigationView(viewStore: viewStore)
                         profileTabView()
                     }
                     
@@ -42,6 +43,16 @@ public struct CrewHomeView: View {
             }
             .onAppear {
                 viewStore.send(.onAppear)
+            }
+            .fullScreenCover(isPresented: viewStore.binding(\.$showCrewJoinView)) {
+                IfLetStore(store.scope(state: \.crewJoin, action: { .crewJoin($0) })) {
+                    CrewJoinView(store: $0)
+                }
+            }
+            .fullScreenCover(isPresented: viewStore.binding(\.$showCrewMakeView)) {
+                IfLetStore(store.scope(state: \.crewMake, action: { .crewMake($0) })) {
+                    CrewMakeView(store: $0)
+                }
             }
             .navigationBarHidden(true)
         }
@@ -64,29 +75,38 @@ public struct CrewHomeView: View {
     }
     
     private func emptyProfileTabView(viewStore: ViewStoreOf<CrewHomeStore>) -> some View {
-        VStack(alignment: .center) {
+        VStack(alignment: .center, spacing: .zero) {
             Text("운동 크루에 참여해주세요")
                 .font(.pretendard(size: .h2))
                 .foregroundColor(PumpingColors.colorGrey900.swiftUIColor)
+                .padding(.top, 44)
             
             Text("크루는 최대 5명까지 참여 가능해요")
                 .font(.pretendard(size: .body1))
                 .foregroundColor(PumpingColors.colorGrey800.swiftUIColor)
+                .padding(.top, 12)
+            
+            Spacer()
+            
+            PumpingImages.imgEmptyCrew.swiftUIImage
+                .resizable()
+                .frame(width: 246, height: 233)
+            
+            Spacer()
             
             HStack {
                 PumpingSubmitButton(title: "코드로 참여하기") {
-                    
+                    viewStore.send(.tapCrewJoinButton)
                 }
                 Spacer()
                 PumpingSubmitButton(title: "크루 만들기") {
-                    
+                    viewStore.send(.tapCrewMakeButton)
                 }
             }
-            
-            Spacer()
+            .padding()
         }
         .background(Color.colorBlue300)
-        .frame(height: 400)
+        .frame(height: 520)
     }
     
     private func profileNavigationView(viewStore: ViewStoreOf<CrewHomeStore>) -> some View {

@@ -7,8 +7,10 @@
 
 import ComposableArchitecture
 import FeatureCrewInterface
+
 import Domain
-import SharedDesignSystem
+import Core
+import Shared
 
 extension CrewHomeStore {
     public init() {
@@ -48,7 +50,12 @@ extension CrewHomeStore {
                 }
                 
             case let .fetchUserResponse(.success(userInfo)):
-                state.currentCrewId = userInfo.currentCrew
+                //FIXME: 원래 이부분에서 bypass 요청을 보내는 것이 옳음
+                if let crewId = userInfo.currentCrew {
+                    state.currentCrewId = crewId
+                    return .send(.bypassFetchCrewRequest(crewId))
+                }
+                
                 return .none
                 
             case .fetchCrewRequest:
@@ -62,11 +69,37 @@ extension CrewHomeStore {
 
             case let .fetchCrewResponse(.success(crewList)):
                 state.crewList = crewList
-                print(crewList)
+                if let crewId = crewList.first?.crewId {
+                    return .send(.bypassFetchCrewRequest(crewId))
+                }
+                
                 return .none
 
             case let .fetchCrewResponse(.failure(error)):
                 print(error)
+                return .none
+                
+            case let .bypassFetchCrewRequest(crewId):
+                let userId = KeyChainStore.shared.load(property: .userId)
+                return .task {
+                    await .bypassFetchCrewResponse(
+                        TaskResult {
+                            try await crewClient.bypassFetchCrew(userId, crewId)
+                        }
+                    )
+                }
+                
+            case let .bypassFetchCrewResponse(.success(bypassCrewInfo)):
+                state.profileList = .init(
+                    uniqueElements: bypassCrewInfo.memberInfo.enumerated().map { index, member in
+                        return .init(id: .init(), ranking: "\(index+1)", userName: member.userName, workoutTime: DateManager.toClockString(from: member.workoutTime ?? 0))
+                })
+                
+                state.userRecordList = .init(
+                    uniqueElements: bypassCrewInfo.memberInfo.enumerated().map { index, member in
+                        return .init(id: .init(), avatarName: member.profileImage, ranking: "\(index+1)", userName: member.userName, numberOfExerciseGoals: "\(member.goalCount)", workoutTime: DateManager.toClockString(from: member.workoutTime ?? 0))
+                })
+                
                 return .none
                 
             case .presentCrewListView:

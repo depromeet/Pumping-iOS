@@ -32,7 +32,7 @@ public struct CrewListView: View {
                 buttonView(viewStore: viewStore)
             }
             .onAppear {
-                viewStore.send(.onAppear)
+                viewStore.send(.fetchCrewRequest)
             }
             .fullScreenCover(isPresented: viewStore.binding(\.$showCrewJoinView)) {
                 IfLetStore(store.scope(state: \.crewJoin, action: { .crewJoin($0) })) {

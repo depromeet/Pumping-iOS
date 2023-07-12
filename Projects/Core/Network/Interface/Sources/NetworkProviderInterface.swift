@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol NetworkProviderInterface {
-    func sendRequest<N: Networkable, T: Decodable>(_ endpoint: N) async throws -> T where N.Response == T
+    func sendRequest<N: Networkable, T: Decodable>(_ endpoint: N, isBypass: Bool) async throws -> T where N.Response == T
 }
