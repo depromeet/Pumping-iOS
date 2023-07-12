@@ -14,8 +14,8 @@ import CoreKeyChainStore
 
 extension OnboardingRootStore {
     public init() {
-        
         @Dependency(\.authClient) var authClient
+        @Dependency(\.crewClient) var crewClient
         
         let reducer: Reduce<State, Action> = Reduce { state, action in
             switch action {
@@ -23,6 +23,9 @@ extension OnboardingRootStore {
                 state.path.append(.permission)
                 state.permission = .init()
                 return .none
+                
+            case .auth(.isAlreadyAuthorized):
+                return .send(.fetchCrewRequest)
                 
             case .permission(.goToProfile):
                 state.path.append(.profile)
@@ -47,13 +50,15 @@ extension OnboardingRootStore {
                     return .none
                 }
                 
-                let userInfo = UserInfo(name: name,
-                                        gender: gender,
-                                        height: height,
-                                        weight: weight,
-                                        characterType: characterType,
-                                        loginType: loginType,
-                                        oauth2Id: oauth2Id)
+                let userInfo = UserInfo(
+                    name: name,
+                    gender: gender,
+                    height: height,
+                    weight: weight,
+                    characterType: characterType,
+                    loginType: loginType,
+                    oauth2Id: oauth2Id
+                )
                 
                 return .task { [userInfo = userInfo] in
                     await .signUp(
@@ -65,22 +70,32 @@ extension OnboardingRootStore {
                 
             case let .signUp(.success(token)):
                 print(token)
-                
                 authClient.saveToken(token)
-                
-                return .send(.goToMain)
+                return .send(.fetchCrewRequest)
                 
             case let .signUp(.failure(error)):
                 print(error.localizedDescription)
                 return .none
+                
+            case .fetchCrewRequest:
+                return .task {
+                    await .fetchCrewResponse(
+                        TaskResult {
+                            try await crewClient.fetchCrew()
+                        }
+                    )
+                }
+                
+            case let .fetchCrewResponse(.success(crewList)):
+                return .send(.goToMain(crewList))
                 
             case .goToMain:
                 state.permission = nil
                 state.profile = nil
                 state.avatar = nil
                 return .none
-                                
-            default :
+                
+            default:
                 return .none
             }
         }

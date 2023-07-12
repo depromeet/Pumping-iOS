@@ -25,7 +25,6 @@ public struct CrewHomeStore: ReducerProtocol {
     }
     
     public struct State: Equatable {
-        
         @BindingState public var showCrewListView: Bool = false
         @BindingState public var showCrewJoinView: Bool = false
         @BindingState public var showCrewMakeView: Bool = false
@@ -33,36 +32,39 @@ public struct CrewHomeStore: ReducerProtocol {
         public var crewJoin: CrewJoinStore.State?
         public var crewMake: CrewMakeStore.State?
         
-        public var crewList: [CrewInfo] = []
+        public var crewList: [CrewInfo]
         
-        public var userRecordList: IdentifiedArrayOf<PersonalRecordCellStore.State> = [
-            .init(id: .init(), avatarName: "몰라", ranking: "4", userName: "보민", numberOfExerciseGoals: "3 / 5회", workoutTime: "02:40"),
-            .init(id: .init(), avatarName: "몰라", ranking: "1", userName: "희원", numberOfExerciseGoals: "3 / 5회", workoutTime: "02:40"),
-            .init(id: .init(), avatarName: "몰라", ranking: "2", userName: "채령", numberOfExerciseGoals: "3 / 5회", workoutTime: "02:40"),
-            .init(id: .init(), avatarName: "몰라", ranking: "5", userName: "영모", numberOfExerciseGoals: "3 / 5회", workoutTime: "02:40"),
-            .init(id: .init(), avatarName: "몰라", ranking: "3", userName: "현우", numberOfExerciseGoals: "3 / 5회", workoutTime: "02:40")
-        ]
+        public var userRecordList: IdentifiedArrayOf<PersonalRecordCellStore.State> = []
+//        [
+//            .init(id: .init(), avatarName: "몰라", ranking: "4", userName: "보민", numberOfExerciseGoals: "3 / 5회", workoutTime: "02:40"),
+//            .init(id: .init(), avatarName: "몰라", ranking: "1", userName: "희원", numberOfExerciseGoals: "3 / 5회", workoutTime: "02:40"),
+//            .init(id: .init(), avatarName: "몰라", ranking: "2", userName: "채령", numberOfExerciseGoals: "3 / 5회", workoutTime: "02:40"),
+//            .init(id: .init(), avatarName: "몰라", ranking: "5", userName: "영모", numberOfExerciseGoals: "3 / 5회", workoutTime: "02:40"),
+//            .init(id: .init(), avatarName: "몰라", ranking: "3", userName: "현우", numberOfExerciseGoals: "3 / 5회", workoutTime: "02:40")
+//        ]
 
-        public var profileList: IdentifiedArrayOf<ProfileBodyCellStore.State> = [
-            .init(id: .init(), ranking: "5", userName: "보민", workoutTime: "00:00:00"),
-            .init(id: .init(), ranking: "1", userName: "현우", workoutTime: "00:00:00"),
-            .init(id: .init(), ranking: "2", userName: "영모", workoutTime: "00:00:00"),
-            .init(id: .init(), ranking: "3", userName: "희원", workoutTime: "00:00:00"),
-            .init(id: .init(), ranking: "4", userName: "데릭", workoutTime: "00:00:00")
-        ]
+        public var profileList: IdentifiedArrayOf<ProfileBodyCellStore.State> = []
+//        [
+//            .init(id: .init(), ranking: "5", userName: "보민", workoutTime: "00:00:00"),
+//            .init(id: .init(), ranking: "1", userName: "현우", workoutTime: "00:00:00"),
+//            .init(id: .init(), ranking: "2", userName: "영모", workoutTime: "00:00:00"),
+//            .init(id: .init(), ranking: "3", userName: "희원", workoutTime: "00:00:00"),
+//            .init(id: .init(), ranking: "4", userName: "데릭", workoutTime: "00:00:00")
+//        ]
 
-        public init() {
-            
+        public init(crewList: [CrewInfo]) {
+            self.crewList = crewList
         }
     }
     
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         
+        case tapCrewJoinButton
+        case tapCrewMakeButton
+        
         case fetchCrew
         case fetchCrewResponse(TaskResult<[CrewInfo]>)
-
-        case goToProfileView
         
         case presentCrewListView
         case presentCrewJoinView
@@ -73,6 +75,9 @@ public struct CrewHomeStore: ReducerProtocol {
 
         case profileBodyCell(id: ProfileBodyCellStore.State.ID, action: ProfileBodyCellStore.Action)
         case personalRecordCell(id: PersonalRecordCellStore.State.ID, action: PersonalRecordCellStore.Action)
+        
+        // navigation
+        case goToProfileView
     }
     
     public var body: some ReducerProtocol<State, Action> {

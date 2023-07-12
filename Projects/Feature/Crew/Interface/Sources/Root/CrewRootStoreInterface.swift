@@ -9,6 +9,8 @@ import ComposableArchitecture
 import SharedDesignSystem
 import FeatureProfileInterface
 
+import Domain
+
 public enum CrewScene: Hashable {
     case crewRanking
     case profile
@@ -44,12 +46,14 @@ public struct CrewRootStore: ReducerProtocol {
         @BindingState public var showingCrew: Bool = false
 
         // child
-        public var crewHome: CrewHomeStore.State = .init()
+        public var crewHome: CrewHomeStore.State
         public var crewRanking: CrewRankingStore.State?
         public var profileHome: ProfileHomeStore.State?
         public var profileWidthOfChange: ProfileWidthOfChangeStore.State?
 
-        public init() { }
+        public init(crewList: [CrewInfo]) {
+            self.crewHome = .init(crewList: crewList)
+        }
     }
     
     public enum Action: BindableAction, Equatable {

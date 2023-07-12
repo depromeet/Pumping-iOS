@@ -34,11 +34,11 @@ public struct OnboardingAuthView : View {
     private func onboardingInfoView(viewStore : ViewStoreOf<OnboardingAuthStore>) -> some View {
         VStack(spacing : 82) {
             TabView(selection: viewStore.binding(\.$tabViewIndex)) {
-                Color.red
+                firstTabView()
                     .tag(0)
-                Color.yellow
+                secondTabView()
                     .tag(1)
-                Color.blue
+                thirdTabView()
                     .tag(2)
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
@@ -74,6 +74,24 @@ public struct OnboardingAuthView : View {
                     EmptyView()
                 }
             }
+        }
+    }
+    
+    private func firstTabView() -> some View {
+        VStack {
+            
+        }
+    }
+    
+    private func secondTabView() -> some View {
+        VStack {
+            
+        }
+    }
+    
+    private func thirdTabView() -> some View {
+        VStack {
+            
         }
     }
     

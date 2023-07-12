@@ -19,6 +19,12 @@ extension CrewHomeStore {
             case .binding:
                 return .none
                 
+            case .tapCrewJoinButton:
+                return .send(.presentCrewJoinView)
+                
+            case .tapCrewMakeButton:
+                return .send(.presentCrewMakeView)
+                
             case let .profileBodyCell(id, action):
                 return .none
                 

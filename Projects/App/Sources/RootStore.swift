@@ -11,6 +11,8 @@ import ComposableArchitecture
 
 import Feature
 
+import Core
+
 public struct RootStore: ReducerProtocol {
 
     public enum State: Equatable {
@@ -31,12 +33,8 @@ public struct RootStore: ReducerProtocol {
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
-            case .onboarding(.goToMain):
-                state = .mainTab(.init())
-                return .none
-                
-            case .onboarding(.auth(.isAlreadyAuthorized)):
-                state = .mainTab(.init())
+            case let .onboarding(.goToMain(crewList)):
+                state = .mainTab(.init(crewList: crewList))
                 return .none
                 
             default:

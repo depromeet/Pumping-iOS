@@ -12,9 +12,7 @@ import SharedDesignSystem
 public struct CrewHomeView: View {
     public let store: StoreOf<CrewHomeStore>
     
-    public init(
-        store: StoreOf<CrewHomeStore>
-    ) {
+    public init(store: StoreOf<CrewHomeStore>) {
         self.store = store
     }
     
@@ -24,7 +22,11 @@ public struct CrewHomeView: View {
                 VStack(spacing: 0) {
                     profileNavigationView(viewStore: viewStore)
                     
-                    profileTabView()
+                    if viewStore.profileList.isEmpty {
+                        emptyProfileTabView(viewStore: viewStore)
+                    } else {
+                        profileTabView()
+                    }
                     
                     crewRankingView(viewStore: viewStore)
                 }
@@ -56,6 +58,32 @@ public struct CrewHomeView: View {
             }
             .frame(height: geometry.size.height)
         }
+    }
+    
+    private func emptyProfileTabView(viewStore: ViewStoreOf<CrewHomeStore>) -> some View {
+        VStack(alignment: .center) {
+            Text("운동 크루에 참여해주세요")
+                .font(.pretendard(size: .h2))
+                .foregroundColor(PumpingColors.colorGrey900.swiftUIColor)
+            
+            Text("크루는 최대 5명까지 참여 가능해요")
+                .font(.pretendard(size: .body1))
+                .foregroundColor(PumpingColors.colorGrey800.swiftUIColor)
+            
+            HStack {
+                PumpingSubmitButton(title: "코드로 참여하기") {
+                    
+                }
+                Spacer()
+                PumpingSubmitButton(title: "크루 만들기") {
+                    
+                }
+            }
+            
+            Spacer()
+        }
+        .background(Color.colorBlue300)
+        .frame(height: 400)
     }
     
     private func profileNavigationView(viewStore: ViewStoreOf<CrewHomeStore>) -> some View {
@@ -110,7 +138,6 @@ public struct CrewHomeView: View {
             
             workoutMessageView()
         }
-        
         .background(Color.colorBlue300)
         .frame(height: 400)
         
