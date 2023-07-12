@@ -24,6 +24,8 @@ public struct OnboardingAuthView : View {
 
                 signInWithAppleButton(viewStore: viewStore)
             }
+            .ignoresSafeArea(edges: [.top])
+            .background(PumpingColors.colorGrey000.swiftUIColor)
             .onAppear {
                 viewStore.send(.checkAuthorization)
             }
@@ -79,20 +81,26 @@ public struct OnboardingAuthView : View {
     
     private func firstTabView() -> some View {
         VStack {
-            
+            PumpingImages.imgOnboardingFirst.swiftUIImage
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(PumpingColors.colorBlue500.swiftUIColor)
     }
     
     private func secondTabView() -> some View {
         VStack {
-            
+            PumpingImages.imgOnboardingSecond.swiftUIImage
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(PumpingColors.colorBlue500.swiftUIColor)
     }
     
     private func thirdTabView() -> some View {
         VStack {
-            
+            PumpingImages.imgOnboardingThird.swiftUIImage
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(PumpingColors.colorBlue500.swiftUIColor)
     }
     
     private func signInWithAppleButton(viewStore : ViewStoreOf<OnboardingAuthStore>) -> some View {

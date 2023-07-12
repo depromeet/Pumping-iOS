@@ -20,8 +20,8 @@ public struct RootStore: ReducerProtocol {
         case mainTab(MainTabViewStore.State)
         
         public init() {
-            KeyChainStore.shared.delete(property: .userId)
-            KeyChainStore.shared.save(property: .userId, value: "719664")
+//            KeyChainStore.shared.delete(property: .accessToken)
+//            KeyChainStore.shared.save(property: .userId, value: "719664")
             self = .onboarding(.init())
 //            self = .mainTab(.init())
         }
