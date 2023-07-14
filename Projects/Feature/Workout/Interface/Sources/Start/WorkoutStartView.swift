@@ -27,10 +27,7 @@ public struct WorkoutStartView: View {
                 
                 Spacer()
                 
-                Rectangle()
-                    .frame(height: 391)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.white)
+                PumpingImages.imgStartWorkout.swiftUIImage
                 
                 Spacer()
                 
@@ -39,6 +36,7 @@ public struct WorkoutStartView: View {
                 })
                 .padding(.horizontal)
             }
+            .background(PumpingColors.colorGrey000.swiftUIColor)
             .navigationBarBackButtonHidden(true)
         }
     }

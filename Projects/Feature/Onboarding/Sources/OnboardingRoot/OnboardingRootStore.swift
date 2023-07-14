@@ -14,8 +14,9 @@ import CoreKeyChainStore
 
 extension OnboardingRootStore {
     public init() {
-        
         @Dependency(\.authClient) var authClient
+        @Dependency(\.crewClient) var crewClient
+        @Dependency(\.userClient) var userClient
         
         let reducer: Reduce<State, Action> = Reduce { state, action in
             switch action {
@@ -23,6 +24,9 @@ extension OnboardingRootStore {
                 state.path.append(.permission)
                 state.permission = .init()
                 return .none
+                
+            case .auth(.isAlreadyAuthorized):
+                return .send(.goToMain)
                 
             case .permission(.goToProfile):
                 state.path.append(.profile)
@@ -47,13 +51,15 @@ extension OnboardingRootStore {
                     return .none
                 }
                 
-                let userInfo = UserInfo(name: name,
-                                        gender: gender,
-                                        height: height,
-                                        weight: weight,
-                                        characterType: characterType,
-                                        loginType: loginType,
-                                        oauth2Id: oauth2Id)
+                let userInfo = UserInfo(
+                    name: name,
+                    gender: gender,
+                    height: height,
+                    weight: weight,
+                    characterType: characterType,
+                    loginType: loginType,
+                    oauth2Id: oauth2Id
+                )
                 
                 return .task { [userInfo = userInfo] in
                     await .signUp(
@@ -65,9 +71,7 @@ extension OnboardingRootStore {
                 
             case let .signUp(.success(token)):
                 print(token)
-                
                 authClient.saveToken(token)
-                
                 return .send(.goToMain)
                 
             case let .signUp(.failure(error)):
@@ -79,8 +83,8 @@ extension OnboardingRootStore {
                 state.profile = nil
                 state.avatar = nil
                 return .none
-                                
-            default :
+                
+            default:
                 return .none
             }
         }

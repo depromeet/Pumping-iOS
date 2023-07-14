@@ -13,6 +13,7 @@ public struct PersonalRecordCellStore: ReducerProtocol {
 
     public struct State: Equatable, Identifiable {
         public let id: UUID
+        public let userId: String
         public let avatarName: String
         public let ranking: String
         public let userName: String
@@ -22,12 +23,14 @@ public struct PersonalRecordCellStore: ReducerProtocol {
         public var isTapped: Bool = true
 
         public init(id: UUID,
+                    userId: String,
                     avatarName: String,
                     ranking: String,
                     userName: String,
                     numberOfExerciseGoals: String,
                     workoutTime: String) {
             self.id = id
+            self.userId = userId
             self.avatarName = avatarName
             self.ranking = ranking
             self.userName = userName

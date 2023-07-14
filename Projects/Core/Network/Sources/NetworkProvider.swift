@@ -12,15 +12,22 @@ import SharedUtil
 public final class NetworkProvider : NetworkProviderInterface {
     public static let shared = NetworkProvider()
     
-    public func sendRequest<N: Networkable, T: Decodable>(_ endpoint: N) async throws -> T where N.Response == T {
+    public func sendRequest<N: Networkable, T: Decodable>(_ endpoint: N, isBypass: Bool = false) async throws -> T where N.Response == T {
         do {
-            let urlRequest: URLRequest = try endpoint.makeURLRequest()
-//            print(urlRequest.url?.absoluteString)
-//            print(urlRequest.httpBody)
+            let urlRequest: URLRequest = try endpoint.makeURLRequest(isBypass: isBypass)
             let (data, response) = try await URLSession.shared.data(for: urlRequest, delegate: nil)
-//            print(try? JSONSerialization.jsonObject(with: urlRequest.httpBody!, options: []))
             guard let response = response as? HTTPURLResponse else {
                 throw NetworkError.noResponseError
+            }
+            
+            print(urlRequest)
+            
+            if let requestBodyJsonString = String(data: urlRequest.httpBody ?? .SubSequence(), encoding: .utf8) {
+                print(requestBodyJsonString)
+            }
+            
+            if let responseJsonString = String(data: data, encoding: .utf8) {
+                print(responseJsonString)
             }
             
             if let emptyResponse = try JSONDecoder().decode(EmptyData.self, from: data) as? T, data.isEmpty {

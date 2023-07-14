@@ -1,4 +1,4 @@
-public enum TokenProperties: String {
+public enum TokenProperties: String, CaseIterable {
     case accessToken = "ACCESS-TOKEN"
     case expiresAt = "ACCESS-EXPIRES-AT"
     case userId = "USERID"
@@ -17,4 +17,5 @@ public protocol TokenStore {
     func save(property: TokenProperties, value: String)
     func load(property: TokenProperties) -> String
     func delete(property: TokenProperties)
+    func deleteAll()
 }

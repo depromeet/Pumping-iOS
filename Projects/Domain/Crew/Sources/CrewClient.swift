@@ -12,6 +12,13 @@ import CoreNetwork
 
 extension CrewClient: DependencyKey {
     public static let liveValue = CrewClient(
+        bypassFetchCrew: { userId, crewId in
+            let bypassFetchCrewRequestDTO = BypassFetchCrewRequestDTO(userID: userId, crewID: crewId)
+            let apiEndpoint = CrewEndpoint.bypassFetchCrew(bypassFetchCrewRequestDTO)
+            let response = try await NetworkProvider.shared.sendRequest(apiEndpoint, isBypass: true).toDomain()
+            
+            return response
+        },
         fetchCrew: {
             let apiEndpoint = CrewEndpoint.fetchCrew()
             let response = try await NetworkProvider.shared.sendRequest(apiEndpoint).toDomain()

@@ -18,6 +18,7 @@ let targets: [Target] = [
                 .domain(implements: .Workout),
                 .domain(implements: .Crew),
                 .domain(implements: .WatchConnectivity),
+                .domain(implements: .User),
                 .core
             ]
         )

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct EmptyData : Decodable { }
+public struct EmptyData : Decodable, Equatable { }
 
 
 public protocol Responsable {

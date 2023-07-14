@@ -71,7 +71,7 @@ public struct WorkoutHomeView : View {
         VStack(spacing: .zero) {
             ForEach(Array(viewStore.state.workoutCategoryCellZip.keys), id: \.self) { type in
                 HStack {
-                    Text(type.rawValue)
+                    Text(type.title)
                     
                     Spacer()
                 }

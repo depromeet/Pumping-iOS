@@ -11,6 +11,8 @@ import ComposableArchitecture
 
 import Feature
 
+import Core
+
 public struct RootStore: ReducerProtocol {
 
     public enum State: Equatable {
@@ -18,6 +20,8 @@ public struct RootStore: ReducerProtocol {
         case mainTab(MainTabViewStore.State)
         
         public init() {
+//            KeyChainStore.shared.delete(property: .accessToken)
+//            KeyChainStore.shared.save(property: .userId, value: "719664")
             self = .onboarding(.init())
 //            self = .mainTab(.init())
         }
@@ -35,8 +39,9 @@ public struct RootStore: ReducerProtocol {
                 state = .mainTab(.init())
                 return .none
                 
-            case .onboarding(.auth(.isAlreadyAuthorized)):
-                state = .mainTab(.init())
+            case .mainTab(.profile(.home(.deleteUserResponse(.success)))):
+                KeyChainStore.shared.deleteAll()
+                state = .onboarding(.init())
                 return .none
                 
             default:

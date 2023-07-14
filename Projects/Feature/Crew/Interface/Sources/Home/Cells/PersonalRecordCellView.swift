@@ -30,6 +30,9 @@ public struct PersonalRecordCellView: View {
                    
             }
             .frame(height: 96)
+            .onTapGesture {
+                viewStore.send(.tapped)
+            }
         }
     }
     
