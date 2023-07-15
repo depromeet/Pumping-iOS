@@ -26,7 +26,7 @@ public struct CrewHomeView: View {
                         emptyProfileTabView(viewStore: viewStore)
                     } else {
                         profileNavigationView(viewStore: viewStore)
-                        profileTabView()
+                        profileTabView(viewStore: viewStore)
                     }
                     
                     crewRankingView(viewStore: viewStore)
@@ -115,7 +115,7 @@ public struct CrewHomeView: View {
                 viewStore.send(.presentCrewListView)
             } label: {
                 HStack(spacing: 5) {
-                    Text("일이삼사오육칠팔구십")
+                    Text(viewStore.crewName ?? "")
                         .font(.pretendard(size: 18, type: .semiBold))
                         .foregroundColor(.colorGrey900)
                     
@@ -125,19 +125,19 @@ public struct CrewHomeView: View {
             
             Spacer()
             
-            Text("D-7")
-                .font(.pretendard(size: 21, type: .semiBold))
-                .foregroundColor(.colorCyan200)
+//            Text("D-7")
+//                .font(.pretendard(size: 21, type: .semiBold))
+//                .foregroundColor(.colorCyan200)
         }
         .background(Color.colorBlue300)
         .padding(.init(top: 20, leading: 15, bottom: 0, trailing: 20))
     }
     
-    private func workoutMessageView() -> some View {
+    private func workoutMessageView(viewStore: ViewStoreOf<CrewHomeStore>) -> some View {
         HStack(spacing: 5) {
             SharedDesignSystemAsset.Images.loudSpeaker.swiftUIImage
             
-            Text("중요한건 꺾였는데도 그냥 하는 마음임")
+            Text(viewStore.crewMessage ?? "")
                 .font(.pretendard(size: 15, type: .medium))
                 .foregroundColor(.colorGrey900)
             
@@ -148,7 +148,7 @@ public struct CrewHomeView: View {
     }
     
     
-    private func profileTabView() -> some View {
+    private func profileTabView(viewStore: ViewStoreOf<CrewHomeStore>) -> some View {
         VStack {
             TabView {
                 ForEachStore(self.store.scope(
@@ -159,7 +159,7 @@ public struct CrewHomeView: View {
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
             
-            workoutMessageView()
+            workoutMessageView(viewStore: viewStore)
         }
         .background(Color.colorBlue300)
         .frame(height: 400)
@@ -187,7 +187,7 @@ public struct CrewHomeView: View {
             ForEachStore(self.store.scope(
                 state: \.userRecordList,
                 action: CrewHomeStore.Action.personalRecordCell(id:action:))) {
-                    PersonalRecordCellView(store: $0)
+                    PersonalRecordCellView(store: $0, firstItem: viewStore.userRecordList.first)
                 }
         }
     }

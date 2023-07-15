@@ -52,9 +52,31 @@ public struct CrewListView: View {
         VStack(alignment: .leading, spacing: 20) {
             ForEach(viewStore.crewList, id: \.self.crewId) { crew in
                 HStack {
-                    Text(crew.crewName)
-                        .font(.pretendard(size: 16, type: .semiBold))
-                        .foregroundColor(.colorGrey600)
+                    
+                    if let crewName = viewStore.crewName, crewName == crew.crewName {
+                        Button {
+                            
+                        } label: {
+                            HStack(spacing: 0) {
+                                Text(crew.crewName)
+                                    .font(.pretendard(size: 16, type: .black))
+                                    .foregroundColor(.colorCyanPrimary)
+                                Image(systemName: "checkmark")
+                                    .frame(width: 24, height: 24)
+                                    .foregroundColor(.colorCyanPrimary)
+                            }
+                        }
+                    } else {
+                        Button {
+                            
+                        } label: {
+                            Text(crew.crewName)
+                                .font(.pretendard(size: 16, type: .semiBold))
+                                .foregroundColor(.colorGrey600)
+                        }
+                    }
+                    
+                    
                     
                     Spacer()
                     
@@ -67,7 +89,7 @@ public struct CrewListView: View {
             }
         }
     }
-        
+    
     private func buttonView(viewStore : ViewStoreOf<CrewHomeStore>) -> some View {
         HStack {
             Button {
