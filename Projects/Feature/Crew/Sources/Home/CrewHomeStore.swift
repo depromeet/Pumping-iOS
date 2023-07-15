@@ -97,13 +97,16 @@ extension CrewHomeStore {
             case let .bypassFetchCrewResponse(.success(bypassCrewInfo)):
                 state.profileList = .init(
                     uniqueElements: bypassCrewInfo.memberInfo.enumerated().map { index, member in
-                        return .init(id: .init(), ranking: "\(index+1)", userName: member.userName, workoutTime: DateManager.toClockString(from: member.workoutTime ?? 0))
+                        return .init(id: .init(), ranking: "\(index+1)", userName: member.userName, characterType: CharacterType(rawValue: member.profileImage) ?? .a, workoutTime: DateManager.toClockString(from: member.workoutTime ?? 0))
                 })
                 
                 state.userRecordList = .init(
                     uniqueElements: bypassCrewInfo.memberInfo.enumerated().map { index, member in
-                        return .init(id: .init(), userId: member.userId, avatarName: member.profileImage, ranking: "\(index+1)", userName: member.userName, numberOfExerciseGoals: "\(member.goalCount)", workoutTime: DateManager.toClockString(from: member.workoutTime ?? 0))
+                        return .init(id: .init(), userId: member.userId, characterType: CharacterType(rawValue: member.profileImage) ?? .a, ranking: "\(index+1)", userName: member.userName, numberOfExerciseGoals: "\(member.goalCount)", workoutTime: DateManager.toClockString(from: member.workoutTime ?? 0))
                 })
+                
+                state.crewName = bypassCrewInfo.crewName
+                state.crewMessage = bypassCrewInfo.message
                 
                 return .none
                 

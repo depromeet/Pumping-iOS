@@ -44,20 +44,20 @@ public struct ProfileBodyCellView: View {
                         }
                     }
 
-                    Button {
-
-                    } label: {
-                        SharedDesignSystemAsset.Images.thumbsUp.swiftUIImage
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .foregroundColor(.black)
-                    }
-                    .frame(width: 60, height: 60)
-                    .background(.white)
-                    .clipShape(Circle())
+//                    Button {
+//
+//                    } label: {
+//                        SharedDesignSystemAsset.Images.thumbsUp.swiftUIImage
+//                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                            .foregroundColor(.black)
+//                    }
+//                    .frame(width: 60, height: 60)
+//                    .background(.white)
+//                    .clipShape(Circle())
                 }
                 .offset(x: -10)
 
-                SharedDesignSystemAsset.Images.avatar.swiftUIImage
+                viewStore.characterType.getCharacterImage()
             }
         }
     }

@@ -11,9 +11,11 @@ import SharedDesignSystem
 
 public struct PersonalRecordCellView: View {
     public let store: StoreOf<PersonalRecordCellStore>
+    public let firstItem: PersonalRecordCellStore.State?
 
-    public init(store: StoreOf<PersonalRecordCellStore>) {
+    public init(store: StoreOf<PersonalRecordCellStore>, firstItem: PersonalRecordCellStore.State?) {
         self.store = store
+        self.firstItem = firstItem
     }
 
     public var body: some View {
@@ -41,21 +43,23 @@ public struct PersonalRecordCellView: View {
             Circle()
                 .frame(width: 60, height: 60)
                 .overlay {
-                    SharedDesignSystemAsset.Images.avatarHead.swiftUIImage
+                    viewStore.characterType.getCharacterImage(body: false, head: true)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .foregroundColor(.black)
                 }
 
             VStack(alignment: .leading) {
                 HStack {
-                    HStack {
-                        Text("나")
-                            .font(.pretendard(size: 15, type: .medium))
-                            .foregroundColor(Color.colorCyan300)
-                            .padding(.init(top: 5, leading: 9, bottom: 5, trailing: 9))
+                    if let firstId = firstItem?.id, firstId == viewStore.id {
+                        HStack {
+                            Text("나")
+                                .font(.pretendard(size: 15, type: .medium))
+                                .foregroundColor(Color.colorCyan300)
+                                .padding(.init(top: 5, leading: 9, bottom: 5, trailing: 9))
+                        }
+                        .background(Color.colorCyan50)
+                        .cornerRadius(13)
                     }
-                    .background(Color.colorCyan50)
-                    .cornerRadius(13)
 
                     Text("\(viewStore.ranking)위")
                         .font(.pretendard(size: 16, type: .extraBold))

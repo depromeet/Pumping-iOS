@@ -7,6 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
+import Domain
 
 public struct ProfileBodyCellStore: ReducerProtocol {
     public init() { }
@@ -15,6 +16,7 @@ public struct ProfileBodyCellStore: ReducerProtocol {
         public let id: UUID
         public let ranking: String
         public let userName: String
+        public let characterType: CharacterType
         public let workoutTime: String
 
         public var isTapped: Bool = true
@@ -22,10 +24,12 @@ public struct ProfileBodyCellStore: ReducerProtocol {
         public init(id: UUID,
                     ranking: String,
                     userName: String,
+                    characterType: CharacterType,
                     workoutTime: String) {
             self.id = id
             self.ranking = ranking
             self.userName = userName
+            self.characterType = characterType
             self.workoutTime = workoutTime
         }
     }

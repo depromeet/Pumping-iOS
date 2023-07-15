@@ -40,6 +40,9 @@ public struct CrewHomeStore: ReducerProtocol {
         
         public var userRecordList: IdentifiedArrayOf<PersonalRecordCellStore.State> = []
         public var profileList: IdentifiedArrayOf<ProfileBodyCellStore.State> = []
+        public var crewName: String?
+        public var crewMessage: String?
+        
 
         public init() {
             
