@@ -20,7 +20,7 @@ public struct TimerCellView: View {
     public var body: some View {
         WithViewStore(self.store) { viewStore in
             VStack(alignment: .center) {
-                Text("\(viewStore.timer.workoutCategoryIdentifier.rawValue)")
+                Text("\(viewStore.timer.workoutCategoryIdentifier.title)")
                 
                 Spacer()
                 

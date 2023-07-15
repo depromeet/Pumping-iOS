@@ -7,45 +7,65 @@
 
 import Foundation
 
-//MARK: WorkoutCategoryIdentifierType
-public enum WorkoutCategoryIdentifierType: String, CaseIterable {
-    case whole = "전신"
-    case upper = "상체"
-    case lower = "하체"
+//MARK: WorkoutCategory
+
+public enum WorkoutCategory: String, CaseIterable, Codable {
+    case whole = "WHOLE"
+    case up = "UP"
+    case down = "DOWN"
 }
 
-public extension WorkoutCategoryIdentifierType {
-    var identifiers: [WorkoutCategoryIdentifier] {
+public extension WorkoutCategory {
+    var title: String {
+        switch self {
+        case .whole: return "전신"
+        case .up: return "상체"
+        case .down: return "하체"
+        }
+    }
+    
+    var parts: [WorkoutPart] {
         switch self {
         case .whole:
             return [.aerobic]
-        case .upper:
-            return [.shoulder, .chest, .arms, .back]
-        case .lower:
-            return [.butt]
+        case .up:
+            return [.shoulder, .chest, .arm, .back]
+        case .down:
+            return [.hip]
         }
     }
 }
 
-//MARK: WorkoutCategoryIdentifier
-public enum WorkoutCategoryIdentifier: String, Codable, CaseIterable, Equatable {
-    case aerobic = "유산소"
-    case shoulder = "어깨"
-    case chest = "가슴"
-    case arms = "팔"
-    case back = "등"
-    case butt = "엉덩이"
+//MARK: WorkoutPart
+
+public enum WorkoutPart: String, CaseIterable, Equatable, Codable {
+    case aerobic = "AEROBIC"
+    case shoulder = "SHOULDER"
+    case chest = "CHEST"
+    case arm = "ARM"
+    case back = "BACK"
+    case hip = "HIP"
+    case leg = "LEG"
 }
 
-public extension WorkoutCategoryIdentifier {
-    var type: WorkoutCategoryIdentifierType {
+public extension WorkoutPart {
+    var title: String {
         switch self {
-        case .aerobic:
-            return .whole
-        case .shoulder, .chest, .arms, .back:
-            return .upper
-        case .butt:
-            return .lower
+        case .aerobic: return "유산소"
+        case .shoulder: return "어깨"
+        case .chest: return "가슴"
+        case .arm: return "팔"
+        case .back: return "등"
+        case .hip: return "엉덩이"
+        case .leg: return "다리"
+        }
+    }
+    
+    var category: WorkoutCategory {
+        switch self {
+        case .aerobic: return .whole
+        case .shoulder, .chest, .arm, .back: return .up
+        case .hip, .leg: return .down
         }
     }
 }
