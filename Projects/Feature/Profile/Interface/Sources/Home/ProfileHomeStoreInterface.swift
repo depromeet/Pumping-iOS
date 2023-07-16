@@ -109,7 +109,8 @@ public struct ProfileHomeStore: ReducerProtocol {
         
         case fetchWorkoutRequest
         case fetchWorkoutResponse(TaskResult<ProfileWorkoutInfo>)
-        
+        case fetchUserReuqest
+        case fetchUserReponse(TaskResult<DomainUserInterface.UserInfo>)
         case deleteUserRequest
         case deleteUserResponse(TaskResult<EmptyData>)
     }
