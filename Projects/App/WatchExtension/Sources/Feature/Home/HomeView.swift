@@ -23,6 +23,7 @@ public struct HomeView: View {
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
                 TabView {
+                    //FIXME: 워치에서 종료기능 추가
                     endView()
 
                     timerListView()
