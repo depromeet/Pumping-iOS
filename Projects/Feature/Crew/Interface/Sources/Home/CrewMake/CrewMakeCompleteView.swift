@@ -24,7 +24,7 @@ struct CrewMakeCompleteView: View {
             VStack(spacing: 50) {
                 crewMakeCompleteTitleView()
                 
-                Color.colorGreen700
+                PumpingImages.imgCrew.swiftUIImage
                     .frame(height: 353)
                 
                 Spacer()

@@ -39,7 +39,7 @@ public struct RootStore: ReducerProtocol {
                 state = .mainTab(.init())
                 return .none
                 
-            case .mainTab(.profile(.home(.deleteUserResponse(.success)))):
+            case .mainTab(.profile(.home(.deleteUserResponse))):
                 KeyChainStore.shared.deleteAll()
                 state = .onboarding(.init())
                 return .none

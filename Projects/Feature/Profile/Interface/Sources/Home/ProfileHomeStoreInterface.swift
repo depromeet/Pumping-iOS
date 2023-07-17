@@ -80,15 +80,17 @@ public struct ProfileHomeStore: ReducerProtocol {
         public let userId: String?
         public let type: ProfileHomeType
         
-        public var selectedDay: Int = 0
-        
-        public var profileWorkoutInfo: ProfileWorkoutInfo?
+        public var selectedDay: Int = Date().weekday()
         
         public var time: Int = 0
         public var calorie: Int = 0
         public var heartRate: Int = 0
         public var maxWorkoutCategory: WorkoutCategory = .up
-        public var maxWorkoutTime: Int = 0
+        public var maxWorkoutCategoryTime: Int = 0
+        public var userName: String = ""
+        public var characterType: CharacterType?
+        public var workoutElements: [ProfileWorkoutElement] = []
+        public var selectedWorkoutElement: ProfileWorkoutElement?
 
         public init(userId: String?, type: ProfileHomeType) {
             self.userId = userId
@@ -109,7 +111,8 @@ public struct ProfileHomeStore: ReducerProtocol {
         
         case fetchWorkoutRequest
         case fetchWorkoutResponse(TaskResult<ProfileWorkoutInfo>)
-        
+        case fetchUserRequest
+        case fetchUserResponse(TaskResult<DomainUserInterface.UserInfo>)
         case deleteUserRequest
         case deleteUserResponse(TaskResult<EmptyData>)
     }

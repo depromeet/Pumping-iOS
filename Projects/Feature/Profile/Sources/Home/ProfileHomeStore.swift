@@ -8,8 +8,10 @@
 import ComposableArchitecture
 
 import FeatureProfileInterface
-
-import Domain
+import DomainWorkout
+import DomainUserInterface
+import DomainUser
+import Core
 import Shared
 
 extension ProfileHomeStore {
@@ -24,20 +26,27 @@ extension ProfileHomeStore {
                 
             case .onAppear:
                 return .concatenate([
+                    .send(.fetchUserRequest),
                     .send(.fetchWorkoutRequest)
                 ])
+                
+            case let .tapDayButton(index):
+                state.selectedDay = index
+                return .send(.selectProfileWorkout(index))
                 
             case .tapWithdrawButton:
                 return .send(.deleteUserRequest)
                 
             case let .selectProfileWorkout(index):
-                let workout = state.profileWorkoutInfo?.workouts[safe: index]
+                let workoutElement = state.workoutElements[safe: index]
                 
-                state.time = workout?.totalTime ?? 0
-                state.calorie = workout?.totalCalories ?? 0
-                state.heartRate = workout?.averageHeartbeat ?? 0
-                state.maxWorkoutCategory = workout?.maxWorkoutPart ?? .up
-                state.maxWorkoutTime = workout?.maxWorkoutPartTime ?? 0
+                state.selectedWorkoutElement = workoutElement
+                
+                state.time = workoutElement?.workout?.totalTime ?? 0
+                state.calorie = workoutElement?.workout?.totalCalories ?? 0
+                state.heartRate = workoutElement?.workout?.averageHeartbeat ?? 0
+                state.maxWorkoutCategory = workoutElement?.workout?.maxWorkoutCategory ?? .up
+                state.maxWorkoutCategoryTime = workoutElement?.workout?.maxWorkoutCategoryTime ?? 0
                 
                 return .none
                 
@@ -50,8 +59,22 @@ extension ProfileHomeStore {
                     )
                 }
                 
+            case .fetchUserRequest:
+                return .task {
+                    await .fetchUserResponse(
+                        TaskResult {
+                            try await userClient.fetchUser()
+                        }
+                    )
+                }
+                
+            case let .fetchUserResponse(.success(userInfo)):
+                state.userName = userInfo.name
+                state.characterType = userInfo.characterType
+                return .none
+                
             case let .fetchWorkoutResponse(.success(profileWorkoutInfo)):
-                state.profileWorkoutInfo = profileWorkoutInfo
+                state.workoutElements = profileWorkoutInfo.workoutElements
                 return .send(.selectProfileWorkout(state.selectedDay))
                 
             case .deleteUserRequest:

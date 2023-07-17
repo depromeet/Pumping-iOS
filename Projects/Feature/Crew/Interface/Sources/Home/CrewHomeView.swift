@@ -124,10 +124,6 @@ public struct CrewHomeView: View {
             }
             
             Spacer()
-            
-//            Text("D-7")
-//                .font(.pretendard(size: 21, type: .semiBold))
-//                .foregroundColor(.colorCyan200)
         }
         .background(Color.colorBlue300)
         .padding(.init(top: 20, leading: 15, bottom: 0, trailing: 20))

@@ -7,27 +7,38 @@
 
 import Foundation
 
-// MARK: - FetchWorkoutResponseDTO
 public struct FetchWorkoutResponseDTO: Codable {
-    let workouts: [FetchWorkoutDTO]
+    let workouts: [WorkoutElementDTO]
     
     public func toDomain() -> ProfileWorkoutInfo {
-        return .init(workouts: workouts.map {
-            return .init(
-                workoutDate: $0.workoutDate,
-                totalTime: $0.totalTime,
-                averageHeartbeat: $0.averageHeartbeat,
-                totalCalories: $0.totalCalories,
-                maxWorkoutPart: $0.maxWorkoutPart,
-                maxWorkoutPartTime: $0.maxWorkoutPartTime)
-        })
+        return .init(workoutElements: workouts.map { $0.toDomain() })
     }
 }
 
-// MARK: - FetchWorkoutDTO
-public struct FetchWorkoutDTO: Codable {
+public struct WorkoutElementDTO: Codable {
+    let dayOfWeek: String
+    let workout: WorkoutDataDTO?
+    
+    public func toDomain() -> ProfileWorkoutElement {
+        if let workout = workout {
+            return .init(
+                dayOfWeek: dayOfWeek,
+                workout: .init(
+                    workoutDate: workout.workoutDate,
+                    totalTime: workout.totalTime,
+                    averageHeartbeat: workout.averageHeartbeat,
+                    totalCalories: workout.totalCalories,
+                    maxWorkoutCategory: workout.maxWorkoutCategory,
+                    maxWorkoutCategoryTime: workout.maxWorkoutCategoryTime))
+        } else {
+            return .init(dayOfWeek: dayOfWeek, workout: nil)
+        }
+    }
+}
+
+public struct WorkoutDataDTO: Codable {
     let workoutDate: String
     let totalTime, averageHeartbeat, totalCalories: Int
-    let maxWorkoutPart: WorkoutCategory
-    let maxWorkoutPartTime: Int
+    let maxWorkoutCategory: WorkoutCategory
+    let maxWorkoutCategoryTime: Int
 }
