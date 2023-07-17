@@ -16,6 +16,7 @@ let targets: [Target] = [
         factory: .init(
             infoPlist: .extendingDefault(
                 with: [
+                    "UIUserInterfaceStyle": "Dark",
                     "BASE_URL": "https://pumpapp.net/",
                     "BASE_URL_PREFIX": "api/v1/",
                     "BASE_URL_BYPASS_PREFIX": "bypass/",
@@ -43,6 +44,7 @@ let targets: [Target] = [
         factory: .init(
             infoPlist: .extendingDefault(
                 with: [
+                    "UIUserInterfaceStyle": "Dark",
                     "CFBundleShortVersionString": "1.1",
                     "CFBundleVersion": "1",
                 ]),
@@ -56,6 +58,7 @@ let targets: [Target] = [
         factory: .init(
             infoPlist: .extendingDefault(
                 with: [
+                    "UIUserInterfaceStyle": "Dark",
                     "CFBundleShortVersionString": "1.1",
                     "CFBundleVersion": "1",
                     "NSHealthShareUsageDescription" : "이 앱은 운동, 수면 및 건강 정보를 추적하고 관리하기 위해 HealthKit 데이터를 공유할 수 있습니다.",

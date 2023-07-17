@@ -8,11 +8,10 @@
 import ComposableArchitecture
 
 import FeatureProfileInterface
-
 import DomainWorkout
 import DomainUserInterface
 import DomainUser
-
+import Core
 import Shared
 
 extension ProfileHomeStore {
