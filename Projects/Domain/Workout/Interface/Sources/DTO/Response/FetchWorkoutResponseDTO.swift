@@ -11,21 +11,29 @@ public struct FetchWorkoutResponseDTO: Codable {
     let workouts: [WorkoutElementDTO]
     
     public func toDomain() -> ProfileWorkoutInfo {
-        return .init(workouts: workouts.map {
-            return .init(
-                workoutDate: $0.workout.workoutDate,
-                totalTime: $0.workout.totalTime,
-                averageHeartbeat: $0.workout.averageHeartbeat,
-                totalCalories: $0.workout.totalCalories,
-                maxWorkoutPart: $0.workout.maxWorkoutPart,
-                maxWorkoutPartTime: $0.workout.maxWorkoutPartTime)
-        })
+        return .init(workoutElements: workouts.map { $0.toDomain() })
     }
 }
 
 public struct WorkoutElementDTO: Codable {
     let dayOfWeek: String
-    let workout: WorkoutDataDTO
+    let workout: WorkoutDataDTO?
+    
+    public func toDomain() -> ProfileWorkoutElement {
+        if let workout = workout {
+            return .init(
+                dayOfWeek: dayOfWeek,
+                workout: .init(
+                    workoutDate: workout.workoutDate,
+                    totalTime: workout.totalTime,
+                    averageHeartbeat: workout.averageHeartbeat,
+                    totalCalories: workout.totalCalories,
+                    maxWorkoutPart: workout.maxWorkoutPart,
+                    maxWorkoutPartTime: workout.maxWorkoutPartTime))
+        } else {
+            return .init(dayOfWeek: dayOfWeek, workout: nil)
+        }
+    }
 }
 
 public struct WorkoutDataDTO: Codable {

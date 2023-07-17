@@ -7,13 +7,16 @@
 
 import Foundation
 
-// MARK: - ProfileWorkoutInfo
-public struct ProfileWorkoutInfo: Equatable {
-    public let workouts: [ProfileWorkout]
+public struct ProfileWorkoutInfo: Codable, Equatable {
+    public let workoutElements: [ProfileWorkoutElement]
 }
 
-// MARK: - ProfileWorkout
-public struct ProfileWorkout: Equatable {
+public struct ProfileWorkoutElement: Codable, Equatable, Hashable {
+    public let dayOfWeek: String
+    public let workout: ProfileWorkout?
+}
+
+public struct ProfileWorkout: Codable, Equatable, Hashable {
     public let workoutDate: String
     public let totalTime, averageHeartbeat, totalCalories: Int
     public let maxWorkoutPart: WorkoutCategory

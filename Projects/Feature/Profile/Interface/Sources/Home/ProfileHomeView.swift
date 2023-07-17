@@ -48,7 +48,7 @@ public struct ProfileHomeView: View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 Rectangle()
-                    .fill(Color.colorBlue500)
+                    .fill(Color.colorBlue300)
                     .frame(height: (geometry.size.height / 2) + 100)
                     .edgesIgnoringSafeArea(.top)
                 
@@ -150,6 +150,7 @@ public struct ProfileHomeView: View {
                 workoutSummaryItemView(type: .heartRate(viewStore.state.heartRate))
                 Spacer()
                 workoutSummaryItemView(type: .calorie(viewStore.state.calorie))
+                    .padding(.trailing, 55)
             }
             .padding(.bottom, 43)
             
@@ -193,24 +194,27 @@ public struct ProfileHomeView: View {
     
     private func weekView(viewStore: ViewStoreOf<ProfileHomeStore>) -> some View {
         HStack {
-            ForEach(Array(viewStore.state.workouts.enumerated()), id: \.element.workoutDate) { index, workout in
-                VStack {
-                    Text("\(index + 1)일차")
-                        .font(.pretendard(size: .body4))
-                        .foregroundColor(PumpingColors.colorGrey200.swiftUIColor)
+            ForEach(Array(viewStore.state.workoutElements.enumerated()), id: \.element.self) { index, workoutElement in
+                HStack {
+                    Spacer()
                     
-                    Circle()
-                        .fill(Color.colorCyanPrimary)
-                        .padding(.init(top: 4, leading: 6, bottom: 6, trailing: 6))
-                        .overlay(alignment: .center) {
-                            //TODO: 여기서 데이트 타임 연결
-                            /*
-                            Date.toSelf(value: Date.toShortWeekdaySymbol(value: viewStore.))
-                                .foregroundColor(.colorGrey50)
-                                .font(.pretendard(size: 14, type: .medium))
-                                .multilineTextAlignment(.center)
-                             */
-                        }
+                    VStack {
+                        Text("\(workoutElement.workout?.workoutDate ?? "")일차")
+                            .font(.pretendard(size: .body4))
+                            .foregroundColor(PumpingColors.colorGrey200.swiftUIColor)
+                        
+                        Circle()
+                            .fill(Color.colorCyanPrimary)
+                            .padding(.init(top: 4, leading: 6, bottom: 6, trailing: 6))
+                            .overlay(alignment: .center) {
+                                Text(Date.toShortWeekdaySymbol(value: Int(workoutElement.dayOfWeek) ?? 1))
+                                    .foregroundColor(.colorGrey50)
+                                    .font(.pretendard(size: 14, type: .medium))
+                                    .multilineTextAlignment(.center)
+                            }
+                    }
+                    
+                    Spacer()
                 }
                 .onTapGesture {
                     viewStore.send(.tapDayButton(index))

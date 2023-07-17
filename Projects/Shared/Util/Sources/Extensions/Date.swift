@@ -23,6 +23,10 @@ public extension Date {
         return formatter.weekdaySymbols[value - 1]
     }
     
+    func weekday() -> Int {
+        return Calendar.current.component(.weekday, from: self)
+    }
+    
     func toShortWeekdaySymbol() -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_kr")

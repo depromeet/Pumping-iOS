@@ -31,17 +31,22 @@ extension ProfileHomeStore {
                     .send(.fetchWorkoutRequest)
                 ])
                 
+            case let .tapDayButton(index):
+                return .send(.selectProfileWorkout(index))
+                
             case .tapWithdrawButton:
                 return .send(.deleteUserRequest)
                 
             case let .selectProfileWorkout(index):
-                let workout = state.profileWorkoutInfo?.workouts[safe: index]
+                let workoutElement = state.workoutElements[safe: index]
                 
-                state.time = workout?.totalTime ?? 0
-                state.calorie = workout?.totalCalories ?? 0
-                state.heartRate = workout?.averageHeartbeat ?? 0
-                state.maxWorkoutCategory = workout?.maxWorkoutPart ?? .up
-                state.maxWorkoutTime = workout?.maxWorkoutPartTime ?? 0
+                state.selectedWorkoutElement = workoutElement
+                
+                state.time = workoutElement?.workout?.totalTime ?? 0
+                state.calorie = workoutElement?.workout?.totalCalories ?? 0
+                state.heartRate = workoutElement?.workout?.averageHeartbeat ?? 0
+                state.maxWorkoutCategory = workoutElement?.workout?.maxWorkoutPart ?? .up
+                state.maxWorkoutTime = workoutElement?.workout?.maxWorkoutPartTime ?? 0
                 
                 return .none
                 
@@ -69,7 +74,7 @@ extension ProfileHomeStore {
                 return .none
                 
             case let .fetchWorkoutResponse(.success(profileWorkoutInfo)):
-                state.profileWorkoutInfo = profileWorkoutInfo
+                state.workoutElements = profileWorkoutInfo.workoutElements
                 return .send(.selectProfileWorkout(state.selectedDay))
                 
             case .deleteUserRequest:
