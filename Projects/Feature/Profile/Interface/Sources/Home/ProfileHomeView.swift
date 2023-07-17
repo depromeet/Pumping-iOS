@@ -67,9 +67,12 @@ public struct ProfileHomeView: View {
             VStack(alignment: .leading) {
                 Spacer()
                 
+                //FIXME: 랭크 기능 제거
+                /*
                 Text("5위")
                     .font(.pretendard(size: 13, type: .extraLight))
                     .foregroundColor(.colorGrey800)
+                 */
                 
                 HStack(alignment: .center, spacing: 10) {
                     if viewStore.state.type == .my {
@@ -88,9 +91,12 @@ public struct ProfileHomeView: View {
                         .foregroundColor(.white)
                 }
                 
+                //FIXME: 프로필에 들어가는 메세지 기능 제거
+                /*
                 Text("원래 영웅은 성공전이 어두운법")
                     .font(.pretendard(size: 15, type: .light))
                     .foregroundColor(.colorGrey700)
+                */
                 
                 //FIXME: 제거
                 /*

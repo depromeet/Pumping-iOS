@@ -36,6 +36,7 @@ public struct CrewRootView: View {
                         case .profile:
                             IfLetStore(self.store.scope(state: \.profileHome, action: { .profileHome($0) })) {
                                 ProfileHomeView(store: $0)
+                                    .toolbarBackground(.hidden, for: .navigationBar)
                                     .toolbarRole(.editor)
                             }
                             
