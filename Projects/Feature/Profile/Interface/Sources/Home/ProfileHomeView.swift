@@ -21,6 +21,7 @@ public struct ProfileHomeView: View {
             ScrollView {
                 VStack(spacing: .zero) {
                     headerView(viewStore: viewStore)
+                        .background(PumpingColors.colorBlue300.swiftUIColor)
                     
                     workoutBottomView(viewStore: viewStore)
                         .frame(maxHeight: .infinity)
@@ -37,6 +38,7 @@ public struct ProfileHomeView: View {
                 }
                 .frame(maxHeight: .infinity)
             }
+            .ignoresSafeArea(edges: [.vertical])
             .background(makeBackgroundView())
             .onAppear {
                 viewStore.send(.onAppear)
@@ -92,17 +94,17 @@ public struct ProfileHomeView: View {
                 
                 //FIXME: 제거
                 /*
-                Button {
-                    
-                } label: {
-                    PumpingImages.thumbsUp.swiftUIImage
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .foregroundColor(.black)
-                }
-                .frame(width: 60, height: 60)
-                .background(.white)
-                .clipShape(Circle())
-                .padding(.bottom, 24)
+                 Button {
+                 
+                 } label: {
+                 PumpingImages.thumbsUp.swiftUIImage
+                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                 .foregroundColor(.black)
+                 }
+                 .frame(width: 60, height: 60)
+                 .background(.white)
+                 .clipShape(Circle())
+                 .padding(.bottom, 24)
                  */
                 
                 Spacer()
@@ -157,7 +159,7 @@ public struct ProfileHomeView: View {
             Divider()
             
             HStack {
-                workoutSummaryItemView(type: .maxWorkout(viewStore.state.maxWorkoutCategory, viewStore.state.maxWorkoutTime))
+                workoutSummaryItemView(type: .maxWorkout(viewStore.state.maxWorkoutCategory, viewStore.state.maxWorkoutCategoryTime))
                 Spacer()
             }
             .padding(.bottom, 43)
@@ -173,21 +175,21 @@ public struct ProfileHomeView: View {
             Spacer()
             //FIXME: 우선 제거
             /*
-            switch viewStore.type {
-            case .my:
-                HStack {
-                    Button("나와 비교") {
-                        viewStore.send(.tapMyButton)
-                    }
-                }
-                
-            case .other:
-                HStack {
-                    Button("변화폭") {
-                        viewStore.send(.tapWidthOfChangeButton)
-                    }
-                }
-            }
+             switch viewStore.type {
+             case .my:
+             HStack {
+             Button("나와 비교") {
+             viewStore.send(.tapMyButton)
+             }
+             }
+             
+             case .other:
+             HStack {
+             Button("변화폭") {
+             viewStore.send(.tapWidthOfChangeButton)
+             }
+             }
+             }
              */
         }
     }
@@ -195,27 +197,45 @@ public struct ProfileHomeView: View {
     private func weekView(viewStore: ViewStoreOf<ProfileHomeStore>) -> some View {
         HStack {
             ForEach(Array(viewStore.state.workoutElements.enumerated()), id: \.element.self) { index, workoutElement in
-                HStack {
-                    Spacer()
+                VStack {
+                    Text("\(workoutElement.workout?.workoutDate ?? "")일차")
+                        .font(.pretendard(size: .body4))
+                        .foregroundColor(
+                            viewStore.state.selectedDay == index ?
+                            PumpingColors.colorGrey900.swiftUIColor : PumpingColors.colorGrey200.swiftUIColor
+                        )
+                        .padding(.top, 12)
                     
-                    VStack {
-                        Text("\(workoutElement.workout?.workoutDate ?? "")일차")
-                            .font(.pretendard(size: .body4))
-                            .foregroundColor(PumpingColors.colorGrey200.swiftUIColor)
-                        
-                        Circle()
-                            .fill(Color.colorCyanPrimary)
-                            .padding(.init(top: 4, leading: 6, bottom: 6, trailing: 6))
-                            .overlay(alignment: .center) {
-                                Text(Date.toShortWeekdaySymbol(value: Int(workoutElement.dayOfWeek) ?? 1))
-                                    .foregroundColor(.colorGrey50)
-                                    .font(.pretendard(size: 14, type: .medium))
-                                    .multilineTextAlignment(.center)
-                            }
-                    }
-                    
-                    Spacer()
+                    Circle()
+                        .fill(
+                            viewStore.state.selectedDay == index ?
+                            PumpingColors.colorCyanPrimary.swiftUIColor : .clear
+                        )
+                        .padding(.init(top: 4, leading: 6, bottom: 9, trailing: 6))
+                        .overlay(alignment: .center) {
+                            Text(Date.toShortWeekdaySymbol(value: Int(workoutElement.dayOfWeek) ?? 1))
+                                .foregroundColor(
+                                    viewStore.state.selectedDay == index ?
+                                    PumpingColors.colorGrey50.swiftUIColor : PumpingColors.colorGrey700.swiftUIColor
+                                )
+                                .foregroundColor(.colorGrey50)
+                                .font(.pretendard(size: 14, type: .medium))
+                                .multilineTextAlignment(.center)
+                        }
                 }
+                .frame(width: 48, height: 75)
+                .background(
+                    viewStore.state.selectedDay == index ?
+                    PumpingColors.colorCyan100.swiftUIColor : .clear
+                )
+                .cornerRadius(100)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 100)
+                        .stroke(
+                            viewStore.state.selectedDay == index ?
+                                PumpingColors.colorCyan200.swiftUIColor : .clear,
+                            lineWidth: 1)
+                )
                 .onTapGesture {
                     viewStore.send(.tapDayButton(index))
                 }

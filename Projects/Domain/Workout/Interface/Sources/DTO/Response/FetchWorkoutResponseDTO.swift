@@ -28,8 +28,8 @@ public struct WorkoutElementDTO: Codable {
                     totalTime: workout.totalTime,
                     averageHeartbeat: workout.averageHeartbeat,
                     totalCalories: workout.totalCalories,
-                    maxWorkoutPart: workout.maxWorkoutPart,
-                    maxWorkoutPartTime: workout.maxWorkoutPartTime))
+                    maxWorkoutCategory: workout.maxWorkoutCategory,
+                    maxWorkoutCategoryTime: workout.maxWorkoutCategoryTime))
         } else {
             return .init(dayOfWeek: dayOfWeek, workout: nil)
         }
@@ -39,6 +39,6 @@ public struct WorkoutElementDTO: Codable {
 public struct WorkoutDataDTO: Codable {
     let workoutDate: String
     let totalTime, averageHeartbeat, totalCalories: Int
-    let maxWorkoutPart: WorkoutCategory
-    let maxWorkoutPartTime: Int
+    let maxWorkoutCategory: WorkoutCategory
+    let maxWorkoutCategoryTime: Int
 }

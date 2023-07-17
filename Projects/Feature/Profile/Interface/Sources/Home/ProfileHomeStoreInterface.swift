@@ -86,7 +86,7 @@ public struct ProfileHomeStore: ReducerProtocol {
         public var calorie: Int = 0
         public var heartRate: Int = 0
         public var maxWorkoutCategory: WorkoutCategory = .up
-        public var maxWorkoutTime: Int = 0
+        public var maxWorkoutCategoryTime: Int = 0
         public var userName: String = ""
         public var characterType: CharacterType?
         public var workoutElements: [ProfileWorkoutElement] = []

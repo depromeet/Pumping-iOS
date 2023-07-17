@@ -20,7 +20,7 @@ public extension Date {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_kr")
         
-        return formatter.weekdaySymbols[value - 1]
+        return formatter.shortWeekdaySymbols[value - 1]
     }
     
     func weekday() -> Int {

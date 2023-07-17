@@ -19,6 +19,6 @@ public struct ProfileWorkoutElement: Codable, Equatable, Hashable {
 public struct ProfileWorkout: Codable, Equatable, Hashable {
     public let workoutDate: String
     public let totalTime, averageHeartbeat, totalCalories: Int
-    public let maxWorkoutPart: WorkoutCategory
-    public let maxWorkoutPartTime: Int
+    public let maxWorkoutCategory: WorkoutCategory
+    public let maxWorkoutCategoryTime: Int
 }

@@ -32,6 +32,7 @@ extension ProfileHomeStore {
                 ])
                 
             case let .tapDayButton(index):
+                state.selectedDay = index
                 return .send(.selectProfileWorkout(index))
                 
             case .tapWithdrawButton:
@@ -45,8 +46,8 @@ extension ProfileHomeStore {
                 state.time = workoutElement?.workout?.totalTime ?? 0
                 state.calorie = workoutElement?.workout?.totalCalories ?? 0
                 state.heartRate = workoutElement?.workout?.averageHeartbeat ?? 0
-                state.maxWorkoutCategory = workoutElement?.workout?.maxWorkoutPart ?? .up
-                state.maxWorkoutTime = workoutElement?.workout?.maxWorkoutPartTime ?? 0
+                state.maxWorkoutCategory = workoutElement?.workout?.maxWorkoutCategory ?? .up
+                state.maxWorkoutCategoryTime = workoutElement?.workout?.maxWorkoutCategoryTime ?? 0
                 
                 return .none
                 
