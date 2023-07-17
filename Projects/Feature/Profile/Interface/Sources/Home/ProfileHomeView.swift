@@ -20,7 +20,7 @@ public struct ProfileHomeView: View {
         WithViewStore(self.store) { viewStore in
             ScrollView {
                 VStack(spacing: .zero) {
-                    headerView()
+                    headerView(viewStore: viewStore)
                     
                     workoutBottomView(viewStore: viewStore)
                         .frame(maxHeight: .infinity)
@@ -60,24 +60,28 @@ public struct ProfileHomeView: View {
         }
     }
     
-    private func headerView() -> some View {
+    private func headerView(viewStore: ViewStoreOf<ProfileHomeStore>) -> some View {
         HStack(alignment: .bottom) {
             VStack(alignment: .leading) {
+                Spacer()
+                
                 Text("5위")
                     .font(.pretendard(size: 13, type: .extraLight))
                     .foregroundColor(.colorGrey800)
                 
                 HStack(alignment: .center, spacing: 10) {
-                    HStack {
-                        Text("나")
-                            .font(.pretendard(size: 16, type: .semiBold))
-                            .foregroundColor(PumpingColors.colorGrey900.swiftUIColor)
-                            .padding(.init(top: 5, leading: 10, bottom: 5, trailing: 10))
+                    if viewStore.state.type == .my {
+                        HStack {
+                            Text("나")
+                                .font(.pretendard(size: 16, type: .semiBold))
+                                .foregroundColor(PumpingColors.colorGrey900.swiftUIColor)
+                                .padding(.init(top: 5, leading: 10, bottom: 5, trailing: 10))
+                        }
+                        .background(.white.opacity(0.3))
+                        .cornerRadius(12)
                     }
-                    .background(.white.opacity(0.3))
-                    .cornerRadius(12)
                     
-                    Text("채령")
+                    Text(viewStore.state.userName)
                         .modifier(TenadaFont(size: .h2))
                         .foregroundColor(.white)
                 }
@@ -86,6 +90,8 @@ public struct ProfileHomeView: View {
                     .font(.pretendard(size: 15, type: .light))
                     .foregroundColor(.colorGrey700)
                 
+                //FIXME: 제거
+                /*
                 Button {
                     
                 } label: {
@@ -97,11 +103,17 @@ public struct ProfileHomeView: View {
                 .background(.white)
                 .clipShape(Circle())
                 .padding(.bottom, 24)
+                 */
+                
+                Spacer()
             }
             
-            Spacer()
-            
-            PumpingImages.boy.swiftUIImage
+            HStack {
+                Spacer()
+                
+                viewStore.state.characterType?.getCharacterImage()
+                    .offset(x: 0, y: 112)
+            }
         }
         .padding(.horizontal)
     }
@@ -111,7 +123,7 @@ public struct ProfileHomeView: View {
             workoutSummaryHeaderView(viewStore: viewStore)
                 .padding()
             
-            weekView()
+            weekView(viewStore: viewStore)
                 .padding(.horizontal)
             
             workoutSummaryView(viewStore: viewStore)
@@ -158,7 +170,8 @@ public struct ProfileHomeView: View {
                 .font(.pretendard(size: .h4))
             
             Spacer()
-            
+            //FIXME: 우선 제거
+            /*
             switch viewStore.type {
             case .my:
                 HStack {
@@ -174,31 +187,33 @@ public struct ProfileHomeView: View {
                     }
                 }
             }
+             */
         }
-
     }
     
-    private func weekView() -> some View {
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.locale = Locale(identifier: "ko_kr")
-        
-        return HStack {
-            ForEach(calendar.shortWeekdaySymbols, id: \.self) { weekday in
+    private func weekView(viewStore: ViewStoreOf<ProfileHomeStore>) -> some View {
+        HStack {
+            ForEach(Array(viewStore.state.workouts.enumerated()), id: \.element.workoutDate) { index, workout in
                 VStack {
-                    Text("n일차")
-                        .font(.pretendard(size: 10, type: .light))
-                        .foregroundColor(.colorGrey900)
-                        .padding(.init(top: 7, leading: 6, bottom: 0, trailing: 6))
-
+                    Text("\(index + 1)일차")
+                        .font(.pretendard(size: .body4))
+                        .foregroundColor(PumpingColors.colorGrey200.swiftUIColor)
+                    
                     Circle()
                         .fill(Color.colorCyanPrimary)
                         .padding(.init(top: 4, leading: 6, bottom: 6, trailing: 6))
                         .overlay(alignment: .center) {
-                            Text(weekday)
+                            //TODO: 여기서 데이트 타임 연결
+                            /*
+                            Date.toSelf(value: Date.toShortWeekdaySymbol(value: viewStore.))
                                 .foregroundColor(.colorGrey50)
                                 .font(.pretendard(size: 14, type: .medium))
                                 .multilineTextAlignment(.center)
+                             */
                         }
+                }
+                .onTapGesture {
+                    viewStore.send(.tapDayButton(index))
                 }
             }
         }

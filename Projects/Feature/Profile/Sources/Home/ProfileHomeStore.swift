@@ -10,6 +10,7 @@ import ComposableArchitecture
 import FeatureProfileInterface
 
 import DomainWorkout
+import DomainUserInterface
 import DomainUser
 
 import Shared
@@ -26,7 +27,7 @@ extension ProfileHomeStore {
                 
             case .onAppear:
                 return .concatenate([
-                    .send(.fetchUserReuqest),
+                    .send(.fetchUserRequest),
                     .send(.fetchWorkoutRequest)
                 ])
                 
@@ -53,22 +54,22 @@ extension ProfileHomeStore {
                     )
                 }
                 
-            case .fetchUserReuqest:
+            case .fetchUserRequest:
                 return .task {
-                    await .fetchUserReponse(
+                    await .fetchUserResponse(
                         TaskResult {
                             try await userClient.fetchUser()
                         }
                     )
                 }
                 
-            case let .fetchUserReponse(.success(userInfo)):
-                print("[D] \(userInfo)")
+            case let .fetchUserResponse(.success(userInfo)):
+                state.userName = userInfo.name
+                state.characterType = userInfo.characterType
                 return .none
                 
             case let .fetchWorkoutResponse(.success(profileWorkoutInfo)):
                 state.profileWorkoutInfo = profileWorkoutInfo
-                return .none
                 return .send(.selectProfileWorkout(state.selectedDay))
                 
             case .deleteUserRequest:

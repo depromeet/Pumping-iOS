@@ -7,25 +7,28 @@
 
 import Foundation
 
-// MARK: - FetchWorkoutResponseDTO
 public struct FetchWorkoutResponseDTO: Codable {
-    let workouts: [FetchWorkoutDTO]
+    let workouts: [WorkoutElementDTO]
     
     public func toDomain() -> ProfileWorkoutInfo {
         return .init(workouts: workouts.map {
             return .init(
-                workoutDate: $0.workoutDate,
-                totalTime: $0.totalTime,
-                averageHeartbeat: $0.averageHeartbeat,
-                totalCalories: $0.totalCalories,
-                maxWorkoutPart: $0.maxWorkoutPart,
-                maxWorkoutPartTime: $0.maxWorkoutPartTime)
+                workoutDate: $0.workout.workoutDate,
+                totalTime: $0.workout.totalTime,
+                averageHeartbeat: $0.workout.averageHeartbeat,
+                totalCalories: $0.workout.totalCalories,
+                maxWorkoutPart: $0.workout.maxWorkoutPart,
+                maxWorkoutPartTime: $0.workout.maxWorkoutPartTime)
         })
     }
 }
 
-// MARK: - FetchWorkoutDTO
-public struct FetchWorkoutDTO: Codable {
+public struct WorkoutElementDTO: Codable {
+    let dayOfWeek: String
+    let workout: WorkoutDataDTO
+}
+
+public struct WorkoutDataDTO: Codable {
     let workoutDate: String
     let totalTime, averageHeartbeat, totalCalories: Int
     let maxWorkoutPart: WorkoutCategory
