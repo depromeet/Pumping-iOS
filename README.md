@@ -13,15 +13,26 @@
 <br>
 
 <p align="center">
-<a href="https://testflight.apple.com/join/XRtozfBk" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1641254400&h=ddfff0c3bd61d9f88f53494b401881d3" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
+<a href="https://apps.apple.com/app/id6451131066" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1641254400&h=ddfff0c3bd61d9f88f53494b401881d3" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
 </p>
 
+
+
+
 # Micro Feature Architecture
-대규모 서비스를 위한 마이크로 Feature Architecture를 구성하였습니다. 
 
-시행착오가 많을 예정이어서 블로그에 따로 정리하려고 합니다.
+>Micro Feature Architecture은 백엔드의 Micro Service([Martinfowler 공식문서](https://martinfowler.com/articles/microservices.html))의 개념으로부터 유래되었습니다. [Tuist 공식문서](https://docs.tuist.io/building-at-scale/microfeatures/)에서 개괄적인 개념을 확인할 수 있습니다.
 
-[🚀 블로그](https://medium.com/@mooyoung2309/tuist%EB%A1%9C-micro-architecture-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0-aa0ca97a4f4d) 도 놀러오세요 !
+## 개요
+
+"어라 그거 백엔드 개념 아니야 ?"  
+"겨우 사이드에서 그딴게 왜 필요해 ?"
+
+저희 팀은 대규모 서비스를 위한 Micro Feature Architecture을 구성하였습니다. 굳이 할 필요 없는 작업이라고 생각이 들 수 있습니다. 당시에 참고할 만한 샘플이 존재하지 않았고 저희는 샘플앱이 되고자 했고, 노력의 과정을 기록하고자 합니다. 앞으로 리펙토링을 할지 말지는 결정된 사항이 없습니다. 누군가 이 샘플을 통해서 계속해서 발전시켜 나갔으면 합니다. 
+
+이상입니다 -
+
+[Tuist로 Micro Architecture 적용하기](https://medium.com/@mooyoung2309/tuist%EB%A1%9C-micro-architecture-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0-aa0ca97a4f4d) 저희가 작성한 블로그에서 자세한 내용을 모두 확인할 수 있습니다.
 
 ## 4 Layer
 계층 구조는 다음과 같습니다.
