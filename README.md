@@ -53,3 +53,22 @@
 디펜던시 그래프는 다음과 같습니다.
 
 <img src="graph.png">
+
+<br>
+
+# Tech
+## Watch OS
+watch OS 개발을 위해 사용된 라이브러리는 다음과 같습니다.
+
+- Dependency
+    |Library|Description|
+    |:---|:---|
+    |SwiftUI|UI 작성|
+    |HealthKit|건강 데이터 접근|
+    |WatchConnectivity|WachOS와 iOS 간 통신|
+    |The Composable Architecture (TCA)|아키텍쳐 적용|
+
+## HealthKit
+iOS의 건강 데이터를 담은 HealthKit 라이브러리에서, 기획 단에서 사용가능한 모든 데이터를 정리한 글을 작성하였습니다. 
+
+[HealthKit에서 사용 가능한 모든 데이터 정리](https://medium.com/@mooyoung2309/healthkit%EC%97%90%EC%84%9C-%EC%82%AC%EC%9A%A9%EA%B0%80%EB%8A%A5%ED%95%9C-%EB%AA%A8%EB%93%A0-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A0%95%EB%A6%AC-9d632a8686da) 저희가 작성한 블로그에서 자세한 내용을 모두 확인할 수 있습니다.
