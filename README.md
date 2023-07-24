@@ -1,5 +1,12 @@
 # Pumping
 
+🔗 해당 주제로 포스팅한 글 모음
+- [HealthKit에서 사용 가능한 모든 데이터 정리](https://medium.com/@mooyoung2309/healthkit%EC%97%90%EC%84%9C-%EC%82%AC%EC%9A%A9%EA%B0%80%EB%8A%A5%ED%95%9C-%EB%AA%A8%EB%93%A0-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A0%95%EB%A6%AC-9d632a8686da)
+- [Tuist로 Micro Architecture 적용하기](https://medium.com/@mooyoung2309/tuist%EB%A1%9C-micro-architecture-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0-aa0ca97a4f4d)
+- [디프만 13기 iOS 파트 회고](https://medium.com/p/1d3d90c25cb3)
+
+<br>
+
 <img src="https://github.com/depromeet/Pumping-iOS/assets/77970826/e79cdec1-b673-42a9-bb9a-5a9f46565b54">
 
 <img src="https://github.com/depromeet/Pumping-iOS/assets/77970826/958cd820-8610-4104-b0fc-79777e9baff8">
